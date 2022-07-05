@@ -12,7 +12,6 @@ const productSchema = new mongoose.Schema({
     reviews:        { type: Array },                        // [{review: x, comment: 'string'}] ---> devolver rating desde el back
     description:    { type: Object, required: true },       // description: {key(front): value(front)}
     date: Date,
-    user:           { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 });
 
 productSchema.set('toJSON', {

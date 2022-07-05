@@ -6,7 +6,6 @@ const getAllProducts = async (req, res, next) => {
 
     try {
         const products = await Product.find({})
-            .find({}).populate('user', { username: 1 })
         return res.json(products);      
     } catch (error) {
         return next(error);
@@ -35,13 +34,8 @@ const createProduct = async (req, res, next) => {
             img,
             stock,
             offer,
-            description: {},
+            description,
         } = req.body;
-
-        if (!name || !price) return res.status(400).json({ error: 'empty fields'});
-
-        // const user = await User.findById(userID);
-        // if (!user) return res.status(400).json({ error: 'user not in database'});
       
         const product = new Product({
             name,
@@ -51,16 +45,13 @@ const createProduct = async (req, res, next) => {
             stock,
             soldCount: 0,
             offer: offer ? offer : 0,
-            description: {},
+            description,
             reviews: [],
             queries: [],
             date: new Date(),
-            // user: user._id
         });
       
         const savedProduct = await product.save();
-        // user.products = user.products.concat(savedProduct._id);
-        // await user.save();
         console.log(`. \u2705 product "${name}" created and saved OK`);
         return res.json(savedProduct);
     } catch (error) {
@@ -70,19 +61,85 @@ const createProduct = async (req, res, next) => {
 
 const deleteProduct = async (req, res, next) => {
     try {
-        const { productID, userID } = req.body;
+        const { productID } = req.body;
 
-        if (!productID || !userID) return res.status(400).json({error: 'enter product id and user id'});
+        if (!productID) return res.status(400).json({error: 'enter product id'});
        
         let product = await Product.findById(productID);
         await Product.deleteOne({ name: product.name});
-        let user = await User.findById(userID);
-        user.products = user.products.filter(prod => prod.toString() !== product._id.toString());
-        await user.save();
-        return res.json(user);
+        return res.json(product);
     } catch (error) {
         return next(error);
     };
 };
 
-module.exports = { getAllProducts, createProduct, totalProducts, deleteProduct };
+const buyProduct = async (req, res, next) => {
+    console.log('> ...initializing connection at "buyProduct"');
+
+    try {
+        // cart = [{idProduct1, quantity}, {idProduct2, quantity}, etc]
+        const { cart, userID } = req.body;
+        const user = await User.findById(userID);
+
+        // ! ! ! ! ! vaciar historial de compras del usuario ! ! ! ! !
+            // await User.updateOne({"username": "usermauro"}, {$set: {"productsHistory": []}});
+            // return res.json(user);
+
+        var outOfStock = 0;
+        let promisesStock = cart.map(async(prods) => {
+            let productStock = await Product.findById(prods.id);
+
+            if (productStock.stock < prods.quantity) {
+                outOfStock++;
+            };
+        });
+
+        await Promise.all(promisesStock);
+
+        if (outOfStock > 0) return res.status(400).json({ error: `out of stock` });
+
+        let cartProducts = [];
+        let totalPrice = 0;
+
+        // mapeo los productos del carrito
+        let emptyCart = cart.map(async(prods) => {
+            let product = await Product.findById(prods.id);
+
+            let { price, name, offer } = product;
+
+            product.stock = product.stock - prods.quantity;
+            product.soldCount = product.soldCount + prods.quantity;
+            totalPrice = totalPrice + price;
+            product.save();
+
+            // agrego uno por uno, cada producto del carrito al 'cartProducts'
+            cartProducts.push({
+                id: prods.id,
+                name,
+                price,
+                offer,
+                quantity: prods.quantity,
+            });
+        });
+        
+        await Promise.all(emptyCart);
+
+        // creo la orden de compra
+        const order = {
+            order: "number-of-order",
+            date: new Date(),
+            total: totalPrice,
+            detail: cartProducts,
+        };
+
+        user.productsHistory = user.productsHistory.concat(order);
+        user.save();
+        
+        return res.json(order);  
+    } catch (error) {
+        return next(error);
+    };
+
+};
+
+module.exports = { getAllProducts, createProduct, totalProducts, deleteProduct, buyProduct };
