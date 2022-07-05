@@ -6,7 +6,7 @@ const getAllUsers = async (req, res, next) => {
 
     try {
         const users = await User.find({})
-            .find({}).populate('productsHistory', { user: 0 }); // que me traiga todo de 'products' menos el user
+            // .find({}).populate('productsHistory', { user: 0 }); // que me traiga todo de 'products' menos el user
         return res.json(users);
     } catch (error) {
         return next(error);
