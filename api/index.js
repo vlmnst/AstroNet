@@ -27,7 +27,7 @@ const errorHandler = require('./src/middleware/errorHandler');
     server.use(errorHandler);
 
 // CONECTO EL SERVIDOR
-    const PORT = process.env.PORT // || 3001
-    server.listen(PORT, () => {
+    const { PORT } = process.env // || 3001
+    server.listen(PORT || 3001 , () => {
         console.log(`. \u2705 server-express listening at ${PORT}`);
     });
