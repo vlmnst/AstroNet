@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
     phone:              { type: String, required: true },
     location:           { type: Object, required: true },       // country {country: , city: , state: }
     address:            { type: Object, required: true },       // address {street address: , floor: , department: , zip code: }
-    productsHistory:    [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }],
+    productsHistory:    { type: Object },
     favorites:          [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }],
     queries:            [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }],
 });
