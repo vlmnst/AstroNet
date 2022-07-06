@@ -4,7 +4,7 @@ module.exports = errorHandler = (err, req, res, next) => {
 
     console.error(err);
     
-    res.status(status).send({ errorHandler: message });
+    res.status(status).send({ error: message });
 
     // if (error.name === 'CastError') { // causado por un ID de objeto no válido para Mongo (findById y que no traiga nada)
     //   return response.status(400).send({ error: 'malformatted id' })
