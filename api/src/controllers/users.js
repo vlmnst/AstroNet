@@ -33,7 +33,6 @@ const createUser = async (req, res, next) => {
             username,
             password,
             email,
-            role,
             dni,
             firstname,
             lastname,
@@ -50,7 +49,7 @@ const createUser = async (req, res, next) => {
         const user = new User({
             username,
             email,
-            role,
+            role: 'user',
             dni,
             firstname,
             lastname,
@@ -64,12 +63,14 @@ const createUser = async (req, res, next) => {
             queries: [],
         });
 
-        if (user) {
-            let userSaved = await user.save();
-            userSaved ? res.json(userSaved) : res.status(400).json({ error: 'error while saving user'});
+        let userSaved = await user.save();
+        
+        if (userSaved) {
+            console.log(`. \u2705 user "${username}" registered and saved OK`);
+            return res.json(userSaved);
         } else {
-            res.status(400).json({ error: 'error while creating user'});
-        } 
+            res.status(400).json({ error: 'error while saving user'});
+        };
     } catch (error) {
         return next(error);
     };
