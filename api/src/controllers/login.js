@@ -6,6 +6,11 @@ const login = async (req, res, next) => {
     try {
         const { username, password } = req.body;
 
+        // reviso si ya estoy logueado
+        const authorization = req.get('authorization');     // recupera la cabecera http 'authorization' (es de express)
+            if (authorization && authorization.toLowerCase().startsWith('bearer')) 
+                return res.status(400).json({ error: 'you are already logged in'});
+
         const user = await User.findOne({ username });
     
         const passwordCorrect = (user === null) 
@@ -26,10 +31,11 @@ const login = async (req, res, next) => {
             expiresIn: 60 * 60 * 24 * 7     // expira cada 7 días (segs, mins, horas, dias)
         });
 
-        // devuelvo el email, username y token
+        // devuelvo el email, username, role y token
         res.send({
             email: user.email,
             username: user.username,
+            role: user.role,
             token
         })
     } catch (error) {
@@ -38,10 +44,10 @@ const login = async (req, res, next) => {
 
 };
 
+// agregar esta funcion a rutas donde solo quiero que ingresen solo usuarios logueados
 const authOK = async (req, res, next) => {
 
     try {
-        // agregar en donde quiero autorizar solo usuarios logueados
         const authorization = req.get('authorization');     // recupera la cabecera http 'authorization' (es de express)
 
         let token = null;
