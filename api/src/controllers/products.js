@@ -141,5 +141,24 @@ const buyProduct = async (req, res, next) => {
     };
 
 };
+//expresiòn regular para busqueda difusa
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
+const getProductsByName = async (req, res, next) => {
+    try {
+       let name = req.params.name
+       const regex = new RegExp(escapeRegex(name), 'gi')
+       console.log(regex)
+       let productsFound = await Product.find( { 'name' : regex } )
+       if(productsFound.length === 0) {
+        return res.json('We are sorry, the product does not exist')
+       }
+       if(productsFound.length !== 0)
+        return res.json(productsFound);     
+    } catch (error) {
+        return next(error);
+    }
+  };
 
-module.exports = { getAllProducts, createProduct, totalProducts, deleteProduct, buyProduct };
+module.exports = { getAllProducts, createProduct, totalProducts, deleteProduct, buyProduct, getProductsByName };
