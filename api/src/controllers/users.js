@@ -24,7 +24,6 @@ const totalUsers = async (req, res, next) => {
     };
 };
 
-// ERROR AL CREAR UN USUARIO CON UN MISMO ROL (admin/user/guest)
 const createUser = async (req, res, next) => {
     console.log('> ...initializing connection at "createUser"');
 
