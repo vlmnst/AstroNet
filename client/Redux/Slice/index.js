@@ -1,8 +1,8 @@
 import {createSlice, dispatch} from '@reduxjs/toolkit';
 import axios from 'axios';
-require('dotenv').config();
+import { ROUTE }  from '@env'
 // const { ROUTE } = process.env;
-const ROUTE = "https://glacial-brushlands-14508.herokuapp.com"
+//const ROUTE = "https://glacial-brushlands-14508.herokuapp.com"
 
 export const userSlice = createSlice({
     name : "ALL_PRODUCTS",
