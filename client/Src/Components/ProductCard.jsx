@@ -1,27 +1,54 @@
 import { View, Text, Image, StyleSheet } from "react-native";
 
-
 const ProductCard = (props) => {
 
-    return (
-        <View style={styles.container}>
-            <Image source={{ uri: props.img }}
-                style={styles.image}
-            />
-            <View style={styles.contInt} >
-                <Text style={styles.price}>$ {props.price}</Text>
-                <Text style={styles.description}>{props.description}</Text>
-            </View>
+  let descriptionArray = Object.entries(props.description) //converte el objecto en array de arrays (con key y value)
+  console.log(descriptionArray)
+  return (
+    <View style={styles.container}>
+      <Image source={{ uri: props.img }}
+        style={styles.image}
+      />
+      <View style={styles.contInt} >
+        <View style={styles.priceOffer}>
+          <Text style={styles.price}>$ {props.price}</Text>
+          {(props.offer > 0) ? (<Text style={styles.offer} >{props.offer}% off!</Text>) : null}
         </View>
-    );
+        <Text style={styles.name}>{props.name}: </Text>
+        {descriptionArray.map((item, index) => {
+          return (
+            <Text style={styles.description} key={index} >{item[0]}: {item[1]}</Text>
+          )
+        })}
+      </View>
+    </View>
+  );
 };
 
+const font = 11;
+const fontDescription = 10;
 const styles = StyleSheet.create({
-    container: { alignItems: 'center', marginTop: 10, padding: 5, borderWidth: 1, width: 110, height: 160, borderColor: "grey" },
-    image: { marginBottom: 2, height: 100, width: 100, borderRadius: 10 },
-    contInt: { marginTop: 5 },
-    price: { fontSize: 15 },
-    description: { fontSize: 10 }
+  container: { display: "flex", alignItems: 'center', margin:"2%", padding: 5, borderWidth: 2, width: "46%", borderColor: "#EAEAEA", backgroundColor:"white", borderRadius:15 },
+  priceOffer: {flexDirection:'row', justifyContent: "space-between", marginBottom: 5 },
+  image: { marginBottom: 2, height: 100,  width:"90%", borderRadius: 10 },
+  contInt: { marginTop: 5, width:"90%" },
+  price: { fontSize: font },
+  name: { fontSize: font },
+  offer: { color: "red", fontSize: font },
+  description: { fontSize: fontDescription }
 })
 
 export default ProductCard;
+
+// const description = {
+//   "Teclas": "MAS TECLAS",
+//   "marca": "cualquiercosa"
+// };
+
+{/* <ProductCard
+price="444"
+name="laptop"
+img= "https://img.lovepik.com/free-png/20220121/lovepik-laptop-png-image_401598576_wh860.png"
+offer="30"
+description= {description}
+/> */}
