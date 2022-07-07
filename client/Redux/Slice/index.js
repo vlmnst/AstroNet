@@ -1,8 +1,8 @@
 import {createSlice, dispatch} from '@reduxjs/toolkit';
 import axios from 'axios';
-import { ROUTE }  from '@env'
-// const { ROUTE } = process.env;
-//const ROUTE = "https://glacial-brushlands-14508.herokuapp.com"
+import { ROUTE }  from '@env';
+// const ROUTE = "http://localhost:3001";
+
 
 export const userSlice = createSlice({
     name : "ALL_PRODUCTS",
@@ -15,7 +15,8 @@ export const userSlice = createSlice({
         getAllProducts(state,action){
             state.allProducts = action.payload
             state.allProductsFiltered = action.payload
-            state.allProducts.map((p)=> (state.categories.includes(p.category))? null : state.categories.push(p.category))
+            state.allProducts.map((p)=> (state.categories.includes(p.category))? null :
+                state.categories.push(p.category))
         },
         getProductsByCategory(state,action){
             state.allProductsFiltered = action.payload
@@ -46,8 +47,10 @@ export const userSlice = createSlice({
                 state.allProductsFiltered = neworder
             }
             
+        },
+        clearCache(state){
+            state.allProductsFiltered = []
         }
-        
     }
 });
 
@@ -69,9 +72,9 @@ export const getProductsByCategory = (category)=> async(dispatch) => {
         console.log(e)
     }
 }   
-export const getByPrice = (order)=> (dispatch) => {
-        dispatch(userSlice.actions.getByPrice(order))
-}
-
+// export const getByPrice = (order)=> (dispatch) => {
+//         dispatch(userSlice.actions.getByPrice(order))
+// }
+export const {getByPrice, clearCache}=userSlice.actions
 
 export default userSlice.reducer

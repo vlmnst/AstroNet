@@ -3,10 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { View,Text } from "react-native";
 import { getAllProducts} from '../../Redux/Slice';
 import Allproducts from "./Allproducts";
+import Categories from "./Categories";
 
 
 
-const Home = () => {
+const Home = ({ navigation }) => {
     //----------ejemplo dispatch-------------
     const dispatch = useDispatch();
     useEffect(() => {
@@ -16,7 +17,7 @@ const Home = () => {
 
     return (
         <View>
-            <Allproducts/>
+            <Categories {...navigation}/>
         </View>
     );
 };
