@@ -163,4 +163,20 @@ const getProductsByCategory = async (req, res, next) => {
     }
 };
 
-module.exports = { getAllProducts, createProduct, totalProducts, deleteProduct, buyProduct, getProductsByCategory };
+const getProductsByName = async (req, res, next) => {
+    try {
+        let name = req.params.name.toLowerCase()
+        let products = await Product.find({})
+        let productsIncludesName = products.filter(item => 
+            item.name.toLowerCase().includes(name) ||
+            item.category.toLowerCase().includes(name) ||
+            item.description.Brand.toLowerCase().includes(name)
+        )
+        if(productsIncludesName.length === 0) return res.json({ msg: 'We are sorry, we do not have that product, try something else'})
+        if(productsIncludesName.length !== 0) return res.json(productsIncludesName);    
+    } catch (error) {
+        return next(error);
+    }
+}
+
+module.exports = { getAllProducts, createProduct, totalProducts, deleteProduct, buyProduct, getProductsByCategory, getProductsByName };
