@@ -172,11 +172,24 @@ const getProductsByName = async (req, res, next) => {
             item.category.toLowerCase().includes(name) ||
             item.description.Brand.toLowerCase().includes(name)
         )
-        if(productsIncludesName.length === 0) return res.json({ msg: 'We are sorry, we do not have that product, try something else'})
+        if(productsIncludesName.length === 0) return res.json({ error:  'We are sorry, we do not have that product, try something else'})
         if(productsIncludesName.length !== 0) return res.json(productsIncludesName);    
     } catch (error) {
         return next(error);
     }
 }
+const getProductsById = async (req, res, next) => {
+    try {
+        let id = req.params.id
+        if(id){
+            let products = await Product.findById(id);
+            res.status(200).json(products) 
+        }else{
+            res.json({ error: 'please enter an id'})
+        }   
+    } catch (error) {
+        return next(error.detail);
+    }
+}
 
-module.exports = { getAllProducts, createProduct, totalProducts, deleteProduct, buyProduct, getProductsByCategory, getProductsByName };
+module.exports = { getAllProducts, createProduct, totalProducts, deleteProduct, buyProduct, getProductsByCategory, getProductsByName, getProductsById };
