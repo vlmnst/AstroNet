@@ -142,4 +142,25 @@ const buyProduct = async (req, res, next) => {
 
 };
 
-module.exports = { getAllProducts, createProduct, totalProducts, deleteProduct, buyProduct };
+const getProductsByCategory = async (req, res, next) => {
+    try{
+        let category = req.params.category
+        console.log(category)
+        if(category){
+            let productsFound = await Product.find({category: category})
+            if(productsFound.length === 0) {
+                 return res.json('We are sorry, There are no products with the category ' + category)
+            }
+            if(productsFound.length !== 0)
+                return res.json(productsFound);     
+        }
+        else{
+            return res.json('The category was not indicated')    
+        }
+    }
+    catch(error){
+        return next(error);
+    }
+};
+
+module.exports = { getAllProducts, createProduct, totalProducts, deleteProduct, buyProduct, getProductsByCategory };
