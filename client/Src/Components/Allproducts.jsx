@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { View, Text, FlatList, StyleSheet, useWindowDimensions } from "react-native";
-import { getByPrice, getProductsByCategory,clearCache } from '../../Redux/Slice';
+import { getByPrice, getProductsByCategory, clearCache } from '../../Redux/Slice';
 import ProductCard from './ProductCard.jsx';
+import { Picker } from '@react-native-picker/picker';
 
 const Allproducts = ({ route }) => {
     //----------dispatch-------------
     let item = route.params
     let Products = useSelector((state) => state.ALL_PRODUCTS.allProductsFiltered);
-    let categories = useSelector((state) => state.ALL_PRODUCTS.categories);
+    let [categories,setCategories] = useState(useSelector((state) => state.ALL_PRODUCTS.categories));
+    const pickerRef = useRef();
     const dispatch = useDispatch();
     const [state, setState] = useState({
         title: "AllProducts",
@@ -17,18 +19,22 @@ const Allproducts = ({ route }) => {
     useEffect(() => { return dispatch(clearCache()); }, [dispatch]);
     //----------actions-------------
     function handleCategory(e) {
-        e.preventDefault(e);
         setState({
             ...state,
-            title: e.target.value
+            title: e
         })
-
-        dispatch(getProductsByCategory(e.target.value));
+        dispatch(getProductsByCategory(e));
     };
     function handlePrice(e) {
-        e.preventDefault(e);
-        dispatch(getByPrice(e.target.value));
+        dispatch(getByPrice(e));
     };
+    function open() {
+        pickerRef.current.focus();
+    };
+    function close() {
+        pickerRef.current.blur();
+    };
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>{state.title}</Text>
@@ -36,39 +42,36 @@ const Allproducts = ({ route }) => {
                 <View style={styles.selects}>
                     {/* ------------Select category------------- */}
                     <Text >Filter by:  </Text>
-                    <select 
-                        onChange={(e) => handleCategory(e)}
-                        defaultValue={null}
-                        name="Category"
-                        id="Category"
-                    >
-                        <option defaultValue={null} ></option>
-                        {categories.length ? (
+                    <Picker
+                        defaultValue ={null} 
+                        ref={pickerRef}
+                        multiple={true}
+                        selectedValue={categories}
+                        onValueChange={(itemValue, itemIndex) =>
+                        handleCategory(itemValue)
+                        }>
+                            <Picker.Item label={null}  value={null} />
+                            {categories.length ? (
                             categories.map((c, index) => (
-                                <option value={c} key={index}>
-                                    {c}
-                                </option>
+                                <Picker.Item label={c} value={c} key={index}/>
                             )
                             )
                         ) : (null)}
-                    </select>
+                    </Picker>
                 </View>
                 <View style={styles.selects}>
                     {/* ------------order By Price------------- */}
                     <Text >Order by:  </Text>
-                    <select
-                        defaultValue={null}
-                        name="Category"
-                        id="Category"
-                        onChange={(e) => handlePrice(e)}>
-                        <option defaultValue={null} ></option>
-                        <option value="higher">
-                            higher price
-                        </option>
-                        <option value="lower">
-                            lower price
-                        </option>
-                    </select>
+                    <Picker
+                        defaultValue ={null} 
+                        ref={pickerRef}
+                        multiple={true}
+                        onValueChange={(itemValue, itemIndex) =>
+                            handlePrice(itemValue)
+                        }>  <Picker.Item label={null}  value={null} />
+                            <Picker.Item label="higher" value="higher" />
+                            <Picker.Item label="lower" value="lower" />
+                    </Picker>
                     {/* ------------Products List------------- */}
                 </View>
             </View>
