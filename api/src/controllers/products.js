@@ -179,4 +179,4 @@ const getProductsByName = async (req, res, next) => {
     }
 }
 
-module.exports = { getAllProducts, createProduct, totalProducts, deleteProduct, buyProduct, getProductsByCategory };
+module.exports = { getAllProducts, createProduct, totalProducts, deleteProduct, buyProduct, getProductsByCategory, getProductsByName };

@@ -1,6 +1,6 @@
 const productsRouter = require('express').Router();
 
-const { getAllProducts, createProduct, totalProducts, deleteProduct, buyProduct, getProductsByCategory } = require('../controllers/products');
+const { getAllProducts, createProduct, totalProducts, deleteProduct, buyProduct, getProductsByCategory, getProductsByName } = require('../controllers/products');
 // const { authOK } = require('../controllers/login');
 
 productsRouter.get('/getAll', getAllProducts);
