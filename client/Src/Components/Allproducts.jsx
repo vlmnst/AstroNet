@@ -1,22 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { View, Text, FlatList, StyleSheet, useWindowDimensions } from "react-native";
-import { getAllProducts, getByPrice,getProductsByCategory } from '../../Redux/Slice';
+import { getByPrice, getProductsByCategory,clearCache } from '../../Redux/Slice';
 import ProductCard from './ProductCard.jsx';
 
-
-const Allproducts = () => {
+const Allproducts = ({ route }) => {
     //----------dispatch-------------
-    const dispatch = useDispatch();
-    useEffect(() => { dispatch(getAllProducts()); }, [dispatch]);
+    let item = route.params
     let Products = useSelector((state) => state.ALL_PRODUCTS.allProductsFiltered);
     let categories = useSelector((state) => state.ALL_PRODUCTS.categories);
-    let Title = "AllProducts"
-
+    const dispatch = useDispatch();
+    const [state, setState] = useState({
+        title: "AllProducts",
+    });
+    useEffect(() => { dispatch(getProductsByCategory(item)); }, [dispatch]);
+    useEffect(() => { return dispatch(clearCache()); }, [dispatch]);
     //----------actions-------------
     function handleCategory(e) {
         e.preventDefault(e);
-        Title = e.target.value;
+        setState({
+            ...state,
+            title: e.target.value
+        })
+
         dispatch(getProductsByCategory(e.target.value));
     };
     function handlePrice(e) {
@@ -25,17 +31,18 @@ const Allproducts = () => {
     };
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>{Title}</Text>
+            <Text style={styles.title}>{state.title}</Text>
             <View style={styles.selects}>
                 <View style={styles.selects}>
                     {/* ------------Select category------------- */}
                     <Text >Filter by:  </Text>
-                    <select
+                    <select 
+                        onChange={(e) => handleCategory(e)}
                         defaultValue={null}
                         name="Category"
                         id="Category"
-                        onChange={(e) => handleCategory(e)}>
-                            <option defaultValue={null} ></option>
+                    >
+                        <option defaultValue={null} ></option>
                         {categories.length ? (
                             categories.map((c, index) => (
                                 <option value={c} key={index}>
@@ -81,10 +88,10 @@ const Allproducts = () => {
 };
 
 const styles = StyleSheet.create({
-    container:{flex:1},
+    container: { flex: 1 },
     selects: { flexDirection: "row", padding: 5, justifyContent: "space-evenly" },
     flatList: { marginTop: 10, padding: 5, width: useWindowDimensions, },
-    title: { fontSize: 20, padding: 5, marginLeft: 10 ,}
+    title: { fontSize: 20, padding: 5, marginLeft: 10, }
 })
 
 export default Allproducts;
