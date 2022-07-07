@@ -3,7 +3,7 @@ import { View, Text, Image, StyleSheet } from "react-native";
 const ProductCard = (props) => {
 
   let descriptionArray = Object.entries(props.description) //converte el objecto en array de arrays (con key y value)
-  console.log(descriptionArray)
+  
   return (
     <View style={styles.container}>
       <Image source={{ uri: props.img }}
@@ -15,11 +15,11 @@ const ProductCard = (props) => {
           {(props.offer > 0) ? (<Text style={styles.offer} >{props.offer}% off!</Text>) : null}
         </View>
         <Text style={styles.name}>{props.name}: </Text>
-        {descriptionArray.map((item, index) => {
+        {/* {descriptionArray.map((item, index) => {
           return (
             <Text style={styles.description} key={index} >{item[0]}: {item[1]}</Text>
           )
-        })}
+        })} */}
       </View>
     </View>
   );
@@ -28,14 +28,14 @@ const ProductCard = (props) => {
 const font = 11;
 const fontDescription = 10;
 const styles = StyleSheet.create({
-  container: { display: "flex", alignItems: 'center', margin:"2%", padding: 5, borderWidth: 2, width: "46%", borderColor: "#EAEAEA", backgroundColor:"white", borderRadius:15 },
+  container: { display: "flex", alignItems: 'center', margin:"2%", padding: 5, borderWidth: 2, width: 300, borderColor: "#EAEAEA", backgroundColor:"white", borderRadius:15 },
   priceOffer: {flexDirection:'row', justifyContent: "space-between", marginBottom: 5 },
-  image: { marginBottom: 2, height: 100,  width:"90%", borderRadius: 10 },
-  contInt: { marginTop: 5, width:"90%" },
+  image: { marginBottom: 2, height: 200,  width:250, borderRadius: 10 },
+  contInt: { marginTop: 5, width:300 },
   price: { fontSize: font },
   name: { fontSize: font },
   offer: { color: "red", fontSize: font },
-  description: { fontSize: fontDescription }
+  description: { fontSize: fontDescription,padding:5 }
 })
 
 export default ProductCard;
