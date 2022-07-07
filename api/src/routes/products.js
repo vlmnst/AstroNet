@@ -1,6 +1,6 @@
 const productsRouter = require('express').Router();
 
-const { getAllProducts, createProduct, totalProducts, deleteProduct, buyProduct, getProductsByCategory, getProductsByName } = require('../controllers/products');
+const { getAllProducts, createProduct, totalProducts, deleteProduct, buyProduct, getProductsByCategory, getProductsByName, getProductsById } = require('../controllers/products');
 // const { authOK } = require('../controllers/login');
 
 productsRouter.get('/getAll', getAllProducts);
@@ -10,5 +10,6 @@ productsRouter.get('/search/:name', getProductsByName);
 productsRouter.post('/create', createProduct);
 productsRouter.post('/buy', buyProduct);
 productsRouter.delete('/delete', deleteProduct);
+productsRouter.get('/product/:id', getProductsById);
 
 module.exports = productsRouter;
