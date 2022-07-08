@@ -28,7 +28,7 @@ const ProductCard = (props) => {
 const font = 11;
 const fontDescription = 10;
 const styles = StyleSheet.create({
-  container: { display: "flex", alignItems: 'center', margin:"2%", padding: 5, borderWidth: 2, width: 300, borderColor: "#EAEAEA", backgroundColor:"white", borderRadius:15 },
+  container: { display: "flex", alignItems: 'center', margin: 2, padding: 5, borderWidth: 2, width: 300, borderColor: "#EAEAEA", backgroundColor:"white", borderRadius:15 },
   priceOffer: {flexDirection:'row', justifyContent: "space-between", marginBottom: 5 },
   image: { marginBottom: 2, height: 200,  width:250, borderRadius: 10 },
   contInt: { marginTop: 5, width:300 },
