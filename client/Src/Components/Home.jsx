@@ -4,7 +4,7 @@ import { View,Text } from "react-native";
 import { getAllProducts} from '../../Redux/Slice';
 import Allproducts from "./Allproducts";
 import Categories from "./Categories";
-
+import Banner from "./Banner";
 
 
 const Home = ({ navigation }) => {
@@ -17,6 +17,7 @@ const Home = ({ navigation }) => {
 
     return (
         <View>
+            <Banner/>
             <Categories {...navigation}/>
         </View>
     );
