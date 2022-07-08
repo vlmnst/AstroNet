@@ -16,7 +16,7 @@ const Allproducts = ({ route }) => {
         title: "AllProducts",
     });
     useEffect(() => { dispatch(getProductsByCategory(item)); }, [dispatch]);
-    // useEffect(() => { return dispatch(clearCache()); }, [dispatch]);
+    useEffect(() => { return () => {dispatch(clearCache())} }, [dispatch]);
     //----------actions-------------
     // function handleCategory(e) {
     //     setState({
