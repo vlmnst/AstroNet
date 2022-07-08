@@ -29,7 +29,7 @@ const Categories = (navigation) => {
     )
 }
 const styles = StyleSheet.create({
-    container:{alignItems: 'center', margin:"2%", padding: 5, borderWidth: 2, heigth:100,width: 150, borderColor: "#EAEAEA", backgroundColor:"white", borderRadius:15 },
+    container:{alignItems: 'center', margin:2, padding: 5, borderWidth: 2, heigth:100,width: 150, borderColor: "#EAEAEA", backgroundColor:"white", borderRadius:15 },
 })
 
 export default Categories;

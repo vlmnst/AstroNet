@@ -16,24 +16,24 @@ const Allproducts = ({ route }) => {
         title: "AllProducts",
     });
     useEffect(() => { dispatch(getProductsByCategory(item)); }, [dispatch]);
-    useEffect(() => { return dispatch(clearCache()); }, [dispatch]);
+    // useEffect(() => { return dispatch(clearCache()); }, [dispatch]);
     //----------actions-------------
-    function handleCategory(e) {
-        setState({
-            ...state,
-            title: e
-        })
-        dispatch(getProductsByCategory(e));
-    };
-    function handlePrice(e) {
-        dispatch(getByPrice(e));
-    };
-    function open() {
-        pickerRef.current.focus();
-    };
-    function close() {
-        pickerRef.current.blur();
-    };
+    // function handleCategory(e) {
+    //     setState({
+    //         ...state,
+    //         title: e
+    //     })
+    //     dispatch(getProductsByCategory(e));
+    // };
+    // function handlePrice(e) {
+    //     dispatch(getByPrice(e));
+    // };
+    // function open() {
+    //     pickerRef.current.focus();
+    // };
+    // function close() {
+    //     pickerRef.current.blur();
+    // };
 
     return (
         <View style={styles.container}>
@@ -42,7 +42,7 @@ const Allproducts = ({ route }) => {
                 <View style={styles.selects}>
                     {/* ------------Select category------------- */}
                     <Text >Filter by:  </Text>
-                    <Picker
+                    {/* <Picker
                         defaultValue ={null} 
                         ref={pickerRef}
                         multiple={true}
@@ -57,12 +57,12 @@ const Allproducts = ({ route }) => {
                             )
                             )
                         ) : (null)}
-                    </Picker>
+                    </Picker> */}
                 </View>
                 <View style={styles.selects}>
                     {/* ------------order By Price------------- */}
                     <Text >Order by:  </Text>
-                    <Picker
+                    {/* <Picker
                         defaultValue ={null} 
                         ref={pickerRef}
                         multiple={true}
@@ -71,7 +71,7 @@ const Allproducts = ({ route }) => {
                         }>  <Picker.Item label={null}  value={null} />
                             <Picker.Item label="higher" value="higher" />
                             <Picker.Item label="lower" value="lower" />
-                    </Picker>
+                    </Picker> */}
                     {/* ------------Products List------------- */}
                 </View>
             </View>
@@ -93,7 +93,7 @@ const Allproducts = ({ route }) => {
 const styles = StyleSheet.create({
     container: { flex: 1 },
     selects: { flexDirection: "row", padding: 5, justifyContent: "space-evenly" },
-    flatList: { marginTop: 10, padding: 5, width: useWindowDimensions, },
+    flatList: { marginTop: 10, padding: 5 },
     title: { fontSize: 20, padding: 5, marginLeft: 10, }
 })
 
