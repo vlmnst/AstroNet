@@ -77,7 +77,7 @@ const Allproducts = ({ route }) => {
             <Text style={styles.title}>{valueitems}</Text>
 
             {/* ------------ FILTERS ------------ */}
-            <View style={styles.selects}>
+            <View style={styles.selectsContainer}>
 
                 {/* ------------Select category------------- */}
                 <View style={styles.selects}>
@@ -132,10 +132,30 @@ const Allproducts = ({ route }) => {
 };
 
 const styles = StyleSheet.create({
-    container: { flex: 1 },
-    selects: { flexDirection: "row", padding: 5, justifyContent: "space-evenly" },
-    flatList: { marginTop: 10, padding: 5 },
-    title: { fontSize: 20, padding: 5, marginLeft: 10, }
-});
+    container: {
+        width:'100%',
+        height:'100%',
+        alignItems:'center'
+    },
+    selectsContainer:{
+        flexDirection: 'row',
+        justifyContent: "space-around",
+    },
+    selects: {
+        flexDirection: "column",
+        margin:10,
+        width: '40%'
+    },
+    flatList: { 
+        marginTop: 0,
+        padding: 0,
+        width: '100%'
+    },
+    title: {
+        fontSize: 20,
+        padding: 5,
+        textAlign: 'center'
+    }
+})
 
 export default Allproducts;
