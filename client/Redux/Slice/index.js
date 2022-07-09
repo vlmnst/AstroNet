@@ -49,6 +49,9 @@ export const userSlice = createSlice({
         },
         clearCache(state){
             state.allProductsFiltered = []
+        },
+        getProductsByName(state,action){
+            state.allProductsFiltered = action.payload
         }
     }
 });
@@ -70,7 +73,16 @@ export const getProductsByCategory = (category)=> async(dispatch) => {
     } catch (e) {
         console.log(e)
     }
-}   
+}
+export const getProductsByName = (name)=> async(dispatch) => {
+    try {
+        var json = await axios.get(ROUTE +"/products/search/"+name)
+        dispatch(userSlice.actions.getProductsByName (json.data))
+
+    } catch (e) {
+        console.log(e)
+    }
+} 
 // export const getByPrice = (order)=> (dispatch) => {
 //         dispatch(userSlice.actions.getByPrice(order))
 // }
