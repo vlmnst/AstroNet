@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { View,Text } from "react-native";
-import { getAllProducts} from '../../Redux/Slice';
+import { getAllProducts,} from '../../Redux/Slice';
 import Allproducts from "./Allproducts";
+import ProductCreate from "./ProductCreate";
 
 
 
@@ -16,7 +17,7 @@ const Home = () => {
 
     return (
         <View>
-            <Allproducts/>
+            <Allproducts/>    
         </View>
     );
 };

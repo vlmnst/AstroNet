@@ -46,10 +46,13 @@ export const userSlice = createSlice({
                 state.allProductsFiltered = neworder
             }
             
-        }
-        
-    }
-});
+        },
+// //-----------------revisar---------------------        
+//         createProduct(state,action){
+//             Product = action.payload
+//         },    
+     }
+ });
 
 export const getAllProducts = ()=> async(dispatch) => {
     try {
@@ -73,5 +76,15 @@ export const getByPrice = (order)=> (dispatch) => {
         dispatch(userSlice.actions.getByPrice(order))
 }
 
+// //-----------------revisar---------------------
+// export const createProduct = (Product)=> async(dispatch) => {
+//     try {
+//         var json = await axios.post(ROUTE +"/products/create", Product)
+//         dispatch(userSlice.actions.createProduct(json.data))
+
+//     } catch (e) {
+//         console.log(e)
+//     }
+// }   
 
 export default userSlice.reducer
