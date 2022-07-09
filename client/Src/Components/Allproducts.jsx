@@ -5,46 +5,82 @@ import { getByPrice, getProductsByCategory, clearCache } from '../../Redux/Slice
 import ProductCard from './ProductCard.jsx';
 import DropDownPicker from 'react-native-dropdown-picker';
 
+import Paginate from "./Paginate";
+
 
 const Allproducts = ({ route }) => {
-    //----------dispatch-------------
-    let item = route.params
-    let Products = useSelector((state) => state.ALL_PRODUCTS.allProductsFiltered);
-    let [categories, setCategories] = useState(useSelector((state) => state.ALL_PRODUCTS.categories));
+
+    // ---------- dispatch ----------
+    let category = route.params;
     const dispatch = useDispatch();
-    const [state, setState] = useState({
-        title: "AllProducts",
-    });
-    useEffect(() => { dispatch(getProductsByCategory(item)); }, [dispatch]);
-    useEffect(() => { return () => { dispatch(clearCache()) } }, [dispatch]);
-    //----------picker utils-------------
+
+    // ---------- global states ----------
+    let products = useSelector((state) => state.ALL_PRODUCTS.allProductsFiltered);
+    let [categories, /*setCategories*/] = useState(useSelector((state) => state.ALL_PRODUCTS.categories));
+
+    // ---------- pickerUtils ----------
     const [openitems, setOpenitems] = useState(false);
+    const [valueitems, setValueitems] = useState(category);
+
     const [openprice, setOpenprice] = useState(false);
-    const [valueitems, setValueitems] = useState(null);
     const [valueprice, setValueprice] = useState(null);
+    
     let pickerSort= [{label: "higher", value: "higher"},{label: "lower", value:"lower"}]
     let pickerItems = [];
     categories.length ? (
         categories.map((c, index) => (
             pickerItems.push({ label: c, value: c })
         ))) : null
-    //----------actions-------------
+
+    // mount
+    useEffect(() => { 
+        dispatch(getProductsByCategory(category));
+        setPage(1);
+    }, [dispatch]);
+
+    // unmount
+    useEffect(() => { 
+        return () => dispatch(clearCache());
+    }, [dispatch]);
+
+
+    // ---------- paginate ----------
+    const [currentPage, setCurrentPage] = useState(1);
+    const productsPerPage = 6;
+
+    const indexOfLast = currentPage * productsPerPage;
+    const indexOfFirst = indexOfLast - productsPerPage;
+    
+    let paginateProducts;
+    if (products.length > 0) {
+        paginateProducts = products.slice(indexOfFirst, indexOfLast);
+    };
+
+    // ---------- handlers ----------
+    function setPage(number) {
+        setCurrentPage(number);
+    };
+
     function handleCategory(e) {
-        setState({
-            ...state,
-            title: e.value
-        })
         dispatch(getProductsByCategory(e.value));
     };
+
     function handlePrice(e) {
         dispatch(getByPrice(e.value));
     };
+
+
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>{state.title}</Text>
+
+            {/* ------------ TITLE ------------ */}
+            <Text style={styles.title}>{valueitems}</Text>
+
+            {/* ------------ FILTERS ------------ */}
             <View style={styles.selects}>
+
+                {/* ------------Select category------------- */}
                 <View style={styles.selects}>
-                    {/* ------------Select category------------- */}
                     <View><Text >Filter by:  </Text></View>
                     <DropDownPicker
                         open={openitems}
@@ -55,8 +91,9 @@ const Allproducts = ({ route }) => {
                         onSelectItem={(value) => handleCategory(value)}
                     />
                 </View>
+
+                {/* ------------order By Price------------- */}
                 <View style={styles.selects}>
-                    {/* ------------order By Price------------- */}
                     <View><Text >Order by:  </Text></View>
                     <DropDownPicker
                         open={openprice}
@@ -66,20 +103,30 @@ const Allproducts = ({ route }) => {
                         setValue={setValueprice}
                         onSelectItem={(value) => handlePrice(value)}
                     />
-                    {/* ------------Products List------------- */}
-                </View>
+                </View>  
             </View>
+
+            {/* ------------ PAGINATE ------------ */}
+            <Paginate
+                    products={products.length}
+                    currentPage={currentPage}
+                    setPage={setPage}
+                    productsPerPage={productsPerPage}
+            />
+
+            {/* ------------ PRODUCTS CARDS ------------ */}
             <FlatList
                 columnWrapperStyle={{ justifyContent: 'space-evenly' }}
                 style={styles.flatList}
                 numColumns={2}
-                data={Products}
+                data={paginateProducts}
                 renderItem={({ item }) => (
                     <View>
                         <ProductCard  {...item} />
                     </View>
                 )}
             />
+
         </View>
     );
 };
@@ -89,6 +136,6 @@ const styles = StyleSheet.create({
     selects: { flexDirection: "row", padding: 5, justifyContent: "space-evenly" },
     flatList: { marginTop: 10, padding: 5 },
     title: { fontSize: 20, padding: 5, marginLeft: 10, }
-})
+});
 
 export default Allproducts;

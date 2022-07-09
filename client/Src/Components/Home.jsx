@@ -8,12 +8,11 @@ import Banner from "./Banner";
 
 
 const Home = ({ navigation }) => {
-    //----------ejemplo dispatch-------------
+
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getAllProducts());
     }, [dispatch]);
-    let Products = useSelector((state) => state.ALL_PRODUCTS.allProductsFiltered);
 
     return (
         <View>

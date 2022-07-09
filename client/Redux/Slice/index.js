@@ -14,7 +14,6 @@ export const userSlice = createSlice({
     reducers:{
         getAllProducts(state,action){
             state.allProducts = action.payload
-            state.allProductsFiltered = action.payload
             state.allProducts.map((p)=> (state.categories.includes(p.category))? null :
                 state.categories.push(p.category))
         },
