@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   container: {
     display: "flex",
     alignItems: "center",
-    margin: 5,
+    // margin: 5,
     padding: 0,
     borderWidth: 2,
     width: "100%",

@@ -33,7 +33,8 @@ const Banner = ({navigation}) => {
             {...parallaxProps}
           />
 
-          <Text>{item.offer}</Text>
+          <Text style={styles.name}>{item.name.toUpperCase().charAt(0).concat(item.name.slice(1,26))}...</Text>
+          <Text style={styles.offer}>{item.offer}% Off!</Text>
       </TouchableOpacity>
     );
   };
@@ -41,14 +42,14 @@ const Banner = ({navigation}) => {
   return (
     <View>
       <Carousel
-        sliderWidth={screenWidth-40}
-        sliderHeight={screenWidth- 60}
-        itemWidth={screenWidth - 60}
+        sliderWidth={screenWidth}
+        sliderHeight={screenWidth}
+        itemWidth={screenWidth}
         data={products}
         renderItem={renderItem}
         hasParallaxImages={true}
-        // loop={true}
-        // enableSnap={true}
+        loop={true}
+        enableSnap={true}
       />
     </View>
   );
@@ -59,7 +60,7 @@ export default Banner;
 const styles = StyleSheet.create({
   item: {
     width: '100%',
-    height: 89,
+    height: 200,
     backgroundColor: 'black',
   },
   imageContainer: {
@@ -71,4 +72,24 @@ const styles = StyleSheet.create({
   image: {
     resizeMode : 'contain'
   },
+  offer: {
+    position: 'absolute',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    marginTop: 10,
+    marginLeft: 5,
+    backgroundColor: 'green',
+    borderRadius: 10,
+    color: 'white',
+    fontSize: 25,
+  },
+  name: {
+    color: 'white',
+    marginLeft: 5,
+    marginBottom: 10,
+    fontFamily: 'monospace',
+    fontWeight: 'bold',
+    fontSize: 20,
+    textAlignVertical: 'center'
+  }
 });

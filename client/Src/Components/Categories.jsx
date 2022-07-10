@@ -65,10 +65,10 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     alignItems: "center",
-    margin: 2,
-    padding: 5,
-    heigth: 200,
-    width: '45%',
+    paddingHorizontal: 5,
+    paddingVertical: 5,
+    heigth: '100%',
+    width: '50%',
     borderRadius: 15,
   },
   img: {

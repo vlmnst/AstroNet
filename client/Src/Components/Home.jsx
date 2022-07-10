@@ -15,7 +15,7 @@ const Home = ({ navigation, route }) => {
   }, [dispatch]);
 
   return (
-    <View>
+    <View style={styles.container}>
       <SafeAreaView style={styles.AndroidSafeArea} >
         <NavBar navigation={navigation} route={route} />
         <Banner navigation={navigation} />
@@ -28,6 +28,9 @@ const Home = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   AndroidSafeArea: {
     paddingTop: StatusBar.currentHeight + 10,
+  },
+  container: {
+    justifyContent: 'center',
   },
 });
 
