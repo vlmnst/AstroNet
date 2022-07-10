@@ -13,19 +13,19 @@ const Main = () => {
         <NavigationContainer  >
             <Stack.Navigator
                 screenOptions={{
-                    //headerShown: false
+                    headerShown: false
                 }}>
                 <Stack.Screen
-                name = 'Home'
-                component= { Home }
+                    name='Home'
+                    component={Home}
                 />
                 <Stack.Screen
-                name = 'Categories'
-                component= { Categories }
+                    name='Categories'
+                    component={Categories}
                 />
                 <Stack.Screen
-                name = 'Allproducts'
-                component= { Allproducts }
+                    name='Allproducts'
+                    component={Allproducts}
                 />
                 <Stack.Screen
                 name = 'Details'

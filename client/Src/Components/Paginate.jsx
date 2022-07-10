@@ -1,7 +1,8 @@
-import React from "react";
-import { Button, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Button, View, StyleSheet } from "react-native";
 
 const Paginate = (props) => {
+
     const pageNumbers = [];
 
     for (let i = 1; i <= Math.ceil(props.products / props.productsPerPage); i++) {
@@ -9,7 +10,7 @@ const Paginate = (props) => {
     };
 
     return (
-        <View>
+        <View style={styles.container}>
             {/* BOTON PREVIUS */}
             {props.currentPage === pageNumbers[1]
                 ? <Button title='prev' disabled={false} onPress={() => props.setPage(props.currentPage - 1)} />
@@ -29,5 +30,12 @@ const Paginate = (props) => {
         </View>
     );
 };
+
+const styles = StyleSheet.create({
+    container:{
+        flexDirection: 'row',
+        justifyContent: "space-around",
+    },
+});
 
 export default Paginate;

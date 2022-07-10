@@ -1,35 +1,90 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { View, Text, FlatList, StyleSheet, useWindowDimensions,Button} from "react-native";
+import { useFonts, Inter_900Black } from '@expo-google-fonts/inter';
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  useWindowDimensions,
+  Button,
+  Image,
+  TouchableOpacity
+} from "react-native";
 
 const Categories = (navigation) => {
-    let categories = useSelector((state) => state.ALL_PRODUCTS.categories);
-    const keyExtractor = useCallback((item)=>{
-        return item;
-    },[]);
+  let categories = useSelector((state) => state.ALL_PRODUCTS.categories);
+//   const keyExtractor = useCallback((item) => {
+//     return item;
+//   }, []);
 
-    return(
-        <View>
-            <FlatList
-            horizontal= {true}
-            numColumns={1}
-            data={categories}
-            keyExtractor={keyExtractor}
-            renderItem={({ item }) => (
-                <View style={styles.container}>
-                <Button
-                    title={item}
-                    onPress = { ()=>{navigation.navigate('Allproducts',item)}}>
-                </Button>
-                    {/* <Text>{item}</Text> */}
-                </View>
-            )}
-            />
-        </View>
-    )
-}
+  let images = [
+    "https://w.wallhaven.cc/full/e7/wallhaven-e7q8r8.png", //teclado
+    "https://static.lenovo.com/ww/campaigns/2022/legion-brand/lenovo-campaign-legion-brand-agnostic-feature-2-7-series-mobile.jpg", //notebook
+    "https://w.wallhaven.cc/full/qd/wallhaven-qdvjjd.jpg", //KIT PC
+    "https://w.wallhaven.cc/full/ym/wallhaven-ymp3mx.jpg", //headphone
+    "https://w.wallhaven.cc/full/13/wallhaven-139plv.jpg", //mouse
+  ];
+  let data = [];
+  categories?.map((name, index) => {
+    data.push({ name: name, img: images[index], id: index });
+  });
+  console.log(data);
+
+  let [fontsLoaded] = useFonts({
+    Inter_900Black,
+  });
+
+  return (
+    <View>
+      <FlatList
+        horizontal={false}
+        numColumns={2}
+        data={data}
+        renderItem={({ item }) => (
+         
+            <TouchableOpacity 
+            style={styles.container}
+            onPress={()=>navigation.navigate("Allproducts", item.name)}>
+              <Image 
+              source={{ uri: item.img }} 
+              style={styles.img} 
+              keyExtractor={(item) => item.id} // rompe el componente, ahora tira un warnin
+              />  
+              <Text style={styles.text}>{item.name}</Text>
+            </TouchableOpacity>
+    
+        )}
+      />
+    </View>
+  );
+};
+
+
 const styles = StyleSheet.create({
-    container:{alignItems: 'center', margin:2, padding: 5, borderWidth: 2, heigth:100,width: 150, borderColor: "#EAEAEA", backgroundColor:"white", borderRadius:15 },
-})
+  container: {
+    flexDirection: 'column',
+    alignItems: "center",
+    margin: 2,
+    padding: 5,
+    heigth: 200,
+    width: '45%',
+    borderRadius: 15,
+  },
+  img: {
+    width: '100%',
+    height: 150,
+    borderRadius: 10
+  },
+  text: {
+    position: 'absolute',
+    paddingTop: 100,
+    color: 'white',
+    fontFamily: 'Inter_900Black',
+    fontWeight: 'bold',
+    fontSize: 25,
+    textAlignVertical: 'center'
+  }
+});
 
 export default Categories;
