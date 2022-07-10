@@ -76,7 +76,7 @@ export const getProductsByCategory = (category)=> async(dispatch) => {
 }
 export const getProductsByName = (name)=> async(dispatch) => {
     try {
-        var json = await axios.get(ROUTE +"/products/search/"+name)
+        var json = await axios.get(ROUTE+"/products/search/"+name)
         dispatch(userSlice.actions.getProductsByName (json.data))
 
     } catch (e) {
