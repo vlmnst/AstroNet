@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { View, Text, FlatList, StyleSheet } from "react-native";
-import { getByPrice, getProductsByCategory, clearCache } from '../../Redux/Slice';
+import { getByPrice, getProductsByCategory, clearCache, getProductsByName } from '../../Redux/Slice';
 import ProductCard from './ProductCard.jsx';
 import DropDownPicker from 'react-native-dropdown-picker';
 
 import Paginate from "./Paginate";
+import NavBar from "./NavBar";
 
 
 const Allproducts = ({ route }) => {
-
     // ---------- dispatch ----------
+    // si route.params existe en categories, busco por categoria
+
     let category = route.params;
     const dispatch = useDispatch();
 
@@ -24,8 +26,8 @@ const Allproducts = ({ route }) => {
 
     const [openprice, setOpenprice] = useState(false);
     const [valueprice, setValueprice] = useState(null);
-    
-    let pickerSort= [{label: "higher", value: "higher"},{label: "lower", value:"lower"}]
+
+    let pickerSort = [{ label: "higher", value: "higher" }, { label: "lower", value: "lower" }]
     let pickerItems = [];
     categories.length ? (
         categories.map((c, index) => (
@@ -33,13 +35,13 @@ const Allproducts = ({ route }) => {
         ))) : null
 
     // mount
-    useEffect(() => { 
-        dispatch(getProductsByCategory(category));
+    useEffect(() => {
+        categories.includes(category) ? dispatch(getProductsByCategory(category)) : dispatch(getProductsByName(category));
         setPage(1);
     }, [dispatch]);
 
     // unmount
-    useEffect(() => { 
+    useEffect(() => {
         return () => dispatch(clearCache());
     }, [dispatch]);
 
@@ -50,7 +52,7 @@ const Allproducts = ({ route }) => {
 
     const indexOfLast = currentPage * productsPerPage;
     const indexOfFirst = indexOfLast - productsPerPage;
-    
+
     let paginateProducts;
     if (products.length > 0) {
         paginateProducts = products.slice(indexOfFirst, indexOfLast);
@@ -75,6 +77,8 @@ const Allproducts = ({ route }) => {
 
             {/* ------------ TITLE ------------ */}
             <Text style={styles.title}>{valueitems}</Text>
+
+            <NavBar />
 
             {/* ------------ FILTERS ------------ */}
             <View style={styles.selectsContainer}>
@@ -103,15 +107,15 @@ const Allproducts = ({ route }) => {
                         setValue={setValueprice}
                         onSelectItem={(value) => handlePrice(value)}
                     />
-                </View>  
+                </View>
             </View>
 
             {/* ------------ PAGINATE ------------ */}
             <Paginate
-                    products={products.length}
-                    currentPage={currentPage}
-                    setPage={setPage}
-                    productsPerPage={productsPerPage}
+                products={products.length}
+                currentPage={currentPage}
+                setPage={setPage}
+                productsPerPage={productsPerPage}
             />
 
             {/* ------------ PRODUCTS CARDS ------------ */}
@@ -133,20 +137,20 @@ const Allproducts = ({ route }) => {
 
 const styles = StyleSheet.create({
     container: {
-        width:'100%',
-        height:'100%',
-        alignItems:'center'
+        width: '100%',
+        height: '100%',
+        alignItems: 'center'
     },
-    selectsContainer:{
+    selectsContainer: {
         flexDirection: 'row',
         justifyContent: "space-around",
     },
     selects: {
         flexDirection: "column",
-        margin:10,
+        margin: 10,
         width: '40%'
     },
-    flatList: { 
+    flatList: {
         marginTop: 0,
         padding: 0,
         width: '100%'
