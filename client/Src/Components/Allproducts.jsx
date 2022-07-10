@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { View, Text, FlatList, StyleSheet } from "react-native";
+import { View, Text, FlatList, StyleSheet, SafeAreaView, StatusBar } from "react-native";
 import { getByPrice, getProductsByCategory, clearCache, getProductsByName } from '../../Redux/Slice';
 import ProductCard from './ProductCard.jsx';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -9,7 +9,7 @@ import Paginate from "./Paginate";
 import NavBar from "./NavBar";
 
 
-const Allproducts = ({ route }) => {
+const Allproducts = ({ route, navigation }) => {
     // ---------- dispatch ----------
     // si route.params existe en categories, busco por categoria
 
@@ -76,11 +76,12 @@ const Allproducts = ({ route }) => {
 
     return (
         <View style={styles.container}>
+            <SafeAreaView style={styles.AndroidSafeArea} >
 
             {/* ------------ TITLE ------------ */}
             <Text style={styles.title}>{valueitems}</Text>
 
-            <NavBar />
+            <NavBar navigation={navigation} route={route}/>
 
             {/* ------------ FILTERS ------------ */}
             <View style={styles.selectsContainer}>
@@ -120,7 +121,7 @@ const Allproducts = ({ route }) => {
                 data={paginateProducts}
                 renderItem={({ item }) => (
                     <View>
-                        <ProductCard  {...item} />
+                        <ProductCard  navigation={navigation} item={item} />
                     </View>
                 )}
             />
@@ -133,11 +134,15 @@ const Allproducts = ({ route }) => {
                 productsPerPage={productsPerPage}
             />
 
+            </SafeAreaView>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
+    AndroidSafeArea: {
+        paddingTop: StatusBar.currentHeight + 10,
+    },
     container: {
         width: '100%',
         height: '100%',

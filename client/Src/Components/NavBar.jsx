@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import SearchBar from './SearchBar';
 
 const NavBar = ({ navigation, route }) => {
+
     return (
         <View style={styles.container}>
             <Icon name="menu-outline" size={40} color="grey" style={styles.icon} />
@@ -11,7 +12,7 @@ const NavBar = ({ navigation, route }) => {
             <SearchBar navigation={navigation} route={route} />
         </View>
     )
-}
+};
 
 const styles = StyleSheet.create({
     container: {
