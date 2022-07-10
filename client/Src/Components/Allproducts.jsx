@@ -65,10 +65,12 @@ const Allproducts = ({ route }) => {
 
     function handleCategory(e) {
         dispatch(getProductsByCategory(e.value));
+        setPage(1);
     };
 
     function handlePrice(e) {
         dispatch(getByPrice(e.value));
+        setPage(1);
     };
 
 
@@ -110,14 +112,6 @@ const Allproducts = ({ route }) => {
                 </View>
             </View>
 
-            {/* ------------ PAGINATE ------------ */}
-            <Paginate
-                products={products.length}
-                currentPage={currentPage}
-                setPage={setPage}
-                productsPerPage={productsPerPage}
-            />
-
             {/* ------------ PRODUCTS CARDS ------------ */}
             <FlatList
                 columnWrapperStyle={{ justifyContent: 'space-evenly' }}
@@ -129,6 +123,14 @@ const Allproducts = ({ route }) => {
                         <ProductCard  {...item} />
                     </View>
                 )}
+            />
+
+            {/* ------------ PAGINATE ------------ */}
+            <Paginate
+                products={products.length}
+                currentPage={currentPage}
+                setPage={setPage}
+                productsPerPage={productsPerPage}
             />
 
         </View>

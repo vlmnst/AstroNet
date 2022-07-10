@@ -14,7 +14,7 @@ const ProductCard = (props) => {
           <Text style={styles.price}>$ {props.price}</Text>
           {(props.offer > 0) ? (<Text style={styles.offer} >{props.offer}% off!</Text>) : null}
         </View>
-        <Text style={styles.name}>{props.name}: </Text>
+        <Text style={styles.name}>{props.name} </Text>
         {/* {descriptionArray.map((item, index) => {
           return (
             <Text style={styles.description} key={index} >{item[0]}: {item[1]}</Text>
