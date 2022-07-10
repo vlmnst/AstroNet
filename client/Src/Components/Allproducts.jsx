@@ -8,7 +8,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import Paginate from "./Paginate";
 
 
-const Allproducts = ({ route }) => {
+const Allproducts = ({ route, navigation }) => {
 
     // ---------- dispatch ----------
     let category = route.params;
@@ -122,7 +122,7 @@ const Allproducts = ({ route }) => {
                 data={paginateProducts}
                 renderItem={({ item }) => (
                     <View>
-                        <ProductCard  {...item} />
+                        <ProductCard navigation={navigation} {...item} />
                     </View>
                 )}
             />
