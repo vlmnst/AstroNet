@@ -22,7 +22,17 @@ const ProductCreate = () => {
     });
 
     const onSubmit = data => {
-        dispatch(createProduct(data));
+        console.log(data);
+        const product = {
+          name: data.name,
+          category: data.category,
+          img: data.img,
+          price: data.price,
+          offer: data.offer,
+          stock: data.stock,
+          description: {Description: data.description}
+        }
+        dispatch(createProduct(product));
     };
       
     const Separator = () => (

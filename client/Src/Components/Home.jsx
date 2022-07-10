@@ -30,7 +30,9 @@ const styles = StyleSheet.create({
     paddingTop: StatusBar.currentHeight + 10,
   },
   container: {
+    position: 'absolute',
     justifyContent: 'center',
+    // width: '100%'
   },
 });
 

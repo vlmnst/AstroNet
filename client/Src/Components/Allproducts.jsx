@@ -75,16 +75,17 @@ const Allproducts = ({ route, navigation }) => {
 
 
     return (
-        <View style={styles.container}>
+        <View>
             <SafeAreaView style={styles.AndroidSafeArea} >
-
+            <NavBar navigation={navigation} route={route}/>
+        <View style={styles.container}>
+            
             {/* ------------ TITLE ------------ */}
             <Text style={styles.title}>{valueitems}</Text>
 
-            <NavBar navigation={navigation} route={route}/>
-
             {/* ------------ FILTERS ------------ */}
             <View style={styles.selectsContainer}>
+            
 
                 {/* ------------Select category------------- */}
                 <View style={styles.selects}>
@@ -134,6 +135,7 @@ const Allproducts = ({ route, navigation }) => {
                 productsPerPage={productsPerPage}
             />
 
+            </View>
             </SafeAreaView>
         </View>
     );
@@ -154,13 +156,14 @@ const styles = StyleSheet.create({
     },
     selects: {
         flexDirection: "column",
-        margin: 10,
+        marginBottom: 10,
         width: '40%'
     },
     flatList: {
         marginTop: 0,
         padding: 0,
-        width: '100%'
+        width: '100%',
+        // height: '100%'
     },
     title: {
         fontSize: 20,

@@ -7,8 +7,8 @@ const NavBar = ({ navigation, route }) => {
 
     return (
         <View style={styles.container}>
-            <Icon name="menu-outline" size={40} color="grey" style={styles.icon} />
-            <Button title='Create Product' onPress={() => navigation.navigate("ProductCreate")} />
+            {/* <Icon name="menu-outline" size={40} color="grey" style={styles.icon} /> */}
+            <Button style={styles.btn} title='Create Product' onPress={() => navigation.navigate("ProductCreate")} />
             <SearchBar navigation={navigation} route={route} />
         </View>
     )
@@ -18,19 +18,23 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         backgroundColor: '#3E3E3E',
+        // backgroundColor: 'black',
+        justifyContent: 'space-between',
         width: '100%',
         height: 60,
         alignItems: 'center'
     },
-    icon: {
-        flexDirection: 'row',
-        flex: 1,
-        marginLeft: 20,
-    },
-    iconsearch: {
-        alignItems: 'flex-end',
-        marginRight: 25
-    },
+    btn : {
+        backgroundColor: 'black',
+    }
+    // icon: {
+    //     flexDirection: 'row',
+    //     flex: 1,
+    //     // width: '27%',
+    //     marginLeft: 20,
+        
+    //     // color: '#3E3E3E'
+    // },
 });
 
 export default NavBar;
