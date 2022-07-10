@@ -89,13 +89,12 @@ export const getProductsByName = (name)=> async(dispatch) => {
 export const createProduct = (product)=> async(dispatch) => {
     try {
         await axios.post(ROUTE +"/products/create", product);
-        // dispatch(userSlice.actions.createProduct(json.data))
 
     } catch (e) {
         console.log(e)
     };
 };
 
-export const {getByPrice, clearCache} =userSlice.actions
+export const {getByPrice, clearCache} =userSlice.actions;
 
-export default userSlice.reducer
+export default userSlice.reducer;

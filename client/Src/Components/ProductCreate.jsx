@@ -22,7 +22,6 @@ const ProductCreate = () => {
     });
 
     const onSubmit = data => {
-        console.log(data);
         dispatch(createProduct(data));
     };
       

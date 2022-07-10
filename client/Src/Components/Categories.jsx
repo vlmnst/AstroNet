@@ -80,7 +80,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     paddingTop: 100,
     color: 'white',
-    fontFamily: 'Inter_900Black',
+    // fontFamily: 'Inter_900Black',
+    fontFamily: 'serif',
     fontWeight: 'bold',
     fontSize: 25,
     textAlignVertical: 'center'
