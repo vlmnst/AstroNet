@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { View, Text, SafeAreaView, StyleSheet, StatusBar } from "react-native";
+import { useDispatch } from "react-redux";
+import { View, SafeAreaView, StyleSheet, StatusBar } from "react-native";
 import { getAllProducts } from '../../Redux/Slice';
-import Allproducts from "./Allproducts";
+// import Allproducts from "./Allproducts";
 import Categories from "./Categories";
 import Banner from "./Banner";
 import NavBar from "./NavBar";
@@ -18,7 +18,7 @@ const Home = ({ navigation, route }) => {
     <View>
       <SafeAreaView style={styles.AndroidSafeArea} >
         <NavBar navigation={navigation} route={route} />
-        <Banner />
+        <Banner navigation={navigation} />
         <Categories {...navigation} />
       </SafeAreaView>
     </View>
