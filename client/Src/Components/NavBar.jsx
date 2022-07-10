@@ -1,20 +1,18 @@
-import React, { useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React from 'react';
+import { View, StyleSheet, Button } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import SearchBar from './SearchBar';
 
 const NavBar = ({ navigation, route }) => {
+
     return (
         <View style={styles.container}>
             <Icon name="menu-outline" size={40} color="grey" style={styles.icon} />
+            <Button title='Create Product' onPress={() => navigation.navigate("ProductCreate")} />
             <SearchBar navigation={navigation} route={route} />
-
-            {/* <Icon name="heart-outline" size={25} color="grey" style={styles.icon} />
-            <Icon name="cart-outline" size={25} color="grey"  style={styles.icon} /> 
-             */}
         </View>
     )
-}
+};
 
 const styles = StyleSheet.create({
     container: {
@@ -33,5 +31,6 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end',
         marginRight: 25
     },
-})
-export default NavBar
+});
+
+export default NavBar;

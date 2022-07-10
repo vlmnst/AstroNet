@@ -52,7 +52,7 @@ export const userSlice = createSlice({
         },
         getProductsByName(state,action){
             state.allProductsFiltered = action.payload
-        }
+        },
     }
 });
 
@@ -64,7 +64,8 @@ export const getAllProducts = ()=> async(dispatch) => {
     } catch (e) {
         console.log(e)
     }
-}   
+};
+
 export const getProductsByCategory = (category)=> async(dispatch) => {
     try {
         var json = await axios.get(ROUTE +"/products/category/"+category)
@@ -73,7 +74,8 @@ export const getProductsByCategory = (category)=> async(dispatch) => {
     } catch (e) {
         console.log(e)
     }
-}
+};
+
 export const getProductsByName = (name)=> async(dispatch) => {
     try {
         var json = await axios.get(ROUTE+"/products/search/"+name)
@@ -82,10 +84,18 @@ export const getProductsByName = (name)=> async(dispatch) => {
     } catch (e) {
         console.log(e)
     }
-} 
-// export const getByPrice = (order)=> (dispatch) => {
-//         dispatch(userSlice.actions.getByPrice(order))
-// }
-export const {getByPrice, clearCache}=userSlice.actions
+};
+
+export const createProduct = (product)=> async(dispatch) => {
+    try {
+        await axios.post(ROUTE +"/products/create", product);
+        // dispatch(userSlice.actions.createProduct(json.data))
+
+    } catch (e) {
+        console.log(e)
+    };
+};
+
+export const {getByPrice, clearCache} =userSlice.actions
 
 export default userSlice.reducer

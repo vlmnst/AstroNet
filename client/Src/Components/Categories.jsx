@@ -29,7 +29,7 @@ const Categories = (navigation) => {
   categories?.map((name, index) => {
     data.push({ name: name, img: images[index], id: index });
   });
-  console.log(data);
+  // console.log(data);
 
   let [fontsLoaded] = useFonts({
     Inter_900Black,
