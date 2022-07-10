@@ -30,6 +30,11 @@ const Categories = (navigation) => {
     data.push({ name: name, img: images[index], id: index });
   });
   console.log(data);
+
+  let [fontsLoaded] = useFonts({
+    Inter_900Black,
+  });
+
   return (
     <View>
       <FlatList
@@ -54,12 +59,14 @@ const Categories = (navigation) => {
     </View>
   );
 };
+
+
 const styles = StyleSheet.create({
   container: {
+    flexDirection: 'column',
     alignItems: "center",
     margin: 2,
     padding: 5,
-   
     heigth: 200,
     width: '45%',
     borderRadius: 15,
@@ -71,11 +78,12 @@ const styles = StyleSheet.create({
   },
   text: {
     position: 'absolute',
-    paddingTop: 50,
+    paddingTop: 100,
     color: 'white',
-    fontFamily: 'monospace',
+    fontFamily: 'Inter_900Black',
     fontWeight: 'bold',
-    fontSize: 20
+    fontSize: 25,
+    textAlignVertical: 'center'
   }
 });
 
