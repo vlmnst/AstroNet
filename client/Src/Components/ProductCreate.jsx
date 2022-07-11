@@ -1,7 +1,8 @@
-import React from "react";
-import { useDispatch } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Text, View, TextInput, Button, StyleSheet, SafeAreaView, StatusBar } from "react-native";
 import { useForm, Controller } from "react-hook-form";
+import DropDownPicker from "react-native-dropdown-picker";
 
 import { createProduct } from "../../Redux/Slice";
 
@@ -9,30 +10,63 @@ const ProductCreate = () => {
 
   const dispatch = useDispatch();
 
-    const { control, handleSubmit, formState: { errors } } = useForm({
-        defaultValues: {
-          name: '',
-          price: '',
-          category: '',
-          img: '',
-          stock: '',
-          offer: '',
-          description: '',
-        }
-    });
+// PROBANDO CATEGORIES EN ARRAY
+  let categories = useSelector((state) => state.ALL_PRODUCTS.categories); // categories === ['', '', '']
+
+  const [openitems, setOpenitems] = useState(false);
+  const [valueitems, setValueitems] = useState(null);
+  let pickerItems = [];
+  categories.length
+    ? categories.map((c, index) => pickerItems.push({ label: c, value: c }))
+    : null;
+
+  const [state, setState] = useState({
+    category: [],
+  });
+
+  function handleCategory(e) {
+    if (!state.category.includes(e.value)) {
+      setState({
+        ...state,
+        category: [...state.category, e.value]
+      })
+    } else {
+      setState({
+        ...state,
+        category: state.category.filter(c => c !== e.value)
+      })
+    };
+    console.log(state.category);
+  };
+// PROBANDO CATEGORIES EN ARRAY
+
+  const { control, handleSubmit, formState: { errors } } = useForm({
+      defaultValues: {
+        name: '',
+        price: '',
+        img: '',
+        stock: '',
+        offer: '',
+        description: '',
+      }
+  });
 
     const onSubmit = data => {
-        console.log(data);
-        const product = {
-          name: data.name,
-          category: data.category,
-          img: data.img,
-          price: data.price,
-          offer: data.offer,
-          stock: data.stock,
-          description: {Description: data.description}
-        }
-        dispatch(createProduct(product));
+        if (state.category.length < 1) {
+          alert('Enter a category')
+        } else {
+          const product = {
+            name: data.name,
+            category: state.category,
+            img: data.img,
+            price: data.price,
+            offer: data.offer,
+            stock: data.stock,
+            description: {Description: data.description}
+          }
+          dispatch(createProduct(product));
+          // console.log(product);
+        };   
     };
       
     const Separator = () => (
@@ -80,20 +114,13 @@ const ProductCreate = () => {
         {errors.price && <Text>Insert price value</Text>}
 
         <Text>Product category:</Text>
-        <Controller
-          control={control}
-          rules={{
-           required: true,
-          }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              style={styles.input}
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-            />
-          )}
-          name="category"
+        <DropDownPicker
+          open={openitems}
+          value={valueitems}
+          items={pickerItems}
+          setOpen={setOpenitems}
+          setValue={setValueitems}
+          onSelectItem={(value) => handleCategory(value)}
         />
         {errors.category && <Text>Insert category name</Text>}
 
