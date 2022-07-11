@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
+import Categories from "../Components/Categories";
 import { useDispatch } from "react-redux";
 import { View, SafeAreaView, StyleSheet, StatusBar } from "react-native";
 import { getAllProducts } from '../../Redux/Slice';
-// import Allproducts from "./Allproducts";
-import Categories from "./Categories";
 import Banner from "./Banner";
 import NavBar from "./NavBar";
+
 
 const Home = ({ navigation, route }) => {
 
@@ -15,13 +15,13 @@ const Home = ({ navigation, route }) => {
   }, [dispatch]);
 
   return (
-    <View style={styles.conteiner}>
-      <SafeAreaView style={styles.AndroidSafeArea} >
-        <NavBar navigation={navigation} route={route} />
-        <Banner navigation={navigation} />
-        <Categories {...navigation} />
-      </SafeAreaView>
-    </View>
+      <View style={styles.conteiner}>
+        <SafeAreaView style={styles.AndroidSafeArea} >
+          <NavBar navigation={navigation} route={route} />
+          <Banner navigation={navigation} />
+          <Categories {...navigation} />
+        </SafeAreaView>
+      </View>
   );
 };
 

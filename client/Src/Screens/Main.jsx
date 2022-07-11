@@ -1,46 +1,38 @@
 import React from "react";
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import 'react-native-gesture-handler'
 import { NavigationContainer } from '@react-navigation/native';
-
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import UserHome from "./UserHome";
 import Home from "../Components/Home";
-import Allproducts from "../Components/Allproducts";
-import Categories from "../Components/Categories";
 import ProductCreate from "../Components/ProductCreate";
-import Details from "../Screens/Details";
-
-const Stack = createNativeStackNavigator()
+const Drawer = createDrawerNavigator();
 
 const Main = () => {
     return (
         <NavigationContainer  >
-            <Stack.Navigator
+            <Drawer.Navigator
                 screenOptions={{
-                    headerShown: false
+                    // headerShown: false
                 }}>
-                <Stack.Screen
+                <Drawer.Screen
+                    name='UserHome'
+                    component={UserHome}
+                    options={{
+                        drawerLabel: () => null,
+                        title: "Home"
+                    }}
+                />
+                <Drawer.Screen
                     name='Home'
                     component={Home}
                 />
-                <Stack.Screen
-                    name='Categories'
-                    component={Categories}
-                />
-                <Stack.Screen
-                name = 'Details'
-                component= { Details }
-                />
-                <Stack.Screen
+                <Drawer.Screen
                     name='ProductCreate'
                     component={ProductCreate}
                 />
-                <Stack.Screen
-                    name='Allproducts'
-                    component={Allproducts}
-                />
-            </Stack.Navigator>
+            </Drawer.Navigator >
         </NavigationContainer >
     )
 }
-
 
 export default Main
