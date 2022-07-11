@@ -65,10 +65,10 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     alignItems: "center",
-    margin: 2,
-    padding: 5,
+    paddingHorizontal: 10,
+    paddingVertical:10,
     heigth: 200,
-    width: '45%',
+    width: '50%',
     borderRadius: 15,
   },
   img: {
@@ -80,7 +80,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     paddingTop: 100,
     color: 'white',
-    fontFamily: 'Inter_900Black',
+    // fontFamily: 'Inter_900Black',
+    fontFamily: 'serif',
     fontWeight: 'bold',
     fontSize: 25,
     textAlignVertical: 'center'

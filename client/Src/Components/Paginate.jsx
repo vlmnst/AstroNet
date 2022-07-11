@@ -12,7 +12,7 @@ const Paginate = (props) => {
     return (
         <View style={styles.container}>
             {/* BOTON PREVIUS */}
-            {props.currentPage === pageNumbers[1]
+            {props.currentPage > 1
                 ? <Button title='prev' disabled={false} onPress={() => props.setPage(props.currentPage - 1)} />
                 : <Button title='prev' disabled={true} onPress={() => props.setPage(props.currentPage - 1)} />
             }
