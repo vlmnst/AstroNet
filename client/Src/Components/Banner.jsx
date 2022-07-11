@@ -7,7 +7,8 @@ import {
   StyleSheet,
   Platform,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
+  TouchableHighlight
 } from 'react-native';
 
 const {width: screenWidth} = Dimensions.get('window');

@@ -20,7 +20,7 @@ const ProductCard = (props) => {
             <Text style={styles.offer}>{item.offer}% off!</Text>
           ) : null}
         </View>
-        <Text style={styles.name}>{item.name} </Text>
+        <Text style={styles.name}>{item.name.slice(0,65)}... </Text>
       </View>
     </TouchableOpacity>
   );
@@ -30,9 +30,9 @@ const font = 10;
 
 const styles = StyleSheet.create({
   container: {
-    display: "flex",
+    flex: 1,
     alignItems: "center",
-    // margin: 5,
+    margin: 5,
     padding: 0,
     borderWidth: 2,
     width: "100%",
@@ -47,10 +47,11 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   image: {
-    margin: 15,
-    height: 100,
+    margin: 10,
+    height: 110,
     width: "100%",
     borderRadius: 10,
+    resizeMode : 'contain',
   },
   contInt: {
     margin: 20,

@@ -65,9 +65,9 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     alignItems: "center",
-    paddingHorizontal: 5,
-    paddingVertical: 5,
-    heigth: '100%',
+    paddingHorizontal: 10,
+    paddingVertical:10,
+    heigth: 200,
     width: '50%',
     borderRadius: 15,
   },
