@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Categories from "../Components/Categories";
 import { useDispatch } from "react-redux";
 import { View, SafeAreaView, StyleSheet, StatusBar } from "react-native";
-import { getAllProducts } from '../../Redux/Slice';
+import { getAllProducts,getCategories } from '../../Redux/Slice';
 import Banner from "./Banner";
 import NavBar from "./NavBar";
 
@@ -11,6 +11,7 @@ const Home = ({ navigation, route }) => {
 
   const dispatch = useDispatch();
   useEffect(() => {
+    dispatch(getCategories());
     dispatch(getAllProducts());
   }, [dispatch]);
 
