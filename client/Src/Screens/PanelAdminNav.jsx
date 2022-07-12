@@ -1,10 +1,10 @@
 import React from "react";
 import 'react-native-gesture-handler';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import PanelAdmin from "../Components/PanelAdmin";
+import PanelAdmin from "../Components/Home";
 const Stack = createNativeStackNavigator();
 
-const UserHome = () => {
+const PanelAdminNav = () => {
     return (
             <Stack.Navigator
                 screenOptions={{
@@ -19,4 +19,4 @@ const UserHome = () => {
 }
 
 
-export default UserHome
+export default PanelAdminNav
