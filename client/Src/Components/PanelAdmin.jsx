@@ -2,7 +2,7 @@ import React from "react";
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 
 
-const Home = ({ navigation, route }) => {
+const PanelAdmin = ({ navigation, route }) => {
 
     return (
             <View style={styles.conteiner}>
@@ -47,4 +47,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Home;
+export default PanelAdmin;

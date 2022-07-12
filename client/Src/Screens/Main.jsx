@@ -32,8 +32,11 @@ const Main = () => {
                     component={ProductCreate}
                 />
                 <Drawer.Screen
-                    name='PanelAdmin'
+                    name='PanelAdminNav'
                     component={PanelAdminNav}
+                    options={{
+                        title: "PanelAdmin"
+                    }}
                 />
             </Drawer.Navigator >
         </NavigationContainer >

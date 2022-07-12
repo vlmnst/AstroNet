@@ -1,7 +1,7 @@
 import React from "react";
 import 'react-native-gesture-handler';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import PanelAdmin from "../Components/Home";
+import PanelAdmin from "../Components/PanelAdmin";
 const Stack = createNativeStackNavigator();
 
 const PanelAdminNav = () => {
