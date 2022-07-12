@@ -14,8 +14,10 @@ export const userSlice = createSlice({
     reducers:{
         getAllProducts(state,action){
             state.allProducts = action.payload
-            state.allProducts.map((p)=> (state.categories.includes(p.category))? null :
-                state.categories.push(p.category))
+            let products = state.allProducts
+            var array= products.map(O => O.category).flat()
+            const sin_repetidos= [... new Set(array)]
+            state.categories=sin_repetidos;
         },
         getProductsByCategory(state,action){
             state.allProductsFiltered = action.payload
@@ -53,6 +55,9 @@ export const userSlice = createSlice({
         getProductsByName(state,action){
             state.allProductsFiltered = action.payload
         },
+        getCategories(state,action){
+            state.categories = action.payload
+        }
     }
 });
 
@@ -93,6 +98,14 @@ export const createProduct = (product)=> async(dispatch) => {
     } catch (e) {
         console.log(e)
     };
+};
+export const getCategories = ()=> async(dispatch) => {
+    try {
+        var json = await axios.get(ROUTE+"/products/getCategories")
+        dispatch(userSlice.actions.getCategories (json.data))
+    } catch (e) {
+        console.log(e)
+    }
 };
 
 export const {getByPrice, clearCache} =userSlice.actions;

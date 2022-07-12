@@ -191,5 +191,16 @@ const getProductsById = async (req, res, next) => {
         return next(error.detail);
     }
 }
+const getCategories = async (req, res, next) => {
+    try {
+        let products = await Product.find({})
+        var array= products.map(O => O.category).flat()
+        const sin_repetidos= [... new Set(array)]
+        res.status(200).json(sin_repetidos);
+    } catch (error) {
+        console.log(error.message)
+    }
+}
 
-module.exports = { getAllProducts, createProduct, totalProducts, deleteProduct, buyProduct, getProductsByCategory, getProductsByName, getProductsById };
+
+module.exports = { getAllProducts, createProduct, totalProducts, deleteProduct, buyProduct, getProductsByCategory, getProductsByName, getProductsById, getCategories };
