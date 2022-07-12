@@ -14,10 +14,6 @@ export const userSlice = createSlice({
     reducers:{
         getAllProducts(state,action){
             state.allProducts = action.payload
-            let products = state.allProducts
-            var array= products.map(O => O.category).flat()
-            const sin_repetidos= [... new Set(array)]
-            state.categories=sin_repetidos;
         },
         getProductsByCategory(state,action){
             state.allProductsFiltered = action.payload
