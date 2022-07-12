@@ -5,6 +5,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import UserHome from "./UserHome";
 import Home from "../Components/Home";
 import ProductCreate from "../Components/ProductCreate";
+import PanelAdminNav from "./PanelAdminNav";
 const Drawer = createDrawerNavigator();
 
 const Main = () => {
@@ -29,6 +30,10 @@ const Main = () => {
                 <Drawer.Screen
                     name='ProductCreate'
                     component={ProductCreate}
+                />
+                <Drawer.Screen
+                    name='PanelAdmin'
+                    component={PanelAdminNav}
                 />
             </Drawer.Navigator >
         </NavigationContainer >
