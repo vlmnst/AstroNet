@@ -6,6 +6,7 @@ import UserHome from "./UserHome";
 import Home from "../Components/Home";
 // import ProductCreate from "../Components/ProductCreate";
 import PanelAdminNav from "./PanelAdminNav";
+import DoReview from "../Components/DoReview";
 const Drawer = createDrawerNavigator();
 
 // login credentials
@@ -46,9 +47,10 @@ const Main = () => {
                     component={Home} 
                 />
 
-                { role === 'admin' ? (
+                { role === 'admin' ? (<>
+                    <Drawer.Screen name='doReview' component={DoReview} />
                     <Drawer.Screen name='PanelAdminNav' component={PanelAdminNav} />
-                ) : null }
+                </>) : null }
 
                 { role === 'guest' ? (
                     <Drawer.Screen name='Login' component={Login} />
