@@ -9,7 +9,7 @@ export const userSlice = createSlice({
     initialState : {
         allProducts: [],
         allProductsFiltered:[],
-        categories:[] 
+        categories:['Mouse', 'keyboard'] 
     },
     reducers:{
         getAllProducts(state,action){
@@ -99,6 +99,20 @@ export const getCategories = ()=> async(dispatch) => {
     try {
         var json = await axios.get(ROUTE+"/products/getCategories")
         dispatch(userSlice.actions.getCategories (json.data))
+    } catch (e) {
+        console.log(e)
+    }
+};
+export const PutPrivileges = (name,privileges)=> async(dispatch) => {
+    try {
+        await axios.put(ROUTE+"/users/privileges/"+name,privileges)
+    } catch (e) {
+        console.log(e)
+    }
+};
+export const PutBanned = (name,banned)=> async(dispatch) => {
+    try {
+        await axios.put(ROUTE+"/users/banned/"+name,banned)
     } catch (e) {
         console.log(e)
     }

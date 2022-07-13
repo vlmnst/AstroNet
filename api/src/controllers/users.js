@@ -41,6 +41,12 @@ const createUser = async (req, res, next) => {
             address, 
         } = req.body;
 
+        // chequeo no repetir username/email
+        const users = await User.find({username})
+        if (users.length > 0) return res.status(400).json({ error: 'username already exists'})
+        const emails = await User.find({email})
+        if (emails.length > 0) return res.status(400).json({ error: 'email already exists'})
+
         // hash passwd
             const saltRounds = 10
             const passwordHash = await bcrypt.hash(password, saltRounds)
@@ -74,5 +80,36 @@ const createUser = async (req, res, next) => {
         return next(error);
     };
 };
+const PutPrivileges = async (req, res, next) => {
+    let name=req.params.name
+    let {username, privilege}= req.body.privileges;
 
-module.exports = { createUser, getAllUsers, totalUsers };
+    try{
+        let isAdmin = await User.find({username})
+        if(isAdmin.role==="admin"){
+            await User.findOneAndUpdate({username:name},{$set:{"role":privilege}})
+            res.status(200).send("Privileges Updated")
+        }else{
+            res.status(400).json({ error: 'not admin'});
+        }
+    } catch(e){
+        res.status(404).send(e.message)
+    }
+};
+const PutBanned = async (req, res, next) => {
+    let name=req.params.name
+    let {username, privilege}= req.body.banned;
+    try{
+        let isAdmin = await User.find({username})
+        if(isAdmin.role==="admin"){
+            await User.findOneAndUpdate({username:name},{$set:{"role":privilege}})
+            res.status(200).send(`. \u2705 user "${name}" "banned" status Updated to ${privilege}`)
+        }else{
+            res.status(400).json({ error: 'not admin'});
+        }
+    } catch(e){
+        res.status(404).send(e.message)
+    }
+};
+
+module.exports = { createUser, getAllUsers, totalUsers, PutPrivileges, PutBanned };
