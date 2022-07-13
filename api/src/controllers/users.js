@@ -76,20 +76,30 @@ const createUser = async (req, res, next) => {
 };
 const PutPrivileges = async (req, res, next) => {
     let name=req.params.name
-    let {privileges}= req.body;
+    let {privileges,username}= req.body;
     try{
+        let isAdmin = await User.find({username})
+        if(isAdmin.role==="admin"){
             await User.findOneAndUpdate({username:name},{$set:{"role":privileges}})
             res.status(200).send("Privileges Updated")
+        }else{
+            res.status(400).json({ error: 'not admin'});
+        }
     } catch(e){
         res.status(404).send(e.message)
     }
 };
 const PutBanned = async (req, res, next) => {
     let name=req.params.name
-    let {banned}= req.body;
+    let {banned,username}= req.body;
     try{
+        let isAdmin = await User.find({username})
+        if(isAdmin.role==="admin"){
             await User.findOneAndUpdate({username:name},{$set:{"banned":banned}})
             res.status(200).send(`. \u2705 user "${name}" "banned" status Updated to ${banned}`)
+        }else{
+            res.status(400).json({ error: 'not admin'});
+        }
     } catch(e){
         res.status(404).send(e.message)
     }
