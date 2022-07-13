@@ -4,12 +4,7 @@ const User = require('../models/User');
 
 const login = async (req, res, next) => {
     try {
-        const { username, password } = req.body;
-
-        // reviso si ya estoy logueado
-        const authorization = req.get('authorization');     // recupera la cabecera http 'authorization' (es de express)
-            if (authorization && authorization.toLowerCase().startsWith('bearer')) 
-                return res.status(400).json({ error: 'you are already logged in'});
+        let { username, password } = req.body;
 
         const user = await User.findOne({ username });
     
@@ -17,7 +12,7 @@ const login = async (req, res, next) => {
             ? false
             : await bcrypt.compare(password, user.passwordHash)
         
-        if (!passwordCorrect) return res.status(401).json({ error: 'invalid username/password'});
+        if (!passwordCorrect) return res.status(401).json({ status: 'FAILED', message: 'invalid username/password' });
 
         // si logueo bien, agrego la data que va a ir en el token codificado
         const dataToken = {
@@ -31,12 +26,19 @@ const login = async (req, res, next) => {
             expiresIn: 60 * 60 * 24 * 7     // expira cada 7 días (segs, mins, horas, dias)
         });
 
-        // devuelvo el email, username, role y token
-        res.send({
-            email: user.email,
+        // preparo la data a devolver
+        const userData = {
             username: user.username,
+            email: user.email,
             role: user.role,
             token
+        }
+
+        // devuelvo el email, username, role y token
+        res.send({
+            status: 'SUCCESS',
+            message: 'Signup successfully',
+            data: userData
         })
     } catch (error) {
         return next(error);

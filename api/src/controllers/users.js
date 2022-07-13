@@ -41,6 +41,12 @@ const createUser = async (req, res, next) => {
             address, 
         } = req.body;
 
+        // chequeo no repetir username/email
+        const users = await User.find({username})
+        if (users.length > 0) return res.status(400).json({ error: 'username already exists'})
+        const emails = await User.find({email})
+        if (emails.length > 0) return res.status(400).json({ error: 'email already exists'})
+
         // hash passwd
             const saltRounds = 10
             const passwordHash = await bcrypt.hash(password, saltRounds)
@@ -76,11 +82,12 @@ const createUser = async (req, res, next) => {
 };
 const PutPrivileges = async (req, res, next) => {
     let name=req.params.name
-    let {privileges,username}= req.body;
+    let {username, privilege}= req.body.privileges;
+
     try{
         let isAdmin = await User.find({username})
         if(isAdmin.role==="admin"){
-            await User.findOneAndUpdate({username:name},{$set:{"role":privileges}})
+            await User.findOneAndUpdate({username:name},{$set:{"role":privilege}})
             res.status(200).send("Privileges Updated")
         }else{
             res.status(400).json({ error: 'not admin'});
@@ -91,12 +98,12 @@ const PutPrivileges = async (req, res, next) => {
 };
 const PutBanned = async (req, res, next) => {
     let name=req.params.name
-    let {banned,username}= req.body;
+    let {username, privilege}= req.body.banned;
     try{
         let isAdmin = await User.find({username})
         if(isAdmin.role==="admin"){
-            await User.findOneAndUpdate({username:name},{$set:{"banned":banned}})
-            res.status(200).send(`. \u2705 user "${name}" "banned" status Updated to ${banned}`)
+            await User.findOneAndUpdate({username:name},{$set:{"role":privilege}})
+            res.status(200).send(`. \u2705 user "${name}" "banned" status Updated to ${privilege}`)
         }else{
             res.status(400).json({ error: 'not admin'});
         }

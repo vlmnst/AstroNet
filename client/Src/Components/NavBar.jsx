@@ -1,18 +1,38 @@
-import React from 'react';
-import { View, StyleSheet, Button, TouchableOpacity, Text } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, Button, Text } from 'react-native';
 import SearchBar from './SearchBar';
 
+import { getCredentials, logOut } from '../utils/handleCredentials';
+
 const NavBar = ({ navigation, route }) => {
+    const [userName, setUserName] = useState(null);
+
+    useEffect(async() => {
+        let credentials = await getCredentials();
+        if (credentials) {
+            setUserName(credentials.username)
+        };
+      }, []);
+
+    const handleLogOut = () => {
+        logOut();
+        setUserName(null);
+    };
 
     return (
         <View style={styles.container}>
-            {/* <Icon name="menu-outline" size={40} color="grey" style={styles.icon} /> */}
-            <TouchableOpacity 
-             style={styles.button}
-            onPress={() => navigation.navigate("ProductCreate")} >
-             <Text style={styles.text}>Create Product</Text>
-            </TouchableOpacity>
+
+            {/* USERNAME / GUEST */}
+            { userName ? (
+                <View>
+                    <Text>Hi, {userName}</Text>
+                    <Button title='LogOut' onPress={() => handleLogOut()}></Button>
+                </View>
+            ):(
+                <Text>Guest</Text>
+            )}
+            
+            {/* SEARCHBAR */}
             <SearchBar navigation={navigation} route={route} />
         </View>
     )
