@@ -4,7 +4,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import UserHome from "./UserHome";
 import Home from "../Components/Home";
-import ProductCreate from "../Components/ProductCreate";
+// import ProductCreate from "../Components/ProductCreate";
+import PanelAdminNav from "./PanelAdminNav";
 const Drawer = createDrawerNavigator();
 
 // login credentials
@@ -24,7 +25,7 @@ const Main = () => {
         } else {
             setRole('guest')
         };
-      }, []);
+    }, []);
 
     return (
         <NavigationContainer  >
@@ -46,7 +47,7 @@ const Main = () => {
                 />
 
                 { role === 'admin' ? (
-                    <Drawer.Screen name='ProductCreate' component={ProductCreate} />
+                    <Drawer.Screen name='PanelAdminNav' component={PanelAdminNav} />
                 ) : null }
 
                 { role === 'guest' ? (
