@@ -1,6 +1,6 @@
 const productsRouter = require('express').Router();
 
-const { getAllProducts, createProduct, totalProducts, deleteProduct, buyProduct, getProductsByCategory, getProductsByName, getProductsById, getCategories} = require('../controllers/products');
+const { getAllProducts, createProduct, totalProducts, deleteProduct, buyProduct, getProductsByCategory, getProductsByName, getProductsById, getCategories, editProduct } = require('../controllers/products');
 // const { authOK } = require('../controllers/login');
 
 productsRouter.get('/getAll', getAllProducts);
@@ -8,6 +8,7 @@ productsRouter.get('/count', totalProducts);
 productsRouter.get('/category/:category', getProductsByCategory);
 productsRouter.get('/search/:name', getProductsByName);
 productsRouter.post('/create', createProduct);
+productsRouter.put('/update/:id', editProduct);
 productsRouter.post('/buy', buyProduct);
 productsRouter.delete('/delete', deleteProduct);
 productsRouter.get('/product/:id', getProductsById);

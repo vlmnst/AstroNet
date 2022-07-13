@@ -59,6 +59,39 @@ const createProduct = async (req, res, next) => {
     };
 };
 
+const editProduct = async (req, res, next) => {
+
+    try {
+        const { 
+            name,
+            price,
+            category,
+            img,
+            stock,
+            offer,
+            description,
+        } = req.body;
+
+        const productId = req.params.id
+
+        const edProduct = Product.finOneAndUpdate({id: productId}, {
+            name,
+            price,
+            category,
+            img,
+            stock,
+            offer,
+            description,
+            }    
+        );
+
+        console.log(`. \u2705 product "${name}" edited OK`);
+        return res.json(edProduct);
+    } catch (error) {
+        return next(error);
+    };
+};
+
 const deleteProduct = async (req, res, next) => {
     try {
         const { productID } = req.body;
@@ -202,4 +235,4 @@ const getCategories = async (req, res, next) => {
     }
 }
 
-module.exports = { getAllProducts, createProduct, totalProducts, deleteProduct, buyProduct, getProductsByCategory, getProductsByName, getProductsById, getCategories };
+module.exports = { getAllProducts, createProduct, totalProducts, deleteProduct, buyProduct, getProductsByCategory, getProductsByName, getProductsById, getCategories, editProduct };
