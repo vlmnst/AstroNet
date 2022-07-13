@@ -9,7 +9,7 @@ export const userSlice = createSlice({
     initialState : {
         allProducts: [],
         allProductsFiltered:[],
-        categories:[] 
+        categories:['Mouse', 'keyboard'] 
     },
     reducers:{
         getAllProducts(state,action){
