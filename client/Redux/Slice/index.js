@@ -103,6 +103,20 @@ export const getCategories = ()=> async(dispatch) => {
         console.log(e)
     }
 };
+export const PutPrivileges = (name,privileges)=> async(dispatch) => {
+    try {
+        await axios.put(ROUTE+"/users/privileges/"+name,privileges)
+    } catch (e) {
+        console.log(e)
+    }
+};
+export const PutBanned = (name,banned)=> async(dispatch) => {
+    try {
+        await axios.put(ROUTE+"/users/banned/"+name,banned)
+    } catch (e) {
+        console.log(e)
+    }
+};
 export const {getByPrice, clearCache} =userSlice.actions;
 
 export default userSlice.reducer;
