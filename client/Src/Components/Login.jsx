@@ -6,10 +6,13 @@ import axios from "axios";
 import { ROUTE }  from '@env';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useDispatch } from "react-redux";
+import { setUserData } from "../../Redux/Slice/userSlice";
 
 const Login = ({navigation}) => {
     // const URL = 'http://localhost:3001/login';
     const [message, setMessage] = useState('');
+    const dispatch = useDispatch();
 
     const { control, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {
@@ -34,6 +37,9 @@ const Login = ({navigation}) => {
                 const { status, message, data } = res.data; // data contiene el user y su token
                 alert(status + ' ' + message);
                 setMessage('');
+                // console.log(data)
+                // const { username, role } = data;
+                dispatch(setUserData(data))
                 AsyncStorage.setItem('storageCredentials', JSON.stringify(data))
                     .catch(() => console.log('error while persistLogin at Login.jsx'));
                 navigation.navigate('Home'); // agregar props??

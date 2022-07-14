@@ -55,9 +55,9 @@ export const userSlice = createSlice({
         getCategories(state,action){
             state.categories = action.payload
         },
-        getPurchaseProducts(state, action) {
-            state.purchaseProducts = action.payload
-        }
+        // getPurchaseProducts(state, action) {
+        //     state.purchaseProducts = action.payload
+        // }
     }
 });
 
@@ -125,14 +125,14 @@ export const PutBanned = (name,banned)=> async(dispatch) => {
     }
 };
 
-export const getPurchaseProducts = (username)=> async(dispatch) => {
-    try {
-        const { data } = await axios.get(ROUTE+"/users/productsHistory/"+username);
-        dispatch(userSlice.actions.getPurchaseProducts(data));
-    } catch (error) {
-        console.log(error);
-    };
-};
+// export const getPurchaseProducts = (username)=> async(dispatch) => {
+//     try {
+//         const { data } = await axios.get(ROUTE+"/users/productsHistory/"+username);
+//         dispatch(userSlice.actions.getPurchaseProducts(data));
+//     } catch (error) {
+//         console.log(error);
+//     };
+// };
 
 export const {getByPrice, clearCache} =userSlice.actions;
 
