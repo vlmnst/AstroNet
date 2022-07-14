@@ -2,59 +2,53 @@ import React, { useState, useEffect } from "react";
 import 'react-native-gesture-handler'
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import SideMenu from "./SideMenu/SideMenu";
 import UserHome from "./UserHome";
-import Home from "../Components/Home";
-// import ProductCreate from "../Components/ProductCreate";
 import PanelAdminNav from "./PanelAdminNav";
-import DoReview from "../Components/DoReview";
+
+import UserProfileNav from "./UserProfileNav";
+
+
+import Login from "../Components/Login";
+
 const Drawer = createDrawerNavigator();
 
-// login credentials
-import Login from "../Components/Login";
-import { getCredentials } from '../utils/handleCredentials';
 
 const Main = () => {
-    const [role, setRole] = useState('guest');
-
-    // posible solucion: setear role desde reducer
-        // es buena practica o super inseguro? (me modifican el estado del reducer a admin y chau)
-
-    useEffect(async() => {
-        const credentials = await getCredentials();
-        if (credentials) {
-            setRole(credentials.role);
-        } else {
-            setRole('guest')
-        };
-    }, []);
 
     return (
         <NavigationContainer  >
             <Drawer.Navigator
-                screenOptions={{
-                    // headerShown: false
-                }}>
+                drawerContent={(props) => <SideMenu { ...props } />}
+            >
                 <Drawer.Screen
-                    name='UserHome'
-                    component={UserHome}
                     options={{
-                        drawerLabel: () => null,
-                        title: "Home"
+                        title:''
                     }}
+                    name='Home'
+                    component={UserHome}
                 />
-                <Drawer.Screen 
-                    name='Home' 
-                    component={Home} 
+                <Drawer.Screen
+                    options={{
+                        title:''
+                    }}
+                    name='Profile'
+                    component={UserProfileNav}
                 />
-
-                { role === 'admin' ? (<>
-                    <Drawer.Screen name='doReview' component={DoReview} />
-                    <Drawer.Screen name='PanelAdminNav' component={PanelAdminNav} />
-                </>) : null }
-
-                { role === 'guest' ? (
-                    <Drawer.Screen name='Login' component={Login} />
-                ) : null }
+                <Drawer.Screen
+                    options={{
+                        title:''
+                    }}
+                    name='PanelAdminNav'
+                    component={PanelAdminNav}
+                />
+                <Drawer.Screen
+                    options={{
+                        title:''
+                    }}
+                    name='Login'
+                    component={Login}
+                />
 
             </Drawer.Navigator >
         </NavigationContainer >

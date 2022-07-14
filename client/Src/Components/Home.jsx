@@ -3,7 +3,7 @@ import Categories from "../Components/Categories";
 import { useDispatch } from "react-redux";
 import { View, SafeAreaView, StyleSheet, StatusBar } from "react-native";
 import { getAllProducts,getCategories } from '../../Redux/Slice';
-import Banner from "./Banner";
+// import Banner from "./Banner";
 import NavBar from "./NavBar";
 
 
@@ -19,7 +19,7 @@ const Home = ({ navigation, route }) => {
       <View style={styles.conteiner}>
         <SafeAreaView style={styles.AndroidSafeArea} >
           <NavBar navigation={navigation} route={route} />
-          <Banner navigation={navigation} />
+          {/* <Banner navigation={navigation} /> */}
           <Categories {...navigation} />
         </SafeAreaView>
       </View>
@@ -28,7 +28,7 @@ const Home = ({ navigation, route }) => {
 
 const styles = StyleSheet.create({
   AndroidSafeArea: {
-    paddingTop: StatusBar.currentHeight + 10,
+    // paddingTop: StatusBar.currentHeight + 10,
   },
   conteiner: {
     position: 'absolute',
