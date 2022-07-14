@@ -10,16 +10,25 @@ import LoginBtn from "./SideMenuBtns/LoginBtn";
 import { StackActions, useNavigationState } from '@react-navigation/native';
 import ProfileBtn from "./SideMenuBtns/ProfileBtn";
 import LogoutBtn from "./SideMenuBtns/LogoutBtn";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserData } from "../../../Redux/Slice/userSlice";
 
 
 const SideMenu = ({ navigation }) => {
 
-    const [userName, setUserName] = useState(null);
-    const [role, setRole] = useState('guest');
+
+    const dispatch = useDispatch()
+    // const [userName, setUserName] = useState(null);
+    // const [role, setRole] = useState('guest');
+    let role = useSelector((state) => state.USER.role);
+    let userName = useSelector((state) => state.USER.userName);
+
+
+    
     const [currentBtn, setCurrentBtn] = useState('Home');
     
     const index = useNavigationState(state => state)
-    index ? console.log(index):null;
+    // index ? console.log(index):null;
 
     const handlePressHome = () => {
         if(currentBtn === 'Home' || index > 0){
@@ -45,13 +54,16 @@ const SideMenu = ({ navigation }) => {
         const credentials = async () => {
             const credentials = await getCredentials();
             if (credentials) {
-                setUserName(credentials.username)
+                // setUserName(credentials.username)
+                const { username, role, email } = credentials
+                const data = { username, role, email }
+                dispatch(setUserData(data))
             };
-            if (credentials) {
-                setRole(credentials.role);
-            } else {
-                setRole('guest')
-            };
+            // if (credentials) {
+            //     setRole(credentials.role);
+            // } else {
+            //     setRole('guest')
+            // };
         }
         credentials()
     }, []);
