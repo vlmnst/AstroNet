@@ -24,7 +24,7 @@ const Allproducts = ({ route, navigation }) => {
   // ---------- dispatch ----------
   // si route.params existe en categories, busco por categoria
 
-  let category = route.params;
+  let searchName = route.params;
   const dispatch = useDispatch();
 
   // ---------- global states ----------
@@ -35,7 +35,7 @@ const Allproducts = ({ route, navigation }) => {
 
   // ---------- pickerUtils ----------
   const [openitems, setOpenitems] = useState(false);
-  const [valueitems, setValueitems] = useState(category);
+  const [valueitems, setValueitems] = useState(searchName);
 
   const [openprice, setOpenprice] = useState(false);
   const [valueprice, setValueprice] = useState(null);
@@ -51,9 +51,7 @@ const Allproducts = ({ route, navigation }) => {
 
   // mount
   useEffect(() => {
-    categories.includes(category)
-      ? dispatch(getProductsByCategory(category))
-      : dispatch(getProductsByName(category));
+       dispatch(getProductsByName(searchName));
     setPage(1);
   }, [dispatch]);
 

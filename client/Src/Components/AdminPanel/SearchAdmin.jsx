@@ -14,7 +14,7 @@ const SearchAdmin = ({ navigation, route }) => {
     };
 
     function search(e) {
-        console.log(route.name)
+        // console.log(route.name)
         route.name === 'AllUsers' ?(
             nombre === ''? alert('Enter a name')
             :

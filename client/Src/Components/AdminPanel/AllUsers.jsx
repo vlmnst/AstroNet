@@ -9,7 +9,7 @@ const AllUsers = ({ route, navigation }) => {
     // ---------- dispatch ----------
     const dispatch = useDispatch();
     // ---------- global states ----------
-    let users = useSelector((state) => state.ALL_PRODUCTS.AllUsers);
+    let users = useSelector((state) => state.ALL_PRODUCTS.AllUsersFiltered);
     // mount
     useEffect(() => {dispatch(getAllUsers())}, [dispatch]);
     // ---------- handlers ----------

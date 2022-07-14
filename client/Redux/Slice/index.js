@@ -12,6 +12,7 @@ export const userSlice = createSlice({
         categories:[],
         purchaseProducts: [],
         AllUsers:[],
+        AllUsersFiltered: [],
         allAdminProducts:[],
     },
     reducers:{
@@ -61,15 +62,24 @@ export const userSlice = createSlice({
         //------------------Admin-------------------
         getAllUsers(state, action) {
             state.AllUsers = action.payload
+            state.AllUsersFiltered = action.payload
         },
         searchUser(state,action){
             let user =[]
             state.AllUsers.map((u)=> {
-                if( u.role || u.username|| u.firstname|| u.lastname|| u.email|| u.dni|| u.phone === action.payload){
+                if (
+                    u.role === action.payload || 
+                    u.username === action.payload ||
+                    u.firstname === action.payload ||
+                    u.lastname === action.payload ||
+                    u.email === action.payload ||
+                    u.phone === action.payload ||
+                    u.dni.toString() === action.payload
+                ){
                     user.push(u)
                 }
         })
-            state.AllUsers = user
+            state.AllUsersFiltered = user;
         },
         clearAdmin(state){
             state.allAdminProducts = []
@@ -137,7 +147,7 @@ export const getProductsByCategory = (category)=> async(dispatch) => {
 };
 export const getProductsByName = (name)=> async(dispatch) => {
     try {
-        var json = await axios.get(ROUTE+"/products/search/"+name)
+        var json = await axios.get(ROUTE+"/products/search/"+name.toLowerCase())
         dispatch(userSlice.actions.getProductsByName (json.data))
 
     } catch (e) {
@@ -195,7 +205,7 @@ export const getAdminByCategory = (category)=> async(dispatch) => {
 };
 export const getAdminByName = (name)=> async(dispatch) => {
     try {
-        var json = await axios.get(ROUTE+"/products/search/"+name)
+        var json = await axios.get(ROUTE+"/products/search/"+name.toLowerCase())
         dispatch(userSlice.actions.getAdminByName (json.data))
         console.log(json.data)
     } catch (e) {
