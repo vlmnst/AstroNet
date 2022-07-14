@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-// import { useDispatch, useSelector } from "react-redux";
 import { Text, View, TextInput, Button, StyleSheet, SafeAreaView, StatusBar } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
 
+import { ROUTE }  from '@env';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import { getCredentials, logOut } from '../utils/handleCredentials';
 
 const Login = ({navigation}) => {
-    const URL = 'http://localhost:3001/login';
+    // const URL = 'http://localhost:3001/login';
     const [message, setMessage] = useState('');
 
     const { control, handleSubmit, formState: { errors } } = useForm({
@@ -30,7 +30,7 @@ const Login = ({navigation}) => {
             alert('Already signed in')
         } else {
             try {
-                let res = await axios.post(URL, credentials);
+                let res = await axios.post(ROUTE + '/login', credentials);
                 const { status, message, data } = res.data; // data contiene el user y su token
                 alert(status + ' ' + message);
                 setMessage('');

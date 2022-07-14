@@ -9,7 +9,8 @@ export const userSlice = createSlice({
     initialState : {
         allProducts: [],
         allProductsFiltered:[],
-        categories:['Mouse', 'keyboard'] 
+        categories:[],
+        purchaseProducts: [],
     },
     reducers:{
         getAllProducts(state,action){
@@ -53,6 +54,9 @@ export const userSlice = createSlice({
         },
         getCategories(state,action){
             state.categories = action.payload
+        },
+        getPurchaseProducts(state, action) {
+            state.purchaseProducts = action.payload
         }
     }
 });
@@ -95,6 +99,7 @@ export const createProduct = (product)=> async(dispatch) => {
         console.log(e)
     };
 };
+
 export const getCategories = ()=> async(dispatch) => {
     try {
         var json = await axios.get(ROUTE+"/products/getCategories")
@@ -103,6 +108,7 @@ export const getCategories = ()=> async(dispatch) => {
         console.log(e)
     }
 };
+
 export const PutPrivileges = (name,privileges)=> async(dispatch) => {
     try {
         await axios.put(ROUTE+"/users/privileges/"+name,privileges)
@@ -110,6 +116,7 @@ export const PutPrivileges = (name,privileges)=> async(dispatch) => {
         console.log(e)
     }
 };
+
 export const PutBanned = (name,banned)=> async(dispatch) => {
     try {
         await axios.put(ROUTE+"/users/banned/"+name,banned)
@@ -117,6 +124,16 @@ export const PutBanned = (name,banned)=> async(dispatch) => {
         console.log(e)
     }
 };
+
+export const getPurchaseProducts = (username)=> async(dispatch) => {
+    try {
+        const { data } = await axios.get(ROUTE+"/users/productsHistory/"+username);
+        dispatch(userSlice.actions.getPurchaseProducts(data));
+    } catch (error) {
+        console.log(error);
+    };
+};
+
 export const {getByPrice, clearCache} =userSlice.actions;
 
 export default userSlice.reducer;
