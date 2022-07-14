@@ -25,14 +25,14 @@ const Main = () => {
                     options={{
                         title:''
                     }}
-                    name='Home'
+                    name='HomeNav'
                     component={UserHome}
                 />
                 <Drawer.Screen
                     options={{
                         title:''
                     }}
-                    name='Profile'
+                    name='ProfileNav'
                     component={UserProfileNav}
                 />
                 <Drawer.Screen

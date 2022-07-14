@@ -16,54 +16,44 @@ import { setUserData } from "../../../Redux/Slice/userSlice";
 
 const SideMenu = ({ navigation }) => {
 
-
     const dispatch = useDispatch()
-    // const [userName, setUserName] = useState(null);
-    // const [role, setRole] = useState('guest');
     let role = useSelector((state) => state.USER.role);
     let userName = useSelector((state) => state.USER.userName);
-
-
     
-    const [currentBtn, setCurrentBtn] = useState('Home');
+    const [currentBtn, setCurrentBtn] = useState('HomeNav');
     
-    const index = useNavigationState(state => state)
-    // index ? console.log(index):null;
-
-    const handlePressHome = () => {
-        if(currentBtn === 'Home' || index > 0){
+    // const index = useNavigationState(state => state?.routes[0].state.index)
+    const { routes } = navigation.getState()
+    let index = routes[0].state?.index    
+    const handlePressStack = (prop) => {
+        if(currentBtn === prop && index > 0 ){
+            navigation.navigate(prop)
             navigation.dispatch(
                 StackActions.popToTop()
             )
-        } else if (currentBtn !== 'Home' || index > 0) {
-            navigation.navigate('Home')
+        } else if (currentBtn !== prop && index > 0 ) {
+            navigation.navigate(prop)
             navigation.dispatch(
                 StackActions.popToTop()
             )
         } else {
-            navigation.navigate('Home')
+            navigation.navigate(prop)
         }
-        setCurrentBtn('Home')
+        setCurrentBtn(prop)
     }
+
     const handlePress = (prop) => {
         navigation.navigate(prop)
         setCurrentBtn(prop)
     }
-
     useEffect( () => {
         const credentials = async () => {
             const credentials = await getCredentials();
             if (credentials) {
-                // setUserName(credentials.username)
                 const { username, role, email } = credentials
                 const data = { username, role, email }
                 dispatch(setUserData(data))
             };
-            // if (credentials) {
-            //     setRole(credentials.role);
-            // } else {
-            //     setRole('guest')
-            // };
         }
         credentials()
     }, []);
@@ -75,18 +65,18 @@ const SideMenu = ({ navigation }) => {
             <Text style={ styles.title }>Menu</Text>
             <HomeBtn
                 text = "Home"
-                onPress={() => handlePressHome()}
+                onPress={() => handlePressStack('HomeNav')}
             />
             { userName ? (
                 <ProfileBtn
-                text = "Profile"
-                onPress = { () => handlePress("Profile") }
-            />
+                    text = "Profile"
+                    onPress = { () => handlePress("ProfileNav") }
+                />
             ) : null }
             { role === 'admin' ? (
                 <PanelAdminBtn
                     text = "PanelAdmin"
-                    onPress = { () => handlePress("PanelAdminNav") }
+                    onPress = { () => handlePressStack("PanelAdminNav") }
                 />
             ) : null }
             { role === 'guest' ? (
