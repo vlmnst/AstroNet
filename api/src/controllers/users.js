@@ -80,6 +80,7 @@ const createUser = async (req, res, next) => {
         return next(error);
     };
 };
+
 const PutPrivileges = async (req, res, next) => {
     let name=req.params.name
     let {username, privilege}= req.body.privileges;
@@ -96,6 +97,7 @@ const PutPrivileges = async (req, res, next) => {
         res.status(404).send(e.message)
     }
 };
+
 const PutBanned = async (req, res, next) => {
     let name=req.params.name
     let {username, privilege}= req.body.banned;
@@ -112,4 +114,38 @@ const PutBanned = async (req, res, next) => {
     }
 };
 
-module.exports = { createUser, getAllUsers, totalUsers, PutPrivileges, PutBanned };
+const getProductsHistory = async (req, res, next) => {
+    let name=req.params.name
+ 
+    try {
+        const prodHistory = await User.findOne({username: name}, {productsHistory})
+        return res.json(prodHistory);
+    } catch (error) {
+        return next(error);
+    };      
+ }
+
+const getPurchasedProducts = async (req, res, next) => {
+    console.log('> ...initializing connection at "getPurchasedProducts"');
+    
+    try {
+        const { name: username } = req.params;
+
+        // not user?
+        if (!username) res.status(400).json({ error: 'The username was not found in the database'})
+
+        const {productsHistory} = await User.findOne({username}, {"productsHistory": 1, "_id": 0})
+
+        if (productsHistory.length > 0) {
+            let purchasedProducts = [];
+            productsHistory.map(p => p.detail.map(prod => purchasedProducts.push(prod)));
+            res.json(purchasedProducts);
+        } else {
+            res.status(400).json({ error: 'Your products history is empty, buy something'})
+        }; 
+    } catch (error) { 
+        return next(error);
+    };
+};
+
+module.exports = { createUser, getAllUsers, totalUsers, PutPrivileges, PutBanned, getPurchasedProducts, getProductsHistory };

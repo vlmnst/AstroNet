@@ -5,7 +5,9 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import SideMenu from "./SideMenu/SideMenu";
 import UserHome from "./UserHome";
 import PanelAdminNav from "./PanelAdminNav";
+
 import UserProfileNav from "./UserProfileNav";
+
 
 import Login from "../Components/Login";
 
@@ -47,6 +49,7 @@ const Main = () => {
                     name='Login'
                     component={Login}
                 />
+
             </Drawer.Navigator >
         </NavigationContainer >
     )
