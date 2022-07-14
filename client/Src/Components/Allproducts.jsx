@@ -159,7 +159,7 @@ const Allproducts = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   AndroidSafeArea: {
-    paddingTop: StatusBar.currentHeight + 10,
+    // paddingTop: StatusBar.currentHeight + 10,
   },
   container: {
     width: "100%",
