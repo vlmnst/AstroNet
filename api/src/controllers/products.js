@@ -202,7 +202,10 @@ const getProductsByName = async (req, res, next) => {
         let products = await Product.find({})
         let productsIncludesName = products.filter(item => 
             item.name.toLowerCase().includes(name) ||
-            item.category.toLowerCase().includes(name) ||
+            item.category.includes(name) ||
+            // item.category.toLowerCase().includes(name) ||
+            // category ['', '', '', '', '']
+            // item.category.map(c => c.toLowerCase().includes(name.toLowerCase())) ||
             item.description.Brand.toLowerCase().includes(name)
         )
         if(productsIncludesName.length === 0) return res.json({ error:  'We are sorry, we do not have that product, try something else'})
