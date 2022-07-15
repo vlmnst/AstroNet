@@ -6,19 +6,22 @@ const PanelAdmin = ({ navigation, route }) => {
 
     return (
             <View style={styles.conteiner}>
-                <TouchableOpacity>
+                <TouchableOpacity
+                onPress={() => navigation.navigate("ProductCreate")}>
                     <View style={styles.button}>
-                        <Text style={styles.text}>Button 1</Text>
+                        <Text style={styles.text}>Create Product</Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity
+                onPress={() => navigation.navigate("AllAdmin")}>
                     <View style={styles.button}>
-                        <Text style={styles.text}>Button 2</Text>
+                        <Text style={styles.text}>All Products</Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity
+                onPress={() => navigation.navigate("AllUsers")}>
                     <View style={styles.button}>
-                        <Text style={styles.text}>Button 3</Text>
+                        <Text style={styles.text}>All Users</Text>
                     </View>
                 </TouchableOpacity>
             </View>
