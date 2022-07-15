@@ -24,8 +24,9 @@ const SideMenu = ({ navigation }) => {
     
     // const index = useNavigationState(state => state?.routes[0].state.index)
     const { routes } = navigation.getState()
-    let index = routes[0].state?.index    
-    const handlePressStack = (prop) => {
+    let index = routes[0].state?.index  
+    const handlePressHome = (prop) => {
+        // console.log(navigation.getState())
         if(currentBtn === prop && index > 0 ){
             navigation.navigate(prop)
             navigation.dispatch(
@@ -40,6 +41,24 @@ const SideMenu = ({ navigation }) => {
             navigation.navigate(prop)
         }
         setCurrentBtn(prop)
+    }
+
+    let index2 = routes[2].state?.index   
+    const handlePressPanelAdminBtn = (prop) => {
+        setCurrentBtn(prop)
+        if(currentBtn == prop && index2 > 0 ){
+            navigation.navigate(prop)
+            navigation.dispatch(
+                StackActions.popToTop()
+            )
+        } else if (currentBtn != prop && index2 > 0 ) {
+            navigation.navigate(prop)
+            navigation.dispatch(
+                StackActions.popToTop()
+            )
+        } else {
+            navigation.navigate(prop)
+        }
     }
 
     const handlePress = (prop) => {
@@ -65,7 +84,7 @@ const SideMenu = ({ navigation }) => {
             <Text style={ styles.title }>Menu</Text>
             <HomeBtn
                 text = "Home"
-                onPress={() => handlePressStack('HomeNav')}
+                onPress={() => handlePressHome('HomeNav')}
             />
             { userName ? (
                 <ProfileBtn
@@ -76,7 +95,7 @@ const SideMenu = ({ navigation }) => {
             { role === 'admin' ? (
                 <PanelAdminBtn
                     text = "PanelAdmin"
-                    onPress = { () => handlePressStack("PanelAdminNav") }
+                    onPress = { () => handlePressPanelAdminBtn("PanelAdminNav") }
                 />
             ) : null }
             { role === 'guest' ? (
