@@ -55,7 +55,7 @@ const Login = ({ navigation }) => {
   // RESPUESTA PARA SABER SI ESTA REGISTRADO O NO
   const responseToLogin = async (email) => {
     //ruta para indtificar el user y traer la data
-    let res = await axios.post("http://localhost:3001/users/getByEmail/"+email);
+    let res = await axios.post(ROUTE+"/users/getByEmail/"+email);
     const { status, message, data } = res.data;
     if(!status){ navigation.navigate("Create User") }
     if(status){
