@@ -151,34 +151,28 @@ const getPurchasedProducts = async (req, res, next) => {
 
 const getUser = async (req, res, next) => {
     const { email } = req.params;
-    console.log(req.body)
     try {
-      console.log(email)
       let user = await User.find({ email: email });
       if (user.length === 0) {
         return res.json({ message: "Not register user" });
       }
       if (user) {
-        // si logueo bien, agrego la data que va a ir en el token codificado
+        const { _id, username, email, role } = user[0]
         const dataToken = {
-          id: user._id,
-          username: user.username,
-          email: user.email,
+          id: _id,
+          username: username,
+          email: email,
         };
-  
-        // creo el token modificado con la dataToken y lo encripto con la palabra secreta
         const token = jwt.sign(dataToken, process.env.SECRET, {
-          expiresIn: 60 * 60 * 24 * 7, // expira cada 7 días (segs, mins, horas, dias)
+          expiresIn: 60 * 60 * 1 * 1, // expira cada 7 días (segs, mins, horas, dias)
         });
-  
-        // preparo la data a devolver
+         
         const userData = {
-          username: user.username,
-          email: user.email,
-          role: user.role,
+          username: username,
+          email: email,
+          role: role,
           token,
         };
-  
         return res.send({
           status: "SUCCESS",
           message: "Signup successfully",

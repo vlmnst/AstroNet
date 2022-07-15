@@ -46,9 +46,9 @@ const AllAdmin = ({ route, navigation }) => {
         : null;
 
     // unmount
-    useEffect(() => {
-        return () => dispatch(clearAdmin());
-    }, [dispatch]);
+    // useEffect(() => {
+    //     return () => dispatch(clearAdmin());
+    // }, [dispatch]);
 
     // ---------- handlers ----------
 

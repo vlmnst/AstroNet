@@ -62,11 +62,9 @@ export const getPurchaseOrders = (username)=> async(dispatch) => {
 };
 
 export const putReviewToProduct = (payload)=> async(dispatch) => {
-    console.log(payload)
     const { idProduct } = payload;
     try {
         const { data } = await axios.put(ROUTE + "/products/putReview/" + idProduct, payload);
-        console.log(data);
     } catch (error) {
         console.log(error);
     }; 

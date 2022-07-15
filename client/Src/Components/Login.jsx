@@ -7,6 +7,7 @@ import {
   StyleSheet,
   SafeAreaView,
   StatusBar,
+  TouchableOpacity,
 } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
@@ -54,11 +55,12 @@ const Login = ({ navigation }) => {
   // RESPUESTA PARA SABER SI ESTA REGISTRADO O NO
   const responseToLogin = async (email) => {
     //ruta para indtificar el user y traer la data
-    let res = await axios.post(ROUTE+"/users/getByEmail/"+email);
+    let res = await axios.post("http://localhost:3001/users/getByEmail/"+email);
     const { status, message, data } = res.data;
     if(!status){ navigation.navigate("Create User") }
     if(status){
         dispatch(setUserData(data));
+        // console.log(data)
         AsyncStorage.setItem("storageCredentials", JSON.stringify(data)).catch(
           () => console.log("error while persistLogin at Login.jsx")
         );
@@ -156,11 +158,12 @@ const Login = ({ navigation }) => {
         <Button title="Create account" onPress={() => alert("create")} />
 
         {/* LOGIN GOOGLE */}
-        <GoogleButton
-          onClick={() => {
+        <TouchableOpacity
+          onPress={() => {
             promptAsync()
            }}
-        />
+        ><Text>Login with Google</Text>
+        </TouchableOpacity>
       </SafeAreaView>
     </View>
   );
