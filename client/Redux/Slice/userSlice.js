@@ -19,6 +19,9 @@ export const realUserSlice = createSlice({
         getPurchaseProducts(state, action) {
             state.purchaseProducts = action.payload
         },
+        getPurchaseOrders(state, action) {
+            state.productHistory = action.payload
+        },
         getUserData(state, action) {
             state.userName = action.payload
         },
@@ -42,11 +45,31 @@ export const realUserSlice = createSlice({
 
 export const getPurchaseProducts = (username)=> async(dispatch) => {
     try {
-        const { data } = await axios.get(ROUTE+"/users/productsHistory/"+username);
+        const { data } = await axios.get(ROUTE + "/users/purchasedProducts/" + username);
         dispatch(realUserSlice.actions.getPurchaseProducts(data));
     } catch (error) {
         console.log(error);
     };
+};
+
+export const getPurchaseOrders = (username)=> async(dispatch) => {
+    try {
+        const { data } = await axios.get(ROUTE + "/users/productsHistory/" + username);
+        dispatch(realUserSlice.actions.getPurchaseOrders(data));
+    } catch (error) {
+        console.log(error);
+    };
+};
+
+export const putReviewToProduct = (payload)=> async(dispatch) => {
+    console.log(payload)
+    const { idProduct } = payload;
+    try {
+        const { data } = await axios.put(ROUTE + "/products/putReview/" + idProduct, payload);
+        console.log(data);
+    } catch (error) {
+        console.log(error);
+    }; 
 };
 
 export const setUserData = (data) => async (dispatch) => {
@@ -63,6 +86,14 @@ export const getUserData = (username)=> async(dispatch) => {
         dispatch(realUserSlice.actions.getUserData(data));
     } catch (error) {
         console.log(error);
+    };
+};
+
+export const createUser = (user)=> async(dispatch) => {
+    try {
+        await axios.post(ROUTE +"/users/register", user);
+    } catch (e) {
+        console.log(e)
     };
 };
 

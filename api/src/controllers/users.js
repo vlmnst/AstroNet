@@ -118,7 +118,7 @@ const getProductsHistory = async (req, res, next) => {
     let name=req.params.name
  
     try {
-        const prodHistory = await User.findOne({username: name}, {productsHistory})
+        const prodHistory = await User.findOne({username: name}, {"productsHistory": 1})
         return res.json(prodHistory);
     } catch (error) {
         return next(error);
@@ -148,4 +148,45 @@ const getPurchasedProducts = async (req, res, next) => {
     };
 };
 
-module.exports = { createUser, getAllUsers, totalUsers, PutPrivileges, PutBanned, getPurchasedProducts, getProductsHistory };
+const getUser = async (req, res, next) => {
+    const { email } = req.params;
+    console.log(req.body)
+    try {
+      console.log(email)
+      let user = await User.find({ email: email });
+      if (user.length === 0) {
+        return res.json({ message: "Not register user" });
+      }
+      if (user) {
+        // si logueo bien, agrego la data que va a ir en el token codificado
+        const dataToken = {
+          id: user._id,
+          username: user.username,
+          email: user.email,
+        };
+  
+        // creo el token modificado con la dataToken y lo encripto con la palabra secreta
+        const token = jwt.sign(dataToken, process.env.SECRET, {
+          expiresIn: 60 * 60 * 24 * 7, // expira cada 7 días (segs, mins, horas, dias)
+        });
+  
+        // preparo la data a devolver
+        const userData = {
+          username: user.username,
+          email: user.email,
+          role: user.role,
+          token,
+        };
+  
+        return res.send({
+          status: "SUCCESS",
+          message: "Signup successfully",
+          data: userData,
+        });
+      }
+    } catch (e) {
+      res.status(404).send(e.message);
+    }
+  };
+
+module.exports = { createUser, getAllUsers, totalUsers, PutPrivileges, PutBanned, getPurchasedProducts, getProductsHistory, getUser };
