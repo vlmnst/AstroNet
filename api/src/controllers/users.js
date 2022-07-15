@@ -184,4 +184,19 @@ const getUser = async (req, res, next) => {
     }
   };
 
-module.exports = { createUser, getAllUsers, totalUsers, PutPrivileges, PutBanned, getPurchasedProducts, getProductsHistory, getUser };
+  const getUsersFull = async (req, res, next) => {
+    const { email } = req.params;
+    console.log(req.body)
+    try {
+      console.log(email)
+      let user = await User.find({ email: email });
+      if (user.length === 0) {
+        return res.json({ message: "Not register user" });
+      }
+      return res.json(user)
+    } catch (e) {
+      res.status(404).send(e.message);
+    }
+  };
+
+module.exports = { createUser, getAllUsers, totalUsers, PutPrivileges, PutBanned, getPurchasedProducts, getProductsHistory, getUser,getUsersFull };
