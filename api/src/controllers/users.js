@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
+const jwt = require('jsonwebtoken');
 
 const getAllUsers = async (req, res, next) => {
     console.log('> ...initializing connection at "getAllUsers"');

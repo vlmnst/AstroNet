@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
-import { ROUTE, expoClientId, androidClientId, webClientId } from "@env";
+import { ROUTE } from "@env";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch } from "react-redux";
 import { setUserData } from "../../Redux/Slice/userSlice";
@@ -25,9 +25,9 @@ const Login = ({ navigation }) => {
   const [accessToken, setAccessToken] = useState(null);
 
   const [request, response, promptAsync] = Google.useAuthRequest({
-    expoClientId,
-    androidClientId,
-    webClientId,
+    expoClientId:'249536522363-39rfcrblktar14u0n6eo9bjrcgj4to67.apps.googleusercontent.com',
+    androidClientId:'249536522363-69m8roucbhests6sk69l3msirfjm9lhf.apps.googleusercontent.com',
+    webClientId:'249536522363-2bvea9vfafhkscv8fs8vrbbe0fei9e5i.apps.googleusercontent.com',
   });
   async function getUserInfo() {
     let response = await fetch(
@@ -39,7 +39,6 @@ const Login = ({ navigation }) => {
       }
     );
     const userInfo = await response.json();
-    console.log(userInfo.email)
     responseToLogin(userInfo.email)
   }
 
@@ -55,10 +54,8 @@ const Login = ({ navigation }) => {
   // RESPUESTA PARA SABER SI ESTA REGISTRADO O NO
   const responseToLogin = async (email) => {
     //ruta para indtificar el user y traer la data
-    console.log(email)
-    let res = await axios.post("http://localhost:3001/users/getByEmail/"+ email);
+    let res = await axios.post(ROUTE+"/users/getByEmail/"+email);
     const { status, message, data } = res.data;
-    console.log(res.data)
     if(!status){ navigation.navigate("Create User") }
     if(status){
         dispatch(setUserData(data));
