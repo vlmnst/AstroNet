@@ -138,7 +138,7 @@ const buyProduct = async (req, res, next) => {
         let emptyCart = cart.map(async(prods) => {
             let product = await Product.findById(prods.id);
 
-            let { price, name, offer } = product;
+            let { price, name, offer, img } = product;
 
             product.stock = product.stock - prods.quantity;
             product.soldCount = product.soldCount + prods.quantity;
@@ -151,6 +151,8 @@ const buyProduct = async (req, res, next) => {
                 name,
                 price,
                 offer,
+                img,
+                review: false,
                 quantity: prods.quantity,
             });
         });
@@ -213,7 +215,8 @@ const getProductsByName = async (req, res, next) => {
     } catch (error) {
         return next(error);
     }
-}
+};
+
 const getProductsById = async (req, res, next) => {
     try {
         let id = req.params.id
@@ -226,7 +229,8 @@ const getProductsById = async (req, res, next) => {
     } catch (error) {
         return next(error.detail);
     }
-}
+};
+
 const getCategories = async (req, res, next) => {
     try {
         let products = await Product.find({})
@@ -236,6 +240,38 @@ const getCategories = async (req, res, next) => {
     } catch (error) {
         console.log(error.message)
     }
-}
+};
 
-module.exports = { getAllProducts, createProduct, totalProducts, deleteProduct, buyProduct, getProductsByCategory, getProductsByName, getProductsById, getCategories, editProduct };
+const putReview = async (req, res, next) => {
+    console.log('> ...initializing connection at "putReview"');
+
+    try {
+        const { id } = req.params;
+        const { review } = req.body; // review: {rating, comment, owner}
+        // falta ir a buscar al owner y sus productHistory, para agregarle al producto comprado : REVIEW = true
+        
+        const addReviewProduct = await Product.updateOne({"_id": id }, {$push: {"reviews": review}});
+
+        if (addReviewProduct) {
+            return res.json({ msg: 'review successfully'})
+        } else {
+            return res.status(400).json({ error: 'problem adding review in product' });
+        };
+    } catch (error) {
+        return next(error);
+    };
+};
+
+module.exports = { 
+    getAllProducts, 
+    createProduct, 
+    totalProducts, 
+    deleteProduct, 
+    buyProduct, 
+    getProductsByCategory,
+    getProductsByName, 
+    getProductsById, 
+    getCategories, 
+    editProduct,
+    putReview, 
+};
