@@ -7,6 +7,7 @@ import {
   StyleSheet,
   SafeAreaView,
   StatusBar,
+  TouchableOpacity,
 } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
@@ -59,6 +60,7 @@ const Login = ({ navigation }) => {
     if(!status){ navigation.navigate("Create User") }
     if(status){
         dispatch(setUserData(data));
+        // console.log(data)
         AsyncStorage.setItem("storageCredentials", JSON.stringify(data)).catch(
           () => console.log("error while persistLogin at Login.jsx")
         );
@@ -156,11 +158,12 @@ const Login = ({ navigation }) => {
         <Button title="Create account" onPress={() => alert("create")} />
 
         {/* LOGIN GOOGLE */}
-        <GoogleButton
-          onClick={() => {
+        <TouchableOpacity
+          onPress={() => {
             promptAsync()
            }}
-        />
+        ><Text>Login with Google</Text>
+        </TouchableOpacity>
       </SafeAreaView>
     </View>
   );
