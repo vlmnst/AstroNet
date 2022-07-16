@@ -55,7 +55,6 @@ const UserCard = (props) => {
     const handleReset = () => {
         //dispatch(funcionreset()) Falta accion en reducer y ruta en el back 
     }
-    console.log(userRol)
     return (
         <TouchableOpacity
             style={item.role === 'banned' ? styles.containerBanned : styles.container}
