@@ -35,9 +35,9 @@ const SearchBar = ({ navigation, route }) => {
 };
 
 const styles = StyleSheet.create({
-  textInput: { height: 30, width: 200, borderWidth: 1, borderRadius: 8, borderColor: "#A09E9E", backgroundColor: "#D0D0D0", marginBottom: 2 },
-  image: { marginBottom: 2, height: 30, width: 30, borderRadius: 8, backgroundColor: "#48A346", borderColor: "#A09E9E" },
-  Container_: { flexDirection: "row", marginBottom: 1, boderWidth: 1, borderColor: "#A09E9E", marginHorizontal: 15 }
+  textInput: { height: 40, width: 250, borderWidth: 1, borderRadius: 8, borderColor: "#A09E9E", backgroundColor: "#D0D0D0", marginBottom: 2 },
+  image: { marginHorizontal:5, height: 30, width: 30, borderRadius: 8, backgroundColor: "#48A346", borderColor: "#A09E9E" },
+  Container_: { flexDirection: "row", justifyContent:"center", alignItems:"center" }
 });
 
 export default SearchBar;
