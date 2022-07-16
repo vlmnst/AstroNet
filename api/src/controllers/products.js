@@ -2,7 +2,6 @@ const Product = require('../models/Product');
 const User = require('../models/User');
 
 const getAllProducts = async (req, res, next) => {
-    console.log('> ...initializing connection at "getAllProducts"');
 
     try {
         const products = await Product.find({})
@@ -13,7 +12,6 @@ const getAllProducts = async (req, res, next) => {
 };
 
 const totalProducts = async (req, res, next) => {
-    console.log('> ...initializing connection at "totalProducts"');
 
     try {
         let result = await Product.count();
@@ -24,7 +22,6 @@ const totalProducts = async (req, res, next) => {
 };
 
 const createProduct = async (req, res, next) => {
-    console.log('> ...initializing connection at "createProduct"');
 
     try {
         const { 
@@ -107,7 +104,6 @@ const deleteProduct = async (req, res, next) => {
 };
 
 const buyProduct = async (req, res, next) => {
-    console.log('> ...initializing connection at "buyProduct"');
 
     try {
         // cart = [{idProduct1, quantity}, {idProduct2, quantity}, etc]
@@ -243,7 +239,6 @@ const getCategories = async (req, res, next) => {
 };
 
 const putReview = async (req, res, next) => {
-    console.log('> ...initializing connection at "putReview"');
 
     try {
         const { id } = req.params;

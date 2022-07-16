@@ -3,7 +3,6 @@ const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 
 const getAllUsers = async (req, res, next) => {
-    console.log('> ...initializing connection at "getAllUsers"');
 
     try {
         const users = await User.find({})
@@ -15,7 +14,6 @@ const getAllUsers = async (req, res, next) => {
 };
 
 const totalUsers = async (req, res, next) => {
-    console.log('> ...initializing connection at "totalUsers"');
 
     try {
         let result = await User.count();
@@ -26,7 +24,6 @@ const totalUsers = async (req, res, next) => {
 };
 
 const createUser = async (req, res, next) => {
-    console.log('> ...initializing connection at "createUser"');
 
     try {
         const { 
@@ -127,7 +124,6 @@ const getProductsHistory = async (req, res, next) => {
  }
 
 const getPurchasedProducts = async (req, res, next) => {
-    console.log('> ...initializing connection at "getPurchasedProducts"');
     
     try {
         const { name: username } = req.params;
@@ -186,9 +182,7 @@ const getUser = async (req, res, next) => {
 
   const getUsersFull = async (req, res, next) => {
     const { email } = req.params;
-    console.log(req.body)
     try {
-      console.log(email)
       let user = await User.find({ email: email });
       if (user.length === 0) {
         return res.json({ message: "Not register user" });
