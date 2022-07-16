@@ -5,8 +5,10 @@ import Details from "./Details";
 import Allproducts from "../Components/Allproducts";
 import Home from "../Components/Home";
 import Categories from "../Screens/Details";
+import Login from "../Components/Login";
+// import NavBar from "../Components/NavBar";
+
 const Stack = createNativeStackNavigator();
-import NavBar from "../Components/NavBar";
 
 const UserHome = () => {
     return (
@@ -14,7 +16,7 @@ const UserHome = () => {
                 screenOptions={{
                     headerShown: false
                 }}>
-                    <Stack.Screen
+                <Stack.Screen
                     name='Home'
                     component={Home}
                 />
@@ -29,6 +31,10 @@ const UserHome = () => {
                 <Stack.Screen
                     name='Details'
                     component={Details}
+                />
+                <Stack.Screen
+                    name='Login'
+                    component={Login}
                 />
             </Stack.Navigator >
     )
