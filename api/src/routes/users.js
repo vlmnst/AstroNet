@@ -7,7 +7,7 @@ userRouter.get('/getAll', getAllUsers);
 userRouter.get('/count', totalUsers);
 userRouter.post('/register', createUser);
 userRouter.put('/privileges/:name', PutPrivileges);
-userRouter.put('/users/banned/:name', PutBanned);
+userRouter.put('/banned/:name', PutBanned);
 userRouter.get('/productsHistory/:name', getProductsHistory);
 userRouter.get('/purchasedProducts/:name', getPurchasedProducts);
 userRouter.post('/getByEmail/:email', getUser);

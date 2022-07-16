@@ -74,7 +74,7 @@ const editProduct = async (req, res, next) => {
 
         const productId = req.params.id
 
-        const edProduct = Product.finOneAndUpdate({id: productId}, {
+        const edProduct = Product.findOneAndUpdate({"_id": productId}, {
             name,
             price,
             category,
@@ -86,7 +86,7 @@ const editProduct = async (req, res, next) => {
         );
 
         console.log(`. \u2705 product "${name}" edited OK`);
-        return res.json(edProduct);
+        return res.json({message:"Preduct modify successssssfully"});
     } catch (error) {
         return next(error);
     };
