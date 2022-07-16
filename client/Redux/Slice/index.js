@@ -139,7 +139,8 @@ export const getAllProducts = ()=> async(dispatch) => {
 export const getProductsByCategory = (category)=> async(dispatch) => {
     try {
         var json = await axios.get(ROUTE +"/products/category/"+category)
-        dispatch(userSlice.actions.getProductsByCategory (json.data))
+        let productWithStock = json.data.filter((prod)=> prod.stock > 0)
+        dispatch(userSlice.actions.getProductsByCategory (productWithStock))
 
     } catch (e) {
         console.log(e)
@@ -148,7 +149,8 @@ export const getProductsByCategory = (category)=> async(dispatch) => {
 export const getProductsByName = (name)=> async(dispatch) => {
     try {
         var json = await axios.get(ROUTE+"/products/search/"+name.toLowerCase())
-        dispatch(userSlice.actions.getProductsByName (json.data))
+        let productWithStock = json.data.filter((prod)=> prod.stock > 0)
+        dispatch(userSlice.actions.getProductsByName (productWithStock))
 
     } catch (e) {
         console.log(e)

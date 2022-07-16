@@ -88,7 +88,7 @@ const PutPrivileges = async (req, res, next) => {
 
     try{
         let isAdmin = await User.find({username})
-        if(isAdmin.role==="admin"){
+        if(isAdmin[0].role==="admin"){
             await User.findOneAndUpdate({username:name},{$set:{"role":privilege}})
             res.status(200).send("Privileges Updated")
         }else{
@@ -104,7 +104,7 @@ const PutBanned = async (req, res, next) => {
     let {username, privilege}= req.body.banned;
     try{
         let isAdmin = await User.find({username})
-        if(isAdmin.role==="admin"){
+        if(isAdmin[0].role==="admin"){
             await User.findOneAndUpdate({username:name},{$set:{"role":privilege}})
             res.status(200).send(`. \u2705 user "${name}" "banned" status Updated to ${privilege}`)
         }else{
