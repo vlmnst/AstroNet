@@ -173,16 +173,27 @@ export const getCategories = ()=> async(dispatch) => {
     }
 };
 //------------------Admin-------------------
-export const PutPrivileges = (name,privileges)=> async(dispatch) => {
+export const PutPrivileges = (payload)=> async(dispatch) => {
+    const {name,privileges} = payload
     try {
-        await axios.put(ROUTE+"/users/privileges/"+name,privileges)
+        await axios.put(ROUTE+"/users/privileges/"+name, privileges)
     } catch (e) {
         console.log(e)
     }
 };
-export const PutBanned = (name,banned)=> async(dispatch) => {
+export const PutBanned = (payload)=> async(dispatch) => {
+    const {name,privileges} = payload
     try {
-        await axios.put(ROUTE+"/users/banned/"+name,banned)
+        console.log(ROUTE+"/users/banned/"+name, privileges)
+        await axios.put(ROUTE+"/users/banned/"+name, privileges)
+    } catch (e) {
+        console.log(e)
+    }
+};
+export const ModifyProducts = (payload)=> async(dispatch) => {
+    const {id,product} = payload
+    try {
+        await axios.put(ROUTE+"/products/update/"+id, product)
     } catch (e) {
         console.log(e)
     }
