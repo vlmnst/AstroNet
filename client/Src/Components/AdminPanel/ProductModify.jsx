@@ -1,28 +1,24 @@
-import React, { useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Text, View, TextInput, Button, StyleSheet, SafeAreaView, StatusBar,Image,ScrollView} from "react-native";
+import { Text, View, TextInput, Button, StyleSheet, SafeAreaView, StatusBar, Image, ScrollView } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import DropDownPicker from "react-native-dropdown-picker";
 import { ModifyProducts } from "../../../Redux/Slice";
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const ProductModify = (props) => {
 
     const dispatch = useDispatch();
     let item = props.route.params;
-    // PROBANDO CATEGORIES EN ARRAY
-    let categories = useSelector((state) => state.ALL_PRODUCTS.categories); // categories === ['', '', '']
-
+    let categories = useSelector((state) => state.ALL_PRODUCTS.categories); 
     const [openitems, setOpenitems] = useState(false);
     const [valueitems, setValueitems] = useState(null);
     let pickerItems = [];
     categories.length
         ? categories.map((c, index) => pickerItems.push({ label: c, value: c }))
         : null;
-
-
-    console.log(item)
-
-
+    const [key, setKey] = useState("");
+    const [description, setDescription] = useState("");
     const [state, setState] = useState({
         id: item.id,
         category: item.category,
@@ -47,8 +43,6 @@ const ProductModify = (props) => {
             })
         };
     };
-    // PROBANDO CATEGORIES EN ARRAY
-
     const { control, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {
             name: item.name,
@@ -59,18 +53,28 @@ const ProductModify = (props) => {
             description: item.description,
         }
     });
+    let product = {
+        name: "",
+        category: "",
+        img: "",
+        price: "",
+        offer: "",
+        stock: "",
+        description: {},
+    }
+
     const onSubmitPreview = data => {
         if (state.category.length < 1) {
-        alert('Enter a category')
+            alert('Enter a category')
         } else {
-            const product = {
-                name : data.name,
+                product = {
+                name: data.name,
                 category: state.category,
                 img: data.img,
                 price: data.price,
                 offer: data.offer,
                 stock: data.stock,
-                description: {Description: data.description}
+                description: state.description ,
             }
             setState({
                 ...state,
@@ -83,15 +87,45 @@ const ProductModify = (props) => {
                 offer: product.offer,
                 description: product.description,
             })
+            key ? createDescription():null
         }
     }
+    
 
     const onSubmit = () => {
-        // dispatch(ModifyProducts(product));
-        console.log("hola")
+        const payload ={
+            id: item.id,
+            product:{
+                category: state.category,
+                name: state.name,
+                price: state.price,
+                img: state.img,
+                stock: state.stock,
+                offer: state.offer,
+                description: state.description
+            }
+        }
+        dispatch(ModifyProducts(payload));
+    }
+    function filterDescription(e) {
+        setDescription(e)
     };
+    function filterKey(e) {
+        setKey(e)
+    };
+    const createDescription = (e) => {
+        let result ={}
+        resultarray =descriptionArray
+        resultarray.push([key,description])
+        resultarray.forEach(par =>result[par[0]] = par[1])
+        result[key] = description
+        setState({
+            ...state,
+            description: result
+        })
+    }
 
-    descriptionArray = Object.entries(item.description)
+    descriptionArray = Object.entries(state.description)
 
     const Separator = () => (
         <View style={styles.separator} />
@@ -110,10 +144,19 @@ const ProductModify = (props) => {
                         ) : null}
                     </View>
                     <View style={styles.descriptionCont}>
-                        {/* {state.category? state.category.map((p,index)
-                        <Text style={styles.name}>{state.name}: </Text> 
-                        )} */}
-                        <Text style={styles.name}>{state.name}: </Text>
+                    <Text style={styles.name}>{state.name} </Text>
+                    <Text style={styles.name}>Categories: </Text>
+                    {state.category? state.category.map((p,index)=>{
+                            return(
+                                <View key={index}>
+                                <Text style={styles.description}>{p} </Text>
+                                </View>
+                            )
+                            
+                            }
+                        )
+                        :<View style={styles.descriptionCont}><Text style={styles.name}>not categories loaded </Text></View>}
+                        
                         {descriptionArray.map((p, index) => {
                             return (
                                 <Text style={styles.description} key={index}>
@@ -125,7 +168,7 @@ const ProductModify = (props) => {
                 </View>
             </View>
 
-
+            <View style={styles.Container_}>
             <Text>Product name:</Text>
             <Controller
                 control={control}
@@ -134,7 +177,7 @@ const ProductModify = (props) => {
                 }}
                 render={({ field: { onChange, onBlur, value } }) => (
                     <TextInput
-                        style={styles.input}
+                        style={styles.textInput}
                         onBlur={onBlur}
                         onChangeText={onChange}
                         value={value}
@@ -143,7 +186,8 @@ const ProductModify = (props) => {
                 name="name"
             />
             {errors.name && <Text>Insert product name</Text>}
-
+            </View>
+            <View style={styles.Container_}>
             <Text>Product price:</Text>
             <Controller
                 control={control}
@@ -152,7 +196,7 @@ const ProductModify = (props) => {
                 }}
                 render={({ field: { onChange, onBlur, value } }) => (
                     <TextInput
-                        style={styles.input}
+                        style={styles.textInput}
                         onBlur={onBlur}
                         onChangeText={onChange}
                         value={value}
@@ -161,9 +205,22 @@ const ProductModify = (props) => {
                 name="price"
             />
             {errors.price && <Text>Insert price value</Text>}
-
-            <Text>Product category:</Text>
+            </View>
+            <View style={styles.Container_}><Text>Product category:</Text></View>
+            <View style={styles.descriptionCont}>
+            {state.category? state.category.map((p,index)=>{
+                            return(
+                                <View style={styles.Container_}key={index}>
+                                <Text style={styles.name}>{p} </Text>
+                                </View>
+                            )
+                            
+                            }
+                        )
+                        :<View style={styles.descriptionCont}><Text style={styles.name}>not categories loaded </Text></View>}
+            </View>
             <DropDownPicker
+                style={styles.Container_}
                 open={openitems}
                 value={valueitems}
                 items={pickerItems}
@@ -172,7 +229,7 @@ const ProductModify = (props) => {
                 onSelectItem={(value) => handleCategory(value)}
             />
             {errors.category && <Text>Insert category name</Text>}
-
+            <View style={styles.description}>
             <Text>Product image:</Text>
             <Controller
                 control={control}
@@ -181,7 +238,7 @@ const ProductModify = (props) => {
                 }}
                 render={({ field: { onChange, onBlur, value } }) => (
                     <TextInput
-                        style={styles.input}
+                        style={styles.textInput}
                         onBlur={onBlur}
                         onChangeText={onChange}
                         value={value}
@@ -190,7 +247,8 @@ const ProductModify = (props) => {
                 name="img"
             />
             {errors.img && <Text>Insert URL image </Text>}
-
+            </View>
+            <View style={styles.Container_}>
             <Text>Product stock:</Text>
             <Controller
                 control={control}
@@ -200,7 +258,7 @@ const ProductModify = (props) => {
                 }}
                 render={({ field: { onChange, onBlur, value } }) => (
                     <TextInput
-                        style={styles.input}
+                        style={styles.textInput}
                         onBlur={onBlur}
                         onChangeText={onChange}
                         value={value}
@@ -209,7 +267,8 @@ const ProductModify = (props) => {
                 name="stock"
             />
             {errors.stock && <Text>Insert stock value</Text>}
-
+            </View>
+            <View style={styles.Container_}>
             <Text>Product offer:</Text>
             <Controller
                 control={control}
@@ -219,7 +278,7 @@ const ProductModify = (props) => {
                 }}
                 render={({ field: { onChange, onBlur, value } }) => (
                     <TextInput
-                        style={styles.input}
+                        style={styles.textInput}
                         onBlur={onBlur}
                         onChangeText={onChange}
                         value={value}
@@ -228,31 +287,24 @@ const ProductModify = (props) => {
                 name="offer"
             />
             {errors.offer && <Text>Insert offer value</Text>}
-
-            <Text>Product description:</Text>
-            <Controller
-                control={control}
-                rules={{
-                    required: true,
-                }}
-                render={({ field: { onChange, onBlur, value } }) => (
-                    <TextInput
-                        multiline
-                        numberOfLines={4}
-                        style={styles.inputmul}
-                        onBlur={onBlur}
-                        onChangeText={onChange}
-                        value={value}
-                    />
-                )}
-                name="description"
-            />
-            {errors.description && <Text>Insert product description</Text>}
-
+            </View>
+            <View style={styles.Container_}>
+                <Text>Name of description: </Text>
+                <TextInput
+                    style={styles.textInput}
+                    onChangeText={(text) => filterKey(text)}
+                    value={description.key}
+                />
+                <Text>value of description: </Text>
+                <TextInput
+                    style={styles.textInput}
+                    onChangeText={(text) => filterDescription(text)}
+                    value={description.value}
+                />
+            </View>
             <Separator />
-
             <Button title="Modification Preview" onPress={handleSubmit(onSubmitPreview)} />
-            {/* <Button title="Modify Product" onPress={onSubmit()} /> */}
+            <Button title="Modify Product" onPress={()=>{onSubmit()}} />
         </ScrollView>
     );
 };
@@ -297,6 +349,8 @@ const styles = StyleSheet.create({
     offer: { color: "red", fontSize: priceOfferFont },
     descriptionCont: { display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "center" },
     description: { fontSize: fontDescription, padding: 5, backgroundColor: "white", borderRadius: 5, borderColor: "#EAEAEA", marginHorizontal: 5, marginVertical: 5 },
+    textInput: { height: 40, width: "90%", borderWidth: 1, borderRadius: 8, borderColor: "#A09E9E", backgroundColor: "#D0D0D0", marginBottom: 2 },
+    Container_: {  marginBottom: 1, boderWidth: 1, borderColor: "#A09E9E", marginHorizontal: 15 }
 });
 
 export default ProductModify;
