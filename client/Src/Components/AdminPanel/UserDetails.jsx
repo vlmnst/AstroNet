@@ -1,8 +1,61 @@
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
+import {PutPrivileges} from "../../../Redux/Slice/index";
+import {PutBanned} from "../../../Redux/Slice/index";
+import { getCredentials } from "../../utils/handleCredentials";
+import { useDispatch} from "react-redux";
+import {useState, useEffect} from "react";
 
 const UserDetails = (props) => {
     const { route } = props;
     const data = route.params.item
+    const { navigation, item } = props;
+    const [userAdmin, setUserAdmin] = useState();
+    
+    //-----------Mount Credentials---------------
+    useEffect(() => {
+        const checkCreds= async()=>{
+            const credentials = await getCredentials();
+            if (credentials) {
+                setUserAdmin(credentials.username);
+            };
+        };
+        checkCreds()
+    }, []);
+    const dispatch = useDispatch();
+    //-----------User Types---------------
+    const userType={
+        user:"user",
+        mod:"mod",
+        banned:"banned",
+    }
+        //-----------Handlers---------------
+        const handlePushPrivilege=(type)=>{
+            if (type !== "banned"){
+                const payload = {
+                    name:data.username,
+                    privileges:{
+                        username:userAdmin, 
+                        privilege:type
+                    }
+                }
+                dispatch(PutPrivileges(payload))
+                alert('privileges changed successfully')
+            }else{
+            const payload = {
+                name:data.username,
+                privileges:{
+                    privilege:type,
+                    username:userAdmin
+                }
+            }
+                dispatch(PutBanned(payload))
+                alert('user banned successfully')
+            
+            }
+        }
+        const handleReset=()=>{
+            //dispatch(funcionreset()) Falta accion en reducer y ruta en el back 
+        }
 
     return (
         <ScrollView
@@ -26,15 +79,20 @@ const UserDetails = (props) => {
                 {data.role === 'admin' ?
                     <TouchableOpacity
                         style={styles.button}
-                        onPress={() => navigation.navigate("userDetails")} >
-                        <Text style={styles.text}>Remove from admins</Text>
+                        onPress={() =>handlePushPrivilege(userType.user)} >
+                        <Text style={styles.text}>Remove from moderator</Text>
                     </TouchableOpacity>
                     :
                     <TouchableOpacity
                         style={styles.button}
-                        onPress={() => navigation.navigate("ProductModify")} >
-                        <Text style={styles.text}> Set as administrator </Text>
+                        onPress={() =>handlePushPrivilege(userType.mod)}  >
+                        <Text style={styles.text}> Set as moderator </Text>
                     </TouchableOpacity>}
+                    <TouchableOpacity
+                    style={styles.button}
+                    onPress={() =>handlePushPrivilege(userType.user)} >
+                    <Text style={styles.text}> remove ban </Text>
+                </TouchableOpacity>
                 <TouchableOpacity
                     style={styles.button}
                     onPress={() => navigation.navigate("ProductCreate")} >
@@ -42,7 +100,7 @@ const UserDetails = (props) => {
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={styles.button}
-                    onPress={() => navigation.navigate("ProductCreate")} >
+                    onPress={() =>handlePushPrivilege(userType.banned)} >
                     <Text style={styles.text}> ban user </Text>
                 </TouchableOpacity>
             </View>
