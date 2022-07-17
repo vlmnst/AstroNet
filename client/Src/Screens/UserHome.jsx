@@ -6,6 +6,8 @@ import Allproducts from "../Components/Allproducts";
 import Home from "../Components/Home";
 import Categories from "../Screens/Details";
 import Login from "../Components/Login";
+import UserCreate from "../Components/UserCreate";
+import Cart from "../Components/CartLobby";
 // import NavBar from "../Components/NavBar";
 
 const Stack = createNativeStackNavigator();
@@ -35,6 +37,14 @@ const UserHome = () => {
                 <Stack.Screen
                     name='Login'
                     component={Login}
+                />
+                <Stack.Screen
+                    name='UserCreate'
+                    component={UserCreate}
+                />
+                <Stack.Screen 
+                    name='Cart' 
+                    component={Cart} 
                 />
             </Stack.Navigator >
     )

@@ -3,7 +3,7 @@ import Categories from "../Components/Categories";
 import { useDispatch, useSelector } from "react-redux";
 import { View, StyleSheet, Modal, Text, TouchableOpacity } from "react-native";
 import { getAllProducts,getCategories } from '../../Redux/Slice';
-// import Banner from "./Banner";
+import Banner from "./Banner";
 // import NavBar from "./NavBar";
 import SearchBar from "./SearchBar";
 
@@ -64,7 +64,7 @@ const Home = ({ navigation, route }) => {
         <View style={styles.SB}>
           <SearchBar navigation={navigation} route={route} />
         </View>
-        {/* <Banner navigation={navigation} /> */}
+        <Banner navigation={navigation} />
         <Categories {...navigation} />
       </View>
   );

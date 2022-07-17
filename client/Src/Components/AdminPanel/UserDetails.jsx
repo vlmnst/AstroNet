@@ -61,6 +61,11 @@ const UserDetails = (props) => {
         <ScrollView
             style={styles.container}
         >
+            <TouchableOpacity
+                style={styles.button}
+                onPress={() => navigation.goBack()}>
+                <Text style={styles.text}>Go Back</Text>
+            </TouchableOpacity>
             <View style={styles.title}>
                 <View style={styles.titlecontainer}>
                     <Text style={styles.title}>Role </Text>

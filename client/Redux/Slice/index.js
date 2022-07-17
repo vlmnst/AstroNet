@@ -14,6 +14,7 @@ export const userSlice = createSlice({
         AllUsers:[],
         AllUsersFiltered: [],
         allAdminProducts:[],
+        cart:[],
     },
     reducers:{
         getAllProducts(state,action){
@@ -121,9 +122,9 @@ export const userSlice = createSlice({
             state.allAdminProducts = state.allProducts 
         },
 
-        // getPurchaseProducts(state, action) {
-        //     state.purchaseProducts = action.payload
-        // }
+        cartCreate(state, action){
+            state.cart = [...state.cart, action.payload]
+        }
     }
 });
 
@@ -227,14 +228,9 @@ export const getAdminByName = (name)=> async(dispatch) => {
 };
 
 
-// export const getPurchaseProducts = (username)=> async(dispatch) => {
-//     try {
-//         const { data } = await axios.get(ROUTE+"/users/productsHistory/"+username);
-//         dispatch(userSlice.actions.getPurchaseProducts(data));
-//     } catch (error) {
-//         console.log(error);
-//     };
-// };
+export const cartCreate = (payload) => async(dispatch) => {
+    dispatch(userSlice.actions.cartCreate(payload))
+}
 
 export const {getByPrice, clearCache,clearAdmin,getAdminByPrice,resetAdminProducts,searchUser} =userSlice.actions;
 

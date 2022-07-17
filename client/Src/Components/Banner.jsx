@@ -1,77 +1,107 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
-import Carousel, {ParallaxImage} from 'react-native-snap-carousel';
 import {
+  Button,
+  Image,
   View,
+  ScrollView,
   Dimensions,
   StyleSheet,
   Platform,
   Text,
   TouchableOpacity,
-  TouchableHighlight
+  TouchableHighlight,
+  FlatList
 } from 'react-native';
 
-const {width: screenWidth} = Dimensions.get('window');
-
-
-const Banner = ({navigation}) => {
+const Banner = ({ navigation }) => {
 
   // traemos los productos con oferta
-  let products = useSelector((state) => state.ALL_PRODUCTS.allProducts);
-
+  let img = "https://www.google.com/imgres?imgurl=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1587831990711-23ca6441447b%3Fixlib%3Drb-1.2.1%26ixid%3DMnwxMjA3fDB8MHxzZWFyY2h8MXx8Y29tcHV0ZXIlMjB3aW5kb3dzfGVufDB8fDB8fA%253D%253D%26w%3D1000%26q%3D80&imgrefurl=https%3A%2F%2Funsplash.com%2Fes%2Fs%2Ffotos%2Fcomputer-windows&tbnid=YMFwWnjXMeZYqM&vet=12ahUKEwjewKqV5_34AhWNg5UCHQrpDwgQMygAegUIARDZAQ..i&docid=Ml2zzbRytNKAMM&w=1000&h=563&q=computer&ved=2ahUKEwjewKqV5_34AhWNg5UCHQrpDwgQMygAegUIARDZAQ"
+  products = useSelector((state) => state.ALL_PRODUCTS.allProducts);
   products = products.filter(p => p.offer > 0).sort((a, b) => b.offer - a.offer);
+  if (products.length > 5) { products = products.slice(0, 5) }
+  const [state, setState] = useState({slideIndex:0,});
+  products ? imgToView = products[state.slideIndex] : null
+  const plusSlides =(n)=> {
 
-  if (products.length > 5) { products = products.slice(0,5) }
-
-  const renderItem = ({item}, parallaxProps) => {
-    return (
-        <TouchableOpacity style={styles.item} onPress={() => navigation.navigate("Details", item)}>
-          <ParallaxImage
-            source={{uri: item.img }}
-            containerStyle={styles.imageContainer}
-            style={styles.image}
-            parallaxFactor={0.4}
-            {...parallaxProps}
-          />
-
-          <Text style={styles.name}>{item.name.toUpperCase().charAt(0).concat(item.name.slice(1,26))}...</Text>
-          <Text style={styles.offer}>{item.offer}% Off!</Text>
-      </TouchableOpacity>
-    );
-  };
-
+    if (state.slideIndex + n === -1 ){
+        return setState({
+            ...state,
+            slideIndex: (products.length-1),
+            
+        });
+    }
+    if (state.slideIndex + n === products.length){
+        return setState({
+        ...state,
+        slideIndex: 0,
+    });
+    }
+        return setState({
+            ...state,
+            slideIndex: (state.slideIndex) + n,
+    });
+}
+const [visible, setVisible] = useState(false)
+const[variable, setVariable] = useState('')
+const user = useSelector((state) => state.USER.userName)
+// setInterval(()=>plusSlides(1),10000)
   return (
-    <View>
-      <Carousel
-        sliderWidth={screenWidth}
-        sliderHeight={screenWidth}
-        itemWidth={screenWidth}
-        data={products}
-        renderItem={renderItem}
-        hasParallaxImages={true}
-        loop={true}
-        enableSnap={true}
-      />
-    </View>
+
+    <TouchableOpacity onPress={() => navigation.navigate("Details", imgToView)}>
+      {
+        imgToView ?
+            <View style={styles.imageContainer}>
+              <Image source={{ uri:imgToView.img}} style={styles.image} />
+              <Text style={styles.name}>
+                {imgToView.name.toUpperCase().charAt(0).concat(imgToView.name.slice(1, 26))}...
+              </Text> 
+              <Text style={styles.offer}>
+                {imgToView.offer}% Off!
+              </Text>
+              <View style={styles.Buttoncontainer}>
+              <View><Button style={styles.Button} onPress={(e)=>plusSlides(1)} title="Next"></Button></View>
+              <View><Button style={styles.Button} onPress={(e)=>plusSlides(-1)} title="Prev"></Button></View>
+              </View>
+            </View>
+          :
+          <Image source={{ uri: img }} style={styles.image} />
+      }
+
+    </TouchableOpacity>
+    //   )}
+    // />
   );
 };
 
-export default Banner;
-
 const styles = StyleSheet.create({
-  item: {
+  Buttoncontainer:{
+    marginTop :300,
+    justifyContent:'center',
+    flexDirection: 'row',
+    paddingHorizontal: 10,
+    paddingVertical:10,
+    heigth: 200,
     width: '100%',
-    height: 200,
-    backgroundColor: 'black',
+    borderRadius: 15,
+    position:'absolute'
+  },
+  Button:{
+    width: 40,
   },
   imageContainer: {
-    flex: 1,
-    marginBottom: Platform.select({ios: 0, android: 1}), 
-    backgroundColor: 'transparent',
+    justifyContent: "center",
+    backgroundColor:"black",
+    width: "100%",
+    marginBottom: Platform.select({ ios: 0, android: 1 }),
     borderRadius: 8,
   },
   image: {
-    resizeMode : 'contain'
+    padding:30,
+    height: 300,
+    width: '100%',
+    alignSelf:"center"
   },
   offer: {
     position: 'absolute',
@@ -94,3 +124,5 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center'
   }
 });
+
+export default Banner;

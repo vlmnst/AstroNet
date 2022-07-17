@@ -71,6 +71,10 @@ const Login = ({ navigation }) => {
 
 
   const [message, setMessage] = useState("");
+
+  const handleCreate=( )=>{
+    navigation.navigate("UserCreate");
+  }
   const dispatch = useDispatch();
 
   const {
@@ -155,7 +159,7 @@ const Login = ({ navigation }) => {
         {<Text style={styles.error}>{message}</Text>}
 
         <Button title="Sign in" onPress={handleSubmit(onSubmit)} />
-        <Button title="Create account" onPress={() => alert("create")} />
+        <Button title="Create account" onPress={() => handleCreate()} />
 
         {/* LOGIN GOOGLE */}
         <TouchableOpacity
