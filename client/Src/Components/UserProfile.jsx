@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { View, StyleSheet, Text, TouchableOpacity, ScrollView, FlatList, Image } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserFullData } from "../../Redux/Slice/userSlice";
+import { getUserFullData,getPurchaseOrders } from "../../Redux/Slice/userSlice";
 
 
 const UserProfile = ({ navigation, route }) => {
@@ -9,8 +9,10 @@ const UserProfile = ({ navigation, route }) => {
     const dispatch = useDispatch()
     const data = useSelector((state) => state.USER.userFullData)
     const email = useSelector((state) => state.USER.email)
+    const userName = useSelector((state) => state.USER.userName)
 
     useEffect(()=>{
+        dispatch(getPurchaseOrders(userName));
         dispatch(getUserFullData(email))
     },[dispatch])
 
@@ -78,16 +80,9 @@ const UserProfile = ({ navigation, route }) => {
                     </View>
                     <View style={styles.view2}>
                         <Text style={styles.text1}>Orders:</Text>
-                        {/* <FlatList
-                            // columnWrapperStyle={{ justifyContent: "space-evenly" }}
-                            style={styles.flatList}
-                            numColumns={1}
-                            data={data[0]?.productsHistory}
-                            renderItem={({ item }) => (
-                                <View>
-                                </View>
-                            )}
-                        /> */}
+                        <TouchableOpacity style={styles.Bottunn_} onPress={()=>navigation.navigate("PurchaseHistory", {navigation})}>
+                            <Text>watch</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>}
             </View>
