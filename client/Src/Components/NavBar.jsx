@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Button, Text } from 'react-native';
+import { View, StyleSheet, Button, Text,TouchableOpacity } from 'react-native';
 import SearchBar from './SearchBar';
 
 import { getCredentials, logOut } from '../utils/handleCredentials';
@@ -38,6 +38,11 @@ const NavBar = ({ navigation, route }) => {
             
             {/* SEARCHBAR */}
             <SearchBar navigation={navigation} route={route} />
+            <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => navigation.navigate("Cart")}>
+                    <Text>shopping cart</Text>
+            </TouchableOpacity>
         </View>
     )
 };

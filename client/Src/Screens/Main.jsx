@@ -5,6 +5,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import SideMenu from "./SideMenu/SideMenu";
 import UserHome from "./UserHome";
 import PanelAdminNav from "./PanelAdminNav";
+import Cart from "../Components/CartLobby";
 
 import UserProfileNav from "./UserProfileNav";
 
@@ -27,6 +28,10 @@ const Main = () => {
                     }}
                     name='HomeNav'
                     component={UserHome}
+                />
+                <Drawer.Screen 
+                    name='Cart' 
+                    component={Cart} 
                 />
                 <Drawer.Screen
                     options={{

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Text, View, TextInput, Button, StyleSheet, SafeAreaView, StatusBar, Image, ScrollView } from "react-native";
+import { Text, View, TextInput, Button, StyleSheet, SafeAreaView, StatusBar, Image, ScrollView,TouchableOpacity } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import DropDownPicker from "react-native-dropdown-picker";
 import { ModifyProducts } from "../../../Redux/Slice";
@@ -135,6 +135,11 @@ const ProductModify = (props) => {
         <ScrollView>
 
             <View style={styles.contDetails}>
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => props.navigation.goBack()}>
+                    <Text style={styles.text}>Go Back</Text>
+                </TouchableOpacity>
                 <Image source={{ uri: state.img }} style={styles.image} />
                 <View style={styles.contInt}>
                     <View style={state.priceOffer}>

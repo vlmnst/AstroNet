@@ -51,7 +51,7 @@ const Allproducts = ({ route, navigation }) => {
 
   // mount
   useEffect(() => {
-       dispatch(getProductsByName(searchName));
+    categories.includes(searchName)? dispatch(getProductsByCategory(searchName)):dispatch(getProductsByName(searchName))
     setPage(1);
   }, [dispatch]);
 

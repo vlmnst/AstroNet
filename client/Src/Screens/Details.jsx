@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Cart from "../Components/Cart";
 import {
   View,
   Text,
@@ -7,6 +8,7 @@ import {
   useWindowDimensions,
   Button,
   Image,
+  TouchableOpacity
 } from "react-native";
 
 const Details = (props) => {
@@ -19,6 +21,11 @@ const Details = (props) => {
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => props.navigation.goBack()}>
+        <Text style={styles.text}>Go Back</Text>
+      </TouchableOpacity>
       <Image source={{ uri: params.img }} style={styles.image} />
       <View style={styles.contInt}>
         <View style={styles.priceOffer}>
@@ -38,6 +45,7 @@ const Details = (props) => {
           })}
         </View>
       </View>
+      <Cart navigation={route} item={params}/>
     </View>
   );
 };

@@ -1,4 +1,5 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import Cart from "./Cart";
 
 const ProductCard = (props) => {
   const { navigation, item } = props;
@@ -22,6 +23,7 @@ const ProductCard = (props) => {
         </View>
         <Text style={styles.name}>{item.name.slice(0,65)}... </Text>
       </View>
+      <Cart navigation={navigation} item={item}/>
     </TouchableOpacity>
   );
 };
