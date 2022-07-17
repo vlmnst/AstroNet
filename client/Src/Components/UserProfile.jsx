@@ -11,7 +11,7 @@ const UserProfile = ({ navigation, route }) => {
     const email = useSelector((state) => state.USER.email)
     const userName = useSelector((state) => state.USER.userName)
 
-    useEffect(()=>{
+    useEffect(()=>{  
         dispatch(getPurchaseOrders(userName));
         dispatch(getUserFullData(email))
     },[dispatch])

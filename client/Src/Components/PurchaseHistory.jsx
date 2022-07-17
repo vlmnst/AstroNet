@@ -9,15 +9,14 @@ import {
   SafeAreaView,
   TouchableOpacity
 } from "react-native";
-import {
-    getPurchaseOrders
-} from "../../Redux/Slice/userSlice";
 
 const PurchaseHistory = (props) => {
   // ---------- dispatch ----------
+  console.log(props)
   const { route } = props;
   const { params } = route;
   const { navigation } = params
+  console.log(params)
   const dispatch = useDispatch();
 
   // ---------- global states ----------
@@ -28,18 +27,24 @@ const PurchaseHistory = (props) => {
   const handleSubmit=( )=>{
     // navigation.navigate('PurchaseOrders')
   }
-  console.log(purchaseProductsH.productsHistory[0].order)
+  // const handleVolver=( )=>{
+  //    navigation.navigate('Profile')
+  // }
   return (
     
       <SafeAreaView style={styles.AndroidSafeArea}>
         <View style={styles.container}>
+        {/* <TouchableOpacity style={styles.Bottunn_} onPress={handleVolver()}>
+                    <Text>Return</Text>
+        </TouchableOpacity> */}
              {/* ------------ TITLE ------------ */}
             <Text style={styles.title}>Purchase History</Text>
             <Text>{userName}</Text>
        
 
         {/* ------------ PRODUCTS CARDS ------------ */}
-        {purchaseProductsH?
+        
+        {purchaseProductsH.productsHistory?.length?
         <FlatList
           columnWrapperStyle={{ justifyContent: "space-evenly" }}
 
@@ -60,7 +65,7 @@ const PurchaseHistory = (props) => {
           )}
         />
         :<View>
-        <Text>Loading...</Text>
+        <Text>No purchases</Text>
         </View>}
         </View>
       </SafeAreaView>
