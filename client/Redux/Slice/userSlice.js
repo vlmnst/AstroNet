@@ -14,6 +14,7 @@ export const realUserSlice = createSlice({
         productHistory: [],
         purchaseProducts: [],
         allProductsUser: [],
+        userFullData:[]
     },
     reducers:{
         getPurchaseProducts(state, action) {
@@ -30,6 +31,9 @@ export const realUserSlice = createSlice({
             state.userName = username
             state.role = role
             state.email = email
+        },
+        getUserFullData(state, action) {
+            state.userFullData = action.payload
         },
         setLogOut(state) {
             state.userName = ''
@@ -82,6 +86,16 @@ export const getUserData = (username)=> async(dispatch) => {
     try {
         const { data } = await axios.get(ROUTE+'/users/getData/'+username);
         dispatch(realUserSlice.actions.getUserData(data));
+    } catch (error) {
+        console.log(error);
+    };
+};
+
+export const getUserFullData = (username)=> async(dispatch) => {
+    try {
+        // ROUTE
+        const { data } = await axios.get(ROUTE+'/users/getUserFull/'+username);
+        dispatch(realUserSlice.actions.getUserFullData(data));
     } catch (error) {
         console.log(error);
     };
