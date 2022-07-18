@@ -80,8 +80,14 @@ const UserProfile = ({ navigation, route }) => {
                     </View>
                     <View style={styles.view2}>
                         <Text style={styles.text1}>Orders:</Text>
-                        <TouchableOpacity style={styles.Bottunn_} onPress={()=>navigation.navigate("PurchaseHistory", {navigation})}>
+                        <TouchableOpacity onPress={()=>navigation.navigate("PurchaseHistory", {navigation})}>
                             <Text>watch</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.view2}>
+                        <Text style={styles.text1}>Reviews</Text>
+                        <TouchableOpacity onPress={()=>navigation.navigate("DoReview", {navigation})}>
+                            <Text>all items</Text>
                         </TouchableOpacity>
                     </View>
                 </View>}
@@ -105,7 +111,7 @@ const styles = StyleSheet.create({
         height:'60%'
     },
     view2: {
-        height:'40%'
+        height:'20%'
     },
     textusername: {
         fontSize: 30,
