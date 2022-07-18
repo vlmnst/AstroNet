@@ -62,7 +62,7 @@ const Allproducts = ({ route, navigation }) => {
     //update
     useEffect(() => {
       loadMoreItem();
-      console.log(currentPage);
+      // console.log(currentPage);
     }, [products]);
 
   // unmount
@@ -120,16 +120,16 @@ const Allproducts = ({ route, navigation }) => {
     ) : null;
   };
 
-  console.log(currentPage);
+  // console.log(currentPage);
   const loadMoreItem = () => {
     // if (isLoading) {
-      console.log(currentPage);
+      // console.log(currentPage);
      setCurrentPage(currentPage+1)
       nextPage();
       products.length === paginateProducts.length
         ? setIsLoading(false)
         : setIsLoading(true);
-      console.log("ejecutando");
+      // console.log("ejecutando");
     // }
   };
 
@@ -176,7 +176,7 @@ const Allproducts = ({ route, navigation }) => {
           <Image source={{ uri: 'https://www.rubba-seal.co.uk/themes/rubbaseal/resources/img/roof-bot-confused.png'}} style={styles.notfound}/>
         </View>
       ) : (
-        <View>
+        <View style={styles.flatListContainer}>
           {/* ------------ PRODUCTS CARDS ------------ */}
           <FlatList
             columnWrapperStyle={{ justifyContent: "space-evenly" }}
@@ -222,8 +222,12 @@ const styles = StyleSheet.create({
     margin: 10,
     width: "40%",
   },
+  flatListContainer: {
+    height:'77%'
+  },
   flatList: {
     width: "100%",
+    height: '100%'
   },
   title: {
     fontSize: 20,
