@@ -3,6 +3,7 @@ import { Text, TouchableOpacity, StyleSheet } from "react-native";
 import { useDispatch } from "react-redux";
 import { setLogOut } from "../../../../Redux/Slice/userSlice";
 import { logOut } from '../../../utils/handleCredentials';
+import IconAntDesign from 'react-native-vector-icons/AntDesign';
 
 const LogoutBtn = ({navigation, text, onPress }) => {
 
@@ -19,6 +20,7 @@ const LogoutBtn = ({navigation, text, onPress }) => {
             style={ styles.container }
             onPress={() => handleLogOut()}
         >
+            <IconAntDesign style={ styles.icon } name="login" size={20} color="black"/>
             <Text style={ styles.text }>{text}</Text>
         </TouchableOpacity>
     )
@@ -31,9 +33,14 @@ const styles = StyleSheet.create({
         marginHorizontal: 15,
         padding:15,
         borderRadius: 10,
-        justifyContent:"center",
-        width:'80%',
+        justifyContent:"flex-start",
+        width:'85%',
         height: 55,
+        flexDirection:"row"
+    },
+    icon: {
+        marginRight:16,
+        marginLeft:6
     },
     text: {
         fontWeight:"bold",

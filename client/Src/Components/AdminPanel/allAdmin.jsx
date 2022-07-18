@@ -67,10 +67,11 @@ const AllAdmin = ({ route, navigation }) => {
             <View style={styles.container}>
                 {/* ------------ TITLE ------------ */}
                 <View style={styles.nav}>
-                <SearchAdmin navigation={navigation} route={route} />
+                    <SearchAdmin navigation={navigation} route={route} />
                 </View>
-                
-                <Text style={styles.title}>{valueitems}</Text>
+                {valueitems?
+                    <Text style={styles.title}>{valueitems}</Text>
+                :null}
 
                 {/* ------------ FILTERS ------------ */}
                 <View style={styles.selectsContainer}>
@@ -122,13 +123,11 @@ const AllAdmin = ({ route, navigation }) => {
 };
 
 const styles = StyleSheet.create({
-    AndroidSafeArea: {
-        paddingTop: StatusBar.currentHeight + 10,
-    },
     container: {
         width: "100%",
         height: "100%",
         alignItems: "center",
+        justifyContent: "center"
     },
     selectsContainer: {
         flexDirection: "row",
@@ -151,11 +150,13 @@ const styles = StyleSheet.create({
     },
     nav: {
         flexDirection: 'row',
-        backgroundColor: '#3E3E3E',
+        // backgroundColor: '#3E3E3E',
         justifyContent: 'center',
-        width: '100%',
-        height: 60,
+        width: '75%',
+        height: 20,
         alignItems: 'center',
+        marginTop: 30,
+        marginBottom: 20
     },
 });
 
