@@ -8,6 +8,7 @@ import Categories from "../Screens/Details";
 import Login from "../Components/Login";
 import UserCreate from "../Components/UserCreate";
 import Cart from "../Components/CartLobby";
+import OrderDetail from "../Components/OrderDetail";
 // import NavBar from "../Components/NavBar";
 
 const Stack = createNativeStackNavigator();
@@ -46,7 +47,11 @@ const UserHome = () => {
                     name='Cart' 
                     component={Cart} 
                 />
-            </Stack.Navigator >
+                <Stack.Screen 
+                    name='OrderDetail' 
+                    component={OrderDetail} 
+                />
+            </Stack.Navigator>
     )
 }
 
