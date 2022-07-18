@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     padding: 10,
     width: "100%",
     height: "100%",
-    borderColor: "#EAEAEA",
+    borderColor: "white",
     backgroundColor: "white",
   },
   priceOffer: {
