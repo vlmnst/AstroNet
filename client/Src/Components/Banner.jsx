@@ -63,8 +63,8 @@ const user = useSelector((state) => state.USER.userName)
                 {imgToView.offer}% Off!
               </Text>
               <View style={styles.Buttoncontainer}>
-              <View style={{alignItems:"flex-start"}}><Icon onPress={(e)=>plusSlides(-1)} name="arrow-back-outline" size={30} color="grey" /></View>
-              <View style={{alignItems:"flex-end"}}><Icon onPress={(e)=>plusSlides(1)} name="arrow-forward-outline" size={30} color="grey" /></View>
+              <View style={{position:'absolute',left:"5%",bottom:"30%"}}><Icon onPress={(e)=>plusSlides(-1)} name="arrow-back-outline" size={30} color="grey" /></View>
+              <View style={{position:'absolute',right:"5%",bottom:"30%"}}><Icon onPress={(e)=>plusSlides(1)} name="arrow-forward-outline" size={30} color="grey" /></View>
               </View>
             </View>
           :
@@ -79,14 +79,14 @@ const user = useSelector((state) => state.USER.userName)
 
 const styles = StyleSheet.create({
   Buttoncontainer:{
-    // marginTop :220,
+    marginTop :160,
     justifyContent:'center',
     flexDirection: 'row',
     // paddingHorizontal: 10,
     // paddingVertical:10,
     heigth: "100%",
-    width: 100,
-    borderRadius: 15,
+    width: "100%",
+    // borderRadius: 15,
     position:'absolute'
   },
   Button:{
@@ -97,8 +97,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor:"black",
     width: "100%",
+    resizeMode:"contain",
     marginBottom: Platform.select({ ios: 0, android: 1 }),
-    borderRadius: 8,
+    // borderRadius: 8,
   },
   image: {
     padding:30,
@@ -108,10 +109,12 @@ const styles = StyleSheet.create({
   },
   offer: {
     position: 'absolute',
-    alignItems: 'center',
-    paddingHorizontal: 10,
-    marginTop: 10,
-    marginLeft: 5,
+    top:"2%",
+    left:"2%",
+    // alignItems: 'center',
+    // paddingHorizontal: 10,
+    // marginTop: 10,
+    // marginLeft: 5,
     backgroundColor: 'green',
     borderRadius: 10,
     color: 'white',
