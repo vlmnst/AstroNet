@@ -27,6 +27,11 @@ const Home = ({ navigation, route }) => {
     }
   },[variable])
 
+  const handleOnPress = () => {
+    navigation.navigate('Login')
+    setVisible(false)
+  }
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getCategories());
@@ -44,7 +49,7 @@ const Home = ({ navigation, route }) => {
             <View style={styles.popUpConteiner}>
               <Text style={styles.modalbtntxt}>You are not logged in:</Text>
               <TouchableOpacity
-                onPress={() => navigation.navigate('Login')}
+                onPress={() => handleOnPress()}
                 style={styles.modalTouchableOpacity}
               >
                 <View style={styles.modalbtntxtview}>
