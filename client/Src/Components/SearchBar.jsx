@@ -18,6 +18,7 @@ const SearchBar = ({ navigation, route }) => {
       route.name === 'Home' ?
       navigation.navigate('Allproducts', nombre) : dispatch(getProductsByName(nombre));
     };
+    setNombre("")
   };
 
   return (

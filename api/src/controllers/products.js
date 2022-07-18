@@ -1,5 +1,6 @@
 const Product = require('../models/Product');
 const User = require('../models/User');
+const { v4: uuidv4 } = require('uuid');
 
 const getAllProducts = async (req, res, next) => {
 
@@ -161,7 +162,7 @@ const buyProduct = async (req, res, next) => {
 
         // creo la orden de compra
         const order = {
-            order: "number-of-order",
+            order: uuidv4(),
             date: new Date(),
             total: totalPrice,
             detail: cartProducts,
