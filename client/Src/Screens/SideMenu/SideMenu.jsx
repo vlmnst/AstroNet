@@ -44,7 +44,7 @@ const SideMenu = ({ navigation }) => {
     }
 
     let index2 = routes[2].state?.index   
-    const handlePressPanelAdminBtn = (prop) => {
+    const handlePressProfile = (prop) => {
         setCurrentBtn(prop)
         if(currentBtn == prop && index2 > 0 ){
             navigation.navigate(prop)
@@ -52,6 +52,24 @@ const SideMenu = ({ navigation }) => {
                 StackActions.popToTop()
             )
         } else if (currentBtn != prop && index2 > 0 ) {
+            navigation.navigate(prop)
+            navigation.dispatch(
+                StackActions.popToTop()
+            )
+        } else {
+            navigation.navigate(prop)
+        }
+    }
+
+    let index3 = routes[3].state?.index   
+    const handlePressPanelAdminBtn = (prop) => {
+        setCurrentBtn(prop)
+        if(currentBtn == prop && index3 > 0 ){
+            navigation.navigate(prop)
+            navigation.dispatch(
+                StackActions.popToTop()
+            )
+        } else if (currentBtn != prop && index3 > 0 ) {
             navigation.navigate(prop)
             navigation.dispatch(
                 StackActions.popToTop()
@@ -89,7 +107,7 @@ const SideMenu = ({ navigation }) => {
             { userName ? (
                 <ProfileBtn
                     text = "Profile"
-                    onPress = { () => handlePress("ProfileNav") }
+                    onPress = { () => handlePressProfile("ProfileNav") }
                 />
             ) : null }
             { role === 'admin'||role === 'mod'?(
