@@ -86,7 +86,8 @@ const styles = StyleSheet.create({
     flex: 1,
     position: 'absolute',
     justifyContent: 'center',
-    width: '100%'
+    width: '100%',
+    backgroundColor: "#F6F6F6",
   },
   SB: {
     flexDirection: 'row',

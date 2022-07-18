@@ -37,15 +37,15 @@ const font = 10;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     alignItems: "center",
     margin: 5,
     padding: 0,
     borderWidth: 2,
-    width: "100%",
+    width: "93%",
     height: 250,
     borderColor: "#EAEAEA",
-    backgroundColor: "white",
+    backgroundColor: "#F6F6F6",
     borderRadius: 10,
   },
   priceOffer: {
