@@ -24,59 +24,75 @@ const SideMenu = ({ navigation }) => {
     
     // const index = useNavigationState(state => state?.routes[0].state.index)
     const { routes } = navigation.getState()
-    let index = routes[0].state?.index  
+    let index = routes[0].state?.index
+    let index2 = routes[2].state?.index
+    let index3 = routes[3].state?.index
+
     const handlePressHome = (prop) => {
-        // console.log(navigation.getState())
+        // console.log(StackActions.popToTop())
         if(currentBtn === prop && index > 0 ){
-            navigation.navigate(prop)
             navigation.dispatch(
                 StackActions.popToTop()
             )
         } else if (currentBtn !== prop && index > 0 ) {
-            navigation.navigate(prop)
             navigation.dispatch(
                 StackActions.popToTop()
             )
-        } else {
-            navigation.navigate(prop)
+        } else if ( index2 > 0) {
+            navigation.dispatch(
+                StackActions.popToTop()
+            )
+        } else if ( index3 > 0) {
+            navigation.dispatch(
+                StackActions.popToTop()
+            )
         }
+        navigation.navigate(prop)
         setCurrentBtn(prop)
     }
 
-    let index2 = routes[2].state?.index   
     const handlePressProfile = (prop) => {
-        setCurrentBtn(prop)
-        if(currentBtn == prop && index2 > 0 ){
-            navigation.navigate(prop)
+        if(currentBtn === prop && index2 > 0 ){
             navigation.dispatch(
                 StackActions.popToTop()
             )
-        } else if (currentBtn != prop && index2 > 0 ) {
-            navigation.navigate(prop)
+        } else if (currentBtn !== prop && index2 > 0 ) {
             navigation.dispatch(
                 StackActions.popToTop()
             )
-        } else {
-            navigation.navigate(prop)
+        } else if ( index > 0) {
+            navigation.dispatch(
+                StackActions.popToTop()
+            )
+        } else if ( index3 > 0) {
+            navigation.dispatch(
+                StackActions.popToTop()
+            )
         }
+        navigation.navigate(prop)
+        setCurrentBtn(prop)
     }
 
-    let index3 = routes[3].state?.index   
     const handlePressPanelAdminBtn = (prop) => {
-        setCurrentBtn(prop)
-        if(currentBtn == prop && index3 > 0 ){
-            navigation.navigate(prop)
+        if(currentBtn === prop && index3 > 0 ){
             navigation.dispatch(
                 StackActions.popToTop()
             )
-        } else if (currentBtn != prop && index3 > 0 ) {
-            navigation.navigate(prop)
+        } else if (currentBtn !== prop && index3 > 0 ) {
             navigation.dispatch(
                 StackActions.popToTop()
             )
-        } else {
-            navigation.navigate(prop)
+        } else if ( index > 0) {
+            navigation.dispatch(
+                StackActions.popToTop()
+            )
+        } else if ( index2 > 0) {
+            navigation.dispatch(
+                StackActions.popToTop()
+            )
         }
+        navigation.navigate(prop)
+        setCurrentBtn(prop)
     }
 
     const handlePress = (prop) => {

@@ -47,11 +47,13 @@ const NavBar = ({ navigation, route }) => {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        backgroundColor: '#3E3E3E',
+        // backgroundColor: '#3E3E3E',
         justifyContent: 'center',
         width: '100%',
         height: 60,
         alignItems: 'center',
+        marginTop:20,
+        marginBottom:10
     },
     // button: {
     // alignItems: "center",

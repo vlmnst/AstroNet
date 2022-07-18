@@ -1,5 +1,6 @@
 import React from "react";
 import { Text, TouchableOpacity, StyleSheet } from "react-native";
+import IconAntDesign from 'react-native-vector-icons/AntDesign';
 
 const PanelAdminBtn = ({ text, onPress }) => {
 
@@ -8,6 +9,7 @@ const PanelAdminBtn = ({ text, onPress }) => {
             style={ styles.container }
             onPress={onPress}
         >
+            <IconAntDesign style={ styles.icon } name="bars" size={20} color="black"/>
             <Text style={ styles.text }>{text}</Text>
         </TouchableOpacity>
     )
@@ -20,9 +22,14 @@ const styles = StyleSheet.create({
         marginHorizontal: 15,
         padding:15,
         borderRadius: 10,
-        justifyContent:"center",
-        width:'80%',
+        justifyContent:"flex-start",
+        width:'85%',
         height: 55,
+        flexDirection:"row"
+    },
+    icon: {
+        marginRight:16,
+        marginLeft:6
     },
     text: {
         fontWeight:"bold",
