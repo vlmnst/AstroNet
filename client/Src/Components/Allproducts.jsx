@@ -7,7 +7,8 @@ import {
   StyleSheet,
   SafeAreaView,
   StatusBar,
-  Image
+  Image,
+  ActivityIndicator,
 } from "react-native";
 import {
   getByPrice,
@@ -58,22 +59,38 @@ const Allproducts = ({ route, navigation }) => {
     setPage(1);
   }, [dispatch]);
 
+    //update
+    useEffect(() => {
+      loadMoreItem();
+      console.log(currentPage);
+    }, [products]);
+
   // unmount
   useEffect(() => {
     return () => dispatch(clearCache());
   }, [dispatch]);
 
   // ---------- paginate ----------
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(0);
   const productsPerPage = 6;
 
   const indexOfLast = currentPage * productsPerPage;
   const indexOfFirst = indexOfLast - productsPerPage;
 
-  let paginateProducts;
-  if (products.length > 0) {
-    paginateProducts = products.slice(indexOfFirst, indexOfLast);
-  }
+  // let paginateProducts;
+  // if (products.length > 0) {
+  //   paginateProducts = products.slice(indexOfFirst, indexOfLast);
+  // }
+  let [paginateProducts, setpaginateProducts] = useState([]);
+
+  const nextPage = () => {
+    if (products?.length > 1) {
+      setpaginateProducts([
+        ...paginateProducts,
+        ...products.slice(indexOfFirst, indexOfLast),
+      ]);
+    }
+  };
 
   // ---------- handlers ----------
   function setPage(number) {
@@ -81,14 +98,40 @@ const Allproducts = ({ route, navigation }) => {
   }
 
   function handleCategory(e) {
+    setpaginateProducts([])
     dispatch(getProductsByCategory(e.value));
     setPage(1);
   }
 
   function handlePrice(e) {
+    setpaginateProducts([])
     dispatch(getByPrice(e.value));
     setPage(1);
   }
+
+  // ------------ LOADER ----------
+  const [isLoading, setIsLoading] = useState(true);
+
+  const renderLoader = () => {
+    return isLoading ? (
+      <View style={styles.loaderStyle}>
+        <ActivityIndicator size="large" color="#aaa" />
+      </View>
+    ) : null;
+  };
+
+  console.log(currentPage);
+  const loadMoreItem = () => {
+    // if (isLoading) {
+      console.log(currentPage);
+     setCurrentPage(currentPage+1)
+      nextPage();
+      products.length === paginateProducts.length
+        ? setIsLoading(false)
+        : setIsLoading(true);
+      console.log("ejecutando");
+    // }
+  };
 
   return (
     <View style={styles.container}>
@@ -140,6 +183,9 @@ const Allproducts = ({ route, navigation }) => {
             style={styles.flatList}
             numColumns={2}
             data={paginateProducts}
+            onEndReachedThreshold={0.2}
+            onEndReached={() => loadMoreItem()}
+            ListFooterComponent={renderLoader}
             renderItem={({ item }) => (
               <View>
                 <ProductCard navigation={navigation} item={item} />
@@ -148,12 +194,12 @@ const Allproducts = ({ route, navigation }) => {
           />
 
           {/* ------------ PAGINATE ------------ */}
-          <Paginate
+          {/* <Paginate
             products={products.length}
             currentPage={currentPage}
             setPage={setPage}
             productsPerPage={productsPerPage}
-          />
+          /> */}
         </View>
       )}
     </View>
@@ -165,6 +211,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     alignItems: "center",
+    backgroundColor: '#D6DBDF'
   },
   selectsContainer: {
     flexDirection: "row",
