@@ -1,6 +1,5 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity, Button } from "react-native";
-import { PutPrivileges } from "../../../Redux/Slice/index";
-import { PutBanned } from "../../../Redux/Slice/index";
+import { PutBanned, getAllUsers, PutPrivileges } from "../../../Redux/Slice/index";
 import { getCredentials } from "../../utils/handleCredentials";
 import { useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
@@ -18,6 +17,9 @@ const UserCard = (props) => {
             };
         };
         checkCreds()
+    }, []);
+    useEffect(() => {
+
     }, []);
     const dispatch = useDispatch();
     const { navigation, item } = props;
@@ -39,6 +41,7 @@ const UserCard = (props) => {
             }
             dispatch(PutPrivileges(payload))
             alert('privileges changed successfully')
+            dispatch(getAllUsers())
         } else {
             const payload = {
                 name: item.username,
@@ -49,6 +52,7 @@ const UserCard = (props) => {
             }
             dispatch(PutBanned(payload))
             alert('user banned successfully')
+            dispatch(getAllUsers())
 
         }
     }
@@ -69,7 +73,7 @@ const UserCard = (props) => {
                         </TouchableOpacity>
                         {userRol === 'admin' ?
                             <View>
-                            {   item.role === 'mod' ?
+                                {item.role === 'mod' ?
                                     <TouchableOpacity
                                         style={styles.button}
                                         onPress={() => handlePushPrivilege(userType.user)}>
@@ -81,23 +85,31 @@ const UserCard = (props) => {
                                         onPress={() => handlePushPrivilege(userType.mod)}>
                                         <Text style={styles.text}> Set as moderator </Text>
                                     </TouchableOpacity>
-                            }
+                                }
                             </View>
                             : null
                         }
-                        <TouchableOpacity
-                            style={styles.button}
-                            onPress={() => handlePushPrivilege(userType.user)}>
-                            <Text style={styles.text}> remove ban </Text>
-                        </TouchableOpacity><TouchableOpacity
+                        {item.role === 'banned' ?
+                            (<TouchableOpacity
+                                style={styles.button}
+                                onPress={() => handlePushPrivilege(userType.user)}>
+                                <Text style={styles.text}> remove ban </Text>
+                            </TouchableOpacity>)
+                            :
+                            (userRol === "mod" && item.role=== "mod" ? (null) : (
+                                (<TouchableOpacity
+                                    style={styles.button}
+                                    onPress={() => handlePushPrivilege(userType.banned)}>
+                                    <Text style={styles.text}> ban user </Text>
+                                </TouchableOpacity>)
+                            ))
+                        }
+                        {/* <TouchableOpacity
                             style={styles.button}
                             onPress={() => handleReset()}>
                             <Text style={styles.text}> Reset password </Text>
-                        </TouchableOpacity><TouchableOpacity
-                            style={styles.button}
-                            onPress={() => handlePushPrivilege(userType.banned)}>
-                            <Text style={styles.text}> ban user </Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
+
                     </View>
                 }
             </View>
@@ -184,6 +196,7 @@ const styles = StyleSheet.create({
         fontSize: font,
     },
     button: {
+        width:100,
         margin: 5,
         alignItems: "center",
         backgroundColor: '#686868',
@@ -193,6 +206,7 @@ const styles = StyleSheet.create({
         width:'90%'
     },
     buttonDetail: {
+        width:100,
         margin: 5,
         alignItems: "center",
         backgroundColor: 'green',

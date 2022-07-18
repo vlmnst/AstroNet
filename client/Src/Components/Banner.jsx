@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
+import Icon from 'react-native-vector-icons/Ionicons';
+
 import {
   Button,
   Image,
@@ -61,8 +63,8 @@ const user = useSelector((state) => state.USER.userName)
                 {imgToView.offer}% Off!
               </Text>
               <View style={styles.Buttoncontainer}>
-              <View><Button style={styles.Button} onPress={(e)=>plusSlides(1)} title="Next"></Button></View>
-              <View><Button style={styles.Button} onPress={(e)=>plusSlides(-1)} title="Prev"></Button></View>
+              <View style={{alignItems:"flex-start"}}><Icon onPress={(e)=>plusSlides(-1)} name="arrow-back-outline" size={30} color="grey" /></View>
+              <View style={{alignItems:"flex-end"}}><Icon onPress={(e)=>plusSlides(1)} name="arrow-forward-outline" size={30} color="grey" /></View>
               </View>
             </View>
           :
@@ -77,18 +79,19 @@ const user = useSelector((state) => state.USER.userName)
 
 const styles = StyleSheet.create({
   Buttoncontainer:{
-    marginTop :220,
+    // marginTop :220,
     justifyContent:'center',
     flexDirection: 'row',
-    paddingHorizontal: 10,
-    paddingVertical:10,
-    heigth: 200,
-    width: '100%',
+    // paddingHorizontal: 10,
+    // paddingVertical:10,
+    heigth: "100%",
+    width: 100,
     borderRadius: 15,
     position:'absolute'
   },
   Button:{
     width: 40,
+    position:'absolute'
   },
   imageContainer: {
     justifyContent: "center",

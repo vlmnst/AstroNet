@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Icon from 'react-native-vector-icons/Ionicons';
 import {
   Text,
   View,
@@ -18,6 +19,7 @@ import { setUserData } from "../../Redux/Slice/userSlice";
 import * as Google from "expo-auth-session/providers/google";
 import * as Web from "expo-web-browser";
 import GoogleButton from "react-google-button";
+import CustomButton from "./CustomButton";
 Web.maybeCompleteAuthSession();
 
 const Login = ({ navigation }) => {
@@ -26,9 +28,12 @@ const Login = ({ navigation }) => {
   const [accessToken, setAccessToken] = useState(null);
 
   const [request, response, promptAsync] = Google.useAuthRequest({
-    expoClientId:'249536522363-39rfcrblktar14u0n6eo9bjrcgj4to67.apps.googleusercontent.com',
-    androidClientId:'249536522363-69m8roucbhests6sk69l3msirfjm9lhf.apps.googleusercontent.com',
-    webClientId:'249536522363-2bvea9vfafhkscv8fs8vrbbe0fei9e5i.apps.googleusercontent.com',
+    expoClientId:
+      "249536522363-39rfcrblktar14u0n6eo9bjrcgj4to67.apps.googleusercontent.com",
+    androidClientId:
+      "249536522363-69m8roucbhests6sk69l3msirfjm9lhf.apps.googleusercontent.com",
+    webClientId:
+      "249536522363-2bvea9vfafhkscv8fs8vrbbe0fei9e5i.apps.googleusercontent.com",
   });
   async function getUserInfo() {
     let response = await fetch(
@@ -40,7 +45,7 @@ const Login = ({ navigation }) => {
       }
     );
     const userInfo = await response.json();
-    responseToLogin(userInfo.email)
+    responseToLogin(userInfo.email);
   }
 
   useEffect(() => {
@@ -55,26 +60,26 @@ const Login = ({ navigation }) => {
   // RESPUESTA PARA SABER SI ESTA REGISTRADO O NO
   const responseToLogin = async (email) => {
     //ruta para indtificar el user y traer la data
-    let res = await axios.post(ROUTE+"/users/getByEmail/"+email);
+    let res = await axios.post(ROUTE + "/users/getByEmail/" + email);
     const { status, message, data } = res.data;
-    if(!status){ navigation.navigate("Create User") }
-    if(status){
-        dispatch(setUserData(data));
-        // console.log(data)
-        AsyncStorage.setItem("storageCredentials", JSON.stringify(data)).catch(
-          () => console.log("error while persistLogin at Login.jsx")
-        );
-        navigation.navigate("Home")
+    if (!status) {
+      navigation.navigate("Create User");
     }
-  }
-
-
+    if (status) {
+      dispatch(setUserData(data));
+      // console.log(data)
+      AsyncStorage.setItem("storageCredentials", JSON.stringify(data)).catch(
+        () => console.log("error while persistLogin at Login.jsx")
+      );
+      navigation.navigate("Home");
+    }
+  };
 
   const [message, setMessage] = useState("");
 
-  const handleCreate=( )=>{
+  const handleCreate = () => {
     navigation.navigate("UserCreate");
-  }
+  };
   const dispatch = useDispatch();
 
   const {
@@ -159,15 +164,32 @@ const Login = ({ navigation }) => {
         {<Text style={styles.error}>{message}</Text>}
 
         <Button title="Sign in" onPress={handleSubmit(onSubmit)} />
-        <Button title="Create account" onPress={() => handleCreate()} />
+        <CustomButton
+          text="Sign in with Google"
+          bgColor="#FAE9EA"
+          fgColor="#DD4D44"
+          onPress={() => {
+            promptAsync();
+          }}
+        />
+        <View style={styles.view}>
+        <Icon name="logo-google" size={30} color="#641E16" /> 
+        <CustomButton 
+        text='Dont have an account? Create one' 
+        onPress={() => handleCreate()}
+        type='TERTIARY'
+        />
+        </View>
+        
+        {/* <Button title="Create account" onPress={() => handleCreate()} /> */}
 
         {/* LOGIN GOOGLE */}
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() => {
             promptAsync()
            }}
         ><Text>Login with Google</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </SafeAreaView>
     </View>
   );
@@ -182,6 +204,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#5E5E5E",
   },
   input: {
+    heigth:80,
     backgroundColor: "#FFFFFF",
     marginTop: 0,
     marginHorizontal: 10,
@@ -189,6 +212,9 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   error: { color: "red" },
+  view:{
+    flexDirection:"row"
+  }
 });
 
 export default Login;

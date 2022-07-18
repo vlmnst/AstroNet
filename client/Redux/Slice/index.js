@@ -1,7 +1,7 @@
 import {createSlice, dispatch} from '@reduxjs/toolkit';
 import axios from 'axios';
-import { ROUTE }  from '@env';
-// const ROUTE = "http://localhost:3001";
+// import { ROUTE }  from '@env';
+const ROUTE = "http://localhost:3001";
 
 
 export const userSlice = createSlice({
@@ -162,7 +162,7 @@ export const createProduct = (product)=> async(dispatch) => {
         await axios.post(ROUTE +"/products/create", product);
 
     } catch (e) {
-        console.log(e)
+        alert(!e.response.data.error ? e.response.data : e.response.data.error)
     };
 };
 export const getCategories = ()=> async(dispatch) => {
