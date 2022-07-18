@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Button, Text,TouchableOpacity } from 'react-native';
 import SearchBar from './SearchBar';
+import Icon from "react-native-vector-icons/Ionicons";
 
 import { getCredentials, logOut } from '../utils/handleCredentials';
 
@@ -38,11 +39,7 @@ const NavBar = ({ navigation, route }) => {
             
             {/* SEARCHBAR */}
             <SearchBar navigation={navigation} route={route} />
-            <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => navigation.navigate("Cart")}>
-                    <Text>shopping cart</Text>
-            </TouchableOpacity>
+            
         </View>
     )
 };
@@ -50,11 +47,13 @@ const NavBar = ({ navigation, route }) => {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        backgroundColor: '#3E3E3E',
+        // backgroundColor: '#3E3E3E',
         justifyContent: 'center',
         width: '100%',
         height: 60,
         alignItems: 'center',
+        marginTop:20,
+        marginBottom:10
     },
     // button: {
     // alignItems: "center",

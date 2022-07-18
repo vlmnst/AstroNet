@@ -27,6 +27,11 @@ const Home = ({ navigation, route }) => {
     }
   },[variable])
 
+  const handleOnPress = () => {
+    navigation.navigate('Login')
+    setVisible(false)
+  }
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getCategories());
@@ -35,6 +40,7 @@ const Home = ({ navigation, route }) => {
 
   return (
       <View style={styles.conteiner}>
+        
         <Modal
           transparent={true}
           visible={visible}
@@ -43,7 +49,7 @@ const Home = ({ navigation, route }) => {
             <View style={styles.popUpConteiner}>
               <Text style={styles.modalbtntxt}>You are not logged in:</Text>
               <TouchableOpacity
-                onPress={() => navigation.navigate('Login')}
+                onPress={() => handleOnPress()}
                 style={styles.modalTouchableOpacity}
               >
                 <View style={styles.modalbtntxtview}>
@@ -61,20 +67,27 @@ const Home = ({ navigation, route }) => {
             </View>
           </View>
         </Modal>
+
         <View style={styles.SB}>
           <SearchBar navigation={navigation} route={route} />
         </View>
-        <Banner navigation={navigation} />
-        <Categories {...navigation} />
+      
+        {/* <View > */}
+          <Banner navigation={navigation} />
+          <Categories {...navigation} />
+        {/* </View> */}
+        
       </View>
   );
 };
 
 const styles = StyleSheet.create({
   conteiner: {
+    flex: 1,
     position: 'absolute',
     justifyContent: 'center',
-    width: '100%'
+    width: '100%',
+    backgroundColor: "white",
   },
   SB: {
     flexDirection: 'row',

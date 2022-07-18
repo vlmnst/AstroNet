@@ -1,6 +1,5 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity, Button } from "react-native";
-import { PutPrivileges } from "../../../Redux/Slice/index";
-import { PutBanned } from "../../../Redux/Slice/index";
+import { PutBanned, getAllUsers, PutPrivileges } from "../../../Redux/Slice/index";
 import { getCredentials } from "../../utils/handleCredentials";
 import { useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
@@ -18,6 +17,9 @@ const UserCard = (props) => {
             };
         };
         checkCreds()
+    }, []);
+    useEffect(() => {
+
     }, []);
     const dispatch = useDispatch();
     const { navigation, item } = props;
@@ -39,6 +41,7 @@ const UserCard = (props) => {
             }
             dispatch(PutPrivileges(payload))
             alert('privileges changed successfully')
+            dispatch(getAllUsers())
         } else {
             const payload = {
                 name: item.username,
@@ -49,6 +52,7 @@ const UserCard = (props) => {
             }
             dispatch(PutBanned(payload))
             alert('user banned successfully')
+            dispatch(getAllUsers())
 
         }
     }
@@ -69,11 +73,11 @@ const UserCard = (props) => {
                         </TouchableOpacity>
                         {userRol === 'admin' ?
                             <View>
-                            {   item.role === 'mod' ?
+                                {item.role === 'mod' ?
                                     <TouchableOpacity
                                         style={styles.button}
                                         onPress={() => handlePushPrivilege(userType.user)}>
-                                        <Text style={styles.text}>Remove from moderator</Text>
+                                        <Text style={styles.text}>Remove moderator</Text>
                                     </TouchableOpacity>
                                     :
                                     <TouchableOpacity
@@ -81,30 +85,41 @@ const UserCard = (props) => {
                                         onPress={() => handlePushPrivilege(userType.mod)}>
                                         <Text style={styles.text}> Set as moderator </Text>
                                     </TouchableOpacity>
-                            }
+                                }
                             </View>
                             : null
                         }
-                        <TouchableOpacity
-                            style={styles.button}
-                            onPress={() => handlePushPrivilege(userType.user)}>
-                            <Text style={styles.text}> remove ban </Text>
-                        </TouchableOpacity><TouchableOpacity
+                        {item.role === 'banned' ?
+                            (<TouchableOpacity
+                                style={styles.button}
+                                onPress={() => handlePushPrivilege(userType.user)}>
+                                <Text style={styles.text}> remove ban </Text>
+                            </TouchableOpacity>)
+                            :
+                            (userRol === "mod" && item.role=== "mod" ? (null) : (
+                                (<TouchableOpacity
+                                    style={styles.button}
+                                    onPress={() => handlePushPrivilege(userType.banned)}>
+                                    <Text style={styles.text}> ban user </Text>
+                                </TouchableOpacity>)
+                            ))
+                        }
+                        {/* <TouchableOpacity
                             style={styles.button}
                             onPress={() => handleReset()}>
                             <Text style={styles.text}> Reset password </Text>
-                        </TouchableOpacity><TouchableOpacity
-                            style={styles.button}
-                            onPress={() => handlePushPrivilege(userType.banned)}>
-                            <Text style={styles.text}> ban user </Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
+
                     </View>
                 }
             </View>
 
             <View style={styles.card}>
                 <View style={styles.line}>
-                    <Text style={styles.user}>-------- {item.username} -------- {item.role}</Text>
+                    <Text style={styles.user}>{item.role}</Text>
+                </View>
+                <View style={styles.line}>
+                    <Text style={styles.user}>{item.username}</Text>
                 </View>
                 <View style={styles.line}>
                     <Text style={styles.name}>firstname: </Text>
@@ -140,14 +155,13 @@ const font = 11;
 const styles = StyleSheet.create({
     container: {
         flexDirection: "row",
-        flex: 1,
         alignItems: "center",
         margin: 5,
-        padding: 0,
         borderWidth: 2,
         borderColor: "#EAEAEA",
         backgroundColor: "white",
         borderRadius: 10,
+        width:'98%'
     },
     containerBanned: {
         flexDirection: "row",
@@ -163,6 +177,7 @@ const styles = StyleSheet.create({
     card: {
         justifyContent: "space-between",
         marginBottom: 5,
+        marginLeft:10
     },
     line: {
         flexDirection: "row",
@@ -174,29 +189,35 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: "green",
         alignSelf: "center",
+        width:'80%'
     },
     name: {
         color: "red",
         fontSize: font,
     },
     button: {
+        width:100,
         margin: 5,
         alignItems: "center",
         backgroundColor: '#686868',
         borderRadius: 5,
         padding: 10,
-        marginHorizontal: 15
+        marginHorizontal: 15,
+        width:'90%'
     },
     buttonDetail: {
+        width:100,
         margin: 5,
         alignItems: "center",
         backgroundColor: 'green',
         borderRadius: 5,
         padding: 10,
-        marginHorizontal: 15
+        marginHorizontal: 15,
+        width:'90%'
     },
     text: {
-        color: 'white'
+        color: 'white',
+        fontSize:12
     }
 });
 

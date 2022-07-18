@@ -143,9 +143,14 @@ const ProductModify = (props) => {
                 <Image source={{ uri: state.img }} style={styles.image} />
                 <View style={styles.contInt}>
                     <View style={state.priceOffer}>
-                        <Text style={styles.price}>$ {state.price}</Text>
                         {state.offer > 0 ? (
-                            <Text style={styles.offer}>{state.offer}% off!</Text>
+                        <Text style={styles.pricethrough}>$ {state.price}</Text>)
+                        : <Text style={styles.price}>$ {state.price}</Text>}
+                        {state.offer > 0 ? (
+                          <Text style={styles.offer}>{state.offer}% off!</Text>
+                        ) : null}
+                         {state.offer > 0 ? (
+                          <Text style={styles.pricenew}>$ {state.price - (state.price * (state.offer/100))}</Text>
                         ) : null}
                     </View>
                     <View style={styles.descriptionCont}>
@@ -355,7 +360,15 @@ const styles = StyleSheet.create({
     descriptionCont: { display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "center" },
     description: { fontSize: fontDescription, padding: 5, backgroundColor: "white", borderRadius: 5, borderColor: "#EAEAEA", marginHorizontal: 5, marginVertical: 5 },
     textInput: { height: 40, width: "90%", borderWidth: 1, borderRadius: 8, borderColor: "#A09E9E", backgroundColor: "#D0D0D0", marginBottom: 2 },
-    Container_: {  marginBottom: 1, boderWidth: 1, borderColor: "#A09E9E", marginHorizontal: 15 }
+    Container_: {  marginBottom: 1, boderWidth: 1, borderColor: "#A09E9E", marginHorizontal: 15 },
+    pricethrough: {
+        fontSize: nameFont,
+        textDecorationLine:'line-through'
+      },
+      pricenew: {
+        color: "green",
+        fontSize: nameFont,
+      },
 });
 
 export default ProductModify;

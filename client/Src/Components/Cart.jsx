@@ -22,7 +22,8 @@ const Cart = (props) => {
     id: data.id,
     quantity: 1,
     price: data.price,
-    image: data.img
+    image: data.img,
+    offer: data.offer
     }
     //setCart((item)=>item.concat(itemCart));
     //infoCart.concat(itemCart);

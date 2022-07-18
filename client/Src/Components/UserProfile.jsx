@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, StyleSheet, Text, TouchableOpacity, ScrollView, FlatList, Image } from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity, ScrollView, FlatList, Image, Button } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserFullData,getPurchaseOrders } from "../../Redux/Slice/userSlice";
 
@@ -17,12 +17,12 @@ const UserProfile = ({ navigation, route }) => {
     },[dispatch])
 
     return (
-            <View style={styles.conteiner}>
+            <ScrollView contentContainerStyle={styles.conteiner}>
                 {!data[0] ?
                 <View>
                     <Text>Loading...</Text>
                 </View>:
-                <View>
+                <View style={styles.conteiner}>
                     <View style={styles.view1}>
                         <Text style={styles.textusername}>{data[0]?.username.slice(0,1).toUpperCase().concat(data[0]?.username.slice(1,data[0]?.username.length))}</Text>
                         <View style={styles.conteineruserdata}>
@@ -77,44 +77,58 @@ const UserProfile = ({ navigation, route }) => {
                                 <Text style={styles.text}>{data[0]?.address.zipCode}</Text>
                             </View>
                         </View>
-                    </View>
-                    <View style={styles.view2}>
-                        <Text style={styles.text1}>Orders:</Text>
-                        <TouchableOpacity style={styles.Bottunn_} onPress={()=>navigation.navigate("PurchaseHistory", {navigation})}>
-                            <Text>watch</Text>
-                        </TouchableOpacity>
+                        <View style={styles.view2}>
+                            <View style={styles.view2_1}>
+                                <Text style={styles.text1}>Orders:</Text>
+                                <Button 
+                                    onPress={()=>navigation.navigate("PurchaseHistory", {navigation})}
+                                    title='open'
+                                />
+                            </View>
+                            <View style={styles.view2_1}>
+                                <Text style={styles.text1}>Reviews</Text>
+                                <Button 
+                                    onPress={()=>navigation.navigate("DoReview", {navigation})}
+                                    title='items'
+                                />
+                            </View>
+                        </View>
                     </View>
                 </View>}
-            </View>
-            
+            </ScrollView>
     );
 };
 
 const styles = StyleSheet.create({
     conteiner: {
-        position: 'absolute',
-        alignItems:"center",
+        alignItems: "center",
         width: '100%',
         height: '100%',
-        
+        flexDirection:"column"
     },
     conteineruserdata: {
         justifyContent:"center",
     },
     view1: {
-        height:'60%'
+        height:'100%'
     },
     view2: {
-        height:'40%'
+        height:'20%',
+        
+    },
+    view2_1: {
+        height: '50%',
+        justifyContent:"flex-start",
+        marginVertical: 15
     },
     textusername: {
-        fontSize: 30,
-        marginTop:20
+        fontSize: 35,
+        marginTop:25
     },
     text1:{
         fontSize: 20,
         fontWeight: "bold",
-        marginVertical: 10
+        marginVertical: 15
     },
     tagandtxt: {
         flexDirection:"row",

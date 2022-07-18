@@ -18,6 +18,7 @@ const SearchBar = ({ navigation, route }) => {
       route.name === 'Home' ?
       navigation.navigate('Allproducts', nombre) : dispatch(getProductsByName(nombre));
     };
+    setNombre("")
   };
 
   return (
@@ -29,15 +30,34 @@ const SearchBar = ({ navigation, route }) => {
         onSubmitEditing={e => (search(e.nativeEvent.text))}
       />
 
-      <Icon onPress={() => search()} name="search-outline" size={30} color="grey" />
+      <Icon style={styles.iconSearch} onPress={() => search()} name="search-outline" size={30} color="grey" />
+      <Icon style={styles.iconCart} name="cart-outline" size={30} color="grey" onPress={() => navigation.navigate("Cart")}/>
+      
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  textInput: { height: 40, width: 250, borderWidth: 1, borderRadius: 8, borderColor: "#A09E9E", backgroundColor: "#D0D0D0", marginBottom: 2 },
-  image: { marginHorizontal:5, height: 30, width: 30, borderRadius: 8, backgroundColor: "#48A346", borderColor: "#A09E9E" },
-  Container_: { flexDirection: "row", justifyContent:"center", alignItems:"center" }
+  textInput: {
+    height: 40,
+    width: 250,
+    borderWidth: 1,
+    borderRadius: 8,
+    borderColor: "#A09E9E",
+    backgroundColor: "#D0D0D0",
+    marginBottom: 2
+  },
+  Container_: {
+    flexDirection: "row",
+    justifyContent:"center",
+    alignItems:"center"
+  },
+  iconSearch: {
+    marginHorizontal: 10
+  },
+  iconCart: {
+    marginLeft:5
+  }
 });
 
 export default SearchBar;

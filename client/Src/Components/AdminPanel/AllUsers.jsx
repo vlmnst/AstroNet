@@ -25,7 +25,9 @@ const AllUsers = ({ route, navigation }) => {
                         <Text style={styles.text}>All User</Text>
                     </View>
                 </TouchableOpacity>
-                <SearchAdmin navigation={navigation} route={route} />
+                <View style={styles.SearchAdmin}>
+                    <SearchAdmin navigation={navigation} route={route} />
+                </View>
                 </View>
                 {/* ------------ PRODUCTS CARDS ------------ */}
                 <FlatList
@@ -68,11 +70,15 @@ const styles = StyleSheet.create({
     },
     nav: {
         flexDirection: 'row',
-        backgroundColor: '#3E3E3E',
+        // backgroundColor: '#3E3E3E',
         justifyContent: 'center',
         width: '100%',
         height: 60,
         alignItems: 'center',
+        marginVertical:20
+    },
+    SearchAdmin: {
+        width:'65%'
     },
     button: {
         height: 40,
@@ -80,11 +86,11 @@ const styles = StyleSheet.create({
         width: 100,
         justifyContent:"center",
         alignItems:"center",
-        borderRadius: 15
+        borderRadius: 15,
     },
     text: {
         color:'white',
-        fontSize:15
+        fontSize:15,
     }
 });
 
