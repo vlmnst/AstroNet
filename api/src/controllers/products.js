@@ -33,7 +33,11 @@ const createProduct = async (req, res, next) => {
             offer,
             description,
         } = req.body;
-      
+        
+        // exists??
+        const exists = await Product.find({name});
+        if (exists.length > 0) return res.status(400).json({ error: 'the name of the product exists' });
+        
         const product = new Product({
             name,
             price,
