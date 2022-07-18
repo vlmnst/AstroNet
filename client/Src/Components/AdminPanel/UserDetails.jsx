@@ -80,7 +80,7 @@ const UserDetails = (props) => {
                     <Text style={styles.titletext}>{data.username} </Text>
                 </View>
             </View>
-            <View style={styles.buttoncard}>
+            {/* <View style={styles.buttoncard}>
                 {data.role === 'admin' ?
                     <TouchableOpacity
                         style={styles.button}
@@ -108,15 +108,7 @@ const UserDetails = (props) => {
                     onPress={() =>handlePushPrivilege(userType.banned)} >
                     <Text style={styles.text}> ban user </Text>
                 </TouchableOpacity>
-            </View>
-
-            {
-/* address: {streetAdress: 'asd', floor: '1', department: 'J', zipCode: '1225'}
-id: "62c38418fdcb5df78c9eb8c8"
-location: {country: 'argentina', city: 'buenos aires', state: 'caba'}
-productsHistory: (8) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
-role: "admin" */}
-
+            </View> */}
             <View style={styles.card}>
                 <View style={styles.line}>
                     <Text style={styles.name}>firstname: </Text>

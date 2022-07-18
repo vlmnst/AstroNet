@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Icon from 'react-native-vector-icons/Ionicons';
 import {
   Text,
   View,
@@ -171,11 +172,15 @@ const Login = ({ navigation }) => {
             promptAsync();
           }}
         />
+        <View style={styles.view}>
+        <Icon name="logo-google" size={30} color="#641E16" /> 
         <CustomButton 
         text='Dont have an account? Create one' 
         onPress={() => handleCreate()}
         type='TERTIARY'
         />
+        </View>
+        
         {/* <Button title="Create account" onPress={() => handleCreate()} /> */}
 
         {/* LOGIN GOOGLE */}
@@ -199,6 +204,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#5E5E5E",
   },
   input: {
+    heigth:80,
     backgroundColor: "#FFFFFF",
     marginTop: 0,
     marginHorizontal: 10,
@@ -206,6 +212,9 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   error: { color: "red" },
+  view:{
+    flexDirection:"row"
+  }
 });
 
 export default Login;

@@ -7,6 +7,7 @@ import {
   StyleSheet,
   SafeAreaView,
   StatusBar,
+  Image
 } from "react-native";
 import {
   getByPrice,
@@ -23,13 +24,13 @@ import NavBar from "./NavBar";
 const Allproducts = ({ route, navigation }) => {
   // ---------- dispatch ----------
   // si route.params existe en categories, busco por categoria
-
+  // const [searchName, setsearchName] = useState(route.params);
   let searchName = route.params;
   const dispatch = useDispatch();
 
   // ---------- global states ----------
   let products = useSelector((state) => state.ALL_PRODUCTS.allProductsFiltered);
-  let [categories /*setCategories*/] = useState(
+  let [categories ] = useState(
     useSelector((state) => state.ALL_PRODUCTS.categories)
   );
 
@@ -51,7 +52,9 @@ const Allproducts = ({ route, navigation }) => {
 
   // mount
   useEffect(() => {
-    categories.includes(searchName)? dispatch(getProductsByCategory(searchName)):dispatch(getProductsByName(searchName))
+    categories.includes(searchName)
+      ? dispatch(getProductsByCategory(searchName))
+      : dispatch(getProductsByName(searchName));
     setPage(1);
   }, [dispatch]);
 
@@ -88,77 +91,76 @@ const Allproducts = ({ route, navigation }) => {
   }
 
   return (
-    
-      <SafeAreaView style={styles.AndroidSafeArea}>
-        <View style={styles.container}>
-        {/* ------------ TITLE ------------ */}
-
-        <NavBar navigation={navigation} route={route} />
-        <Text style={styles.title}>{valueitems}</Text>
-
-        {/* ------------ FILTERS ------------ */}
-        <View style={styles.selectsContainer}>
-          {/* ------------Select category------------- */}
-          <View style={styles.selects}>
-            <View>
-              <Text>Filter by: </Text>
-            </View>
-            <DropDownPicker
-              open={openitems}
-              value={valueitems}
-              items={pickerItems}
-              setOpen={setOpenitems}
-              setValue={setValueitems}
-              onSelectItem={(value) => handleCategory(value)}
-            />
+    <View style={styles.container}>
+      <NavBar navigation={navigation} route={route} />
+      {/* ------------ TITLE ------------ */}
+      {/* <Text style={styles.title}>{searchName}</Text> *MEJOR QUE NO FUNCIONE A QUE FUNCIONE MAL /}
+      {/* ------------ FILTERS ------------ */}
+      <View style={styles.selectsContainer}>
+        {/* ------------Select category------------- */}
+        <View style={styles.selects}>
+          <View>
+            <Text>Filter by: </Text>
           </View>
-
-          {/* ------------order By Price------------- */}
-          <View style={styles.selects}>
-            <View>
-              <Text>Order by: </Text>
-            </View>
-            <DropDownPicker
-              open={openprice}
-              value={valueprice}
-              items={pickerSort}
-              setOpen={setOpenprice}
-              setValue={setValueprice}
-              onSelectItem={(value) => handlePrice(value)}
-            />
-          </View>
+          <DropDownPicker
+            open={openitems}
+            value={valueitems}
+            items={pickerItems}
+            setOpen={setOpenitems}
+            setValue={setValueitems}
+            onSelectItem={(value) => handleCategory(value)}
+          />
         </View>
 
-        {/* ------------ PRODUCTS CARDS ------------ */}
-        <FlatList
-          columnWrapperStyle={{ justifyContent: "space-evenly" }}
-          style={styles.flatList}
-          numColumns={2}
-          data={paginateProducts}
-          renderItem={({ item }) => (
-            <View>
-              <ProductCard navigation={navigation} item={item} />
-            </View>
-          )}
-        />
+        {/* ------------order By Price------------- */}
+        <View style={styles.selects}>
+          <View>
+            <Text>Order by: </Text>
+          </View>
+          <DropDownPicker
+            open={openprice}
+            value={valueprice}
+            items={pickerSort}
+            setOpen={setOpenprice}
+            setValue={setValueprice}
+            onSelectItem={(value) => handlePrice(value)}
+          />
+        </View>
+      </View>
+      {products.error ? (
+        <View>
+          <Text>{products.error}</Text>
+          <Image source={{ uri: 'https://www.rubba-seal.co.uk/themes/rubbaseal/resources/img/roof-bot-confused.png'}} style={styles.notfound}/>
+        </View>
+      ) : (
+        <View>
+          {/* ------------ PRODUCTS CARDS ------------ */}
+          <FlatList
+            columnWrapperStyle={{ justifyContent: "space-evenly" }}
+            style={styles.flatList}
+            numColumns={2}
+            data={paginateProducts}
+            renderItem={({ item }) => (
+              <View>
+                <ProductCard navigation={navigation} item={item} />
+              </View>
+            )}
+          />
 
-        {/* ------------ PAGINATE ------------ */}
-        <Paginate
-          products={products.length}
-          currentPage={currentPage}
-          setPage={setPage}
-          productsPerPage={productsPerPage}
-        />
-       </View> 
-      </SafeAreaView>
-    
+          {/* ------------ PAGINATE ------------ */}
+          <Paginate
+            products={products.length}
+            currentPage={currentPage}
+            setPage={setPage}
+            productsPerPage={productsPerPage}
+          />
+        </View>
+      )}
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  AndroidSafeArea: {
-    // paddingTop: StatusBar.currentHeight + 10,
-  },
   container: {
     width: "100%",
     height: "100%",
@@ -183,6 +185,12 @@ const styles = StyleSheet.create({
     padding: 5,
     textAlign: "center",
   },
+  notfound: {
+    width: 200,
+    height:300,
+    alignItems: 'center',
+    marginTop: 20,
+  }
 });
 
 export default Allproducts;
