@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import PurchaseOrders from "./PurchaseOrders"
+import OrderDetail from './OrderDetail.jsx';
 import {
   View,
   Text,
@@ -24,9 +24,9 @@ const PurchaseHistory = (props) => {
   const userName = useSelector((state) => state.USER.userName)
     
   // mount
-  const handleSubmit=( )=>{
-    // navigation.navigate('PurchaseOrders')
-  }
+  // const handleSubmit=( )=>{
+  //   navigation.navigate('OrderDetail')
+  // }
   // const handleVolver=( )=>{
   //    navigation.navigate('Profile')
   // }
@@ -57,7 +57,7 @@ const PurchaseHistory = (props) => {
                 <Text>{`order: ${item.order}`}</Text>
                 <Text>{`date: ${item.date}`}</Text>
                 <Text> {`total: $${item.total}`}</Text>
-                <TouchableOpacity style={styles.Bottunn_} onPress={handleSubmit()}>
+                <TouchableOpacity style={styles.Bottunn_} onPress={() => navigation.navigate("OrderDetail", item)}>
                     <Text>Details</Text>
                 </TouchableOpacity>
               {/* <PurchaseOrders navigation={navigation} item={item} /> */}
