@@ -1,223 +1,222 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Text, View, TextInput, Button, StyleSheet, SafeAreaView, StatusBar } from "react-native";
-import { useForm, Controller } from "react-hook-form";
+import { Text, View, TextInput, Button, StyleSheet, ScrollView } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 
+import ImageLibrary from "./ImageLibrary";
 import { createProduct } from "../../Redux/Slice";
 
 const ProductCreate = () => {
+    
+    const dispatch = useDispatch();
 
-  const dispatch = useDispatch();
+    // reducer state
+    let categoriesReducer = useSelector((state) => state.ALL_PRODUCTS.categories);
 
-// PROBANDO CATEGORIES EN ARRAY
-  let categories = useSelector((state) => state.ALL_PRODUCTS.categories); // categories === ['', '', '']
+    // local states
+    const [name, setName] = useState('');
+    const [price, setPrice] = useState('');
+    const [stock, setStock] = useState('');
+    const [offer, setOffer] = useState('');
+    const [description, setDescription] = useState('');
+    const [images, setImages] = useState('image');
+    const [categories, setCategories] = useState([]);
 
-  const [openitems, setOpenitems] = useState(false);
-  const [valueitems, setValueitems] = useState(null);
-  let pickerItems = [];
-  categories.length
-    ? categories.map((c, index) => pickerItems.push({ label: c, value: c }))
-    : null;
+    // picker categories
+    const [openitems, setOpenitems] = useState(false);
+    const [valueitems, setValueitems] = useState(null);
+    let pickerItems = [];
+    categoriesReducer.length
+        ? categoriesReducer.map(c => pickerItems.push({ label: c, value: c }))
+        : null;
 
-  const [state, setState] = useState({
-    category: [],
-  });
 
-  function handleCategory(e) {
-    if (!state.category.includes(e.value)) {
-      setState({
-        ...state,
-        category: [...state.category, e.value]
-      })
-    } else {
-      setState({
-        ...state,
-        category: state.category.filter(c => c !== e.value)
-      })
-    };
-    console.log(state.category);
-  };
-// PROBANDO CATEGORIES EN ARRAY
-
-  const { control, handleSubmit, formState: { errors } } = useForm({
-      defaultValues: {
-        name: '',
-        price: '',
-        img: '',
-        stock: '',
-        offer: '',
-        description: '',
-      }
-  });
-
-    const onSubmit = data => {
-        if (state.category.length < 1) {
-          alert('Enter a category')
+    // ------ HANDLERS ------
+    function handleCategory(e) {
+        if (!categories.includes(e.value)) {
+            setCategories(
+                [...categories, e.value]
+            )
         } else {
-          const product = {
-            name: data.name,
-            category: state.category,
-            img: data.img,
-            price: data.price,
-            offer: data.offer,
-            stock: data.stock,
-            description: {Description: data.description}
-          }
-          dispatch(createProduct(product));
-          // console.log(product);
-        };   
+            setCategories([...categories.filter(c => c !== e.value)])
+        };
+        // console.log(categories);
     };
-      
-    const Separator = () => (
-        <View style={styles.separator} />
-    );
+
+    function submitForm() {
+        if (!name || !price ||!stock || !offer || !description || categories.length < 1) {
+            return alert('empty fields')
+        };
+
+        const product = {
+            name, price, stock, offer, 
+            description: { description },
+            category: categories, 
+            img: images,
+        };
+        // console.log(product)
+        try {
+            dispatch(createProduct(product));
+            // console.log(product)
+            clearInputs();
+        } catch (error) {
+            alert(error);
+        };
+    };
+
+    function clearInputs(){
+        setName('');
+        setPrice('');
+        setStock('');
+        setOffer('');
+        setDescription('');
+        setCategories([]);
+    };
+
 
     return(
-        <View>
-        <SafeAreaView style={styles.AndroidSafeArea} >
+        <ScrollView contentContainerStyle={styles.container}>
 
-        <Text>Product name:</Text>
-        <Controller
-          control={control}
-          rules={{
-           required: true,
-          }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              style={styles.input}
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-            />
-          )}
-          name="name"
-        />
-        {errors.name && <Text>Insert product name</Text>}
+            <Text style={{fontSize: 20, marginVertical: 10}}>Create a new product</Text>
 
-        <Text>Product price:</Text>  
-        <Controller
-          control={control}
-          rules={{
-            required: true,
-          }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              style={styles.input}
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-            />
-          )}
-          name="price"
-        />
-        {errors.price && <Text>Insert price value</Text>}
+            {/* NAME */}
+            <View style={styles.inputsContainers}>
+                <TextInput transparent
+                    style={styles.inputs}
+                    onChangeText={setName}
+                    value={name}
+                    placeholder="Name"
+                />
+            </View>
 
-        <Text>Product category:</Text>
-        <DropDownPicker
-          open={openitems}
-          value={valueitems}
-          items={pickerItems}
-          setOpen={setOpenitems}
-          setValue={setValueitems}
-          onSelectItem={(value) => handleCategory(value)}
-        />
-        {errors.category && <Text>Insert category name</Text>}
+            {/* PRICE */}
+            <View style={styles.inputsContainers}>
+                <TextInput transparent
+                    style={styles.inputs}
+                    onChangeText={setPrice}
+                    value={price}
+                    placeholder="Price"
+                />
+            </View>
 
-        <Text>Product image:</Text>  
-        <Controller
-          control={control}
-          rules={{
-            required: true,
-          }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              style={styles.input}
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-            />
-          )}
-          name="img"
-        />
-        {errors.img && <Text>Insert URL image </Text>}
+            {/* STOCK */}
+            <View style={styles.inputsContainers}>
+                <TextInput transparent
+                    style={styles.inputs}
+                    onChangeText={setStock}
+                    value={stock}
+                    placeholder="Stock"
+                />
+            </View>
 
-        <Text>Product stock:</Text>            
-        <Controller
-          control={control}
-          rules={{
-           required: true,
-           min: 1,
-          }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              style={styles.input}
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-            />
-          )}
-          name="stock"
-        />
-        {errors.stock && <Text>Insert stock value</Text>}
+            {/* OFFER */}
+            <View style={styles.inputsContainers}>
+                <TextInput transparent
+                    style={styles.inputs}
+                    onChangeText={setOffer}
+                    value={offer}
+                    placeholder="Offer"
+                />
+            </View>
 
-        <Text>Product offer:</Text>  
-        <Controller
-          control={control}
-          rules={{
-            required: true,
-            min: 0, max: 99,
-          }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              style={styles.input}
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-            />
-          )}
-          name="offer"
-        />
-        {errors.offer && <Text>Insert offer value</Text>}
+            {/* DESCRIPTION */}
+            <View style={styles.descriptionContainer}>
+                <TextInput transparent
+                    style={styles.descriptionInput}
+                    multiline={true}
+                    onChangeText={setDescription}
+                    value={description}
+                    placeholder="Enter a description..."
+                />
+            </View>
 
-        <Text>Product description:</Text>
-        <Controller
-          control={control}
-          rules={{
-           required: true,
-          }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              multiline
-              numberOfLines={4}
-              style={styles.inputmul}
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-            />
-          )}
-          name="description"
-        />
-        {errors.description && <Text>Insert product description</Text>}
+            {/* IMAGES */}
+            <Text style={{fontSize: 15, marginTop: 15}}>Select images</Text>
+            <ImageLibrary />
 
-        <Separator/>
+            {/* CATEGORIES */}
+            <Text style={{fontSize: 15 }}>Select categories</Text>
+            <View style={styles.inputsContainers}>
+                <DropDownPicker
+                    style={{marginVertical: 10}}
+                    open={openitems}
+                    value={valueitems}
+                    items={pickerItems}
+                    setOpen={setOpenitems}
+                    setValue={setValueitems}
+                    onSelectItem={(value) => handleCategory(value)}
+                />
+            </View>
 
-        <Button title="Create Product" onPress={handleSubmit(onSubmit)} />
+            {/* CATEGORIES CONTAINER */}
+            <View style={styles.categoriesContainer}>
+                { categories 
+                    ? categories.map((c, index) => {
+                        return (
+                            <View style={styles.categoriesLabel} key={index} >
+                                <Text>{c}</Text>
+                            </View>
+                        )
+                    })
+                    : (null)
+                }
+            </View>
 
-      </SafeAreaView>
-      </View>
+            {/* CREATE BUTTON */}
+            <View style={{width: '50%', marginBottom: 15}}>
+                <Button title="Create Product" onPress={() => submitForm()}/>
+            </View>
+            
+        </ScrollView>
     ); 
 };
 
-
 const styles = StyleSheet.create({
-  AndroidSafeArea: { paddingTop: StatusBar.currentHeight + 10 },
-  container:{flex: 1, justifyContent: 'center', marginHorizontal: 16, backgroundColor: '#5E5E5E'},
-  input: { backgroundColor: '#FFFFFF', marginTop: 0, marginHorizontal: 10, padding: 5, width: '100%' },
-  inputmul: { backgroundColor: '#FFFFFF', marginTop: 10, marginHorizontal: 10, padding: 5, height: 100, width: '100%' },
-  title: { fontSize: 20, padding: 5, marginLeft: 10 },
-  separator: { marginVertical: 8, borderBottomColor: '#737373', borderBottomWidth: StyleSheet.hairlineWidth },
-  button: { height: 40, margin: 12, borderWidth: 1, padding: 10 },
+    container:{
+        // flex: 1, 
+        width: '100%',
+        alignItems: 'center',
+    },
+    inputsContainers: {
+        width: '50%'
+    },
+    inputs: { 
+        padding: 5, 
+        backgroundColor: 'rgba(0, 0, 0, 0.1)',
+        borderRadius: 10,
+        marginTop: 10,
+    },
+    descriptionContainer: {
+        width: '70%',
+    },
+    descriptionInput: {
+        height: 75,
+        backgroundColor: 'rgba(0, 0, 0, 0.1)',
+        borderRadius: 10,
+        marginTop: 10,
+        padding: 5, 
+    },
+    categoriesContainer: {
+        flexWrap: 'wrap',
+        width: '80%',
+        padding: 5,
+        height: 108,
+        backgroundColor: 'rgba(0, 0, 0, 0.1)',
+        borderRadius: 10,
+        marginBottom: 10,
+        flexDirection: 'row',
+    },
+    categoriesLabel: {
+        backgroundColor: 'rgba(0, 100, 255, 0.5)',
+        width: '30%',
+        height: '30%',
+        padding: 5,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 10,
+        marginVertical: 2,
+        marginHorizontal: 5,
+    },
 });
 
 export default ProductCreate;

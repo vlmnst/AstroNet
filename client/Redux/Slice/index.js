@@ -160,7 +160,7 @@ export const getProductsByName = (name)=> async(dispatch) => {
 export const createProduct = (product)=> async(dispatch) => {
     try {
         await axios.post(ROUTE +"/products/create", product);
-
+        alert('created successfully');
     } catch (e) {
         alert(!e.response.data.error ? e.response.data : e.response.data.error)
     };
