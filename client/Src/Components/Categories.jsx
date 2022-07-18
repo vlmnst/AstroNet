@@ -38,18 +38,19 @@ const Categories = (navigation) => {
   return (
     <View>
       <FlatList
-        horizontal={false}
+        // horizontal={false}
+        style= {{height: 320}}
         numColumns={2}
         data={data}
         renderItem={({ item }) => (
          
             <TouchableOpacity 
-            style={styles.container}
-            onPress={()=>navigation.navigate("Allproducts", item.name)}>
+              style={styles.container}
+              onPress={()=>navigation.navigate("Allproducts", item.name)}>
               <Image 
-              source={{ uri: item.img }} 
-              style={styles.img} 
-              keyExtractor={(item) => item.id} // rompe el componente, ahora tira un warnin
+                source={{ uri: item.img }} 
+                style={styles.img} 
+                keyExtractor={(item) => item.id} // rompe el componente, ahora tira un warnin
               />  
               <Text style={styles.text}>{item.name}</Text>
             </TouchableOpacity>

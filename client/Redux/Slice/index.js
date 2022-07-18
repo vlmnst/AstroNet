@@ -140,8 +140,8 @@ export const getAllProducts = ()=> async(dispatch) => {
 export const getProductsByCategory = (category)=> async(dispatch) => {
     try {
         var json = await axios.get(ROUTE +"/products/category/"+category)
-        let productWithStock = json.data.filter((prod)=> prod.stock > 0)
-        dispatch(userSlice.actions.getProductsByCategory (productWithStock))
+        // let productWithStock = json.data.filter((prod)=> prod.stock > 0)
+        dispatch(userSlice.actions.getProductsByCategory (json.data))
 
     } catch (e) {
         console.log(e)
@@ -150,8 +150,8 @@ export const getProductsByCategory = (category)=> async(dispatch) => {
 export const getProductsByName = (name)=> async(dispatch) => {
     try {
         var json = await axios.get(ROUTE+"/products/search/"+name.toLowerCase())
-        let productWithStock = json.data.filter((prod)=> prod.stock > 0)
-        dispatch(userSlice.actions.getProductsByName (productWithStock))
+        //  let productWithStock = json.data.filter((prod)=> prod.stock > 0)
+        dispatch(userSlice.actions.getProductsByName (json.data))
 
     } catch (e) {
         console.log(e)
@@ -185,7 +185,7 @@ export const PutPrivileges = (payload)=> async(dispatch) => {
 export const PutBanned = (payload)=> async(dispatch) => {
     const {name,privileges} = payload
     try {
-        console.log(ROUTE+"/users/banned/"+name, privileges)
+        // console.log(ROUTE+"/users/banned/"+name, privileges)
         await axios.put(ROUTE+"/users/banned/"+name, privileges)
     } catch (e) {
         console.log(e)
@@ -221,7 +221,7 @@ export const getAdminByName = (name)=> async(dispatch) => {
     try {
         var json = await axios.get(ROUTE+"/products/search/"+name.toLowerCase())
         dispatch(userSlice.actions.getAdminByName (json.data))
-        console.log(json.data)
+        // console.log(json.data)
     } catch (e) {
         console.log(e)
     }

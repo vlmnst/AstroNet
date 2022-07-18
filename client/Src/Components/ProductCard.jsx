@@ -16,10 +16,15 @@ const ProductCard = (props) => {
       <Image source={{ uri: item.img }} style={styles.image} />
       <View style={styles.contInt}>
         <View style={styles.priceOffer}>
-          <Text style={styles.price}>$ {item.price}</Text>
-          {item.offer > 0 ? (
-            <Text style={styles.offer}>{item.offer}% off!</Text>
-          ) : null}
+            {item.offer > 0 ? (
+              <Text style={styles.pricethrough}>$ {item.price}</Text>)
+              : <Text style={styles.price}>$ {item.price}</Text>}
+              {item.offer > 0 ? (
+                <Text style={styles.offer}>{item.offer}% off!</Text>
+              ) : null}
+               {item.offer > 0 ? (
+                <Text style={styles.pricenew}>$ {item.price - (item.price * (item.offer/100))}</Text>
+              ) : null}
         </View>
         <Text style={styles.name}>{item.name.slice(0,65)}... </Text>
       </View>
@@ -75,7 +80,15 @@ const styles = StyleSheet.create({
   //   fontSize: fontDescription,
   //   padding:0,
   //   width:10,
-  // }
+  // },
+  pricethrough: {
+    fontSize: font,
+    textDecorationLine:'line-through'
+  },
+  pricenew: {
+    color: "green",
+    fontSize: font,
+  },
 });
 
 export default ProductCard;
