@@ -77,7 +77,7 @@ const user = useSelector((state) => state.USER.userName)
 
 const styles = StyleSheet.create({
   Buttoncontainer:{
-    marginTop :300,
+    marginTop :220,
     justifyContent:'center',
     flexDirection: 'row',
     paddingHorizontal: 10,
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   },
   image: {
     padding:30,
-    height: 300,
+    height: 220,
     width: '100%',
     alignSelf:"center"
   },

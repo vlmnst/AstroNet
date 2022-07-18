@@ -12,11 +12,9 @@ import {
 
 const PurchaseHistory = (props) => {
   // ---------- dispatch ----------
-  console.log(props)
   const { route } = props;
   const { params } = route;
   const { navigation } = params
-  console.log(params)
   const dispatch = useDispatch();
 
   // ---------- global states ----------
@@ -52,7 +50,6 @@ const PurchaseHistory = (props) => {
           data={purchaseProductsH.productsHistory}
           renderItem={({ item }) => (
             <View> 
-                {console.log(item)}
                 <Text>{userName}</Text>
                 <Text>{`order: ${item.order}`}</Text>
                 <Text>{`date: ${item.date}`}</Text>

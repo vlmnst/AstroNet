@@ -2,7 +2,9 @@ import React from "react";
 import { useDispatch} from "react-redux";
 import { Text, View, TextInput, Button, StyleSheet, SafeAreaView, StatusBar,TouchableOpacity  } from "react-native";
 import { useForm, Controller } from "react-hook-form";
-import { createUser } from "../../Redux/Slice/userSlice";
+import { ROUTE }  from '@env';
+import axios from 'axios';
+// import { createUser } from "../../Redux/Slice/userSlice";
 // username:           { type: String, required: true, unique: true },
 // email:              { type: String, required: true, unique: true },
 // role:               { type: String, required: true, unique: false },       // role (admin/user/banned)
@@ -39,21 +41,27 @@ const UserCreate = ({ navigation }) => {
       }
   });
 
-    const onSubmit = data => {
-          const user = {
-            username: data.username,
-            email: data.email,
-            password: data.password,
-            dni: data.dni,
-            firstname: data.firstname,
-            lastname: data.lastname,
-            birthday: data.birthday,
-            phone: data.phone,
-            location: {"country":data.country,"city":data.country,"state":data.state},
-            address: {"street_address":data.street_address , "floor":data.floor , "department":data.department , "zip_code":data.zip_code }
-          }
-          dispatch(createUser(user));
-          navigation.navigate('Login')
+    const onSubmit = async(data) => {
+      try {
+        const user = {
+          username: data.username,
+          email: data.email,
+          password: data.password,
+          dni: data.dni,
+          firstname: data.firstname,
+          lastname: data.lastname,
+          birthday: data.birthday,
+          phone: data.phone,
+          location: {"country":data.country,"city":data.country,"state":data.state},
+          address: {"street_address":data.street_address , "floor":data.floor , "department":data.department , "zip_code":data.zip_code }
+        }
+        const res = await axios.post(ROUTE +"/users/register", user);
+        alert("user created successfully !")
+        navigation.navigate('Login')
+      } catch (error) {
+        alert(!error.response.data.error?error.response.data:error.response.data.error )
+      }
+         
     };
       
     const Separator = () => (

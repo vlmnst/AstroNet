@@ -29,10 +29,15 @@ const Details = (props) => {
       <Image source={{ uri: params.img }} style={styles.image} />
       <View style={styles.contInt}>
         <View style={styles.priceOffer}>
-          <Text style={styles.price}>$ {params.price}</Text>
-          {params.offer > 0 ? (
-            <Text style={styles.offer}>{params.offer}% off!</Text>
-          ) : null}
+           {params.offer > 0 ? (
+             <Text style={styles.pricethrough}>$ {params.price}</Text>)
+             : <Text style={styles.price}>$ {params.price}</Text>}
+             {params.offer > 0 ? (
+               <Text style={styles.offer}>{params.offer}% off!</Text>
+             ) : null}
+              {params.offer > 0 ? (
+               <Text style={styles.pricenew}>$ {params.price - (params.price * (params.offer/100))}</Text>
+             ) : null}
         </View>
         <View style={styles.descriptionCont}>
           <Text style={styles.name}>{params.name}: </Text>
@@ -84,6 +89,14 @@ const styles = StyleSheet.create({
   offer: { color: "red", fontSize: priceOfferFont },
   descriptionCont: {display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "center"},
   description: { fontSize: fontDescription, padding: 5, backgroundColor: "white", borderRadius: 5, borderColor: "#EAEAEA", marginHorizontal: 5, marginVertical: 5 },
+  pricethrough: {
+    fontSize: nameFont,
+    textDecorationLine:'line-through'
+  },
+  pricenew: {
+    color: "green",
+    fontSize: nameFont,
+  },
 });
 
 export default Details;

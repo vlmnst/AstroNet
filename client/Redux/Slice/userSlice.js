@@ -101,13 +101,7 @@ export const getUserFullData = (username)=> async(dispatch) => {
     };
 };
 
-export const createUser = (user)=> async(dispatch) => {
-    try {
-        await axios.post(ROUTE +"/users/register", user);
-    } catch (e) {
-        console.log(e)
-    };
-};
+
 
 export const { setLogOut } =realUserSlice.actions;
 

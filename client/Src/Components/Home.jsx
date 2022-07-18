@@ -35,6 +35,7 @@ const Home = ({ navigation, route }) => {
 
   return (
       <View style={styles.conteiner}>
+        
         <Modal
           transparent={true}
           visible={visible}
@@ -61,17 +62,23 @@ const Home = ({ navigation, route }) => {
             </View>
           </View>
         </Modal>
+
         <View style={styles.SB}>
           <SearchBar navigation={navigation} route={route} />
         </View>
-        <Banner navigation={navigation} />
-        <Categories {...navigation} />
+      
+        {/* <View > */}
+          <Banner navigation={navigation} />
+          <Categories {...navigation} />
+        {/* </View> */}
+        
       </View>
   );
 };
 
 const styles = StyleSheet.create({
   conteiner: {
+    flex: 1,
     position: 'absolute',
     justifyContent: 'center',
     width: '100%'

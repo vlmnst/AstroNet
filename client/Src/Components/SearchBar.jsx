@@ -30,6 +30,8 @@ const SearchBar = ({ navigation, route }) => {
       />
 
       <Icon onPress={() => search()} name="search-outline" size={30} color="grey" />
+      <Icon name="cart-outline" size={30} color="grey" onPress={() => navigation.navigate("Cart")}/>
+      
     </View>
   );
 };
