@@ -28,7 +28,7 @@ const ProductCard = (props) => {
         </View>
         <Text style={styles.name}>{item.name.slice(0,65)}... </Text>
       </View>
-      <Cart navigation={navigation} item={item}/>
+      {/* <Cart navigation={navigation} item={item}/> */}
     </TouchableOpacity>
   );
 };
