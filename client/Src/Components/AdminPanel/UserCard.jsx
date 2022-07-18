@@ -73,7 +73,7 @@ const UserCard = (props) => {
                                     <TouchableOpacity
                                         style={styles.button}
                                         onPress={() => handlePushPrivilege(userType.user)}>
-                                        <Text style={styles.text}>Remove from moderator</Text>
+                                        <Text style={styles.text}>Remove moderator</Text>
                                     </TouchableOpacity>
                                     :
                                     <TouchableOpacity
@@ -104,7 +104,10 @@ const UserCard = (props) => {
 
             <View style={styles.card}>
                 <View style={styles.line}>
-                    <Text style={styles.user}>-------- {item.username} -------- {item.role}</Text>
+                    <Text style={styles.user}>{item.role}</Text>
+                </View>
+                <View style={styles.line}>
+                    <Text style={styles.user}>{item.username}</Text>
                 </View>
                 <View style={styles.line}>
                     <Text style={styles.name}>firstname: </Text>
@@ -140,14 +143,13 @@ const font = 11;
 const styles = StyleSheet.create({
     container: {
         flexDirection: "row",
-        flex: 1,
         alignItems: "center",
         margin: 5,
-        padding: 0,
         borderWidth: 2,
         borderColor: "#EAEAEA",
         backgroundColor: "white",
         borderRadius: 10,
+        width:'98%'
     },
     containerBanned: {
         flexDirection: "row",
@@ -163,6 +165,7 @@ const styles = StyleSheet.create({
     card: {
         justifyContent: "space-between",
         marginBottom: 5,
+        marginLeft:10
     },
     line: {
         flexDirection: "row",
@@ -174,6 +177,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: "green",
         alignSelf: "center",
+        width:'80%'
     },
     name: {
         color: "red",
@@ -185,7 +189,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#686868',
         borderRadius: 5,
         padding: 10,
-        marginHorizontal: 15
+        marginHorizontal: 15,
+        width:'90%'
     },
     buttonDetail: {
         margin: 5,
@@ -193,10 +198,12 @@ const styles = StyleSheet.create({
         backgroundColor: 'green',
         borderRadius: 5,
         padding: 10,
-        marginHorizontal: 15
+        marginHorizontal: 15,
+        width:'90%'
     },
     text: {
-        color: 'white'
+        color: 'white',
+        fontSize:12
     }
 });
 
