@@ -17,7 +17,7 @@ const UserProfile = ({ navigation, route }) => {
     },[dispatch])
 
     return (
-            <View style={styles.conteiner}>
+            <ScrollView contentContainerStyle={styles.conteiner}>
                 {!data[0] ?
                 <View>
                     <Text>Loading...</Text>
@@ -95,8 +95,7 @@ const UserProfile = ({ navigation, route }) => {
                         </View>
                     </View>
                 </View>}
-            </View>
-            
+            </ScrollView>
     );
 };
 

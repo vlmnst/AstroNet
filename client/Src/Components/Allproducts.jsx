@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     alignItems: "center",
-    backgroundColor: '#D6DBDF'
+    backgroundColor: 'white'
   },
   selectsContainer: {
     flexDirection: "row",
@@ -223,8 +223,6 @@ const styles = StyleSheet.create({
     width: "40%",
   },
   flatList: {
-    marginTop: 0,
-    padding: 0,
     width: "100%",
   },
   title: {

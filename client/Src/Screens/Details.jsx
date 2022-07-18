@@ -8,7 +8,8 @@ import {
   useWindowDimensions,
   Button,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
+  ScrollView
 } from "react-native";
 
 const Details = (props) => {
@@ -20,7 +21,7 @@ const Details = (props) => {
   // console.log(params.img);
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <TouchableOpacity
         style={styles.button}
         onPress={() => props.navigation.goBack()}>
@@ -51,7 +52,7 @@ const Details = (props) => {
         </View>
       </View>
       <Cart navigation={route} item={params}/>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -66,7 +67,7 @@ const styles = StyleSheet.create({
     padding: 10,
     width: "100%",
     height: "100%",
-    borderColor: "#EAEAEA",
+    borderColor: "white",
     backgroundColor: "white",
   },
   priceOffer: {
