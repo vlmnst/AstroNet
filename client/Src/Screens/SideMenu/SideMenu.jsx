@@ -125,6 +125,7 @@ const SideMenu = ({ navigation }) => {
             { userName ? (
                 <LogoutBtn
                     text = "Logout"
+                    navigation={navigation}
                 />
             ) : null }
             
