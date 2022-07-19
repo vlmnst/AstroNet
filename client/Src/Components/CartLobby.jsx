@@ -81,7 +81,7 @@ const CartLobby = () => {
                 {item.article}
               </Text>
               <Text>
-                {`${item.description.slice(0,40)}...`}
+                {`${item.detail.slice(0,40)}...`}
               </Text>
             </View>           
 

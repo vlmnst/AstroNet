@@ -5,9 +5,10 @@ import { useForm, Controller } from "react-hook-form";
 import DropDownPicker from "react-native-dropdown-picker";
 import { ModifyProducts } from "../../../Redux/Slice";
 import Icon from 'react-native-vector-icons/Ionicons';
+import ImageLibrary from '../ImageLibrary';
 
 const ProductModify = (props) => {
-
+    // console.log(props);
     const dispatch = useDispatch();
     let item = props.route.params;
     let categories = useSelector((state) => state.ALL_PRODUCTS.categories); 
@@ -28,6 +29,7 @@ const ProductModify = (props) => {
         stock: item.stock,
         offer: item.offer,
         description: item.description,
+        detail: item.detail,
     });
 
     function handleCategory(e) {
@@ -51,6 +53,7 @@ const ProductModify = (props) => {
             stock: item.stock,
             offer: item.offer,
             description: item.description,
+            detail: item.detail
         }
     });
     let product = {
@@ -61,6 +64,7 @@ const ProductModify = (props) => {
         offer: "",
         stock: "",
         description: {},
+        detail: "",
     }
 
     const onSubmitPreview = data => {
@@ -75,6 +79,7 @@ const ProductModify = (props) => {
                 offer: data.offer,
                 stock: data.stock,
                 description: state.description ,
+                detail: data.detail,
             }
             setState({
                 ...state,
@@ -86,6 +91,7 @@ const ProductModify = (props) => {
                 stock: product.stock,
                 offer: product.offer,
                 description: product.description,
+                detail: product.detail,
             })
             key ? createDescription():null
         }
@@ -102,7 +108,8 @@ const ProductModify = (props) => {
                 img: state.img,
                 stock: state.stock,
                 offer: state.offer,
-                description: state.description
+                description: state.description,
+                detail: state.detail,
             }
         }
         dispatch(ModifyProducts(payload));
@@ -114,18 +121,19 @@ const ProductModify = (props) => {
         setKey(e)
     };
     const createDescription = (e) => {
-        let result ={}
-        resultarray =descriptionArray
+        // let result ={}
+        // resultarray =descriptionArray
+        let resultarray = item.description;
         resultarray.push([key,description])
-        resultarray.forEach(par =>result[par[0]] = par[1])
-        result[key] = description
+        // resultarray.forEach(par =>result[par[0]] = par[1])
+        // result[key] = description
         setState({
             ...state,
-            description: result
+            description: resultarray
         })
     }
 
-    descriptionArray = Object.entries(state.description)
+    // descriptionArray = Object.entries(state.description)
 
     const Separator = () => (
         <View style={styles.separator} />
@@ -140,7 +148,7 @@ const ProductModify = (props) => {
                     onPress={() => props.navigation.goBack()}>
                     <Text style={styles.text}>Go Back</Text>
                 </TouchableOpacity>
-                <Image source={{ uri: state.img }} style={styles.image} />
+                <Image source={{ uri: state.img[0] }} style={styles.image} />
                 <View style={styles.contInt}>
                     <View style={state.priceOffer}>
                         {state.offer > 0 ? (
@@ -166,14 +174,19 @@ const ProductModify = (props) => {
                             }
                         )
                         :<View style={styles.descriptionCont}><Text style={styles.name}>not categories loaded </Text></View>}
-                        
-                        {descriptionArray.map((p, index) => {
+
+                    <Text style={styles.name}>Description: </Text> 
+                        {state.description.map((p, index) => {
                             return (
                                 <Text style={styles.description} key={index}>
-                                    {p[0]}: {p[1]}
+                                    {/* {p[0]}: {p[1]} */}
+                                    {Object.keys(p)} : {Object.values(p)}
                                 </Text>
                             );
                         })}
+
+                    <Text style={styles.name}>Detail: </Text>
+                    <Text style={styles.description}>{state.detail}</Text>
                     </View>
                 </View>
             </View>
@@ -241,7 +254,7 @@ const ProductModify = (props) => {
             {errors.category && <Text>Insert category name</Text>}
             <View style={styles.description}>
             <Text>Product image:</Text>
-            <Controller
+            {/* <Controller
                 control={control}
                 rules={{
                     required: true,
@@ -256,7 +269,8 @@ const ProductModify = (props) => {
                 )}
                 name="img"
             />
-            {errors.img && <Text>Insert URL image </Text>}
+            {errors.img && <Text>Insert URL image </Text>} */}
+            <ImageLibrary />
             </View>
             <View style={styles.Container_}>
             <Text>Product stock:</Text>

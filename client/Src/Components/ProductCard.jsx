@@ -13,7 +13,7 @@ const ProductCard = (props) => {
       style={styles.container}
       onPress={() => navigation.navigate("Details", item)}
     >
-      <Image source={{ uri: item.img }} style={styles.image} />
+      <Image source={{ uri: item.img[0] }} style={styles.image} />
       <View style={styles.contInt}>
         <View style={styles.priceOffer}>
             {item.offer > 0 ? (

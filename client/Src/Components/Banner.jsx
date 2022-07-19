@@ -55,7 +55,7 @@ const user = useSelector((state) => state.USER.userName)
       {
         imgToView ?
             <View style={styles.imageContainer}>
-              <Image source={{ uri:imgToView.img}} style={styles.image} />
+              <Image source={{ uri:imgToView.img[0]}} style={styles.image} />
               <Text style={styles.name}>
                 {imgToView.name.toUpperCase().charAt(0).concat(imgToView.name.slice(1, 26))}...
               </Text> 
