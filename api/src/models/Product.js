@@ -4,13 +4,14 @@ const productSchema = new mongoose.Schema({
     name:           { type: String, required: true, minlength: 2 },
     price:          { type: Number, required: true },
     category:       { type: Array, required: true },
-    img:            { type: String, required: true },
+    img:            { type: Array, required: true },
     stock:          { type: Number, required: true },
     soldCount:      { type: Number, required: true },
     queries:        { type: Array, required: true },        // [{userID, comment}, {}, {}]
     offer:          { type: Number, required: true },       // 0-100 %
     reviews:        { type: Array },                        // [{review: x, comment: 'string'}] ---> devolver rating desde el back
-    description:    { type: Object, required: true },       // description: {key(front): value(front)}
+    description:    { type: Array, required: true },       // description: [{key(front): value(front)}, {}, {}]
+    detail:         { type: String },                        // string
     date: Date,
 });
 

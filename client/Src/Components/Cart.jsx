@@ -18,11 +18,11 @@ const Cart = (props) => {
     //console.log(data);
     const itemCart = {
     article: data.name,
-    description: data.description.Description,
+    detail: data.detail,
     id: data.id,
     quantity: 1,
     price: data.price,
-    image: data.img,
+    image: data.img[0],
     offer: data.offer
     }
     //setCart((item)=>item.concat(itemCart));

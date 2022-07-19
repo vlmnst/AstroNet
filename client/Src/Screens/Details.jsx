@@ -16,7 +16,7 @@ const Details = (props) => {
   
   const { route } = props;
   const { params } = route;
-  let descriptionArray = Object.entries(params.description); //converte el objecto en array de arrays (con key y value)
+  // let descriptionArray = Object.entries(params.description); //converte el objecto en array de arrays (con key y value)
 
   // console.log(params.img);
 
@@ -27,7 +27,7 @@ const Details = (props) => {
         onPress={() => props.navigation.goBack()}>
         <Text style={styles.text}>Go Back</Text>
       </TouchableOpacity>
-      <Image source={{ uri: params.img }} style={styles.image} />
+      <Image source={{ uri: params.img[0] }} style={styles.image} />
       <View style={styles.contInt}>
         <View style={styles.priceOffer}>
            {params.offer > 0 ? (
@@ -42,13 +42,17 @@ const Details = (props) => {
         </View>
         <View style={styles.descriptionCont}>
           <Text style={styles.name}>{params.name}: </Text>
-          {descriptionArray.map((item, index) => {
+          {params.description.map((item, index) => {
             return (
               <Text style={styles.description} key={index}>
-                {item[0]}: {item[1]}
+                {Object.keys(item)} : {Object.values(item)}
               </Text>
             );
           })}
+        </View>
+        <View>
+          <Text style={styles.name}>Detail: </Text>
+          <Text style={styles.description}>{params.detail}</Text>
         </View>
       </View>
       <Cart navigation={route} item={params}/>

@@ -2,12 +2,13 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 
 const ProductCardModify = (props) => {
     const { navigation, item } = props;
+    // console.log(item);
     return (
         <TouchableOpacity
             style={styles.container}
             onPress={() => navigation.navigate("ProductModify", item)}
         >
-            <Image source={{ uri: item.img }} style={styles.image} />
+            <Image source={{ uri: item.img[0] }} style={styles.image} />
             <View style={styles.contInt}>
                 <View style={styles.priceOffer}>
                     {item.offer > 0 ? (
