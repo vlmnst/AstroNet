@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView } from "react-native";
 
 const ProductReviews = ({ reviews }) => {
   //por props solo estoy pasando al review de producto
-  console.log(reviews)
+
   return (
     <View style={styles.divOne}>
 
