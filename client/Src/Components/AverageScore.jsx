@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
   score: {
     backgroundColor: "#ffff",
     justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 5,
     marginHorizontal: 20,
     paddingHorizontal: 15,
