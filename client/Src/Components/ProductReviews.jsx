@@ -10,7 +10,7 @@ const ProductReviews = ({ reviews }) => {
         <View>
           <View style={styles.div}>
             <Text>{reviews.owner}</Text>
-            <Text>{reviews.rating}</Text>
+            <Text>Score: {reviews.rating}</Text>
           </View>
           <Text>{reviews.comment}</Text>
         </View>

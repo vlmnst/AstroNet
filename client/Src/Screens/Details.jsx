@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     width: 250,
     borderRadius: 10,
   },
-  contInt: { marginTop: 5, width: "98%", backgroundColor: "#EAEAEA" },
+  contInt: { marginTop: 5, width: "100%", backgroundColor: "#EAEAEA" },
   price: { fontSize: priceOfferFont },
   name: { fontSize: nameFont, marginHorizontal: 10, marginVertical: 10 },
   offer: { color: "red", fontSize: priceOfferFont },
