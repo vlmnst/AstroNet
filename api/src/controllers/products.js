@@ -3,7 +3,6 @@ const User = require('../models/User');
 const { v4: uuidv4 } = require('uuid');
 
 const getAllProducts = async (req, res, next) => {
-
     try {
         const products = await Product.find({})
         return res.json(products);      
@@ -245,9 +244,10 @@ const putReview = async (req, res, next) => {
 
     try {
         const { id } = req.params;
-        const { review } = req.body; // review: {rating, comment, owner}
+        const review = req.body; // review: {rating, comment, owner}
+        // console.log(req.body)
         // falta ir a buscar al owner y sus productHistory, para agregarle al producto comprado : REVIEW = true
-        
+     
         const addReviewProduct = await Product.updateOne({"_id": id }, {$push: {"reviews": review}});
 
         if (addReviewProduct) {
