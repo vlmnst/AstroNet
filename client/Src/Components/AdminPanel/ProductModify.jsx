@@ -6,6 +6,7 @@ import DropDownPicker from "react-native-dropdown-picker";
 import { ModifyProducts } from "../../../Redux/Slice";
 import Icon from 'react-native-vector-icons/Ionicons';
 import ImageLibrary from '../ImageLibrary';
+import PrePreview from '../PrePreview';
 
 const ProductModify = (props) => {
     // console.log(props);
@@ -95,6 +96,7 @@ const ProductModify = (props) => {
             })
             key ? createDescription():null
         }
+        
     }
     
 
@@ -149,99 +151,12 @@ const ProductModify = (props) => {
                     <Text style={styles.text}>Go Back</Text>
                 </TouchableOpacity>
                 <Image source={{ uri: state.img[0] }} style={styles.image} />
-                <View style={styles.contInt}>
-                    <View style={state.priceOffer}>
-                        {state.offer > 0 ? (
-                        <Text style={styles.pricethrough}>$ {state.price}</Text>)
-                        : <Text style={styles.price}>$ {state.price}</Text>}
-                        {state.offer > 0 ? (
-                          <Text style={styles.offer}>{state.offer}% off!</Text>
-                        ) : null}
-                         {state.offer > 0 ? (
-                          <Text style={styles.pricenew}>$ {state.price - (state.price * (state.offer/100))}</Text>
-                        ) : null}
-                    </View>
-                    <View style={styles.descriptionCont}>
-                    <Text style={styles.name}>{state.name} </Text>
-                    <Text style={styles.name}>Categories: </Text>
-                    {state.category? state.category.map((p,index)=>{
-                            return(
-                                <View key={index}>
-                                <Text style={styles.description}>{p} </Text>
-                                </View>
-                            )
-                            
-                            }
-                        )
-                        :<View style={styles.descriptionCont}><Text style={styles.name}>not categories loaded </Text></View>}
-
-                    <Text style={styles.name}>Description: </Text> 
-                        {state.description.map((p, index) => {
-                            return (
-                                <Text style={styles.description} key={index}>
-                                    {/* {p[0]}: {p[1]} */}
-                                    {Object.keys(p)} : {Object.values(p)}
-                                </Text>
-                            );
-                        })}
-
-                    <Text style={styles.name}>Detail: </Text>
-                    <Text style={styles.description}>{state.detail}</Text>
-                    </View>
-                </View>
+           
             </View>
 
-            <View style={styles.Container_}>
-            <Text>Product name:</Text>
-            <Controller
-                control={control}
-                rules={{
-                    required: true,
-                }}
-                render={({ field: { onChange, onBlur, value } }) => (
-                    <TextInput
-                        style={styles.textInput}
-                        onBlur={onBlur}
-                        onChangeText={onChange}
-                        value={value}
-                    />
-                )}
-                name="name"
-            />
-            {errors.name && <Text>Insert product name</Text>}
-            </View>
-            <View style={styles.Container_}>
-            <Text>Product price:</Text>
-            <Controller
-                control={control}
-                rules={{
-                    required: true,
-                }}
-                render={({ field: { onChange, onBlur, value } }) => (
-                    <TextInput
-                        style={styles.textInput}
-                        onBlur={onBlur}
-                        onChangeText={onChange}
-                        value={value}
-                    />
-                )}
-                name="price"
-            />
-            {errors.price && <Text>Insert price value</Text>}
-            </View>
-            <View style={styles.Container_}><Text>Product category:</Text></View>
-            <View style={styles.descriptionCont}>
-            {state.category? state.category.map((p,index)=>{
-                            return(
-                                <View style={styles.Container_}key={index}>
-                                <Text style={styles.name}>{p} </Text>
-                                </View>
-                            )
-                            
-                            }
-                        )
-                        :<View style={styles.descriptionCont}><Text style={styles.name}>not categories loaded </Text></View>}
-            </View>
+            
+            
+           
             <DropDownPicker
                 style={styles.Container_}
                 open={openitems}
@@ -329,6 +244,7 @@ const ProductModify = (props) => {
             <Separator />
             <Button title="Modification Preview" onPress={handleSubmit(onSubmitPreview)} />
             <Button title="Modify Product" onPress={()=>{onSubmit()}} />
+            <PrePreview item={state}/>
         </ScrollView>
     );
 };
