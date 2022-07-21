@@ -20,9 +20,23 @@ import * as Google from "expo-auth-session/providers/google";
 import * as Web from "expo-web-browser";
 import GoogleButton from "react-google-button";
 import CustomButton from "./CustomButton";
+import { Notification } from 'expo';
+import * as Permissions from "expo-permissions";
 Web.maybeCompleteAuthSession();
 
 const Login = ({ navigation }) => {
+  const getToken =async() => {
+    const {status}=await Permissions.getAsync(Permissions.NOTIFICATIONS);
+    if ( status !== "granted") {
+      return;
+    }
+  const token = await Notification.getExpoPushTokenAsync();
+  console.log(token);
+  return token 
+  };
+  useEffect(() => {
+    getToken();
+  },[])
   // const URL = 'http://localhost:3001/login';
   //ESTADOS PARA LOGIN DE GOOGLE -------------
   const [accessToken, setAccessToken] = useState(null);
