@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Text, View, TextInput, Button, StyleSheet, SafeAreaView, StatusBar, Image, ScrollView,TouchableOpacity } from "react-native";
-import { useForm, Controller } from "react-hook-form";
+import { Text, View, TextInput, Button, StyleSheet, StatusBar, ScrollView,TouchableOpacity } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import { ModifyProducts } from "../../../Redux/Slice";
-import Icon from 'react-native-vector-icons/Ionicons';
+// import Icon from 'react-native-vector-icons/Ionicons';
 import ImageLibrary from '../ImageLibrary';
 import PrePreview from '../PrePreview';
 import FeatherIcon from 'react-native-vector-icons/Feather';
@@ -12,137 +11,90 @@ import FeatherIcon from 'react-native-vector-icons/Feather';
 const ProductModify = (props) => {
     // console.log(props);
     const dispatch = useDispatch();
+
+    // reducer states
     let item = props.route.params;
-    let categories = useSelector((state) => state.ALL_PRODUCTS.categories); 
+    let categoriesReducer = useSelector((state) => state.ALL_PRODUCTS.categories); 
+
+    // picker states
     const [openitems, setOpenitems] = useState(false);
     const [valueitems, setValueitems] = useState(null);
     let pickerItems = [];
-    categories.length
-        ? categories.map((c, index) => pickerItems.push({ label: c, value: c }))
+    categoriesReducer.length
+        ? categoriesReducer.map(c => pickerItems.push({ label: c, value: c }))
         : null;
-    const [key, setKey] = useState("");
-    const [description, setDescription] = useState("");
-    const [state, setState] = useState({
-        id: item.id,
-        category: item.category,
-        name: item.name,
-        price: item.price,
-        img: item.img,
-        stock: item.stock,
-        offer: item.offer,
-        description: item.description,
-        detail: item.detail,
+
+    // local states
+    const [name, setName] = useState(item.name);
+    const [price, setPrice] = useState(item.price);
+    const [stock, setStock] = useState(item.stock);
+    const [offer, setOffer] = useState(item.offer);
+    const [detail, setDetail] = useState(item.detail);
+    const [description, setDescription] = useState(item.description);
+    const [categories, setCategories] = useState(item.category);
+    const [images, setImages] = useState({
+        one: item.img[0] ? item.img[0] : 'empty',
+        two: item.img[1] ? item.img[1] : 'empty',
+        three: item.img[2] ? item.img[2] : 'empty',
     });
 
+    const [product, setProduct] = useState({
+        name, price, offer, stock, detail, description, category: categories, images
+    })
+
+
+    // update preview
+    useEffect(() => {
+        setProduct({
+            name, price, offer, stock, detail, description, category: categories, images
+        })
+      }, [name, price, stock, offer, detail, description, categories, images]);
+
+    // handlers
     function handleCategory(e) {
-        if (!state.category.includes(e.value)) {
-            setState({
-                ...state,
-                category: [...state.category, e.value]
-            })
+        if (!categories.includes(e.value)) {
+            setCategories(
+                [...categories, e.value]
+            )
         } else {
-            setState({
-                ...state,
-                category: state.category.filter(c => c !== e.value)
-            })
+            setCategories([...categories.filter(c => c !== e.value)])
         };
     };
-    const { control, handleSubmit, formState: { errors } } = useForm({
-        defaultValues: {
-            name: item.name,
-            price: item.price,
-            img: item.img,
-            stock: item.stock,
-            offer: item.offer,
-            description: item.description,
-            detail: item.detail
-        }
-    });
-    let product = {
-        name: "",
-        category: "",
-        img: "",
-        price: "",
-        offer: "",
-        stock: "",
-        description: {},
-        detail: "",
-    }
 
-    const onSubmitPreview = data => {
-        if (state.category.length < 1) {
-            alert('Enter a category')
-        } else {
-                product = {
-                name: data.name,
-                category: state.category,
-                img: data.img,
-                price: data.price,
-                offer: data.offer,
-                stock: data.stock,
-                description: state.description ,
-                detail: data.detail,
-            }
-            setState({
-                ...state,
-                id: product.id,
-                category: product.category,
-                name: product.name,
-                price: product.price,
-                img: product.img,
-                stock: product.stock,
-                offer: product.offer,
-                description: product.description,
-                detail: product.detail,
-            })
-            key ? createDescription():null
-        }
-        
-    }
-    
+    function submitForm() {
+        if (!name || !price ||!stock || !offer || !description || !detail || categories.length < 1) {
+            return alert('empty fields')
+        };
 
-    const onSubmit = () => {
-        const payload ={
+        if (images.one === 'empty' && images.two === 'empty' && images.three === 'empty') {
+            return alert('upload one image at least')
+        };
+
+        const payload = {
             id: item.id,
-            product:{
-                category: state.category,
-                name: state.name,
-                price: state.price,
-                img: state.img,
-                stock: state.stock,
-                offer: state.offer,
-                description: state.description,
-                detail: state.detail,
+            product: {
+                name, price, stock, offer, detail, description,
+                category: categories, 
+                img: [images.one, images.two, images.three],
             }
-        }
+        };
+
         dispatch(ModifyProducts(payload));
-    }
-    function filterDescription(e) {
-        setDescription(e)
+        alert('updated successfully');
     };
-    function filterKey(e) {
-        setKey(e)
-    };
+
+    // add new attribute
+    const [key, setKey] = useState('');
+    const [value, setValue] = useState('');
+    
     const createDescription = (e) => {
-        // let result ={}
-        // resultarray =descriptionArray
-        let resultarray = item.description;
-        resultarray.push([key,description])
-        // resultarray.forEach(par =>result[par[0]] = par[1])
-        // result[key] = description
-        setState({
-            ...state,
-            description: resultarray
-        })
-    }
-
-    // descriptionArray = Object.entries(state.description)
-
-    const Separator = () => (
-        <View style={styles.separator} />
-    );
+        if (key === '' || value === '') return alert ('enter new key:value for the attribute');
+        const newAttribute = {[key]:value}
+        setDescription([...description, newAttribute]); 
+    };
 
     return (
+<<<<<<< HEAD
         <View style={{minHeight:'100%', width:'100%', backgroundColor:'white'}}>
             <View style={styles.SBcontainer}>
                 <View style={styles.SB}>
@@ -246,11 +198,129 @@ const ProductModify = (props) => {
             <Button title="Modify Product" onPress={()=>{onSubmit()}} />
             <PrePreview item={state}/>
         </View>
+=======
+        <ScrollView contentContainerStyle={styles.container}>
+
+            <View style={styles.contDetails}>
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => props.navigation.goBack()}>
+                    <Text style={styles.text}>Go Back</Text>
+                </TouchableOpacity>
+            </View>
+
+            {/* NAME */}
+            <View style={styles.inputsContainers}>
+                <TextInput transparent
+                    style={styles.inputs}
+                    onChangeText={setName}
+                    value={name}
+                    placeholder="Name"
+                />
+            </View>
+
+            {/* PRICE */}
+            <View style={styles.inputsContainers}>
+                <TextInput transparent
+                    style={styles.inputs}
+                    onChangeText={setPrice}
+                    value={price}
+                    placeholder="Price"
+                />
+            </View>
+
+            {/* STOCK */}
+            <View style={styles.inputsContainers}>
+                <TextInput transparent
+                    style={styles.inputs}
+                    onChangeText={setStock}
+                    value={stock}
+                    placeholder="Stock"
+                />
+            </View>
+
+            {/* OFFER */}
+            <View style={styles.inputsContainers}>
+                <TextInput transparent
+                    style={styles.inputs}
+                    onChangeText={setOffer}
+                    value={offer}
+                    placeholder="Offer"
+                />
+            </View>
+
+            {/* DESCRIPTION */}
+            <View style={styles.descriptionContainer}>
+                <TextInput transparent
+                    style={styles.descriptionInput}
+                    multiline={true}
+                    onChangeText={setDetail}
+                    value={detail}
+                    placeholder="Enter details..."
+                />
+            </View>
+
+            {/* IMAGES */}
+            <Text style={{fontSize: 15, marginTop: 15}}>Add images</Text>
+            <ImageLibrary images={images} setImages={setImages} />
+
+            {/* CATEGORIES */}
+            <Text style={{fontSize: 15 }}>Add categories</Text>
+            <View style={styles.inputsContainers}>
+                <DropDownPicker
+                    style={{marginVertical: 10}}
+                    open={openitems}
+                    value={valueitems}
+                    items={pickerItems}
+                    setOpen={setOpenitems}
+                    setValue={setValueitems}
+                    onSelectItem={(value) => handleCategory(value)}
+                />
+            </View>
+
+            {/* CATEGORIES CONTAINER */}
+            <View style={styles.categoriesContainer}>
+                { categories 
+                    ? categories.map((c, index) => {
+                        return (
+                            <View style={styles.categoriesLabel} key={index} >
+                                <Text>{c}</Text>
+                            </View>
+                        )
+                    })
+                    : (null)
+                }
+            </View>
+
+            {/* NEW ATTRIBUTE */}
+            <Text style={{fontSize: 15 }}>Add new attribute</Text>
+            <View style={styles.inputsContainers}>
+                <TextInput
+                    style={styles.inputs}
+                    onChangeText={setKey}
+                    value={key}
+                    placeholder="Name of attribute..."
+                />
+                <TextInput
+                    style={styles.inputs}
+                    onChangeText={setValue}
+                    value={value}
+                    placeholder="Value of attribute..."
+                />
+            </View>
+
+            <Button title="Add new attribute" onPress={() => createDescription()} />
+            <PrePreview item={product}/>
+            <Button title="Modify Product" onPress={() => submitForm()}/>
+
+        </ScrollView>
+>>>>>>> 3aedf8dd3eb02bd4247b7fb0e0a9eb66c60fa1f6
     );
 };
 
 
 const styles = StyleSheet.create({
+<<<<<<< HEAD
     SBcontainer: {
         height:'12%',
         backgroundColor:'#4A347F',
@@ -307,6 +377,52 @@ const styles = StyleSheet.create({
         borderWidth:2,
         borderRadius:10,
         borderColor:'grey'
+=======
+    container:{
+        // flex: 1, 
+        width: '100%',
+        alignItems: 'center',
+    },
+    inputsContainers: {
+        width: '50%'
+    },
+    inputs: { 
+        padding: 5, 
+        backgroundColor: 'rgba(0, 0, 0, 0.1)',
+        borderRadius: 10,
+        marginTop: 10,
+    },
+    descriptionContainer: {
+        width: '70%',
+    },
+    descriptionInput: {
+        height: 75,
+        backgroundColor: 'rgba(0, 0, 0, 0.1)',
+        borderRadius: 10,
+        marginTop: 10,
+        padding: 5, 
+    },
+    categoriesContainer: {
+        flexWrap: 'wrap',
+        width: '80%',
+        padding: 5,
+        height: 108,
+        backgroundColor: 'rgba(0, 0, 0, 0.1)',
+        borderRadius: 10,
+        marginBottom: 10,
+        flexDirection: 'row',
+    },
+    categoriesLabel: {
+        backgroundColor: 'rgba(0, 100, 255, 0.5)',
+        width: '30%',
+        height: '30%',
+        padding: 5,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 10,
+        marginVertical: 2,
+        marginHorizontal: 5,
+>>>>>>> 3aedf8dd3eb02bd4247b7fb0e0a9eb66c60fa1f6
     },
 });
 

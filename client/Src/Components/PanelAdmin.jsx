@@ -3,6 +3,7 @@ import { View, StyleSheet, Text, TouchableOpacity, Image } from "react-native";
 import CustomButton from "./CustomButton";
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import { useSelector } from "react-redux";
+import Email from "./AdminPanel/email"
 
 const PanelAdmin = ({ navigation, route }) => {
 
@@ -49,6 +50,7 @@ const PanelAdmin = ({ navigation, route }) => {
                             <Text style={styles.text}>Post new product</Text>
                         </View>
                     </TouchableOpacity>
+                    <Email/>
                 </View>
             </View>
     );

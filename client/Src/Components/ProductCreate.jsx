@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Text, View, TextInput, Button, StyleSheet, ScrollView } from "react-native";
+import { Text, View, TextInput, Button, StyleSheet, ScrollView, Image } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import FeatherIcon from 'react-native-vector-icons/Feather';
+// import axios from "axios";
 
 import ImageLibrary from "./ImageLibrary";
+import PrePreview from "./PrePreview";
 import { createProduct } from "../../Redux/Slice";
 
 const ProductCreate = ({navigation}) => {
@@ -19,9 +21,14 @@ const ProductCreate = ({navigation}) => {
     const [price, setPrice] = useState('');
     const [stock, setStock] = useState('');
     const [offer, setOffer] = useState('');
+    const [detail, setDetail] = useState('');
     const [description, setDescription] = useState('');
-    const [images, setImages] = useState('image');
     const [categories, setCategories] = useState([]);
+    const [images, setImages] = useState({
+        one: 'empty',
+        two: 'empty',
+        three: 'empty',
+    });
 
     // picker categories
     const [openitems, setOpenitems] = useState(false);
@@ -30,7 +37,18 @@ const ProductCreate = ({navigation}) => {
     categoriesReducer.length
         ? categoriesReducer.map(c => pickerItems.push({ label: c, value: c }))
         : null;
+    
+    const [product, setProduct] = useState({
+        name, price, offer, stock, detail, description, category: categories, images
+    })
 
+
+    // update preview
+    useEffect(() => {
+        setProduct({
+            name, price, offer, stock, detail, description, category: categories, images
+        })
+        }, [name, price, stock, offer, detail, description, categories, images]);
 
     // ------ HANDLERS ------
     function handleCategory(e) {
@@ -41,28 +59,6 @@ const ProductCreate = ({navigation}) => {
         } else {
             setCategories([...categories.filter(c => c !== e.value)])
         };
-        // console.log(categories);
-    };
-
-    function submitForm() {
-        if (!name || !price ||!stock || !offer || !description || categories.length < 1) {
-            return alert('empty fields')
-        };
-
-        const product = {
-            name, price, stock, offer, 
-            description: { description },
-            category: categories, 
-            img: images,
-        };
-        // console.log(product)
-        try {
-            dispatch(createProduct(product));
-            // console.log(product)
-            clearInputs();
-        } catch (error) {
-            alert(error);
-        };
     };
 
     function clearInputs(){
@@ -71,7 +67,28 @@ const ProductCreate = ({navigation}) => {
         setStock('');
         setOffer('');
         setDescription('');
+        setDetail('');
         setCategories([]);
+        setImages({ one: '', two: '', three: '' })
+    };
+
+    function submitForm() {
+        if (!name || !price ||!stock || !offer || !description || categories.length < 1) {
+            return alert('empty fields')
+        };
+
+        if (images.one === 'empty' && images.two === 'empty' && images.three === 'empty') {
+            return alert('upload one image at least')
+        };
+
+        const product = {
+            name, price, stock, offer, detail, description,
+            category: categories, 
+            img: [images.one, images.two, images.three],
+        };
+
+        dispatch(createProduct(product));
+        clearInputs();
     };
 
 
@@ -130,18 +147,18 @@ const ProductCreate = ({navigation}) => {
                 <TextInput transparent
                     style={styles.descriptionInput}
                     multiline={true}
-                    onChangeText={setDescription}
-                    value={description}
-                    placeholder="Enter a description..."
+                    onChangeText={setDetail}
+                    value={detail}
+                    placeholder="Enter details..."
                 />
             </View>
 
             {/* IMAGES */}
-            <Text style={{fontSize: 15, marginTop: 15}}>Select images</Text>
-            <ImageLibrary />
+            <Text style={{fontSize: 15, marginTop: 15}}>Add images</Text>
+            <ImageLibrary images={images} setImages={setImages} />
 
             {/* CATEGORIES */}
-            <Text style={{fontSize: 15 }}>Select categories</Text>
+            <Text style={{fontSize: 15 }}>Add categories</Text>
             <View style={styles.inputsContainers}>
                 <DropDownPicker
                     style={{marginVertical: 10}}
@@ -171,8 +188,13 @@ const ProductCreate = ({navigation}) => {
             {/* CREATE BUTTON */}
             <View style={{width: '50%', marginBottom: 15}}>
                 <Button title="Create Product" onPress={() => submitForm()}/>
+                <PrePreview item={product}/>
             </View>
-            
+
+            {/* <View>
+                <Image style={{width: 100, height: 100}} source={{ uri: 'https://res.cloudinary.com/cloud-img-commerce/image/upload/v1658342083/gpyjyznmn1s3oxxwwzys.jpg'}} />
+            </View> */}
+        
         </ScrollView>
     ); 
 };

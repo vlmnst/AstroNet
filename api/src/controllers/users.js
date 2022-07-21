@@ -191,5 +191,6 @@ const getUser = async (req, res, next) => {
       res.status(404).send(e.message);
     }
   };
+  
 
-module.exports = { createUser, getAllUsers, totalUsers, PutPrivileges, PutBanned, getPurchasedProducts, getProductsHistory, getUser,getUsersFull };
+module.exports = { createUser, getAllUsers, totalUsers, PutPrivileges, PutBanned, getPurchasedProducts, getProductsHistory, getUser,getUsersFull};
