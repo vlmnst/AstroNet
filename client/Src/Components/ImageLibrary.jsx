@@ -2,16 +2,9 @@ import React, { useState, } from 'react';
 import { View, Text, Button, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 
-const ImageLibrary = () => {
-
+const ImageLibrary = ({images, setImages}) => {
     const [cameraPermission, setCameraPermission] = useState(null);
     const [galleryPermission, setGalleryPermission] = useState(null);
-
-    const [image, setImage] = useState({
-        one: null,
-        two: null,
-        three: null,
-    });
 
     // permisos
     const permisionFunction = async(from, number) => {
@@ -32,7 +25,7 @@ const ImageLibrary = () => {
         //  ------ GALLERY PERMISSION ------  
         } else if (from === 'gallery') {
             const imagePermission = await ImagePicker.requestMediaLibraryPermissionsAsync(); //requestMediaLibraryPermissionsAsync(writeOnly)
-            console.log(imagePermission);
+            // console.log(imagePermission);
             // console.log(imagePermission.status);
 
             setGalleryPermission(imagePermission.status === 'granted');
@@ -57,7 +50,7 @@ const ImageLibrary = () => {
         
         // si sale bien, seteo imagen
         if (!result.cancelled) {
-            setImage({ ...image, [number]: result.uri });
+            setImages({...images, [number]: result.uri});
         };
     };
 
@@ -72,8 +65,9 @@ const ImageLibrary = () => {
             // returns ---> { cancelled: false, type: 'image', uri, width, height, exif, base64 }
         
         if (!result.cancelled) {
-            setImage({ ...image, [number]: result.uri });
+            setImages({...images, [number]: result.uri});
         };
+        // console.log(result);
     };   
 
     
@@ -83,26 +77,35 @@ const ImageLibrary = () => {
             {/* OPEN GALLERY */}
             <View style={{direction: 'flex', flexDirection: 'row', marginBottom: 5}}>
                 <TouchableOpacity onPress={ () => permisionFunction('gallery', 'one') }>
-                    <Image style={styles.images} source={{ uri: image.one}} />
+                    <Image style={styles.images} source={{ uri: images.one}} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={ () => permisionFunction('gallery', 'two') }>
-                    <Image style={styles.images} source={{ uri: image.two}} />
+                    <Image style={styles.images} source={{ uri: images.two}} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={ () => permisionFunction('gallery', 'three') }>
-                    <Image style={styles.images} source={{ uri: image.three}} />
+                    <Image style={styles.images} source={{ uri: images.three}} />
                 </TouchableOpacity>
             </View>
 
             {/* OPEN CAMERA */}
             <View style={{direction: 'flex', flexDirection: 'row', marginBottom: 5}}>
                 <View style={styles.openCamera}>
-                    <Button title='CAMERA' onPress={ () => permisionFunction('camera', 'one') } />
+                    { images.one !== 'empty'
+                        ? <Button title='DELETE' onPress={ () => setImages({...images, one: 'empty'}) } />
+                        : <Button title='CAMERA' onPress={ () => permisionFunction('camera', 'one') } />
+                    }
                 </View>
                 <View style={styles.openCamera}>
-                    <Button title='CAMERA' onPress={ () => permisionFunction('camera', 'two') } />
+                    { images.two !== 'empty'
+                        ? <Button title='DELETE' onPress={ () => setImages({...images, two: 'empty'}) } />
+                        : <Button title='CAMERA' onPress={ () => permisionFunction('camera', 'two') } />
+                    }
                 </View>
                 <View style={styles.openCamera}>
-                    <Button title='CAMERA' onPress={ () => permisionFunction('camera', 'three') } />
+                    { images.three !== 'empty'
+                        ? <Button title='DELETE' onPress={ () => setImages({...images, three: 'empty'}) } />
+                        : <Button title='CAMERA' onPress={ () => permisionFunction('camera', 'three') } />
+                    }
                 </View>
             </View>
             

@@ -18,7 +18,7 @@ const Home = ({ navigation, route }) => {
   //---------------------------------------------------------------------------------------------
   useEffect(() => {
     registerForPushNotifications()
-    .then(token=>dispatch(putToken(token)))
+    .then(token=> token ? dispatch(putToken(token)) : null)
     .catch(err => console.log(err))
   }, []);
   // Token notificacion push (id unico de dispositivo)
@@ -36,7 +36,7 @@ const Home = ({ navigation, route }) => {
       return token// <------TOKEN DISPOSITIVO-------
     }
     catch (error) {
-      console.log('Error getting a push token ', error);
+      console.log('we dont want your see our notification in web because is suck, you are welcome');
     }
   }
   //---------------------------------------------------------------------------------------------

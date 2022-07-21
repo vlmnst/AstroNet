@@ -25,22 +25,27 @@ const totalProducts = async (req, res, next) => {
 };
 
 const saveAtCloudinary = async({img, id}, where) => {
-    // console.log(where);
+
     try {
         let responses = [];
 
         for (let i = 0; i < img.length; i++) {
-            if (img[i].length > 1) {
+            if (img[i] !== 'empty') { // !== 'empty'
                 if (where === 'create') await cloudinary.uploader.upload(img[i], { public_id: id + '-' + i});
-                // if (where === 'modify') await cloudinary.uploader.update(img[i], { public_id: id + '-' + i});
+                if (where === 'modify') {
+                    await cloudinary.uploader.destroy({ public_id: id + '-' + i});
+                    await cloudinary.uploader.upload(img[i], { public_id: id + '-' + i});
+                } 
                 let response = await cloudinary.api.resource(id + '-' + i);
                 responses.push(response.url);
-            }; 
+            } else {
+                await cloudinary.uploader.destroy({ public_id: id + '-' + i});
+            };
         };
 
         return responses;
     } catch (error) {
-       return next(error); 
+       return console.log(error); 
     };
 };
 
@@ -84,31 +89,45 @@ const createProduct = async (req, res, next) => {
 const editProduct = async (req, res, next) => {
 
     try {
-        const { 
+        let { 
             name,
             price,
             category,
             img,
             stock,
             offer,
+            detail,
             description,
         } = req.body;
 
         const productId = req.params.id
+        
+        const product = {
+            id: productId,
+            img: img,
+        }
 
-        const edProduct = Product.findOneAndUpdate({"_id": productId}, {
-            name,
-            price,
-            category,
-            img,
-            stock,
-            offer,
-            description,
-            }    
+        const responses = await saveAtCloudinary(product, 'modify');
+        img = responses;
+
+        await Product.findOneAndUpdate({"_id": productId}, 
+            {$set: {
+                "name": name,
+                "price": price,
+                "category": category,
+                "img": img,
+                "stock": stock,
+                "offer": offer,
+                "detail": detail,
+                "description": description
+            }},
+            {
+                multi: true
+            }
         );
 
-        console.log(`. \u2705 product "${name}" edited OK`);
-        return res.json({message:"Preduct modify successssssfully"});
+        console.log(`. \u2705 product "${name}" updated successfully`);
+        return res.json({ msg:"Product updated successfully" });
     } catch (error) {
         return next(error);
     };
@@ -134,10 +153,6 @@ const buyProduct = async (req, res, next) => {
         // cart = [{idProduct1, quantity}, {idProduct2, quantity}, etc]
         const { cart, userID } = req.body;
         const user = await User.findById(userID);
-
-        // ! ! ! ! ! vaciar historial de compras del usuario ! ! ! ! !
-            // await User.updateOne({"username": "usermauro"}, {$set: {"productsHistory": []}});
-            // return res.json(user);
 
         var outOfStock = 0;
         let promisesStock = cart.map(async(prods) => {
