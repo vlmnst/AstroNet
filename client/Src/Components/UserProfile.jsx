@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import { View, StyleSheet, Text, TouchableOpacity, ScrollView, FlatList, Image, Button } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserFullData,getPurchaseOrders } from "../../Redux/Slice/userSlice";
+import FeatherIcon from 'react-native-vector-icons/Feather';
+// import Icon from 'react-native-vector-icons/Ionicons';
 
 
 const UserProfile = ({ navigation, route }) => {
@@ -10,6 +12,7 @@ const UserProfile = ({ navigation, route }) => {
     const data = useSelector((state) => state.USER.userFullData)
     const email = useSelector((state) => state.USER.email)
     const userName = useSelector((state) => state.USER.userName)
+    // console.log(data)
 
     useEffect(()=>{  
         dispatch(getPurchaseOrders(userName));
@@ -17,13 +20,19 @@ const UserProfile = ({ navigation, route }) => {
     },[dispatch])
 
     return (
-            <ScrollView contentContainerStyle={styles.conteiner}>
+            <View Style={styles.conteiner}>
                 {!data[0] ?
                 <View>
                     <Text>Loading...</Text>
                 </View>:
-                <View style={styles.conteiner}>
-                    <View style={styles.view1}>
+                <View style={styles.view1}>
+                    <View style={styles.SBcontainer}>
+                        <View style={styles.SB}>
+                            <FeatherIcon style={styles.iconMenu} name="menu" size={36} onPress={() => navigation.openDrawer()}/>
+                            <Text style={{fontSize:28, color:'white', fontWeight:'bold'}}>Profile</Text>
+                        </View>
+                    </View>
+                    <ScrollView contentContainerStyle={styles.ScrollView}>
                         <Text style={styles.textusername}>{data[0]?.username.slice(0,1).toUpperCase().concat(data[0]?.username.slice(1,data[0]?.username.length))}</Text>
                         <View style={styles.conteineruserdata}>
                             <Text style={styles.text1}>My user data:</Text>
@@ -78,24 +87,30 @@ const UserProfile = ({ navigation, route }) => {
                             </View>
                         </View>
                         <View style={styles.view2}>
+                            <Text style={styles.text1}>Orders:</Text>
                             <View style={styles.view2_1}>
-                                <Text style={styles.text1}>Orders:</Text>
-                                <Button 
+                                <TouchableOpacity style={styles.ordersandreviewsbtns} onPress={()=>navigation.navigate("PurchaseHistory", {navigation})}>
+                                    <Text style={{color:'white', fontSize:20, fontWeight:"bold"}}>View</Text>
+                                </TouchableOpacity>
+                                {/* <Button 
                                     onPress={()=>navigation.navigate("PurchaseHistory", {navigation})}
                                     title='open'
-                                />
+                                /> */}
                             </View>
+                            <Text style={styles.text1}>Reviews:</Text>
                             <View style={styles.view2_1}>
-                                <Text style={styles.text1}>Reviews</Text>
-                                <Button 
+                                <TouchableOpacity style={styles.ordersandreviewsbtns} onPress={()=>navigation.navigate("DoReview", {navigation})}>
+                                    <Text style={{color:'white', fontSize:20, fontWeight:"bold"}}>View</Text>
+                                </TouchableOpacity>
+                                {/* <Button 
                                     onPress={()=>navigation.navigate("DoReview", {navigation})}
                                     title='items'
-                                />
+                                /> */}
                             </View>
                         </View>
-                    </View>
+                    </ScrollView>
                 </View>}
-            </ScrollView>
+            </View>
     );
 };
 
@@ -103,27 +118,54 @@ const styles = StyleSheet.create({
     conteiner: {
         alignItems: "center",
         width: '100%',
-        height: '100%',
-        flexDirection:"column"
+        minHeight: '100%',
+        // flexDirection:"column"
+    },
+    view1: {
+        minHeight:'100%'
+    },
+    SBcontainer: {
+        height:'12%',
+        backgroundColor:'#4A347F',
+        width:'100%'
+    },
+    SB: {
+        flexDirection: "row",
+        justifyContent:"center",
+        alignItems:"center",
+        height:'65%',
+        backgroundColor: '#4A347F',
+        // backgroundColor:'white',
+        width: '100%',
+        marginTop:'9%'
+    },
+    iconMenu: {
+        color:'white',
+        position:'absolute',
+        left:'5%'
     },
     conteineruserdata: {
         justifyContent:"center",
     },
-    view1: {
-        height:'100%'
+    ScrollView: {
+        minHeight:'88%',
+        marginHorizontal: 25
     },
     view2: {
-        height:'20%',
-        
+        height:'15%',
     },
     view2_1: {
         height: '50%',
         justifyContent:"flex-start",
-        marginVertical: 15
+        alignItems:"center"
+        // marginVertical: 15
     },
     textusername: {
         fontSize: 35,
-        marginTop:25
+        marginTop:25,
+        fontWeight:"bold",
+        fontStyle:"italic",
+        color:'#4A347F'
     },
     text1:{
         fontSize: 20,
@@ -140,6 +182,14 @@ const styles = StyleSheet.create({
     },
     text:{
         fontSize: 15
+    },
+    ordersandreviewsbtns: {
+        width:'60%',
+        height: '70%',
+        backgroundColor: '#4A347F',
+        borderRadius: 15,
+        alignItems:"center",
+        justifyContent:"center"
     },
 });
 

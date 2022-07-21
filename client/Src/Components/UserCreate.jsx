@@ -4,6 +4,7 @@ import { Text, View, TextInput, Button, StyleSheet, SafeAreaView, StatusBar,Touc
 import { useForm, Controller } from "react-hook-form";
 import { ROUTE }  from '@env';
 import axios from 'axios';
+import FeatherIcon from 'react-native-vector-icons/Feather';
 // import { createUser } from "../../Redux/Slice/userSlice";
 // username:           { type: String, required: true, unique: true },
 // email:              { type: String, required: true, unique: true },
@@ -68,331 +69,361 @@ const UserCreate = ({ navigation }) => {
     );
 
     return(
-        <ScrollView contentContainerStyle={styles.container}>
-			<Text style={styles.Title}>Create Your Account</Text>
-			<View style={styles.containerRow2}>
-				<View style={styles.containerLabelColumn}>
-					<Text style={styles.TitleText}>Username:</Text>
-					<Controller
-						control={control}
-						rules={{
-						required: true,
-						}}
-						render={({ field: { onChange, onBlur, value } }) => (
-							<TextInput
-								style={styles.input}
-								onBlur={onBlur}
-								onChangeText={onChange}
-								value={value}
-							/>
-						)}
-						name="username"
-					/>
-					{errors.username && <Text style={styles.ErrorText}>Insert username</Text>}
-				</View>
-				<View style={styles.containerLabelColumn}>
-					<Text style={styles.TitleText}>Password:</Text>  
-					<Controller
-						control={control}
-						rules={{
-							required: true,
-						}}
-						render={({ field: { onChange, onBlur, value } }) => (
-							<TextInput
-								style={styles.input}
-								onBlur={onBlur}
-								onChangeText={onChange}
-								value={value}
-							/>
-						)}
-						name="password"
-					/>
-					{errors.password && <Text style={styles.ErrorText}>Insert password</Text>}
+		<View style={{minHeight:'100%'}}>
+			<View style={styles.SBcontainer}>
+				<View style={styles.SB}>
+					<FeatherIcon style={styles.iconMenu} name="menu" size={36} onPress={() => navigation.openDrawer()}/>
+					<Text style={{fontSize:25, color:'white', fontWeight:'bold'}}>Create Your Account</Text>
 				</View>
 			</View>
-			<View style={styles.containerRow2}>
-				<View style={styles.containerLabelColumn}>
-					<Text style={styles.TitleText}>Email:</Text>  
-					<Controller
-						control={control}
-						rules={{
+			<ScrollView contentContainerStyle={styles.container}>
+				{/* <Text style={styles.Title}>Create Your Account</Text> */}
+				<View style={styles.containerRow2}>
+					<View style={styles.containerLabelColumn}>
+						<Text style={styles.TitleText}>Username:</Text>
+						<Controller
+							control={control}
+							rules={{
 							required: true,
-						}}
-						render={({ field: { onChange, onBlur, value } }) => (
-							<TextInput
-								style={styles.input}
-								onBlur={onBlur}
-								onChangeText={onChange}
-								value={value}
+							}}
+							render={({ field: { onChange, onBlur, value } }) => (
+								<TextInput
+									style={styles.input}
+									onBlur={onBlur}
+									onChangeText={onChange}
+									value={value}
 								/>
+							)}
+							name="username"
+						/>
+						{errors.username && <Text style={styles.ErrorText}>Insert username</Text>}
+					</View>
+					<View style={styles.containerLabelColumn}>
+						<Text style={styles.TitleText}>Password:</Text>  
+						<Controller
+							control={control}
+							rules={{
+								required: true,
+							}}
+							render={({ field: { onChange, onBlur, value } }) => (
+								<TextInput
+									style={styles.input}
+									onBlur={onBlur}
+									onChangeText={onChange}
+									value={value}
+								/>
+							)}
+							name="password"
+						/>
+						{errors.password && <Text style={styles.ErrorText}>Insert password</Text>}
+					</View>
+				</View>
+				<View style={styles.containerRow2}>
+					<View style={styles.containerLabelColumn}>
+						<Text style={styles.TitleText}>Email:</Text>  
+						<Controller
+							control={control}
+							rules={{
+								required: true,
+							}}
+							render={({ field: { onChange, onBlur, value } }) => (
+								<TextInput
+									style={styles.input}
+									onBlur={onBlur}
+									onChangeText={onChange}
+									value={value}
+									/>
+									)}
+							name="email"
+						/>
+						{errors.email && <Text style={styles.ErrorText}>Insert email </Text>}
+					</View>
+					<View style={styles.containerLabelColumn}>
+						<Text style={styles.TitleText}>Dni:</Text>  
+						<Controller
+							control={control}
+							rules={{
+								required: true,
+							}}
+							render={({ field: { onChange, onBlur, value } }) => (
+								<TextInput
+									style={styles.input}
+									onBlur={onBlur}
+									onChangeText={onChange}
+									value={value}
+								/>
+							)}
+							name="dni"
+						/>
+						{errors.dni && <Text style={styles.ErrorText}>Insert Dni</Text>}
+					</View>
+				</View>
+				<View style={styles.containerRow2}>
+					<View style={styles.containerLabelColumn}>
+						<Text style={styles.TitleText}>Firstname:</Text>            
+						<Controller
+							control={control}
+							rules={{
+								required: true,
+								min: 1,
+							}}
+							render={({ field: { onChange, onBlur, value } }) => (
+								<TextInput
+									style={styles.input}
+									onBlur={onBlur}
+									onChangeText={onChange}
+									value={value}
+								/>
+							)}
+							name="firstname"
+						/>
+						{errors.firstname && <Text style={styles.ErrorText}>Insert Firstname</Text>}
+					</View>
+					<View style={styles.containerLabelColumn}>
+						<Text style={styles.TitleText}>Lastname:</Text>  
+						<Controller
+							control={control}
+							rules={{
+								required: true,
+							}}
+							render={({ field: { onChange, onBlur, value } }) => (
+								<TextInput
+									style={styles.input}
+									onBlur={onBlur}
+									onChangeText={onChange}
+									value={value}
+								/>
+							)}
+							name="lastname"
+						/>
+						{errors.lastname && <Text style={styles.ErrorText}>Insert lastname</Text>}
+					</View>
+				</View>
+				<View style={styles.containerRow2}>
+					<View style={styles.containerLabelColumn}>
+						<Text style={styles.TitleText}>Birthday:</Text>  
+						<Controller
+							control={control}
+							rules={{
+								required: true,
+							}}
+							render={({ field: { onChange, onBlur, value } }) => (
+								<TextInput
+									style={styles.input}
+									onBlur={onBlur}
+									onChangeText={onChange}
+									value={value}
+								/>
+							)}
+							name="birthday"
+						/>
+						{errors.birthday && <Text style={styles.ErrorText}>Insert Birthday</Text>}
+					</View>
+					<View style={styles.containerLabelColumn}>
+						<Text style={styles.TitleText}>Phone:</Text>  
+						<Controller
+							control={control}
+							rules={{
+								required: true,
+							}}
+							render={({ field: { onChange, onBlur, value } }) => (
+								<TextInput
+									style={styles.input}
+									onBlur={onBlur}
+									onChangeText={onChange}
+									value={value}
+								/>
+							)}
+							name="phone"
+						/>
+						{errors.phone && <Text style={styles.ErrorText}>Insert Phone</Text>}
+					</View>
+				</View>
+				<Text style={styles.TitleAdressLocation}>Location</Text>
+				<View style={styles.ContainerLocationAndAdress}>
+					<View style={styles.containerRow2}>
+						<View style={styles.containerLabelColumn}>
+							<Text style={styles.TitleText}>Country:</Text>  
+							<Controller
+								control={control}
+								rules={{
+									required: true,
+								}}
+								render={({ field: { onChange, onBlur, value } }) => (
+									<TextInput
+										style={styles.input}
+										onBlur={onBlur}
+										onChangeText={onChange}
+										value={value}
+									/>
 								)}
-						name="email"
-					/>
-					{errors.email && <Text style={styles.ErrorText}>Insert email </Text>}
-				</View>
-				<View style={styles.containerLabelColumn}>
-					<Text style={styles.TitleText}>Dni:</Text>  
-					<Controller
-						control={control}
-						rules={{
-							required: true,
-						}}
-						render={({ field: { onChange, onBlur, value } }) => (
-							<TextInput
-								style={styles.input}
-								onBlur={onBlur}
-								onChangeText={onChange}
-								value={value}
+								name="country"
 							/>
-						)}
-						name="dni"
-					/>
-					{errors.dni && <Text style={styles.ErrorText}>Insert Dni</Text>}
-				</View>
-			</View>
-			<View style={styles.containerRow2}>
-				<View style={styles.containerLabelColumn}>
-					<Text style={styles.TitleText}>Firstname:</Text>            
-					<Controller
-						control={control}
-						rules={{
-							required: true,
-							min: 1,
-						}}
-						render={({ field: { onChange, onBlur, value } }) => (
-							<TextInput
-								style={styles.input}
-								onBlur={onBlur}
-								onChangeText={onChange}
-								value={value}
+							{errors.country && <Text style={styles.ErrorText}>Insert Country</Text>}
+						</View>
+						<View style={styles.containerLabelColumn}>
+							<Text style={styles.TitleText}>City:</Text>  
+							<Controller
+								control={control}
+								rules={{
+									required: true,
+								}}
+								render={({ field: { onChange, onBlur, value } }) => (
+									<TextInput
+										style={styles.input}
+										onBlur={onBlur}
+										onChangeText={onChange}
+										value={value}
+									/>
+								)}
+								name="city"
 							/>
-						)}
-						name="firstname"
-					/>
-					{errors.firstname && <Text style={styles.ErrorText}>Insert Firstname</Text>}
-				</View>
-				<View style={styles.containerLabelColumn}>
-					<Text style={styles.TitleText}>Lastname:</Text>  
-					<Controller
-						control={control}
-						rules={{
-							required: true,
-						}}
-						render={({ field: { onChange, onBlur, value } }) => (
-							<TextInput
-								style={styles.input}
-								onBlur={onBlur}
-								onChangeText={onChange}
-								value={value}
+							{errors.city && <Text style={styles.ErrorText}>Insert city</Text>}
+						</View>
+					</View>
+					<View style={styles.containerRow2}>
+						<View style={styles.containerLabelColumn}>
+							<Text style={styles.TitleText}>State:</Text>  
+							<Controller
+								control={control}
+								rules={{
+									required: true,
+								}}
+								render={({ field: { onChange, onBlur, value } }) => (
+									<TextInput
+										style={styles.input}
+										onBlur={onBlur}
+										onChangeText={onChange}
+										value={value}
+									/>
+								)}
+								name="state"
 							/>
-						)}
-						name="lastname"
-					/>
-					{errors.lastname && <Text style={styles.ErrorText}>Insert lastname</Text>}
+							{errors.state && <Text style={styles.ErrorText}>Insert state</Text>}
+						</View>
+					</View>
 				</View>
-			</View>
-			<View style={styles.containerRow2}>
-				<View style={styles.containerLabelColumn}>
-					<Text style={styles.TitleText}>Birthday:</Text>  
-					<Controller
-						control={control}
-						rules={{
-							required: true,
-						}}
-						render={({ field: { onChange, onBlur, value } }) => (
-							<TextInput
-								style={styles.input}
-								onBlur={onBlur}
-								onChangeText={onChange}
-								value={value}
+				<Text style={styles.TitleAdressLocation}>Address</Text>
+				<View style={styles.ContainerLocationAndAdress}>
+					<View style={styles.containerRow2}>
+						<View style={styles.containerLabelColumn}>
+							<Text style={styles.TitleText}>Street:</Text>  
+							<Controller
+								control={control}
+								rules={{
+									required: true,
+								}}
+								render={({ field: { onChange, onBlur, value } }) => (
+									<TextInput
+										style={styles.input}
+										onBlur={onBlur}
+										onChangeText={onChange}
+										value={value}
+									/>
+								)}
+								name="street_address"
 							/>
-						)}
-						name="birthday"
-					/>
-					{errors.birthday && <Text style={styles.ErrorText}>Insert Birthday</Text>}
-				</View>
-				<View style={styles.containerLabelColumn}>
-					<Text style={styles.TitleText}>Phone:</Text>  
-					<Controller
-						control={control}
-						rules={{
-							required: true,
-						}}
-						render={({ field: { onChange, onBlur, value } }) => (
-							<TextInput
-								style={styles.input}
-								onBlur={onBlur}
-								onChangeText={onChange}
-								value={value}
+							{errors.street_address && <Text style={styles.ErrorText}>Insert street address</Text>}
+						</View>
+						<View style={styles.containerLabelColumn}>
+							<Text style={styles.TitleText}>floor:</Text>  
+							<Controller
+								control={control}
+								rules={{
+									required: true,
+								}}
+								render={({ field: { onChange, onBlur, value } }) => (
+									<TextInput
+										style={styles.input}
+										onBlur={onBlur}
+										onChangeText={onChange}
+										value={value}
+									/>
+								)}
+								name="floor"
 							/>
-						)}
-						name="phone"
-					/>
-					{errors.phone && <Text style={styles.ErrorText}>Insert Phone</Text>}
-				</View>
-			</View>
-			<Text style={styles.TitleAdressLocation}>Location</Text>
-			<View style={styles.ContainerLocationAndAdress}>
-				<View style={styles.containerRow2}>
-					<View style={styles.containerLabelColumn}>
-						<Text style={styles.TitleText}>Country:</Text>  
-						<Controller
-							control={control}
-							rules={{
-								required: true,
-							}}
-							render={({ field: { onChange, onBlur, value } }) => (
-								<TextInput
-									style={styles.input}
-									onBlur={onBlur}
-									onChangeText={onChange}
-									value={value}
-								/>
-							)}
-							name="country"
-						/>
-						{errors.country && <Text style={styles.ErrorText}>Insert Country</Text>}
+							{errors.floor && <Text style={styles.ErrorText}>Insert floor</Text>}
+						</View>
 					</View>
-					<View style={styles.containerLabelColumn}>
-						<Text style={styles.TitleText}>City:</Text>  
-						<Controller
-							control={control}
-							rules={{
-								required: true,
-							}}
-							render={({ field: { onChange, onBlur, value } }) => (
-								<TextInput
-									style={styles.input}
-									onBlur={onBlur}
-									onChangeText={onChange}
-									value={value}
-								/>
-							)}
-							name="city"
-						/>
-						{errors.city && <Text style={styles.ErrorText}>Insert city</Text>}
+					<View style={styles.containerRow2}>
+						<View style={styles.containerLabelColumn}>
+							<Text style={styles.TitleText}>Department:</Text>  
+							<Controller
+								control={control}
+								rules={{
+									required: true,
+								}}
+								render={({ field: { onChange, onBlur, value } }) => (
+									<TextInput
+										style={styles.input}
+										onBlur={onBlur}
+										onChangeText={onChange}
+										value={value}
+									/>
+								)}
+								name="department"
+							/>
+							{errors.department && <Text style={styles.ErrorText}>Insert department</Text>}
+						</View>
+						<View style={styles.containerLabelColumn}>
+							<Text style={styles.TitleText}>Zip code:</Text>  
+							<Controller
+								control={control}
+								rules={{
+									required: true,
+								}}
+								render={({ field: { onChange, onBlur, value } }) => (
+									<TextInput
+										style={styles.input}
+										onBlur={onBlur}
+										onChangeText={onChange}
+										value={value}
+									/>
+								)}
+								name="zip_code"
+							/>
+							{errors.zip_code && <Text style={styles.ErrorText}>Insert Zip code</Text>} 
+						</View>
 					</View>
 				</View>
-				<View style={styles.containerRow2}>
-					<View style={styles.containerLabelColumn}>
-						<Text style={styles.TitleText}>State:</Text>  
-						<Controller
-							control={control}
-							rules={{
-								required: true,
-							}}
-							render={({ field: { onChange, onBlur, value } }) => (
-								<TextInput
-									style={styles.input}
-									onBlur={onBlur}
-									onChangeText={onChange}
-									value={value}
-								/>
-							)}
-							name="state"
-						/>
-						{errors.state && <Text style={styles.ErrorText}>Insert state</Text>}
-					</View>
-				</View>
-			</View>
-			<Text style={styles.TitleAdressLocation}>Address</Text>
-			<View style={styles.ContainerLocationAndAdress}>
-				<View style={styles.containerRow2}>
-					<View style={styles.containerLabelColumn}>
-						<Text style={styles.TitleText}>Street:</Text>  
-						<Controller
-							control={control}
-							rules={{
-								required: true,
-							}}
-							render={({ field: { onChange, onBlur, value } }) => (
-								<TextInput
-									style={styles.input}
-									onBlur={onBlur}
-									onChangeText={onChange}
-									value={value}
-								/>
-							)}
-							name="street_address"
-						/>
-						{errors.street_address && <Text style={styles.ErrorText}>Insert street address</Text>}
-					</View>
-					<View style={styles.containerLabelColumn}>
-						<Text style={styles.TitleText}>floor:</Text>  
-						<Controller
-							control={control}
-							rules={{
-								required: true,
-							}}
-							render={({ field: { onChange, onBlur, value } }) => (
-								<TextInput
-									style={styles.input}
-									onBlur={onBlur}
-									onChangeText={onChange}
-									value={value}
-								/>
-							)}
-							name="floor"
-						/>
-						{errors.floor && <Text style={styles.ErrorText}>Insert floor</Text>}
-					</View>
-				</View>
-				<View style={styles.containerRow2}>
-					<View style={styles.containerLabelColumn}>
-						<Text style={styles.TitleText}>Department:</Text>  
-						<Controller
-							control={control}
-							rules={{
-								required: true,
-							}}
-							render={({ field: { onChange, onBlur, value } }) => (
-								<TextInput
-									style={styles.input}
-									onBlur={onBlur}
-									onChangeText={onChange}
-									value={value}
-								/>
-							)}
-							name="department"
-						/>
-						{errors.department && <Text style={styles.ErrorText}>Insert department</Text>}
-					</View>
-					<View style={styles.containerLabelColumn}>
-						<Text style={styles.TitleText}>Zip code:</Text>  
-						<Controller
-							control={control}
-							rules={{
-								required: true,
-							}}
-							render={({ field: { onChange, onBlur, value } }) => (
-								<TextInput
-									style={styles.input}
-									onBlur={onBlur}
-									onChangeText={onChange}
-									value={value}
-								/>
-							)}
-							name="zip_code"
-						/>
-						{errors.zip_code && <Text style={styles.ErrorText}>Insert Zip code</Text>} 
-					</View>
-				</View>
-			</View>
-			<TouchableOpacity style={styles.Bottunn_} onPress={handleSubmit(onSubmit)}>
-				<Text>Register</Text>
-			</TouchableOpacity>
-			<Separator style={styles.separator} />
-        	{/* <Button style={styles.Bottunn_} title="Register" onPress={handleSubmit(onSubmit)} /> */}
-		</ScrollView>
+				<TouchableOpacity style={styles.Bottunn_} onPress={handleSubmit(onSubmit)}>
+					<Text>Register</Text>
+				</TouchableOpacity>
+				<Separator style={styles.separator} />
+				{/* <Button style={styles.Bottunn_} title="Register" onPress={handleSubmit(onSubmit)} /> */}
+			</ScrollView>
+		</View>
     ); 
 };
 
 
 const styles = StyleSheet.create({
+	SBcontainer: {
+        height:'12%',
+        backgroundColor:'#4A347F',
+        width:'100%'
+    },
+    SB: {
+        flexDirection: "row",
+        justifyContent:"center",
+        alignItems:"center",
+        height:'65%',
+        backgroundColor: '#4A347F',
+        // backgroundColor:'white',
+        width: '100%',
+        marginTop:'9%'
+    },
+    iconMenu: {
+        color:'white',
+        position:'absolute',
+        left:'5%'
+    },
 	container:{
-		justifyContent: 'center',
+		// justifyContent: 'center',
 		alignItems: "center",
-		width:'100%'
+		width:'100%',
+		// height:'88%'
+		
 	},
 	Title: {
 		fontSize:29,
@@ -456,7 +487,8 @@ const styles = StyleSheet.create({
 	Bottunn_: {
 		backgroundColor:"#ccc",
 		padding: 10,
-		borderRadius: 12
+		borderRadius: 12,
+		marginBottom:'25%'
 	},
 	separator: { marginVertical: 15, borderBottomColor: '#737373', borderBottomWidth: StyleSheet.hairlineWidth },
 });

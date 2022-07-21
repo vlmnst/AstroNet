@@ -98,14 +98,16 @@ const styles = StyleSheet.create({
     backgroundColor:"black",
     width: "100%",
     resizeMode:"contain",
-    marginBottom: Platform.select({ ios: 0, android: 1 }),
+    // marginTop:20,
+    // marginBottom: Platform.select({ ios: 0, android: 1 }),
     // borderRadius: 8,
   },
   image: {
     padding:30,
-    height: 220,
+    height: 170,
     width: '100%',
-    alignSelf:"center"
+    alignSelf:"center",
+    resizeMode:"contain"
   },
   offer: {
     position: 'absolute',

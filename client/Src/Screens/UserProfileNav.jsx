@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import UserProfile from "../Components/UserProfile";
 import PurchaseHistory from "../Components/PurchaseHistory"
 import DoReview from "../Components/DoReview";
+import OrderDetail from "../Components/OrderDetail";
 const Stack = createNativeStackNavigator();
 
 const UserProfileNav = () => {
@@ -23,6 +24,10 @@ const UserProfileNav = () => {
                 <Stack.Screen
                     name='DoReview'
                     component={DoReview}
+                />
+                <Stack.Screen
+                    name='OrderDetail'
+                    component={OrderDetail}
                 />
             </Stack.Navigator >
     )

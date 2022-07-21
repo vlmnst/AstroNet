@@ -21,6 +21,7 @@ import DropDownPicker from "react-native-dropdown-picker";
 
 import Paginate from "./Paginate";
 import NavBar from "./NavBar";
+import SearchBar from "./SearchBar";
 
 const Allproducts = ({ route, navigation }) => {
   // ---------- dispatch ----------
@@ -135,7 +136,9 @@ const Allproducts = ({ route, navigation }) => {
 
   return (
     <View style={styles.container}>
-      <NavBar navigation={navigation} route={route} />
+      <View style={styles.SB}>
+        <SearchBar navigation={navigation} route={route} />
+      </View>
       {/* ------------ TITLE ------------ */}
       {/* <Text style={styles.title}>{searchName}</Text> *MEJOR QUE NO FUNCIONE A QUE FUNCIONE MAL /}
       {/* ------------ FILTERS ------------ */}
@@ -211,7 +214,13 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     alignItems: "center",
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+  },
+  SB: {
+    height:'12%',
+    backgroundColor:'#4A347F',
+    width: '100%',
+    marginBottom: 20
   },
   selectsContainer: {
     flexDirection: "row",
@@ -223,11 +232,12 @@ const styles = StyleSheet.create({
     width: "40%",
   },
   flatListContainer: {
-    height:'77%'
+    height:'76%',
   },
   flatList: {
     width: "100%",
-    height: '100%'
+    height: '100%',
+    marginBottom:'1%'
   },
   title: {
     fontSize: 20,

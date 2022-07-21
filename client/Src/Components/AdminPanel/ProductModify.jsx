@@ -7,6 +7,7 @@ import { ModifyProducts } from "../../../Redux/Slice";
 import Icon from 'react-native-vector-icons/Ionicons';
 import ImageLibrary from '../ImageLibrary';
 import PrePreview from '../PrePreview';
+import FeatherIcon from 'react-native-vector-icons/Feather';
 
 const ProductModify = (props) => {
     // console.log(props);
@@ -142,163 +143,171 @@ const ProductModify = (props) => {
     );
 
     return (
-        <ScrollView>
-
-            <View style={styles.contDetails}>
-                <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => props.navigation.goBack()}>
-                    <Text style={styles.text}>Go Back</Text>
-                </TouchableOpacity>
-                <Image source={{ uri: state.img[0] }} style={styles.image} />
-           
+        <View style={{minHeight:'100%', width:'100%', backgroundColor:'white'}}>
+            <View style={styles.SBcontainer}>
+                <View style={styles.SB}>
+                    <FeatherIcon style={styles.iconMenu} name="skip-back" size={36} onPress={() => props.navigation.goBack()}/>
+                    {/* <Text style={{fontSize:24, color:'white', fontWeight:'bold'}}>Create a new product</Text> */}
+                </View>
             </View>
-
-            
-            
-           
-            <DropDownPicker
-                style={styles.Container_}
-                open={openitems}
-                value={valueitems}
-                items={pickerItems}
-                setOpen={setOpenitems}
-                setValue={setValueitems}
-                onSelectItem={(value) => handleCategory(value)}
-            />
-            {errors.category && <Text>Insert category name</Text>}
-            <View style={styles.description}>
-            <Text>Product image:</Text>
-            {/* <Controller
-                control={control}
-                rules={{
-                    required: true,
-                }}
-                render={({ field: { onChange, onBlur, value } }) => (
-                    <TextInput
-                        style={styles.textInput}
-                        onBlur={onBlur}
-                        onChangeText={onChange}
-                        value={value}
+            <Image source={{ uri: state.img[0] }} style={styles.image} />
+            <ScrollView style={{height:'10%'}}>
+                {/* <View style={styles.contimg}> */}
+                {/* </View> */}
+                <View >
+                    <DropDownPicker
+                        style={styles.DropDownPicker}
+                        open={openitems}
+                        value={valueitems}
+                        items={pickerItems}
+                        setOpen={setOpenitems}
+                        setValue={setValueitems}
+                        onSelectItem={(value) => handleCategory(value)}
                     />
-                )}
-                name="img"
-            />
-            {errors.img && <Text>Insert URL image </Text>} */}
-            <ImageLibrary />
-            </View>
-            <View style={styles.Container_}>
-            <Text>Product stock:</Text>
-            <Controller
-                control={control}
-                rules={{
-                    required: true,
-                    min: 1,
-                }}
-                render={({ field: { onChange, onBlur, value } }) => (
-                    <TextInput
-                        style={styles.textInput}
-                        onBlur={onBlur}
-                        onChangeText={onChange}
-                        value={value}
+                </View>
+                {errors.category && <Text>Insert category name</Text>}
+                <View style={styles.ImageLibrary}>
+                    <Text style={styles.txt}>Add image:</Text>
+                    {/* <Controller
+                        control={control}
+                        rules={{
+                            required: true,
+                        }}
+                        render={({ field: { onChange, onBlur, value } }) => (
+                            <TextInput
+                                style={styles.textInput}
+                                onBlur={onBlur}
+                                onChangeText={onChange}
+                                value={value}
+                            />
+                        )}
+                        name="img"
                     />
-                )}
-                name="stock"
-            />
-            {errors.stock && <Text>Insert stock value</Text>}
-            </View>
-            <View style={styles.Container_}>
-            <Text>Product offer:</Text>
-            <Controller
-                control={control}
-                rules={{
-                    required: true,
-                    min: 0, max: 99,
-                }}
-                render={({ field: { onChange, onBlur, value } }) => (
-                    <TextInput
-                        style={styles.textInput}
-                        onBlur={onBlur}
-                        onChangeText={onChange}
-                        value={value}
+                    {errors.img && <Text>Insert URL image </Text>} */}
+                    <ImageLibrary />
+                </View>
+                <View style={styles.Controllercont}>
+                    <Text style={styles.txt}>Product stock:</Text>
+                    <Controller
+                        control={control}
+                        rules={{
+                            required: true,
+                            min: 1,
+                        }}
+                        render={({ field: { onChange, onBlur, value } }) => (
+                            <TextInput
+                                style={styles.textInput}
+                                onBlur={onBlur}
+                                onChangeText={onChange}
+                                value={value}
+                            />
+                        )}
+                        name="stock"
                     />
-                )}
-                name="offer"
-            />
-            {errors.offer && <Text>Insert offer value</Text>}
-            </View>
-            <View style={styles.Container_}>
-                <Text>Name of description: </Text>
-                <TextInput
-                    style={styles.textInput}
-                    onChangeText={(text) => filterKey(text)}
-                    value={description.key}
+                {errors.stock && <Text>Insert stock value</Text>}
+                </View>
+                <View style={styles.Controllercont}>
+                <Text style={styles.txt}>Product offer:</Text>
+                <Controller
+                    control={control}
+                    rules={{
+                        required: true,
+                        min: 0, max: 99,
+                    }}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                        <TextInput
+                            style={styles.textInput}
+                            onBlur={onBlur}
+                            onChangeText={onChange}
+                            value={value}
+                        />
+                    )}
+                    name="offer"
                 />
-                <Text>value of description: </Text>
-                <TextInput
-                    style={styles.textInput}
-                    onChangeText={(text) => filterDescription(text)}
-                    value={description.value}
-                />
-            </View>
-            <Separator />
+                {errors.offer && <Text>Insert offer value</Text>}
+                </View>
+                <View style={styles.Controllercont}>
+                    <Text style={styles.txt}>Name of description: </Text>
+                    <TextInput
+                        style={styles.textInput}
+                        onChangeText={(text) => filterKey(text)}
+                        value={description.key}
+                    />
+                    <Text style={styles.txt}>value of description: </Text>
+                    <TextInput
+                        style={styles.textInput}
+                        onChangeText={(text) => filterDescription(text)}
+                        value={description.value}
+                    />
+                </View>
+                {/* <Separator /> */}
+            </ScrollView>
             <Button title="Modification Preview" onPress={handleSubmit(onSubmitPreview)} />
             <Button title="Modify Product" onPress={()=>{onSubmit()}} />
             <PrePreview item={state}/>
-        </ScrollView>
+        </View>
     );
 };
 
-const nameFont = 15;
-const priceOfferFont = 15;
-const fontDescription = 12;
 
 const styles = StyleSheet.create({
-    AndroidSafeArea: { paddingTop: StatusBar.currentHeight + 10 },
-    container: { flex: 1, justifyContent: 'center', marginHorizontal: 16, backgroundColor: '#5E5E5E' },
-    input: { backgroundColor: '#FFFFFF', marginTop: 0, marginHorizontal: 10, padding: 5, width: '100%' },
-    inputmul: { backgroundColor: '#FFFFFF', marginTop: 10, marginHorizontal: 10, padding: 5, height: 100, width: '100%' },
-    title: { fontSize: 20, padding: 5, marginLeft: 10 },
-    separator: { marginVertical: 8, borderBottomColor: '#737373', borderBottomWidth: StyleSheet.hairlineWidth },
-    button: { height: 40, margin: 12, borderWidth: 1, padding: 10 },
-    priceOffer: {
+    SBcontainer: {
+        height:'12%',
+        backgroundColor:'#4A347F',
+        width:'100%',
+    },
+    SB: {
         flexDirection: "row",
-        justifyContent: "space-around",
-        marginBottom: 5,
-        fontSize: priceOfferFont,
-        marginTop: 10
+        justifyContent:"center",
+        alignItems:"center",
+        height:'65%',
+        backgroundColor: '#4A347F',
+        width: '100%',
+        marginTop:'9%'
     },
+    iconMenu: {
+        color:'white',
+        position:'absolute',
+        left:'5%'
+    },
+    // contimg: {
+    //     alignItems: "center",
+    //     padding: 10,
+    //     width: "100%",
+    //     height:'30%',
+    //     // borderColor: "#EAEAEA",
+    //     backgroundColor: "white",
+    // },
     image: {
-        marginBottom: 2,
-        marginTop: 5,
-        height: 200,
-        width: 250,
-        borderRadius: 10,
+        height: '20%',
+        // width: '100%',
+        resizeMode:"contain"
     },
-    contDetails: {
-        display: "flex",
-        alignItems: "center",
-        padding: 10,
-        width: "100%",
-        borderColor: "#EAEAEA",
-        backgroundColor: "white",
+    DropDownPicker: {
+        width:'80%',
+        alignSelf:"center"
     },
-    contInt: { marginTop: 5, width: "98%", backgroundColor: "#EAEAEA" },
-    price: { fontSize: priceOfferFont },
-    name: { fontSize: nameFont, marginHorizontal: 10, marginVertical: 10 },
-    offer: { color: "red", fontSize: priceOfferFont },
-    descriptionCont: { display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "center" },
-    description: { fontSize: fontDescription, padding: 5, backgroundColor: "white", borderRadius: 5, borderColor: "#EAEAEA", marginHorizontal: 5, marginVertical: 5 },
-    textInput: { height: 40, width: "90%", borderWidth: 1, borderRadius: 8, borderColor: "#A09E9E", backgroundColor: "#D0D0D0", marginBottom: 2 },
-    Container_: {  marginBottom: 1, boderWidth: 1, borderColor: "#A09E9E", marginHorizontal: 15 },
-    pricethrough: {
-        fontSize: nameFont,
-        textDecorationLine:'line-through'
-      },
-      pricenew: {
-        color: "green",
-        fontSize: nameFont,
-      },
+    ImageLibrary: {
+        height:'35%',
+        width:'80%',
+        alignSelf:"center"
+        // backgroundColor:'black',
+    },
+    txt: {
+        fontSize:18,
+        marginVertical:10
+    },
+    Controllercont: {
+        height:'15%',
+        width:'80%',
+        alignSelf:"center"
+        // backgroundColor:'black'
+    },
+    textInput:{
+        borderWidth:2,
+        borderRadius:10,
+        borderColor:'grey'
+    },
 });
 
 export default ProductModify;

@@ -4,6 +4,7 @@ import {View,Text,FlatList,StyleSheet,StatusBar,TouchableOpacity } from "react-n
 import {getAllUsers,} from "../../../Redux/Slice/index";
 import UserCard from './UserCard';
 import SearchAdmin from './SearchAdmin';
+import FeatherIcon from 'react-native-vector-icons/Feather';
 
 const AllUsers = ({ route, navigation }) => {
     // ---------- dispatch ----------
@@ -18,7 +19,22 @@ const AllUsers = ({ route, navigation }) => {
     }
     return (
             <View style={styles.selectsContainer}>
-                <View style={styles.nav}>
+                <View style={styles.SBcontainer}>
+                    <View style={styles.SB}>
+                        <FeatherIcon style={styles.iconMenu} name="skip-back" size={36} onPress={() => navigation.goBack()}/>
+                        <SearchAdmin navigation={navigation} route={route} />
+                        <TouchableOpacity
+                            onPress={() => handleReset()}
+                            style={styles.TouchableOpacity}
+                        >
+                            <View style={styles.button}>
+                                <Text style={styles.text}>Reset</Text>
+                            </View>
+                        </TouchableOpacity>
+                        {/* <Text style={{fontSize:24, color:'white', fontWeight:'bold'}}>Create a new product</Text> */}
+                    </View>
+                </View>
+                {/* <View style={styles.nav}>
                 <TouchableOpacity
                 onPress={() => handleReset()}>
                     <View style={styles.button}>
@@ -28,7 +44,15 @@ const AllUsers = ({ route, navigation }) => {
                 <View style={styles.SearchAdmin}>
                     <SearchAdmin navigation={navigation} route={route} />
                 </View>
-                </View>
+                </View> */}
+                {/* <TouchableOpacity
+                    onPress={() => handleReset()}
+                    style={styles.TouchableOpacity}
+                >
+                    <View style={styles.button}>
+                        <Text style={styles.text}>All Users</Text>
+                    </View>
+                </TouchableOpacity> */}
                 {/* ------------ PRODUCTS CARDS ------------ */}
                 <FlatList
                     style={styles.flatList}
@@ -55,6 +79,27 @@ const styles = StyleSheet.create({
         borderWidth:2,
         margin: 10,
     },
+    SBcontainer: {
+        height:'12%',
+        backgroundColor:'#4A347F',
+        width:'100%',
+        // marginBottom:'5%'
+    },
+    SB: {
+        flexDirection: "row",
+        justifyContent:"center",
+        alignItems:"center",
+        height:'65%',
+        backgroundColor: '#4A347F',
+        // backgroundColor:'white',
+        width: '100%',
+        marginTop:'9%'
+    },
+    iconMenu: {
+        color:'white',
+        position:'absolute',
+        left:'5%'
+    },
     selectsContainer: {
         justifyContent: "space-around",
     },
@@ -67,6 +112,7 @@ const styles = StyleSheet.create({
         marginTop: 0,
         padding: 0,
         width: "100%",
+        height: '88%'
     },
     nav: {
         flexDirection: 'row',
@@ -80,10 +126,18 @@ const styles = StyleSheet.create({
     SearchAdmin: {
         width:'65%'
     },
+    TouchableOpacity: {
+        alignItems:"center",
+        justifyContent:"center",
+        height:'60%',
+        width:'12%',
+        marginLeft:'3%',
+        // backgroundColor:'black'
+    },
     button: {
-        height: 40,
-        backgroundColor: 'grey',
-        width: 100,
+        // height: '100%',
+        // backgroundColor: '#4A347F',
+        width: '100%',
         justifyContent:"center",
         alignItems:"center",
         borderRadius: 15,

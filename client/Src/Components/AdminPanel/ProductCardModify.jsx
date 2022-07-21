@@ -23,11 +23,11 @@ const ProductCardModify = (props) => {
                 </View>
                 <Text style={styles.name}>{item.name.slice(0, 65)}... </Text>
             </View>
-            <TouchableOpacity
+            {/* <TouchableOpacity
                 style={styles.button}
                 onPress={() => navigation.navigate("ProductModify", item)} >
                 <Text style={styles.buttontext}>Modify product</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
         </TouchableOpacity>
     );
 };

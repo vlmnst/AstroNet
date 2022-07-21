@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { View, Text, FlatList, StyleSheet, Image, Button, Modal, TouchableOpacity, TextInput } from "react-native";
+import FeatherIcon from 'react-native-vector-icons/Feather';
 
 // reducer actions
 import { getPurchaseProducts, putReviewToProduct } from "../../Redux/Slice/userSlice";
@@ -122,7 +123,13 @@ const DoReview = ({ route, navigation }) => {
     return (
         <View style={styles.container}>
             {/* ------------ TITLE ------------ */}
-            <Text style={styles.title}>Purchase products</Text>
+            <View style={styles.SBcontainer}>
+				<View style={styles.SB}>
+					<FeatherIcon style={styles.iconMenu} name="skip-back" size={36} onPress={() => navigation.goBack()}/>
+					<Text style={{fontSize:28, color:'white', fontWeight:'bold'}}>Purchase products</Text>
+				</View>
+			</View>
+            {/* <Text style={styles.title}>Purchase products</Text> */}
 
             {/* ------------ PURCHASED PRODUCTS ------------ */}
             <FlatList
@@ -131,9 +138,9 @@ const DoReview = ({ route, navigation }) => {
                 data={purchaseProducts}
                 renderItem={({ item }) => (
                     <View key={item.id} style={styles.cards}>
-                        <Image source={{ uri: item.img }} style={styles.image} />
+                        <Image source={{ uri: item.img[0] }} style={styles.image} />
                         <View style={styles.contentCards}>
-                            <Text style={styles.names}>{item.name.slice(0,30)}...</Text>
+                            <Text style={styles.names}>{item.name.slice(0,25)}...</Text>
 
                             { (item.review === false)
                                 ? <Button style={styles.btn} disabled={false} title="Review" onPress={() => handleModalReview(item)} />
@@ -199,6 +206,26 @@ const styles = StyleSheet.create({
         width: "100%",
         height: "100%",
         // alignItems: "center",
+    },
+    SBcontainer: {
+        height:'12%',
+        backgroundColor:'#4A347F',
+        width:'100%'
+    },
+    SB: {
+        flexDirection: "row",
+        justifyContent:"center",
+        alignItems:"center",
+        height:'65%',
+        backgroundColor: '#4A347F',
+        // backgroundColor:'white',
+        width: '100%',
+        marginTop:'9%'
+    },
+    iconMenu: {
+        color:'white',
+        position:'absolute',
+        left:'5%'
     },
     flatList: {
         marginTop: 0,

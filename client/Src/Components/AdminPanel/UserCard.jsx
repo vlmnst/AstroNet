@@ -64,7 +64,7 @@ const UserCard = (props) => {
             style={item.role === 'banned' ? styles.containerBanned : styles.container}
             onPress={item.role === 'admin' ? null : () => navigation.navigate("Details", { "item": item })}
         ><View>
-                {item.role === 'admin' ? <View style={styles.buttonDetail}><Text>Admin</Text></View> :
+                {item.role === 'admin' ? <View style={styles.buttonDetail}><Text style={styles.text}>Admin</Text></View> :
                     <View>
                         <TouchableOpacity
                             style={styles.buttonDetail}
@@ -187,19 +187,20 @@ const styles = StyleSheet.create({
     },
     user: {
         fontSize: 20,
-        color: "green",
+        color: "#4A347F",
         alignSelf: "center",
         width:'80%'
     },
     name: {
-        color: "red",
+        // color: "red",
         fontSize: font,
+        fontWeight:"bold"
     },
     button: {
         width:100,
         margin: 5,
         alignItems: "center",
-        backgroundColor: '#686868',
+        backgroundColor: '#C21700',
         borderRadius: 5,
         padding: 10,
         marginHorizontal: 15,
@@ -209,7 +210,7 @@ const styles = StyleSheet.create({
         width:100,
         margin: 5,
         alignItems: "center",
-        backgroundColor: 'green',
+        backgroundColor: '#4A347F',
         borderRadius: 5,
         padding: 10,
         marginHorizontal: 15,

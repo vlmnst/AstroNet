@@ -17,12 +17,12 @@ import {
 import ProductCardModify from "./ProductCardModify";
 import DropDownPicker from "react-native-dropdown-picker";
 import SearchAdmin from "./SearchAdmin";
+import FeatherIcon from 'react-native-vector-icons/Feather';
 
 const AllAdmin = ({ route, navigation }) => {
     // ---------- dispatch ----------
     // si route.params existe en categories, busco por categoria
     const dispatch = useDispatch();
-
     // ---------- global states ----------
     let products = useSelector((state) => state.ALL_PRODUCTS.allAdminProducts);
     let [categories /*setCategories*/] = useState(
@@ -66,9 +66,16 @@ const AllAdmin = ({ route, navigation }) => {
 
             <View style={styles.container}>
                 {/* ------------ TITLE ------------ */}
-                <View style={styles.nav}>
-                    <SearchAdmin navigation={navigation} route={route} />
+                <View style={styles.SBcontainer}>
+                    <View style={styles.SB}>
+                        <FeatherIcon style={styles.iconMenu} name="skip-back" size={36} onPress={() => navigation.goBack()}/>
+                        <SearchAdmin navigation={navigation} route={route} />
+                        {/* <Text style={{fontSize:24, color:'white', fontWeight:'bold'}}>Create a new product</Text> */}
+                    </View>
                 </View>
+                {/* <View style={styles.nav}>
+                    <SearchAdmin navigation={navigation} route={route} />
+                </View> */}
                 {valueitems?
                     <Text style={styles.title}>{valueitems}</Text>
                 :null}
@@ -128,6 +135,27 @@ const styles = StyleSheet.create({
         height: "100%",
         alignItems: "center",
         justifyContent: "center"
+    },
+    SBcontainer: {
+        height:'12%',
+        backgroundColor:'#4A347F',
+        width:'100%',
+        marginBottom:'5%'
+    },
+    SB: {
+        flexDirection: "row",
+        justifyContent:"center",
+        alignItems:"center",
+        height:'65%',
+        backgroundColor: '#4A347F',
+        // backgroundColor:'white',
+        width: '100%',
+        marginTop:'9%'
+    },
+    iconMenu: {
+        color:'white',
+        position:'absolute',
+        left:'5%'
     },
     selectsContainer: {
         flexDirection: "row",
