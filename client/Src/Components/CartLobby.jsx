@@ -4,6 +4,9 @@ import { useSelector } from 'react-redux';
 import Icon from "react-native-vector-icons/Ionicons";
 import { getCredentials } from '../utils/handleCredentials';
 import Cart from '../Components/Cart';
+import axios from 'axios';
+//import { ROUTE } from "@env";
+const ROUTE = "http://localhost:3001";
 
 var { width } = Dimensions.get("window")
 
@@ -32,6 +35,17 @@ const CartLobby = () => {
 
   const [dataCart, setDataCart]= useState(infoCart)
   
+  const cartCheckout = async () => {
+    try{
+      
+      let {data} = await axios.get(ROUTE + "/products/checkout", payload);
+      console.log(data.url);
+
+    }catch(error){
+      console.log(error);
+    }
+
+  }
 
   //let [cant, setCant] = useState(1)
  
@@ -120,6 +134,7 @@ const CartLobby = () => {
         
         <View style={{height:20}}/>
         <TouchableOpacity 
+          onPress={() => cartCheckout()}
           style={{
             backgroundColor:'#33c37d',
             width:width-40,

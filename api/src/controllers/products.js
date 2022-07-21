@@ -2,6 +2,7 @@ const Product = require('../models/Product');
 const User = require('../models/User');
 const { v4: uuidv4 } = require('uuid');
 
+
 const getAllProducts = async (req, res, next) => {
     try {
         const products = await Product.find({})
@@ -258,6 +259,39 @@ const putReview = async (req, res, next) => {
     } catch (error) {
         return next(error);
     };
+
+};
+
+const cartCheckout = async (req, res, next) => {
+    const url = "https://api.mercadopago.com/checkout/preferences";
+
+    const body = {
+      
+      items: [
+        {
+          title: "",
+          quantity: 1,
+          unit_price: 10,
+        }
+      ],
+      back_urls: {
+        failure: "/home",
+        pending: "/home",
+        success: "/home"
+      }
+    };
+
+    const payment = await axios.post(url, body, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.ACCESS_TOKEN}`
+      }
+    }); 
+    
+    console.log(payment.data);
+
+    return payment.data; 
+
 };
 
 module.exports = { 
@@ -271,5 +305,6 @@ module.exports = {
     getProductsById, 
     getCategories, 
     editProduct,
-    putReview, 
+    putReview,
+    cartCheckout, 
 };

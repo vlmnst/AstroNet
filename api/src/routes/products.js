@@ -13,6 +13,7 @@ const {
     getCategories, 
     editProduct,
     putReview,
+    cartCheckout,
 } = require('../controllers/products');
 
 productsRouter.get('/getAll', getAllProducts);
@@ -26,5 +27,6 @@ productsRouter.delete('/delete', deleteProduct);
 productsRouter.get('/product/:id', getProductsById);
 productsRouter.get('/getCategories', getCategories);
 productsRouter.put('/putReview/:id', putReview)
+productsRouter.post('/checkout', cartCheckout)
 
 module.exports = productsRouter;
