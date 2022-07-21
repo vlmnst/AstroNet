@@ -11,24 +11,20 @@ import {
 } from "react-native";
 import React, { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import Icon from "react-native-vector-icons/Ionicons";
 import { getCredentials } from "../utils/handleCredentials";
-import Cart from "../Components/Cart";
 import CartLobbyCounter from "./CartLobbyCounter";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { initialCartUpdate, deleteCart } from "../../Redux/Slice";
 
 var { width } = Dimensions.get("window");
 
-
 const CartLobby = () => {
   const infoCart = useSelector((state) => state.ALL_PRODUCTS.cart);
-  console.log(infoCart)
+  console.log(infoCart);
   const dispatch = useDispatch();
   //console.log(infoCart, '<-------CartLobby');
   const [userID, setUserID] = useState();
   const [cartLocalState, setCartLocalState] = useState([]);
-
 
   useEffect(() => {
     const checkCreds = async () => {
@@ -40,30 +36,26 @@ const CartLobby = () => {
     checkCreds();
   }, []);
 
-
   useEffect(() => {
-    
     const getStorageCart = async () => {
-        const jsonStorageCart = await AsyncStorage.getItem("storageCart");
-        let storageCart = JSON.parse(jsonStorageCart);
-        if (storageCart) {
-          console.log(storageCart)
-          dispatch(initialCartUpdate(storageCart));
-        }      
-    };
-      try {
-        getStorageCart()
-        
-      } catch (error) {
-        console.log(error)
+      const jsonStorageCart = await AsyncStorage.getItem("storageCart");
+      let storageCart = JSON.parse(jsonStorageCart);
+      if (storageCart) {
+        console.log(storageCart);
+        dispatch(initialCartUpdate(storageCart));
       }
-        
+    };
+    try {
+      getStorageCart();
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
 
   const emptyCart = async () => {
     try {
       await AsyncStorage.removeItem("storageCart");
-      dispatch(deleteCart())
+      dispatch(deleteCart());
       return true;
     } catch (error) {
       return false;
@@ -72,54 +64,26 @@ const CartLobby = () => {
 
   const [dataCart, setDataCart] = useState(infoCart);
 
-
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <View style={{ height: 20 }} />
-
       <Text style={{ fontSize: 28, color: "gray", fontWeight: "bold" }}>
         Cart
       </Text>
-
       <View style={{ height: 10 }} />
-
-      {/*<Text>{JSON.stringify(dataCart)}</Text>*/}
-
       <View style={{ backgroundColor: "transparent", flex: 1 }}>
         <ScrollView>
           {infoCart.map((item, index) => {
             return (
-              <View
-                key={index}
-                style={{
-                  width: width - 20,
-                  margin: 10,
-                  backgroundColor: "transparent",
-                  flexDirection: "row",
-                  borderWidthBottom: 2,
-                  borderColor: "#cccccc",
-                  paddingBottom: 10,
-                }}
-              >
-                <Image
-                  style={{ width: width / 3, height: width / 3 }}
-                  source={{ uri: item.img[0] }}
-                />
-
-                <View
-                  style={{
-                    backgroundColor: "transparent",
-                    flex: 1,
-                    justifyContent: "space-between",
-                  }}
-                >
+              <View key={index} style={styles.container}>
+                <Image style={styles.image} source={{ uri: item.img[0] }} />
+                <View style={styles.item}>
                   <View>
                     <Text style={{ fontSize: 15, fontWeight: "bold" }}>
                       {item.article}
                     </Text>
                     <Text>{`${item.detail.slice(0, 40)}...`}</Text>
                   </View>
-
                   <View
                     style={{
                       backgroundColor: "transparent",
@@ -127,9 +91,6 @@ const CartLobby = () => {
                       justifyContent: "space-between",
                     }}
                   >
-                    {/* <Text style={{fontWeight:'bold', color:'#33c37d', fontSize:20}}>
-                    {`$${item.price}`}
-                  </Text> */}
                     {item.offer > 0 ? (
                       <Text style={styles.pricethrough}>$ {item.price}</Text>
                     ) : (
@@ -143,8 +104,10 @@ const CartLobby = () => {
                         $ {item.price - item.price * (item.offer / 100)}
                       </Text>
                     ) : null}
-
                   </View>
+                </View>
+                <View>
+                  <Text>Hola Hola</Text>
                 </View>
               </View>
             );
@@ -192,10 +155,22 @@ const priceOfferFont = 15;
 const fontDescription = 12;
 const styles = StyleSheet.create({
   container: {
+    width: width - 20,
+    margin: 10,
+    backgroundColor: "transparent",
+    flexDirection: "row",
+    borderWidthBottom: 2,
+    borderColor: "#cccccc",
+    paddingBottom: 10,
+  },
+  image: {
+    width: width / 3,
+    height: width / 3,
+  },
+  item: {
+    backgroundColor: "transparent",
     flex: 1,
     justifyContent: "center",
-    marginHorizontal: 16,
-    backgroundColor: "#5E5E5E",
   },
   input: {
     backgroundColor: "#FFFFFF",
@@ -225,13 +200,6 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     fontSize: priceOfferFont,
     marginTop: 10,
-  },
-  image: {
-    marginBottom: 2,
-    marginTop: 5,
-    height: 200,
-    width: 250,
-    borderRadius: 10,
   },
   contDetails: {
     display: "flex",
@@ -269,12 +237,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#D0D0D0",
     marginBottom: 2,
   },
-  Container_: {
-    marginBottom: 1,
-    boderWidth: 1,
-    borderColor: "#A09E9E",
-    marginHorizontal: 15,
-  },
   pricethrough: {
     fontSize: nameFont,
     textDecorationLine: "line-through",
@@ -286,42 +248,3 @@ const styles = StyleSheet.create({
 });
 
 export default CartLobby;
-
-  //let [cant, setCant] = useState(1)
-
-  // const onChangeQuat = (i, type) =>{
-
-  //   if(type){
-
-  //     //info[index].quantity = cant
-  //     let dato = dataCart.map((e, index) => { index === i ?
-  //                                             {...e, quantity : cant} : e
-  //                                           })
-  //     setDataCart(dato)
-  //                console.log(dataCart, '<------datacart')
-  //     setCant(cant + 1)
-  //   }
-  //   else {
-  //     alert(negativo)
-  //   }
-
-  // }
-
-
-  // esta constante no se usa en ningún otro lado del componente ni se exporta
-  // const payload = {
-  //   id: userID,
-  //   cart: infoCart,
-  // };
-
-                      {/* <View style={{flexDirection:'row', alignItems:'center'}}>
-                  <TouchableOpacity onPress={()=>onChangeQuat(index, false)}>
-                    <Icon name='ios-remove-circle' size={30} color={'#33c37d'}/>
-                  </TouchableOpacity>
-                  <Text style={{fontWeight:'bold', paddingHorizontal:8}}>
-                    {item.quantity}
-                  </Text>
-                  <TouchableOpacity onPress={()=>onChangeQuat(index, true)}>
-                    <Icon name='ios-add-circle' size={30} color={'#33c37d'}/>
-                  </TouchableOpacity>
-                </View> */}
