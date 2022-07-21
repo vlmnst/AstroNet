@@ -1,6 +1,7 @@
 const Product = require('../models/Product');
 const User = require('../models/User');
 const { v4: uuidv4 } = require('uuid');
+const axios = require('axios');
 
 
 const getAllProducts = async (req, res, next) => {
@@ -263,34 +264,41 @@ const putReview = async (req, res, next) => {
 };
 
 const cartCheckout = async (req, res, next) => {
-    const url = "https://api.mercadopago.com/checkout/preferences";
+    const payload = req.body;
+    // console.log(payload)
 
-    const body = {
+    try {
+        let newCart = [];
+        payload.cart.map(p => {
+            let item = { title: p.article, unit_price: p.price, quantity: p.quantity }
+            newCart.push(item);
+        });
+
+        console.log(newCart);
+
+        const url = "https://api.mercadopago.com/checkout/preferences";
+
+        const body = {
+            items: newCart,
+            back_urls: {
+              failure: "http://localhost:19006",
+              pending: "http://localhost:19006",
+              success: "http://localhost:19006"
+            }
+          };
       
-      items: [
-        {
-          title: "",
-          quantity: 1,
-          unit_price: 10,
+        const payment = await axios.post(url, body, {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${process.env.ACCESS_TOKEN}`
         }
-      ],
-      back_urls: {
-        failure: "/home",
-        pending: "/home",
-        success: "/home"
-      }
-    };
+        });
+      
+        return res.json(payment.data); 
+    } catch (error) {
+        return next(error);
+    }
 
-    const payment = await axios.post(url, body, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.ACCESS_TOKEN}`
-      }
-    }); 
-    
-    console.log(payment.data);
-
-    return payment.data; 
 
 };
 

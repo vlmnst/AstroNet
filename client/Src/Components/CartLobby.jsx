@@ -1,4 +1,4 @@
-import { Text, View, TextInput, Image, StyleSheet, Dimensions, TouchableOpacity, ScrollView } from 'react-native';
+import { Text, View, TextInput, Image, StyleSheet, Dimensions, TouchableOpacity, ScrollView, Linking } from 'react-native';
 import React, { useState, useEffect, useCallback } from "react";
 import { useSelector } from 'react-redux';
 import Icon from "react-native-vector-icons/Ionicons";
@@ -34,18 +34,27 @@ const CartLobby = () => {
   }
 
   const [dataCart, setDataCart]= useState(infoCart)
+
   
   const cartCheckout = async () => {
-    try{
-      
-      let {data} = await axios.get(ROUTE + "/products/checkout", payload);
-      console.log(data.url);
 
+    try{
+      let {data} = await axios.post(ROUTE + "/products/checkout", payload);
+      
+      // Checking if the link is supported for links with custom URL scheme.
+      const supported = await Linking.canOpenURL(data.init_point);
+  
+      if (supported) {
+        // Opening the link with some app, if the URL scheme is "http" the web link should be opened
+        // by some browser in the mobile
+        await Linking.openURL(data.init_point);
+      } else {
+        Alert.alert(`Don't know how to open this URL: ${data.init_point}`);
+      };
     }catch(error){
       console.log(error);
-    }
-
-  }
+    };
+  };
 
   //let [cant, setCant] = useState(1)
  
