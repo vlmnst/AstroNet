@@ -274,7 +274,7 @@ const cartCheckout = async (req, res, next) => {
             newCart.push(item);
         });
 
-        console.log(newCart);
+        // console.log(newCart);
 
         const url = "https://api.mercadopago.com/checkout/preferences";
 

@@ -129,9 +129,9 @@ export const putToken = (payload) => async (dispatch) => {
 //---------------------------------------------------------------------------------------------
 export const sendEmail = (emailData) => async (dispatch) => {
     try {
-        console.log(emailData)
+        // console.log(emailData)
         await axios.post(ROUTE + "/users/email/",emailData);
-        console.log(emailData)
+        // console.log(emailData)
     } catch (error) {
         console.log(error);
     }
