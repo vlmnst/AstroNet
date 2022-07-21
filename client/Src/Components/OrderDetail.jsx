@@ -4,13 +4,14 @@ import {
   StyleSheet,
   TouchableOpacity,
   FlatList,
-  Image
+  Image,
+  Button,
 } from "react-native";
 
 const OrderDetail = (props) => {
   const { navigation, route } = props;
   let { detail } = route.params;
-  console.log(route);
+
 
   return (
     <View style={styles.container}>
@@ -21,7 +22,7 @@ const OrderDetail = (props) => {
         numColumns={1}
         data={detail}
         renderItem={({ item }) => (
-          <View style={styles.PODetail}  >
+          <View style={styles.PODetail}>
             {console.log(item)}
             {/* <Text>{item.id}</Text> */}
             <Image source={{ uri: item.img }} style={styles.image} />
@@ -66,7 +67,7 @@ const styles = StyleSheet.create({
     height: 110,
     width: "100%",
     borderRadius: 10,
-    resizeMode : 'contain',
+    resizeMode: "contain",
   },
   PODetail: {
     flex: 1,
@@ -92,8 +93,13 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 10,
   },
-
-
+  boton: {
+    backgroundColor: "#ccc",
+    padding: 5,
+    borderRadius: 12,
+    width: 100,
+    height: 30,
+  },
 
   // selectsContainer: {
   //   flexDirection: "row",
@@ -115,7 +121,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   Bottunn_: { backgroundColor: "#ccc", padding: 5, borderRadius: 12 },
-  width: "25%",
 });
 
 export default OrderDetail;

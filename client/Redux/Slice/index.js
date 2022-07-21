@@ -124,6 +124,12 @@ export const userSlice = createSlice({
 
         cartCreate(state, action){
             state.cart = [...state.cart, action.payload]
+        },
+        initialCartUpdate(state, action){
+            state.cart = action.payload
+        },
+        deleteCart(state){
+            state.cart = []
         }
     }
 });
@@ -232,6 +238,10 @@ export const cartCreate = (payload) => async(dispatch) => {
     dispatch(userSlice.actions.cartCreate(payload))
 }
 
-export const {getByPrice, clearCache,clearAdmin,getAdminByPrice,resetAdminProducts,searchUser} =userSlice.actions;
+export const initialCartUpdate = (payload) => async(dispatch) => {
+    dispatch(userSlice.actions.initialCartUpdate(payload))
+}
+
+export const {getByPrice, clearCache,clearAdmin,getAdminByPrice,resetAdminProducts,searchUser, deleteCart} =userSlice.actions;
 
 export default userSlice.reducer;
