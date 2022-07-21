@@ -2,6 +2,7 @@ const Product = require('../models/Product');
 const User = require('../models/User');
 const { v4: uuidv4 } = require('uuid');
 const axios = require('axios');
+const { cloudinary } = require('../utils/cloudinary.jsx');
 
 
 const getAllProducts = async (req, res, next) => {
@@ -23,21 +24,33 @@ const totalProducts = async (req, res, next) => {
     };
 };
 
+const saveAtCloudinary = async({img, id}, where) => {
+    // console.log(where);
+    try {
+        let responses = [];
+
+        for (let i = 0; i < img.length; i++) {
+            if (img[i].length > 1) {
+                if (where === 'create') await cloudinary.uploader.upload(img[i], { public_id: id + '-' + i});
+                // if (where === 'modify') await cloudinary.uploader.update(img[i], { public_id: id + '-' + i});
+                let response = await cloudinary.api.resource(id + '-' + i);
+                responses.push(response.url);
+            }; 
+        };
+
+        return responses;
+    } catch (error) {
+       return next(error); 
+    };
+};
+
 const createProduct = async (req, res, next) => {
 
     try {
-        const { 
-            name,
-            price,
-            category,
-            img,
-            stock,
-            offer,
-            description,
-        } = req.body;
+        const { name, price, category, img, stock, offer, description, detail } = req.body;
         
         // exists??
-        const exists = await Product.find({name});
+        const exists = await Product.find({ name });
         if (exists.length > 0) return res.status(400).json({ error: 'the name of the product exists' });
         
         const product = new Product({
@@ -49,14 +62,20 @@ const createProduct = async (req, res, next) => {
             soldCount: 0,
             offer: offer ? offer : 0,
             description,
+            detail,
             reviews: [],
             queries: [],
             date: new Date(),
         });
-      
-        const savedProduct = await product.save();
+
+        const responses = await saveAtCloudinary(product, 'create');
+
+        product.img = responses;
+        await product.save();
+
         console.log(`. \u2705 product "${name}" created and saved OK`);
-        return res.json(savedProduct);
+        return res.json( {msg: 'product create successfully'} );
+        // return res.json(product);
     } catch (error) {
         return next(error);
     };
