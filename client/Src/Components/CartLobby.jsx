@@ -1,9 +1,12 @@
-import { Text, View, TextInput, Image, StyleSheet, Dimensions, TouchableOpacity, ScrollView } from 'react-native';
+import { Text, View, TextInput, Image, StyleSheet, Dimensions, TouchableOpacity, ScrollView, Linking } from 'react-native';
 import React, { useState, useEffect, useCallback } from "react";
 import { useSelector } from 'react-redux';
 import Icon from "react-native-vector-icons/Ionicons";
 import { getCredentials } from '../utils/handleCredentials';
 import Cart from '../Components/Cart';
+import axios from 'axios';
+//import { ROUTE } from "@env";
+const ROUTE = "http://localhost:3001";
 
 var { width } = Dimensions.get("window")
 
@@ -31,7 +34,27 @@ const CartLobby = () => {
   }
 
   const [dataCart, setDataCart]= useState(infoCart)
+
   
+  const cartCheckout = async () => {
+
+    try{
+      let {data} = await axios.post(ROUTE + "/products/checkout", payload);
+      
+      // Checking if the link is supported for links with custom URL scheme
+      const supported = await Linking.canOpenURL(data.init_point);
+  
+      if (supported) {
+        // Opening the link with some app,
+        const res = await Linking.openURL(data.init_point);
+        console.log(res);
+      } else {
+        Alert.alert(`Don't know how to open this URL: ${data.init_point}`);
+      };
+    }catch(error){
+      console.log(error);
+    };
+  };
 
   //let [cant, setCant] = useState(1)
  
@@ -120,6 +143,7 @@ const CartLobby = () => {
         
         <View style={{height:20}}/>
         <TouchableOpacity 
+          onPress={() => cartCheckout()}
           style={{
             backgroundColor:'#33c37d',
             width:width-40,
