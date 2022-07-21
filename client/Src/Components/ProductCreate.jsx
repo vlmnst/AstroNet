@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Text, View, TextInput, Button, StyleSheet, ScrollView, Image } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 // import axios from "axios";
 
 import ImageLibrary from "./ImageLibrary";
+import PrePreview from "./PrePreview";
 import { createProduct } from "../../Redux/Slice";
 
 const ProductCreate = () => {
@@ -20,7 +21,7 @@ const ProductCreate = () => {
     const [stock, setStock] = useState('');
     const [offer, setOffer] = useState('');
     const [detail, setDetail] = useState('');
-    const [description, setDescription] = useState('descriptionTest');
+    const [description, setDescription] = useState('');
     const [categories, setCategories] = useState([]);
     const [images, setImages] = useState({
         one: 'empty',
@@ -35,6 +36,18 @@ const ProductCreate = () => {
     categoriesReducer.length
         ? categoriesReducer.map(c => pickerItems.push({ label: c, value: c }))
         : null;
+    
+    const [product, setProduct] = useState({
+        name, price, offer, stock, detail, description, category: categories, images
+    })
+
+
+    // update preview
+    useEffect(() => {
+        setProduct({
+            name, price, offer, stock, detail, description, category: categories, images
+        })
+        }, [name, price, stock, offer, detail, description, categories, images]);
 
     // ------ HANDLERS ------
     function handleCategory(e) {
@@ -45,7 +58,6 @@ const ProductCreate = () => {
         } else {
             setCategories([...categories.filter(c => c !== e.value)])
         };
-        // console.log(categories);
     };
 
     function clearInputs(){
@@ -64,7 +76,7 @@ const ProductCreate = () => {
             return alert('empty fields')
         };
 
-        if (images.one.length < 1 && images.two.length < 1 && images.three.length < 1) {
+        if (images.one === 'empty' && images.two === 'empty' && images.three === 'empty') {
             return alert('upload one image at least')
         };
 
@@ -170,6 +182,7 @@ const ProductCreate = () => {
             {/* CREATE BUTTON */}
             <View style={{width: '50%', marginBottom: 15}}>
                 <Button title="Create Product" onPress={() => submitForm()}/>
+                <PrePreview item={product}/>
             </View>
 
             {/* <View>

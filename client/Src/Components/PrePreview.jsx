@@ -25,6 +25,7 @@ const PrePreview = ({item}) => {
                     }}
                 >
                 <View style={styles.modalBackground}>
+                <Text style={styles.name}>{item.name} </Text>
                     <Image source={{ uri: item.images.one }} style={styles.image} />
                         <View style={styles.contInt}>
                             <View style={item.priceOffer}>
@@ -39,7 +40,6 @@ const PrePreview = ({item}) => {
                                 ) : null}
                             </View>
                             <View style={styles.descriptionCont}>
-                            <Text style={styles.name}>{item.name} </Text>
                             <Text style={styles.name}>Categories: </Text>
                             {item.category? item.category.map((p,index)=>{
                                     return(
@@ -53,14 +53,14 @@ const PrePreview = ({item}) => {
                                 :<View style={styles.descriptionCont}><Text style={styles.name}>not categories loaded </Text></View>}
 
                             <Text style={styles.name}>Description: </Text> 
-                                {item.description.map((p, index) => {
+                                {item.description? item.description.map((p, index) => {
                                     return (
                                         <Text style={styles.description} key={index}>
                                             {/* {p[0]}: {p[1]} */}
                                             {Object.keys(p)} : {Object.values(p)}
                                         </Text>
                                     );
-                                })}
+                                }):null}
 
                             <Text style={styles.name}>Detail: </Text>
                             <Text style={styles.description}>{item.detail}</Text>
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     },
     modalBackground: {
         flex: 1,
-        backgroundColor: 'rgba(0, 0, 0, 0.7)', 
+        backgroundColor: 'rgba(0, 0, 0, 0.9)', 
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
                         flexWrap: "wrap", 
                         justifyContent: "center" 
                     },
-    name: { fontSize: nameFont, marginHorizontal: 10, marginVertical: 10 },                
+    name: { fontSize: nameFont, marginHorizontal: 10, marginVertical: 10, color: 'white' },                
     modalView: {
         margin: 20,
         backgroundColor: "white",

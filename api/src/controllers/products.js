@@ -38,7 +38,7 @@ const saveAtCloudinary = async({img, id}, where) => {
                 } 
                 let response = await cloudinary.api.resource(id + '-' + i);
                 responses.push(response.url);
-            } else {
+            } else if (img[i] === 'empty') {
                 await cloudinary.uploader.destroy({ public_id: id + '-' + i});
             };
         };
@@ -296,6 +296,14 @@ const putReview = async (req, res, next) => {
     };
 
 };
+
+// const alertarme = async(req, res, next) => {
+//     try {
+//         return res.json('success')
+//     } catch (error) {
+//         console.log(error);
+//     }
+// }
 
 const cartCheckout = async (req, res, next) => {
     const payload = req.body;

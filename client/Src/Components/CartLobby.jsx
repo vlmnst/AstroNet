@@ -46,7 +46,8 @@ const CartLobby = () => {
   
       if (supported) {
         // Opening the link with some app,
-        await Linking.openURL(data.init_point);
+        const res = await Linking.openURL(data.init_point);
+        console.log(res);
       } else {
         Alert.alert(`Don't know how to open this URL: ${data.init_point}`);
       };

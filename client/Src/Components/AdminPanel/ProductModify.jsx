@@ -47,7 +47,6 @@ const ProductModify = (props) => {
         setProduct({
             name, price, offer, stock, detail, description, category: categories, images
         })
-        console.log(images);
       }, [name, price, stock, offer, detail, description, categories, images]);
 
     // handlers
@@ -66,7 +65,7 @@ const ProductModify = (props) => {
             return alert('empty fields')
         };
 
-        if (images.one.length < 1 && images.two.length < 1 && images.three.length < 1) {
+        if (images.one === 'empty' && images.two === 'empty' && images.three === 'empty') {
             return alert('upload one image at least')
         };
 
@@ -80,7 +79,7 @@ const ProductModify = (props) => {
         };
 
         dispatch(ModifyProducts(payload));
-        alert('updated successfully')
+        alert('updated successfully');
     };
 
     // add new attribute

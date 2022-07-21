@@ -11,7 +11,7 @@ const errorHandler = require('./src/middleware/errorHandler');
     server.name = 'API';
 
 // MIDDLEWARES
-    server.use(express.json());
+    server.use(express.json({limit: '100mb'}));
     server.use(morgan('dev'));
     server.use(cors());
     server.use((req, res, next) => {
