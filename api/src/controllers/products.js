@@ -1,9 +1,11 @@
 const Product = require('../models/Product');
 const User = require('../models/User');
 const { v4: uuidv4 } = require('uuid');
+const axios = require('axios');
+const { cloudinary } = require('../utils/cloudinary.jsx');
+
 
 const getAllProducts = async (req, res, next) => {
-
     try {
         const products = await Product.find({})
         return res.json(products);      
@@ -22,21 +24,38 @@ const totalProducts = async (req, res, next) => {
     };
 };
 
+const saveAtCloudinary = async({img, id}, where) => {
+
+    try {
+        let responses = [];
+
+        for (let i = 0; i < img.length; i++) {
+            if (img[i] !== 'empty') { // !== 'empty'
+                if (where === 'create') await cloudinary.uploader.upload(img[i], { public_id: id + '-' + i});
+                if (where === 'modify') {
+                    await cloudinary.uploader.destroy({ public_id: id + '-' + i});
+                    await cloudinary.uploader.upload(img[i], { public_id: id + '-' + i});
+                } 
+                let response = await cloudinary.api.resource(id + '-' + i);
+                responses.push(response.url);
+            } else if (img[i] === 'empty') {
+                await cloudinary.uploader.destroy({ public_id: id + '-' + i});
+            };
+        };
+
+        return responses;
+    } catch (error) {
+       return console.log(error); 
+    };
+};
+
 const createProduct = async (req, res, next) => {
 
     try {
-        const { 
-            name,
-            price,
-            category,
-            img,
-            stock,
-            offer,
-            description,
-        } = req.body;
+        const { name, price, category, img, stock, offer, description, detail } = req.body;
         
         // exists??
-        const exists = await Product.find({name});
+        const exists = await Product.find({ name });
         if (exists.length > 0) return res.status(400).json({ error: 'the name of the product exists' });
         
         const product = new Product({
@@ -48,14 +67,20 @@ const createProduct = async (req, res, next) => {
             soldCount: 0,
             offer: offer ? offer : 0,
             description,
+            detail,
             reviews: [],
             queries: [],
             date: new Date(),
         });
-      
-        const savedProduct = await product.save();
+
+        const responses = await saveAtCloudinary(product, 'create');
+
+        product.img = responses;
+        await product.save();
+
         console.log(`. \u2705 product "${name}" created and saved OK`);
-        return res.json(savedProduct);
+        return res.json( {msg: 'product create successfully'} );
+        // return res.json(product);
     } catch (error) {
         return next(error);
     };
@@ -64,31 +89,45 @@ const createProduct = async (req, res, next) => {
 const editProduct = async (req, res, next) => {
 
     try {
-        const { 
+        let { 
             name,
             price,
             category,
             img,
             stock,
             offer,
+            detail,
             description,
         } = req.body;
 
         const productId = req.params.id
+        
+        const product = {
+            id: productId,
+            img: img,
+        }
 
-        const edProduct = Product.findOneAndUpdate({"_id": productId}, {
-            name,
-            price,
-            category,
-            img,
-            stock,
-            offer,
-            description,
-            }    
+        const responses = await saveAtCloudinary(product, 'modify');
+        img = responses;
+
+        await Product.findOneAndUpdate({"_id": productId}, 
+            {$set: {
+                "name": name,
+                "price": price,
+                "category": category,
+                "img": img,
+                "stock": stock,
+                "offer": offer,
+                "detail": detail,
+                "description": description
+            }},
+            {
+                multi: true
+            }
         );
 
-        console.log(`. \u2705 product "${name}" edited OK`);
-        return res.json({message:"Preduct modify successssssfully"});
+        console.log(`. \u2705 product "${name}" updated successfully`);
+        return res.json({ msg:"Product updated successfully" });
     } catch (error) {
         return next(error);
     };
@@ -114,10 +153,6 @@ const buyProduct = async (req, res, next) => {
         // cart = [{idProduct1, quantity}, {idProduct2, quantity}, etc]
         const { cart, userID } = req.body;
         const user = await User.findById(userID);
-
-        // ! ! ! ! ! vaciar historial de compras del usuario ! ! ! ! !
-            // await User.updateOne({"username": "usermauro"}, {$set: {"productsHistory": []}});
-            // return res.json(user);
 
         var outOfStock = 0;
         let promisesStock = cart.map(async(prods) => {
@@ -245,9 +280,10 @@ const putReview = async (req, res, next) => {
 
     try {
         const { id } = req.params;
-        const { review } = req.body; // review: {rating, comment, owner}
+        const review = req.body; // review: {rating, comment, owner}
+        // console.log(req.body)
         // falta ir a buscar al owner y sus productHistory, para agregarle al producto comprado : REVIEW = true
-        
+     
         const addReviewProduct = await Product.updateOne({"_id": id }, {$push: {"reviews": review}});
 
         if (addReviewProduct) {
@@ -258,6 +294,54 @@ const putReview = async (req, res, next) => {
     } catch (error) {
         return next(error);
     };
+
+};
+
+// const alertarme = async(req, res, next) => {
+//     try {
+//         return res.json('success')
+//     } catch (error) {
+//         console.log(error);
+//     }
+// }
+
+const cartCheckout = async (req, res, next) => {
+    const payload = req.body;
+    // console.log(payload)
+
+    try {
+        let newCart = [];
+        payload.cart.map(p => {
+            let item = { title: p.article, unit_price: p.price, quantity: p.quantity }
+            newCart.push(item);
+        });
+
+        // console.log(newCart);
+
+        const url = "https://api.mercadopago.com/checkout/preferences";
+
+        const body = {
+            items: newCart,
+            back_urls: {
+              failure: "http://localhost:19006",
+              pending: "http://localhost:19006",
+              success: "http://localhost:19006"
+            }
+          };
+      
+        const payment = await axios.post(url, body, {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${process.env.ACCESS_TOKEN}`
+        }
+        });
+      
+        return res.json(payment.data); 
+    } catch (error) {
+        return next(error);
+    }
+
+
 };
 
 module.exports = { 
@@ -271,5 +355,6 @@ module.exports = {
     getProductsById, 
     getCategories, 
     editProduct,
-    putReview, 
+    putReview,
+    cartCheckout, 
 };

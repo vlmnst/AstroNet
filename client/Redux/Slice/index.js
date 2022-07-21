@@ -200,7 +200,8 @@ export const PutBanned = (payload)=> async(dispatch) => {
 export const ModifyProducts = (payload)=> async(dispatch) => {
     const {id,product} = payload
     try {
-        await axios.put(ROUTE+"/products/update/"+id, product)
+        let {data} = await axios.put(ROUTE+"/products/update/"+id, product)
+        console.log(data);
     } catch (e) {
         console.log(e)
     }
