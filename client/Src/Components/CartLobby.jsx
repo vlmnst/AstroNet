@@ -9,19 +9,20 @@ import {
   TouchableOpacity,
   ScrollView,
   TurboModuleRegistry,
+  Linking
 } from "react-native";
 import React, { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getCredentials } from "../utils/handleCredentials";
-import CartLobbyCounter from "./CartLobbyCounter";
+// import CartLobbyCounter from "./CartLobbyCounter";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { initialCartUpdate, deleteCart } from "../../Redux/Slice";
 import Icon from "react-native-vector-icons/Ionicons";
 import Cart from '../Components/Cart';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import axios from 'axios';
-//import { ROUTE } from "@env";
-const ROUTE = "http://localhost:3001";
+import { ROUTE } from "@env";
+// const ROUTE = "http://localhost:3001";
 
 
 var { width } = Dimensions.get("window");
@@ -38,7 +39,7 @@ const CartLobby = ({navigation}) => {
     const checkCreds = async () => {
       const credentials = await getCredentials();
       if (credentials) {
-        setUserID(credentials.id);
+        setUserID(credentials.id)
       }
     };
     checkCreds();
@@ -62,7 +63,7 @@ const CartLobby = ({navigation}) => {
   }, []);
 
  const payload = {
-    id : userID,
+    // id : userID,
     cart : infoCart
   }
 
@@ -80,7 +81,6 @@ const CartLobby = ({navigation}) => {
       if (supported) {
         // Opening the link with some app,
         const res = await Linking.openURL(data.init_point);
-        console.log(res);
       } else {
         Alert.alert(`Don't know how to open this URL: ${data.init_point}`);
       };
@@ -100,7 +100,6 @@ const CartLobby = ({navigation}) => {
     }
   };
 
-  const [dataCart, setDataCart] = useState(infoCart);
 
   return (
 
@@ -164,8 +163,8 @@ const CartLobby = ({navigation}) => {
                 </View> */}
               </View>
             );
-          })}
-        </ScrollView>
+          {/* })} */}
+        {/* </ScrollView> */}
 
 
           </View>
@@ -193,11 +192,6 @@ const CartLobby = ({navigation}) => {
             CHECKOUT
           </Text>
         </TouchableOpacity>
-        <View style={{height:'1%'}}/>
-      </View>
-    </View>
-  )
-
         <TouchableOpacity
           onPress={emptyCart}
           style={{
@@ -212,11 +206,10 @@ const CartLobby = ({navigation}) => {
             EMPTY CART
           </Text>
         </TouchableOpacity>
-
-        <View style={{ height: 10 }} />
+        <View style={{height:'1%'}}/>
       </View>
     </View>
-  );
+  )
 };
 
 const styles = StyleSheet.create({
