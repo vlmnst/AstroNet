@@ -1,16 +1,16 @@
 import { Text, View, TextInput, Image, StyleSheet, Dimensions, TouchableOpacity, ScrollView, Linking } from 'react-native';
 import React, { useState, useEffect, useCallback } from "react";
 import { useSelector } from 'react-redux';
-import Icon from "react-native-vector-icons/Ionicons";
 import { getCredentials } from '../utils/handleCredentials';
 import Cart from '../Components/Cart';
+import FeatherIcon from 'react-native-vector-icons/Feather';
 import axios from 'axios';
 //import { ROUTE } from "@env";
 const ROUTE = "http://localhost:3001";
 
 var { width } = Dimensions.get("window")
 
-const CartLobby = () => {
+const CartLobby = ({navigation}) => {
 
   
   const infoCart = useSelector((state)=>state.ALL_PRODUCTS.cart)
@@ -78,18 +78,22 @@ const CartLobby = () => {
   // }
 
   return (
-    <View style={{flex:1, alignItems: 'center', justifyContent: 'center'}}>
-
-      <View style={{height:20}}/>
-
+    <View style={{flex:1, width: width, alignItems: 'center', justifyContent: 'center'}}>
+      <View style={styles.SBcontainer}>
+        <View style={styles.SB}>
+          <FeatherIcon style={styles.iconMenu} name="skip-back" size={36} onPress={() => navigation.goBack()}/>
+          <Text style={{fontSize:28, color:'white', fontWeight:'bold'}}>Cart</Text>
+          {/* <Icon style={styles.iconCart} name="cart-outline" size={30}  onPress={() => navigation.navigate("Cart")}/> */}
+        </View>
+      </View>
+      {/* <View style={{height:20}}/>
         <Text style={{fontSize:28, color:'gray', fontWeight:'bold'}}>Cart</Text>
-
-      <View style={{height:10}}/>
+      <View style={{height:10}}/> */}
 
       {/*<Text>{JSON.stringify(dataCart)}</Text>*/}
 
       <View style={{backgroundColor:'transparent', flex:1}}>
-      <ScrollView>
+      <ScrollView style={styles.scrollView}>
         {
           infoCart.map((item, index)=>{
             return(
@@ -140,23 +144,24 @@ const CartLobby = () => {
           })
         }
       </ScrollView>
-        
         <View style={{height:20}}/>
         <TouchableOpacity 
           onPress={() => cartCheckout()}
           style={{
-            backgroundColor:'#33c37d',
-            width:width-40,
+            backgroundColor:'#4A347F',
+            width:width-130,
             alignItems:'center',
-            padding:10,
-            borderRadius:5
+            justifyContent:'center',
+            // padding:10,
+            height:'10%',
+            borderRadius:20,
           }}
         >
-          <Text style={{fontSize:24, fontWeight:'bold', color:'white'}}>
+          <Text style={{fontSize:24, fontWeight:'bold', color:'white', textAlign:'center',justifyContent:'center'}}>
             CHECKOUT
           </Text>
         </TouchableOpacity>
-        <View style={{height:10}}/>
+        <View style={{height:'1%'}}/>
       </View>
     </View>
   )
@@ -164,55 +169,36 @@ const CartLobby = () => {
 
 };
 
-const nameFont = 15;
-const priceOfferFont = 15;
-const fontDescription = 12;
 const styles = StyleSheet.create({
   
-  container: { flex: 1, justifyContent: 'center', marginHorizontal: 16, backgroundColor: '#5E5E5E' },
-  input: { backgroundColor: '#FFFFFF', marginTop: 0, marginHorizontal: 10, padding: 5, width: '100%' },
-  inputmul: { backgroundColor: '#FFFFFF', marginTop: 10, marginHorizontal: 10, padding: 5, height: 100, width: '100%' },
-  title: { fontSize: 20, padding: 5, marginLeft: 10 },
-  separator: { marginVertical: 8, borderBottomColor: '#737373', borderBottomWidth: StyleSheet.hairlineWidth },
-  button: { height: 40, margin: 12, borderWidth: 1, padding: 10 },
-  priceOffer: {
-      flexDirection: "row",
-      justifyContent: "space-around",
-      marginBottom: 5,
-      fontSize: priceOfferFont,
-      marginTop: 10
+  SBcontainer: {
+    height:'10%',
+    backgroundColor:'#4A347F',
+    width:'100%'
   },
-  image: {
-      marginBottom: 2,
-      marginTop: 5,
-      height: 200,
-      width: 250,
-      borderRadius: 10,
+  SB: {
+    flexDirection: "row",
+    justifyContent:"center",
+    alignItems:"center",
+    height:'82%',
+    backgroundColor: '#4A347F',
+    width: '100%',
+    marginTop:'4%'
   },
-  contDetails: {
-      display: "flex",
-      alignItems: "center",
-      padding: 10,
-      width: "100%",
-      borderColor: "#EAEAEA",
-      backgroundColor: "white",
+  iconMenu: {
+    color:'white',
+    position:'absolute',
+    left:'5%'
   },
-  contInt: { marginTop: 5, width: "98%", backgroundColor: "#EAEAEA" },
-  price: { fontSize: priceOfferFont },
-  name: { fontSize: nameFont, marginHorizontal: 10, marginVertical: 10 },
-  offer: { color: "red", fontSize: priceOfferFont },
-  descriptionCont: { display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "center" },
-  description: { fontSize: fontDescription, padding: 5, backgroundColor: "white", borderRadius: 5, borderColor: "#EAEAEA", marginHorizontal: 5, marginVertical: 5 },
-  textInput: { height: 40, width: "90%", borderWidth: 1, borderRadius: 8, borderColor: "#A09E9E", backgroundColor: "#D0D0D0", marginBottom: 2 },
-  Container_: {  marginBottom: 1, boderWidth: 1, borderColor: "#A09E9E", marginHorizontal: 15 },
-  pricethrough: {
-      fontSize: nameFont,
-      textDecorationLine:'line-through'
-    },
-    pricenew: {
-      color: "green",
-      fontSize: nameFont,
-    },
+  scrollView:{
+
+  },
+  buybtn:{
+    alignItems:'center',
+    justifyContent:'center',
+    marginTop: 5,
+    // marginHorizontal:
+  }
 });
 
 export default CartLobby;

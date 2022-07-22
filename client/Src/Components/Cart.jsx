@@ -33,24 +33,27 @@ const Cart = (props) => {
   
     return (
         <TouchableOpacity  onPress={()=> onClickAddCart(item)} style={styles.addCart}>
-        <Text style={styles.addCartText}>Add cart</Text>
-        </TouchableOpacity>  
+          <Text style={styles.addCartText}>Add cart</Text>
+        </TouchableOpacity>
     )
 }
 
 const  styles = StyleSheet.create({
     addCart: {
         alignItems:'center',
-        backgroundColor:"#33c37d",
+        backgroundColor:"#4A347F",
         alignItems:'center',
         padding: 5,
-        borderRadius: 5
+        borderRadius: 5,
+        width: '50%',
+        justifyContent:'center',
+        height:65
       },
       addCartText: {
-        fontSize:15,
+        fontSize:20,
         color:"white",
         fontWeight:"bold"
-      }
+      },
 })
 
 export default Cart;

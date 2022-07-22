@@ -21,6 +21,7 @@ const Main = () => {
         <NavigationContainer  >
             <Drawer.Navigator
                 drawerContent={(props) => <SideMenu { ...props } />}
+                screenOptions={{headerShown: false}}
             >
                 <Drawer.Screen
                     options={{

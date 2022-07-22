@@ -11,7 +11,7 @@ const ProductCard = (props) => {
   return (
     <TouchableOpacity
       style={styles.container}
-      onPress={() => navigation.navigate("Details", item)}
+      onPress={() => navigation.navigate("Details", item, navigation)}
     >
       <Image source={{ uri: item.img[0] }} style={styles.image} />
       <View style={styles.contInt}>

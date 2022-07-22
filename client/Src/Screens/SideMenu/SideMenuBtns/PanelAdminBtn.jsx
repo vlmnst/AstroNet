@@ -9,7 +9,7 @@ const PanelAdminBtn = ({ text, onPress }) => {
             style={ styles.container }
             onPress={onPress}
         >
-            <IconAntDesign style={ styles.icon } name="bars" size={20} color="black"/>
+            <IconAntDesign style={ styles.icon } name="tool" size={20} color="black"/>
             <Text style={ styles.text }>{text}</Text>
         </TouchableOpacity>
     )
@@ -17,8 +17,8 @@ const PanelAdminBtn = ({ text, onPress }) => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#d9d9d9',
-        marginTop: 20,
+        backgroundColor: '#4A347F',
+        marginTop: 40,
         marginHorizontal: 15,
         padding:15,
         borderRadius: 10,
@@ -29,11 +29,13 @@ const styles = StyleSheet.create({
     },
     icon: {
         marginRight:16,
-        marginLeft:6
+        marginLeft:6,
+        color:'white'
     },
     text: {
         fontWeight:"bold",
-        fontSize:15
+        fontSize:15,
+        color:'white'
     }
 })
 
