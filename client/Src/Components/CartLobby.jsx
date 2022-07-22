@@ -13,7 +13,7 @@ import {
 import React, { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getCredentials } from "../utils/handleCredentials";
-import CartLobbyCounter from "./CartLobbyCounter";
+// import CartLobbyCounter from "./CartLobbyCounter";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { initialCartUpdate, deleteCart } from "../../Redux/Slice";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -100,7 +100,7 @@ const CartLobby = ({navigation}) => {
     }
   };
 
-  const [dataCart, setDataCart] = useState(infoCart);
+  // const [dataCart, setDataCart] = useState(infoCart);
 
   return (
 
@@ -164,8 +164,8 @@ const CartLobby = ({navigation}) => {
                 </View> */}
               </View>
             );
-          })}
-        </ScrollView>
+          {/* })} */}
+        {/* </ScrollView> */}
 
 
           </View>
@@ -193,11 +193,6 @@ const CartLobby = ({navigation}) => {
             CHECKOUT
           </Text>
         </TouchableOpacity>
-        <View style={{height:'1%'}}/>
-      </View>
-    </View>
-  )
-
         <TouchableOpacity
           onPress={emptyCart}
           style={{
@@ -212,11 +207,10 @@ const CartLobby = ({navigation}) => {
             EMPTY CART
           </Text>
         </TouchableOpacity>
-
-        <View style={{ height: 10 }} />
+        <View style={{height:'1%'}}/>
       </View>
     </View>
-  );
+  )
 };
 
 const styles = StyleSheet.create({
