@@ -9,7 +9,7 @@ const HomeBtn = ({ text, onPress }) => {
             style={ styles.container }
             onPress={onPress}
         >
-            <IconAntDesign style={ styles.icon } name="home" size={20} color="black"/>
+            <IconAntDesign style={ styles.icon } name="home" size={25} color="black"/>
             <Text style={ styles.text }>{text}</Text>
         </TouchableOpacity>
     )
@@ -18,13 +18,13 @@ const HomeBtn = ({ text, onPress }) => {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#4A347F',
-        marginTop: 40,
-        marginHorizontal: 15,
+        // backgroundColor: 'white',
+        marginTop: 10,
         padding:15,
         borderRadius: 10,
-        justifyContent:"flex-start",
+        alignItems:"center",
         width:'85%',
-        height: 55,
+        height: 65,
         flexDirection:"row"
     },
     icon: {
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     },
     text: {
         fontWeight:"bold",
-        fontSize:15,
+        fontSize:20,
         color:'white'
     }
 })

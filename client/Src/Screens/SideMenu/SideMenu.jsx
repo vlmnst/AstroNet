@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { DrawerContentScrollView } from "@react-navigation/drawer";
-import { Text, StyleSheet, Image } from "react-native";
+import { Text, StyleSheet, Image, View } from "react-native";
 import { getCredentials } from '../../utils/handleCredentials';
 // import { StackActions, NavigationActions } from 'react-navigation';
 
@@ -114,38 +114,40 @@ const SideMenu = ({ navigation }) => {
 
     return (
         <DrawerContentScrollView
-            style={ styles.container }
-        >
-            <Image style={styles.popUpimg} source={ img } />
+            contentContainerStyle={ styles.container }
+            >
+            <Image style={styles.img} source={ img } />
             {/* <Text style={ styles.title }>Menu</Text> */}
-            <HomeBtn
-                text = "Home"
-                onPress={() => handlePressHome('HomeNav')}
-            />
-            { userName ? (
-                <ProfileBtn
-                    text = "Profile"
-                    onPress = { () => handlePressProfile("ProfileNav") }
+            <View style={styles.btncontainer}>
+                <HomeBtn
+                    text = "Home"
+                    onPress={() => handlePressHome('HomeNav')}
                 />
-            ) : null }
-            { role === 'admin'||role === 'mod'?(
-                <PanelAdminBtn
-                    text = "Admin Panel"
-                    onPress = { () => handlePressPanelAdminBtn("PanelAdminNav") }
-                />
-            ) : null }
-            { role === 'guest' ? (
-                <LoginBtn
-                    text = "Login"
-                    onPress = { () => handlePress("Login") }
-                />
-            ) : null }
-            { userName ? (
-                <LogoutBtn
-                    text = "Logout"
-                    navigation={navigation}
-                />
-            ) : null }
+                { userName ? (
+                    <ProfileBtn
+                        text = "Profile"
+                        onPress = { () => handlePressProfile("ProfileNav") }
+                    />
+                ) : null }
+                { role === 'admin'||role === 'mod'?(
+                    <PanelAdminBtn
+                        text = "Admin Panel"
+                        onPress = { () => handlePressPanelAdminBtn("PanelAdminNav") }
+                    />
+                ) : null }
+                { role === 'guest' ? (
+                    <LoginBtn
+                        text = "Login"
+                        onPress = { () => handlePress("Login") }
+                    />
+                ) : null }
+                { userName ? (
+                    <LogoutBtn
+                        text = "Logout"
+                        navigation={navigation}
+                    />
+                ) : null }
+            </View>
             
         </DrawerContentScrollView>
     )
@@ -155,23 +157,19 @@ const styles = StyleSheet.create({
     container: {
         padding: 25,
         minHeight: '100%',
-        backgroundColor: 'white'
+        backgroundColor: '#4A347F',
+        alignItems:"center"
     },
-    title:{
-        fontSize: 25,
-        fontWeight: 'bold',
-        marginBottom: 20
+    btncontainer: {
+        marginTop: 10
     },
-    popUpimg: {
-        height: 150,
-        width: 150,
+    img: {
+        height: 180,
+        width: 180,
         alignSelf:"center",
         resizeMode:"contain",
         borderRadius: 75,
         marginVertical:15
-    },
-    btn: {
-        marginTop:50
     },
 })
 

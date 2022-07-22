@@ -29,13 +29,13 @@ const LogoutBtn = ({navigation, text, onPress }) => {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#4A347F',
-        marginTop: 40,
-        marginHorizontal: 15,
+        // backgroundColor: 'white',
+        marginTop: 10,
         padding:15,
         borderRadius: 10,
-        justifyContent:"flex-start",
+        alignItems:"center",
         width:'85%',
-        height: 55,
+        height: 65,
         flexDirection:"row"
     },
     icon: {
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     },
     text: {
         fontWeight:"bold",
-        fontSize:15,
+        fontSize:20,
         color:'white'
     }
 })
