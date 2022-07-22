@@ -12,7 +12,7 @@ import ProfileBtn from "./SideMenuBtns/ProfileBtn";
 import LogoutBtn from "./SideMenuBtns/LogoutBtn";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserData } from "../../../Redux/Slice/userSlice";
-import img from '../../../assets/logo/logoAstronet.jpeg';
+import img from '../../../assets/logo/logoAstronet.png';
 
 
 const SideMenu = ({ navigation }) => {
