@@ -307,12 +307,10 @@ const putReview = async (req, res, next) => {
 
 const cartCheckout = async (req, res, next) => {
     const payload = req.body;
-    // console.log(payload)
-
     try {
         let newCart = [];
         payload.cart.map(p => {
-            let item = { title: p.article, unit_price: p.price, quantity: p.quantity }
+            let item = { title: p.name, unit_price: p.price, quantity: 1 }
             newCart.push(item);
         });
 
@@ -335,7 +333,6 @@ const cartCheckout = async (req, res, next) => {
             Authorization: `Bearer ${process.env.ACCESS_TOKEN}`
         }
         });
-      
         return res.json(payment.data); 
     } catch (error) {
         return next(error);
