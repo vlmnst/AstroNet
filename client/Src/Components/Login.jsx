@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Icon from 'react-native-vector-icons/Ionicons';
+import FeatherIcon from 'react-native-vector-icons/Feather';
 import {
   Text,
   View,
@@ -20,6 +21,7 @@ import * as Google from "expo-auth-session/providers/google";
 import * as Web from "expo-web-browser";
 import GoogleButton from "react-google-button";
 import CustomButton from "./CustomButton";
+
 Web.maybeCompleteAuthSession();
 
 const Login = ({ navigation }) => {
@@ -123,9 +125,14 @@ const Login = ({ navigation }) => {
   };
 
   return (
-    <View>
-      <SafeAreaView style={styles.AndroidSafeArea}>
+    <View style={{minHeight:'100%'}}>
         {/* USERNAME */}
+        <View style={styles.SBcontainer}>
+            <View style={styles.SB}>
+                <FeatherIcon style={styles.iconMenu} name="menu" size={36} onPress={() => navigation.openDrawer()}/>
+                <Text style={{fontSize:28, color:'white', fontWeight:'bold'}}>Log In</Text>
+            </View>
+        </View>
         <Text>Username</Text>
         <Controller
           name="username"
@@ -190,13 +197,31 @@ const Login = ({ navigation }) => {
            }}
         ><Text>Login with Google</Text>
         </TouchableOpacity> */}
-      </SafeAreaView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  AndroidSafeArea: { paddingTop: StatusBar.currentHeight + 10 },
+  SBcontainer: {
+    height:'12%',
+    backgroundColor:'#4A347F',
+    width:'100%'
+  },
+  SB: {
+      flexDirection: "row",
+      justifyContent:"center",
+      alignItems:"center",
+      height:'65%',
+      backgroundColor: '#4A347F',
+      // backgroundColor:'white',
+      width: '100%',
+      marginTop:'9%'
+  },
+  iconMenu: {
+      color:'white',
+      position:'absolute',
+      left:'5%'
+  },
   container: {
     flex: 1,
     justifyContent: "center",

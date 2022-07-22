@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { DrawerContentScrollView } from "@react-navigation/drawer";
-import { Text, StyleSheet } from "react-native";
+import { Text, StyleSheet, Image } from "react-native";
 import { getCredentials } from '../../utils/handleCredentials';
 // import { StackActions, NavigationActions } from 'react-navigation';
 
@@ -12,6 +12,7 @@ import ProfileBtn from "./SideMenuBtns/ProfileBtn";
 import LogoutBtn from "./SideMenuBtns/LogoutBtn";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserData } from "../../../Redux/Slice/userSlice";
+import img from '../../../assets/logo/logoAstronet.jpeg';
 
 
 const SideMenu = ({ navigation }) => {
@@ -115,7 +116,8 @@ const SideMenu = ({ navigation }) => {
         <DrawerContentScrollView
             style={ styles.container }
         >
-            <Text style={ styles.title }>Menu</Text>
+            <Image style={styles.popUpimg} source={ img } />
+            {/* <Text style={ styles.title }>Menu</Text> */}
             <HomeBtn
                 text = "Home"
                 onPress={() => handlePressHome('HomeNav')}
@@ -128,7 +130,7 @@ const SideMenu = ({ navigation }) => {
             ) : null }
             { role === 'admin'||role === 'mod'?(
                 <PanelAdminBtn
-                    text = "PanelAdmin"
+                    text = "Admin Panel"
                     onPress = { () => handlePressPanelAdminBtn("PanelAdminNav") }
                 />
             ) : null }
@@ -152,13 +154,25 @@ const SideMenu = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         padding: 25,
-        height: '100%'
+        minHeight: '100%',
+        backgroundColor: 'white'
     },
     title:{
         fontSize: 25,
         fontWeight: 'bold',
         marginBottom: 20
-    }
+    },
+    popUpimg: {
+        height: 150,
+        width: 150,
+        alignSelf:"center",
+        resizeMode:"contain",
+        borderRadius: 75,
+        marginVertical:15
+    },
+    btn: {
+        marginTop:50
+    },
 })
 
 export default SideMenu;

@@ -55,6 +55,7 @@ const Cart = (props) => {
     //infoCart.concat(itemCart);
     //var arr = [itemCart]
     dispatch(cartCreate(itemCart));
+
   };
 
   return (
@@ -83,3 +84,4 @@ const styles = StyleSheet.create({
 });
 
 export default Cart;
+

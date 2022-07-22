@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Text, View, TextInput, Button, StyleSheet, ScrollView, Image } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
+import FeatherIcon from 'react-native-vector-icons/Feather';
 // import axios from "axios";
 
 import ImageLibrary from "./ImageLibrary";
 import PrePreview from "./PrePreview";
 import { createProduct } from "../../Redux/Slice";
 
-const ProductCreate = () => {
+const ProductCreate = ({navigation}) => {
     
     const dispatch = useDispatch();
 
@@ -93,8 +94,13 @@ const ProductCreate = () => {
 
     return(
         <ScrollView contentContainerStyle={styles.container}>
-
-            <Text style={{fontSize: 20, marginVertical: 10}}>Create a new product</Text>
+            <View style={styles.SBcontainer}>
+				<View style={styles.SB}>
+					<FeatherIcon style={styles.iconMenu} name="skip-back" size={36} onPress={() => navigation.goBack()}/>
+					<Text style={{fontSize:24, color:'white', fontWeight:'bold'}}>Create a new product</Text>
+				</View>
+			</View>
+            {/* <Text style={{fontSize: 20, marginVertical: 10}}>Create a new product</Text> */}
 
             {/* NAME */}
             <View style={styles.inputsContainers}>
@@ -198,6 +204,28 @@ const styles = StyleSheet.create({
         // flex: 1, 
         width: '100%',
         alignItems: 'center',
+        minHeight:'100%'
+    },
+    SBcontainer: {
+        height:'12%',
+        backgroundColor:'#4A347F',
+        width:'100%',
+        marginBottom:'5%'
+    },
+    SB: {
+        flexDirection: "row",
+        justifyContent:"center",
+        alignItems:"center",
+        height:'65%',
+        backgroundColor: '#4A347F',
+        // backgroundColor:'white',
+        width: '100%',
+        marginTop:'9%'
+    },
+    iconMenu: {
+        color:'white',
+        position:'absolute',
+        left:'5%'
     },
     inputsContainers: {
         width: '50%'

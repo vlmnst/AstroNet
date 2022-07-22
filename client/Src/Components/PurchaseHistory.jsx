@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import OrderDetail from './OrderDetail.jsx';
+import FeatherIcon from 'react-native-vector-icons/Feather';
 import {
 	View,
 	Text,
@@ -35,30 +36,38 @@ const PurchaseHistory = (props) => {
 				<Text>Return</Text>
 			</TouchableOpacity> */}
 			{/* ------------ TITLE ------------ */}
-            <Text style={styles.title}>Purchase History</Text>
-            <Text style={styles.userName}>{userName}</Text>
+			<View style={styles.SBcontainer}>
+				<View style={styles.SB}>
+					<FeatherIcon style={styles.iconMenu} name="skip-back" size={36} onPress={() => navigation.goBack()}/>
+					<Text style={{fontSize:28, color:'white', fontWeight:'bold'}}>Purchase History</Text>
+				</View>
+			</View>
+            {/* <Text style={styles.title}>Purchase History</Text> */}
+            <Text style={styles.userName}>{userName.slice(0,1).toUpperCase().concat(userName.slice(1,userName.length))}</Text>
         	{/* ------------ PRODUCTS CARDS ------------ */}
         
-          {purchaseProductsH.productsHistory?.length?
-            <FlatList
-              numColumns={1}
-              data={purchaseProductsH.productsHistory}
-              renderItem={({ item }) => (
-                <View style={styles.cardContainer}> 
-                  {/* <Text>{userName}</Text> */}
-                  <Text>{`order: ${item.order}`}</Text>
-                  <Text>{`date: ${item.date}`}</Text>
-                  <Text> {`total: $${item.total}`}</Text>
-                  <TouchableOpacity style={styles.Bottunn_} onPress={() => navigation.navigate("OrderDetail", item)}>
-                    <Text>Details</Text>
-                  </TouchableOpacity>
-                {/* <PurchaseOrders navigation={navigation} item={item} /> */}
-                </View>
-              )}
-            />
-          :<View>
-            <Text>No purchases</Text>
-          </View>}
+			{purchaseProductsH.productsHistory?.length?
+				<FlatList
+				numColumns={1}
+				data={purchaseProductsH.productsHistory}
+				renderItem={({ item }) => (
+					<View style={styles.cardContainer}> 
+					{/* <Text>{userName}</Text> */}
+						<View style={{padding:10}}>
+							<Text>{`order: ${item.order}`}</Text>
+							<Text>{`date: ${item.date}`}</Text>
+							<Text> {`total: $${item.total}`}</Text>
+							<TouchableOpacity style={styles.Bottunn_} onPress={() => navigation.navigate("OrderDetail", item)}>
+								<Text style={{fontSize:18, textAlign:"center"}}>Details</Text>
+							</TouchableOpacity>
+						</View>
+					{/* <PurchaseOrders navigation={navigation} item={item} /> */}
+					</View>
+				)}
+				/>
+			:<View>
+				<Text>No purchases</Text>
+			</View>}
         </View>
     
 	);
@@ -69,6 +78,26 @@ container: {
 	width: "100%",
 	height: "100%",
 	alignItems: "center",
+},
+SBcontainer: {
+	height:'12%',
+	backgroundColor:'#4A347F',
+	width:'100%'
+},
+SB: {
+	flexDirection: "row",
+	justifyContent:"center",
+	alignItems:"center",
+	height:'65%',
+	backgroundColor: '#4A347F',
+	// backgroundColor:'white',
+	width: '100%',
+	marginTop:'9%'
+},
+iconMenu: {
+	color:'white',
+	position:'absolute',
+	left:'5%'
 },
 selectsContainer: {
 	flexDirection: "row",
@@ -85,7 +114,10 @@ flatList: {
 	width: "100%",
 },
 cardContainer: {
-	marginVertical:20
+	marginVertical:20,
+	borderWidth:2,
+	borderColor:'grey',
+	borderRadius:10
 },
 title: {
 	fontSize: 30,
@@ -95,7 +127,8 @@ title: {
 },
 userName: {
 	marginVertical:15,
-	fontSize: 25
+	fontSize: 25,
+	fontWeight:"bold"
 },
 Bottunn_:{
 	backgroundColor:"#ccc",

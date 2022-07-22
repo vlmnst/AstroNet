@@ -46,6 +46,7 @@ const NavBar = ({ navigation, route }) => {
 
 const styles = StyleSheet.create({
     container: {
+        // marginTop:'46%',
         flexDirection: 'row',
         // backgroundColor: '#3E3E3E',
         justifyContent: 'center',
