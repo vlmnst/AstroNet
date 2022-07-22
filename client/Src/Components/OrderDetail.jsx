@@ -4,15 +4,18 @@ import {
   StyleSheet,
   TouchableOpacity,
   FlatList,
-  Image
+  Image,
+  Button,
 } from "react-native";
 import FeatherIcon from 'react-native-vector-icons/Feather';
 
 const OrderDetail = (props) => {
   const { navigation, route } = props;
   let { detail } = route.params;
+
   // console.log('------------------');
   // console.log(route);
+
 
   return (
     <View style={styles.container}>
@@ -30,8 +33,10 @@ const OrderDetail = (props) => {
         numColumns={1}
         data={detail}
         renderItem={({ item }) => (
-          <View style={styles.PODetail}  >
-            {/* {console.log(item)} */}
+
+          <View style={styles.PODetail}>
+            {console.log(item)}
+
             {/* <Text>{item.id}</Text> */}
             <Image source={{ uri: item.img[0] }} style={styles.image} />
             <Text>{item.name}</Text>
@@ -96,7 +101,7 @@ const styles = StyleSheet.create({
     height: 110,
     width: "100%",
     borderRadius: 10,
-    resizeMode : 'contain',
+    resizeMode: "contain",
   },
   PODetail: {
     flex: 1,
@@ -126,8 +131,13 @@ const styles = StyleSheet.create({
     fontSize:26,
     fontWeight:"bold"
   },
-
-
+  boton: {
+    backgroundColor: "#ccc",
+    padding: 5,
+    borderRadius: 12,
+    width: 100,
+    height: 30,
+  },
 
   // selectsContainer: {
   //   flexDirection: "row",
@@ -149,7 +159,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   Bottunn_: { backgroundColor: "#ccc", padding: 5, borderRadius: 12 },
-  width: "25%",
 });
 
 export default OrderDetail;

@@ -1,31 +1,64 @@
-import { Text, View, TextInput, Image, StyleSheet, Dimensions, TouchableOpacity, ScrollView, Linking } from 'react-native';
+
+import {
+  Text,
+  View,
+  TextInput,
+  Image,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+  ScrollView,
+  TurboModuleRegistry,
+} from "react-native";
 import React, { useState, useEffect, useCallback } from "react";
-import { useSelector } from 'react-redux';
-import { getCredentials } from '../utils/handleCredentials';
+import { useSelector, useDispatch } from "react-redux";
+import { getCredentials } from "../utils/handleCredentials";
+import CartLobbyCounter from "./CartLobbyCounter";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { initialCartUpdate, deleteCart } from "../../Redux/Slice";
+import Icon from "react-native-vector-icons/Ionicons";
 import Cart from '../Components/Cart';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import axios from 'axios';
 //import { ROUTE } from "@env";
 const ROUTE = "http://localhost:3001";
 
-var { width } = Dimensions.get("window")
+
+var { width } = Dimensions.get("window");
 
 const CartLobby = ({navigation}) => {
-
-  
-  const infoCart = useSelector((state)=>state.ALL_PRODUCTS.cart)
+  const infoCart = useSelector((state) => state.ALL_PRODUCTS.cart);
+  console.log(infoCart);
+  const dispatch = useDispatch();
   //console.log(infoCart, '<-------CartLobby');
   const [userID, setUserID] = useState();
-  
+  const [cartLocalState, setCartLocalState] = useState([]);
 
   useEffect(() => {
     const checkCreds = async () => {
-        const credentials = await getCredentials();
-        if (credentials) {
-          setUserID(credentials.id);
-        };
+      const credentials = await getCredentials();
+      if (credentials) {
+        setUserID(credentials.id);
+      }
     };
-    checkCreds()
+    checkCreds();
+  }, []);
+
+
+  useEffect(() => {
+    const getStorageCart = async () => {
+      const jsonStorageCart = await AsyncStorage.getItem("storageCart");
+      let storageCart = JSON.parse(jsonStorageCart);
+      if (storageCart) {
+        console.log(storageCart);
+        dispatch(initialCartUpdate(storageCart));
+      }
+    };
+    try {
+      getStorageCart();
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
 
  const payload = {
@@ -56,28 +89,21 @@ const CartLobby = ({navigation}) => {
     };
   };
 
-  //let [cant, setCant] = useState(1)
- 
 
-  // const onChangeQuat = (i, type) =>{
-    
-  //   if(type){
-      
-  //     //info[index].quantity = cant
-  //     let dato = dataCart.map((e, index) => { index === i ?
-  //                                             {...e, quantity : cant} : e
-  //                                           })
-  //     setDataCart(dato)
-  //                console.log(dataCart, '<------datacart')
-  //     setCant(cant + 1)
-  //   }
-  //   else {
-  //     alert(negativo)
-  //   }
-    
-  // }
+  const emptyCart = async () => {
+    try {
+      await AsyncStorage.removeItem("storageCart");
+      dispatch(deleteCart());
+      return true;
+    } catch (error) {
+      return false;
+    }
+  };
+
+  const [dataCart, setDataCart] = useState(infoCart);
 
   return (
+
     <View style={{flex:1, width: width, alignItems: 'center', justifyContent: 'center'}}>
       <View style={styles.SBcontainer}>
         <View style={styles.SB}>
@@ -137,6 +163,10 @@ const CartLobby = ({navigation}) => {
                   </TouchableOpacity>
                 </View> */}
               </View>
+            );
+          })}
+        </ScrollView>
+
 
           </View>
         </View>
@@ -144,10 +174,12 @@ const CartLobby = ({navigation}) => {
           })
         }
       </ScrollView>
+
         <View style={{height:20}}/>
         <TouchableOpacity 
           onPress={() => cartCheckout()}
           style={{
+
             backgroundColor:'#4A347F',
             width:width-130,
             alignItems:'center',
@@ -166,10 +198,29 @@ const CartLobby = ({navigation}) => {
     </View>
   )
 
+        <TouchableOpacity
+          onPress={emptyCart}
+          style={{
+            backgroundColor: "#aaaaaa",
+            width: width - 40,
+            alignItems: "center",
+            padding: 10,
+            borderRadius: 5,
+          }}
+        >
+          <Text style={{ fontSize: 24, fontWeight: "bold", color: "white" }}>
+            EMPTY CART
+          </Text>
+        </TouchableOpacity>
 
+        <View style={{ height: 10 }} />
+      </View>
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
+
   
   SBcontainer: {
     height:'10%',

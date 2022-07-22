@@ -1,14 +1,12 @@
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-//import { Icon } from "react-native-vector-icons/Icon";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Icon from "react-native-vector-icons/Ionicons";
 import { cartCreate } from "../../Redux/Slice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 let cartEnStorage = [];
 
-const updateLocalCart = async (value) => {
+const removeLocalCart = async (value) => {
   // primero ver si hay algo en el LocalStorage y guardarlo en formato array
   try {
     const jsonStorageCart = await AsyncStorage.getItem("storageCart");
@@ -31,15 +29,14 @@ const updateLocalCart = async (value) => {
 };
 
 
-const Cart = (props) => {
+const CartRemove = (props) => {
   const dispatch = useDispatch();
   const { navigation, item } = props;
   const [cart, setCart] = useState([]);
 
   const infoCart = useSelector((state) => state.ALL_PRODUCTS.cart);
 
-  const onClickAddCart = (data) => {
-    //console.log(data);
+  const removeCart = (data) => {
     const itemCart = {
       article: data.name,
       detail: data.detail,
@@ -48,22 +45,17 @@ const Cart = (props) => {
       price: data.price,
       img: data.img,
       offer: data.offer,
-    };
-   
-    updateLocalCart(data)
-    //setCart((item)=>item.concat(itemCart));
-    //infoCart.concat(itemCart);
-    //var arr = [itemCart]
+    };   
+    removeLocalCart(data)
     dispatch(cartCreate(itemCart));
-
   };
 
   return (
     <TouchableOpacity
-      onPress={() => onClickAddCart(item)}
+      onPress={() => removeCart(item)}
       style={styles.addCart}
     >
-      <Text style={styles.addCartText}>Add cart</Text>
+      <Text style={styles.removeCartText}>Remove</Text>
     </TouchableOpacity>
   );
 };
@@ -71,17 +63,16 @@ const Cart = (props) => {
 const styles = StyleSheet.create({
   addCart: {
     alignItems: "center",
-    backgroundColor: "#33c37d",
+    backgroundColor: "#d51111",
     alignItems: "center",
     padding: 5,
     borderRadius: 5,
   },
-  addCartText: {
+  removeCartText: {
     fontSize: 15,
     color: "white",
     fontWeight: "bold",
   },
 });
 
-export default Cart;
-
+export default CartRemove;
