@@ -29,7 +29,6 @@ var { width } = Dimensions.get("window");
 
 const CartLobby = ({navigation}) => {
   const infoCart = useSelector((state) => state.ALL_PRODUCTS.cart);
-  console.log(infoCart);
   const dispatch = useDispatch();
   //console.log(infoCart, '<-------CartLobby');
   const [userID, setUserID] = useState();
@@ -51,7 +50,6 @@ const CartLobby = ({navigation}) => {
       const jsonStorageCart = await AsyncStorage.getItem("storageCart");
       let storageCart = JSON.parse(jsonStorageCart);
       if (storageCart) {
-        console.log(storageCart);
         dispatch(initialCartUpdate(storageCart));
       }
     };
@@ -122,54 +120,35 @@ const CartLobby = ({navigation}) => {
         {
           infoCart.map((item, index)=>{
             return(
-              <View key={index} style={{width:width-20, margin:10, backgroundColor:'transparent', flexDirection:'row', borderWidthBottom:2, borderColor:'#cccccc', paddingBottom:10}} >
+              <View key={index} style={styles.viewMap} >
                   
-          <Image style={{width:width/3, height:width/3}} source={{uri : item.image}}/>
+                  <Image style={{width:width/3, height:width/3}} source={{uri : item.image}}/>
 
-          <View style={{backgroundColor:'transparent', flex:1, justifyContent:'space-between'}}>
-            
-            <View>
-              <Text style={{fontSize:20, fontWeight:'bold'}}>
-                {item.article}
-              </Text>
-              <Text>
-                {`${item.detail.slice(0,40)}...`}
-              </Text>
-            </View>           
+                  <View style={{backgroundColor:'transparent', flex:1, justifyContent:'space-between'}}>
+                    
+                    <View>
+                      <Text style={{fontSize:20, fontWeight:'bold'}}>
+                        {item.article}
+                      </Text>
+                      <Text>
+                        {`${item.detail.slice(0,40)}...`}
+                      </Text>
+                    </View>           
 
-              <View style={{backgroundColor:'transparent', flexDirection:'row', justifyContent:'space-between'}}>
-                  {/* <Text style={{fontWeight:'bold', color:'#33c37d', fontSize:20}}>
-                    {`$${item.price}`}
-                  </Text> */}
-                      {item.offer > 0 ? (
-                      <Text style={styles.pricethrough}>$ {item.price}</Text>)
-                      : <Text style={styles.price}>$ {item.price}</Text>}
-                      {item.offer > 0 ? (
-                        <Text style={styles.offer}>{item.offer}% off!</Text>
-                      ) : null}
-                       {item.offer > 0 ? (
-                        <Text style={styles.pricenew}>$ {item.price - (item.price * (item.offer/100))}</Text>
-                      ) : null}
-                {/* <View style={{flexDirection:'row', alignItems:'center'}}>
-                  <TouchableOpacity onPress={()=>onChangeQuat(index, false)}>
-                    <Icon name='ios-remove-circle' size={30} color={'#33c37d'}/>
-                  </TouchableOpacity>
-                  <Text style={{fontWeight:'bold', paddingHorizontal:8}}>
-                    {item.quantity}
-                  </Text>
-                  <TouchableOpacity onPress={()=>onChangeQuat(index, true)}>
-                    <Icon name='ios-add-circle' size={30} color={'#33c37d'}/>
-                  </TouchableOpacity>
-                </View> */}
-              </View>
-            );
-          {/* })} */}
-        {/* </ScrollView> */}
-
-
-          </View>
-        </View>
-            )
+                      <View style={{backgroundColor:'transparent', flexDirection:'row', justifyContent:'space-between'}}>
+                              {item.offer > 0 ? (
+                              <Text style={styles.pricethrough}>$ {item.price}</Text>)
+                              : <Text style={styles.price}>$ {item.price}</Text>}
+                              {item.offer > 0 ? (
+                                <Text style={styles.offer}>{item.offer}% off!</Text>
+                              ) : null}
+                              {item.offer > 0 ? (
+                                <Text style={styles.pricenew}>$ {item.price - (item.price * (item.offer/100))}</Text>
+                              ) : null}
+                      </View>
+                  </View>
+              </View> 
+              );
           })
         }
       </ScrollView>
@@ -177,18 +156,9 @@ const CartLobby = ({navigation}) => {
         <View style={{height:20}}/>
         <TouchableOpacity 
           onPress={() => cartCheckout()}
-          style={{
-
-            backgroundColor:'#4A347F',
-            width:width-130,
-            alignItems:'center',
-            justifyContent:'center',
-            // padding:10,
-            height:'10%',
-            borderRadius:20,
-          }}
+          style={styles.cartBtn}
         >
-          <Text style={{fontSize:24, fontWeight:'bold', color:'white', textAlign:'center',justifyContent:'center'}}>
+          <Text style={styles.cartText}>
             CHECKOUT
           </Text>
         </TouchableOpacity>
@@ -202,7 +172,7 @@ const CartLobby = ({navigation}) => {
             borderRadius: 5,
           }}
         >
-          <Text style={{ fontSize: 24, fontWeight: "bold", color: "white" }}>
+          <Text style={styles.emptyCart}>
             EMPTY CART
           </Text>
         </TouchableOpacity>
@@ -242,6 +212,36 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     marginTop: 5,
     // marginHorizontal:
+  },
+  viewMap: {
+    width:width-20, 
+    margin:10, 
+    backgroundColor:'transparent', 
+    flexDirection:'row', 
+    borderWidthBottom:2, 
+    borderColor:'#cccccc', 
+    paddingBottom:10
+  },
+  cartBtn: {
+    backgroundColor:'#4A347F',
+    width:width-130,
+    alignItems:'center',
+    justifyContent:'center',
+    // padding:10,
+    height:'10%',
+    borderRadius:20,
+  },
+  cartText: {
+    fontSize:24, 
+    fontWeight:'bold', 
+    color:'white', 
+    textAlign:'center',
+    justifyContent:'center'
+  },
+  emptyCart: {
+    fontSize: 24, 
+    fontWeight: "bold", 
+    color: "white" 
   }
 });
 

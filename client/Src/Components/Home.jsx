@@ -6,7 +6,7 @@ import { getAllProducts,getCategories } from '../../Redux/Slice';
 import Banner from "./Banner";
 // import NavBar from "./NavBar";
 import SearchBar from "./SearchBar";
-import img from '../../assets/logo/logoAstronet.jpeg'
+import img from '../../assets/logo/logoAstronet.png'
 import {putToken} from '../../Redux/Slice/userSlice'
 import * as Notifications from 'expo-notifications';//EXPO PUSH IMPORT
 import * as Permissions from 'expo-permissions';//EXPO PUSH IMPORT

@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import React, { useState } from "react";
 import Icon from 'react-native-vector-icons/Ionicons';
 import FeatherIcon from 'react-native-vector-icons/Feather';
-import img from '../../assets/logo/logoAstronet.jpeg'
+import img from '../../assets/logo/logoAstronet.png'
 
 const SearchBar = ({ navigation, route }) => {
   const dispatch = useDispatch();
