@@ -54,8 +54,8 @@ const AllPurchaseHistory = ({ route, navigation }) => {
                 <FlatList
                     numColumns={1}
                     data={allpurchaseProducts_}
-                    renderItem={({ item }) => (
-                    
+                    keyExtractor={(item, index) => index.toString()}
+                    renderItem={({ item, index }) => (
                     <View style={styles.container}>
                             <AllPurchaseHistoryCard style={styles.selectsContainer} navigation={navigation} item={item} />
                     </View>
