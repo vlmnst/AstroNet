@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import React, { useState, useEffect } from "react";
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const SearchAdmin = ({ navigation, route }) => {
+const SearchAdmin = ({ navigation, route, setPage, setpaginateProducts }) => {
 
     const dispatch = useDispatch();
     const [nombre, setNombre] = useState('');
@@ -18,12 +18,16 @@ const SearchAdmin = ({ navigation, route }) => {
         route.name === 'AllUsers' ?(
             nombre === ''? alert('Enter a name')
             :
+            setPage(1), 
+            setpaginateProducts([]),
             dispatch(searchUser(nombre))
         )
         :(
             nombre === ''? alert('Enter a name')
-            :
-                dispatch(getAdminByName(nombre))
+            :   
+            setPage(1), 
+            setpaginateProducts([]),
+            dispatch(getAdminByName(nombre))
         )
         
     };

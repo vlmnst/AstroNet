@@ -6,6 +6,7 @@ import {
     FlatList,
     StyleSheet,
     StatusBar,
+    ActivityIndicator
 } from "react-native";
 import {
     resetAdminProducts,
@@ -50,18 +51,73 @@ const AllAdmin = ({ route, navigation }) => {
     //     return () => dispatch(clearAdmin());
     // }, [dispatch]);
 
+    //update
+    useEffect(() => {
+        loadMoreItem();
+    console.log(currentPage, 'useEffect');
+    }, [products]);
+
     // ---------- handlers ----------
 
     function handleCategory(e) {
         e.value === "all Products"?
-        dispatch(resetAdminProducts(e.value)):
-        dispatch(getAdminByCategory(e.value));
+        (setpaginateProducts([]), dispatch(resetAdminProducts(e.value)), setPage(1)) :
+        (setpaginateProducts([]), dispatch(getAdminByCategory(e.value)),  setPage(1)) ;
     }
 
     function handlePrice(e) {
+        setpaginateProducts([]);
         dispatch(getAdminByPrice(e.value));
+        setPage(1);
     }
 
+      // ------------ LOADER ----------
+    const [isLoading, setIsLoading] = useState(true);
+
+    const renderLoader = () => {
+        return isLoading ? (
+        <View style={styles.loaderStyle}>
+            <ActivityIndicator size="large" color="#aaa" />
+        </View>
+        ) : null;
+    };
+
+    // ---------- paginate ----------
+    const [currentPage, setCurrentPage] = useState(1);
+    const productsPerPage = 6;
+
+    const indexOfLast = currentPage * productsPerPage;
+    const indexOfFirst = indexOfLast - productsPerPage;
+
+    let [paginateProducts, setpaginateProducts] = useState([]);
+
+    function setPage(number) {
+        setCurrentPage(number);
+      }
+
+      const nextPage = () => {
+        console.log(products, 'nextpage')
+        if (products?.length > 1) {
+          setpaginateProducts([
+            ...paginateProducts,
+            ...products.slice(indexOfFirst, indexOfLast),
+          ]);
+        }
+      };
+
+    // console.log(currentPage);
+    const loadMoreItem = () => {
+        setCurrentPage(currentPage+1)
+        nextPage();
+        products.length === paginateProducts.length
+            ? setIsLoading(false)
+            : setIsLoading(true);
+    };
+
+    console.log(products)
+    console.log(paginateProducts)
+    
+    
     return (
 
             <View style={styles.container}>
@@ -69,7 +125,7 @@ const AllAdmin = ({ route, navigation }) => {
                 <View style={styles.SBcontainer}>
                     <View style={styles.SB}>
                         <FeatherIcon style={styles.iconMenu} name="skip-back" size={36} onPress={() => navigation.goBack()}/>
-                        <SearchAdmin navigation={navigation} route={route} />
+                        <SearchAdmin navigation={navigation} route={route} setPage={setPage} setpaginateProducts={setpaginateProducts} />
                         {/* <Text style={{fontSize:24, color:'white', fontWeight:'bold'}}>Create a new product</Text> */}
                     </View>
                 </View>
@@ -118,7 +174,10 @@ const AllAdmin = ({ route, navigation }) => {
                     columnWrapperStyle={{ justifyContent: "space-evenly" }}
                     style={styles.flatList}
                     numColumns={2}
-                    data={products}
+                    data={paginateProducts}
+                    onEndReachedThreshold={0.2}
+                    onEndReached={() => loadMoreItem()}
+                    ListFooterComponent={renderLoader}
                     renderItem={({ item }) => (
                         <View >
                             <ProductCardModify navigation={navigation} item={item} />

@@ -134,6 +134,9 @@ const Allproducts = ({ route, navigation }) => {
     // }
   };
 
+  console.log(products)
+    console.log(paginateProducts)
+
   return (
     <View style={styles.container}>
       <View style={styles.SB}>
