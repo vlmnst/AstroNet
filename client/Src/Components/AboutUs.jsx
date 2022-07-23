@@ -10,6 +10,7 @@ import erickimg from '../../assets/imgAboutUs/erickimg.png';
 import crisimg from '../../assets/imgAboutUs/crisimg.png';
 import juanimg from '../../assets/imgAboutUs/juanimg.png';
 import marceimg from '../../assets/imgAboutUs/marceimg.png';
+import alonsoimg from '../../assets/imgAboutUs/alonsoimg.png';
 
 const AboutUs = ({ navigation, route }) => {
     
@@ -58,12 +59,12 @@ const AboutUs = ({ navigation, route }) => {
                     Alert.alert(`Don't know how to open this URL: https://www.linkedin.com/in/erick-osterling-castillo-49b569104`);
                 }
             } else if (prop === 'alonso') {
-                // const supported = await Linking.canOpenURL('https://www.linkedin.com/in/erick-osterling-castillo-49b569104');
-                // if (supported) {
-                //     await Linking.openURL('https://www.linkedin.com/in/erick-osterling-castillo-49b569104');
-                // } else {
-                //     Alert.alert(`Don't know how to open this URL: https://www.linkedin.com/in/erick-osterling-castillo-49b569104`);
-                // }
+                const supported = await Linking.canOpenURL('https://www.linkedin.com/in/alonso-gordillo-925862222/');
+                if (supported) {
+                    await Linking.openURL('https://www.linkedin.com/in/alonso-gordillo-925862222/');
+                } else {
+                    Alert.alert(`Don't know how to open this URL: https://www.linkedin.com/in/alonso-gordillo-925862222/`);
+                }
             } else if (prop === 'juan') {
                 const supported = await Linking.canOpenURL('https://www.linkedin.com/in/juan-manuel-cuevas-0799b616a');
                 if (supported) {
@@ -148,9 +149,9 @@ const AboutUs = ({ navigation, route }) => {
                         </View>
                     </View>
                     <View style={styles.card}>
-                            <Image style={styles.cardimg} source={ img } />
+                            <Image style={styles.cardimg} source={ alonsoimg } />
                         <View style={styles.cardtxts}>
-                            <Text style={styles.cardinfo1}>Alonso</Text>
+                            <Text style={styles.cardinfo1}>Alonso Gordillo</Text>
                             <TouchableOpacity onPress={() => handlePress('alonso')}>
                                 <Text style={styles.cardinfo2}>linkedin</Text>
                             </TouchableOpacity>
