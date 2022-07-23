@@ -71,6 +71,18 @@ const Allproducts = ({ route, navigation }) => {
     return () => dispatch(clearCache());
   }, [dispatch]);
 
+  // useEffect(() => {
+  //   return () => dispatch(clearCache());
+  // }, [dispatch]);
+
+//    //mount
+//    useEffect(() => {
+//     getAllProducts()
+// console.log('allprodu');
+// }, [products]);
+
+
+
   // ---------- paginate ----------
   const [currentPage, setCurrentPage] = useState(0);
   const productsPerPage = 6;

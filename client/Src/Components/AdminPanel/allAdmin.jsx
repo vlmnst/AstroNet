@@ -49,23 +49,30 @@ const AllAdmin = ({ route, navigation }) => {
 
     //update
     useEffect(() => {
+        dispatch(getAllProducts())
+    console.log( 'primero');
+    }, [getAllProducts]);
+    
+
+    useEffect(() => {
         loadMoreItem();
-    console.log(currentPage, 'useEffect');
+    console.log(currentPage, 'load');
     }, [products]);
+
 
 
     // ---------- handlers ----------
 
     function handleCategory(e) {
         e.value === "all Products"?
-        (setpaginateProducts([]), dispatch(resetAdminProducts(e.value)), setPage(1)) :
-        (setpaginateProducts([]), dispatch(getProductsByCategory(e.value)),  setPage(1)) ;
+        (setpaginateProducts([]), setPage(1), dispatch(resetAdminProducts(e.value))) :
+        (setpaginateProducts([]), setPage(1), dispatch(getProductsByCategory(e.value)))   ;
     }
 
     function handlePrice(e) {
         setpaginateProducts([]);
-        dispatch(getByPrice(e.value));
         setPage(1);
+        dispatch(getByPrice(e.value));
 
     }
 
