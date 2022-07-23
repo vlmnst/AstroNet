@@ -91,6 +91,8 @@ const ProductModify = (props) => {
         if (key === '' || value === '') return alert ('enter new key:value for the attribute');
         const newAttribute = {[key]:value}
         setDescription([...description, newAttribute]); 
+        setKey('');
+        setValue('');
     };
 
     return (
@@ -205,8 +207,8 @@ const ProductModify = (props) => {
                     />
                 </View>
 
-                <Button title="Add new attribute" onPress={() => createDescription()} />
                 <PrePreview item={product}/>
+                <Button title="Add new attribute" onPress={() => createDescription()} />
                 <Button title="Modify Product" onPress={() => submitForm()}/>
                 <View style={{marginBottom:'30%'}}/>
             </ScrollView>
