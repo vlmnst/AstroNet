@@ -6,15 +6,15 @@ import CustomButton from '../CustomButton'
 
 const Email = () => {
 
-    let payload ={ //<---------------------- debe contener userMail = 
-        userMail: "cristianrubiles@gmail.com",// email de usuario
-        message : "prueba astronet te saluda"// mensaje a enviar 
-    }
+    // let payload ={ //<---------------------- debe contener userMail = 
+    //     userMail: "cristianrubiles@gmail.com",// email de usuario
+    //     message : "prueba astronet te saluda"// mensaje a enviar 
+    // }
 
     const dispatch = useDispatch();
-    const handleEmail = () => {
-        dispatch(sendEmail(payload))// despacha al reducer payload 
-    }
+    // const handleEmail = () => {
+    //     dispatch(sendEmail(payload))// despacha al reducer payload 
+    // }
 
     let tokenBox ={
         body :"new Astronet notification from backend"
