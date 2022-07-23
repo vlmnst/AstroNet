@@ -3,13 +3,13 @@ import { View, StyleSheet, ScrollView, Text, Image, Linking } from "react-native
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Icon from 'react-native-vector-icons/Ionicons';
 import FeatherIcon from 'react-native-vector-icons/Feather';
-import img from '../../assets/logo/logoAstronet.jpeg';
-import mauroimg from '../../assets/imgAboutUs/mauroimg.jpg';
-import valeimg from '../../assets/imgAboutUs/valeimg.jpg';
-import erickimg from '../../assets/imgAboutUs/erickimg.jpg';
-import crisimg from '../../assets/imgAboutUs/crisimg.jpg';
-import juanimg from '../../assets/imgAboutUs/juanimg.jpg';
-import marceimg from '../../assets/imgAboutUs/marceimg.jpg';
+import img from '../../assets/logo/logoAstronet.png';
+import mauroimg from '../../assets/imgAboutUs/mauroimg.png';
+import valeimg from '../../assets/imgAboutUs/valeimg.png';
+import erickimg from '../../assets/imgAboutUs/erickimg.png';
+import crisimg from '../../assets/imgAboutUs/crisimg.png';
+import juanimg from '../../assets/imgAboutUs/juanimg.png';
+import marceimg from '../../assets/imgAboutUs/marceimg.png';
 
 const AboutUs = ({ navigation, route }) => {
     
