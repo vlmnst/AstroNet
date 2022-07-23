@@ -6,11 +6,12 @@ import SideMenu from "./SideMenu/SideMenu";
 import UserHome from "./UserHome";
 import PanelAdminNav from "./PanelAdminNav";
 import Cart from "../Components/CartLobby";
-
 import UserProfileNav from "./UserProfileNav";
-
-
 import Login from "../Components/Login";
+import AboutUs from "../Components/AboutUs";
+
+
+
 
 const Drawer = createDrawerNavigator();
 
@@ -55,7 +56,10 @@ const Main = () => {
                     name='Login'
                     component={Login}
                 />
-
+                <Drawer.Screen
+                    name='AboutUs'
+                    component={AboutUs}
+                />
             </Drawer.Navigator >
         </NavigationContainer >
     )

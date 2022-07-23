@@ -27,7 +27,7 @@ const SearchBar = ({ navigation, route }) => {
     <View style={styles.Container_}>
       {/* <FeatherIcon style={styles.iconMenu} name="menu" size={36} onPress={() => navigation.openDrawer()}/> */}
       <TouchableOpacity onPress={() => navigation.openDrawer()}>
-        <Image style={styles.popUpimg} source={ img } />
+        <Image style={styles.img} source={ img } />
       </TouchableOpacity>
       <TextInput
         style={styles.textInput}
@@ -42,12 +42,14 @@ const SearchBar = ({ navigation, route }) => {
 };
 
 const styles = StyleSheet.create({
-  popUpimg: {
-    height: 50,
-    width: 50,
+  img: {
+    height: 46,
+    width: 46,
     alignSelf:"center",
     resizeMode:"contain",
-    borderRadius: 25,
+    borderWidth:1,
+    borderColor:'white',
+    borderRadius: 17,
     marginRight:15
   },
   textInput: {
