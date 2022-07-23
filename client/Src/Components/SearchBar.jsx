@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import img from '../../assets/logo/logoAstronet.png'
 
-const SearchBar = ({ navigation, route }) => {
+const SearchBar = ({ navigation, route, setPage, setpaginateProducts }) => {
   const dispatch = useDispatch();
   const [nombre, setNombre] = useState('');
 
@@ -18,7 +18,7 @@ const SearchBar = ({ navigation, route }) => {
     if (nombre === '') alert('Enter a name')
     else {
       route.name === 'Home' ?
-      navigation.navigate('Allproducts', nombre) : dispatch(getProductsByName(nombre));
+      navigation.navigate('Allproducts', nombre) : setPage(1), setpaginateProducts([]), dispatch(getProductsByName(nombre));
     };
     setNombre("")
   };

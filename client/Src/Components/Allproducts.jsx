@@ -137,7 +137,7 @@ const Allproducts = ({ route, navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.SB}>
-        <SearchBar navigation={navigation} route={route} />
+        <SearchBar navigation={navigation} route={route} setPage={setPage} setpaginateProducts={setpaginateProducts} />
       </View>
       {/* ------------ TITLE ------------ */}
       {/* <Text style={styles.title}>{searchName}</Text> *MEJOR QUE NO FUNCIONE A QUE FUNCIONE MAL /}
