@@ -101,9 +101,9 @@ export const putReviewToProduct = (payload) => async (dispatch) => {
     }
 };
 
-export const setUserData = (data) => async (dispatch) => {
+export const setUserData = (data) => (dispatch) => {
     try {
-        await dispatch(realUserSlice.actions.setUserData(data));
+        dispatch(realUserSlice.actions.setUserData(data));
     } catch (error) {
         console.log(error);
     }

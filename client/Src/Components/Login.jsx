@@ -1,17 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Icon from 'react-native-vector-icons/Ionicons';
 import FeatherIcon from 'react-native-vector-icons/Feather';
-import {
-  Text,
-  View,
-  TextInput,
-  Button,
-  StyleSheet,
-  SafeAreaView,
-  StatusBar,
-  TouchableOpacity,
-} from "react-native";
-import { useForm, Controller } from "react-hook-form";
+import { Text, View, TextInput, Button, StyleSheet } from "react-native";
 import axios from "axios";
 import { ROUTE } from "@env";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -19,14 +9,14 @@ import { useDispatch } from "react-redux";
 import { setUserData } from "../../Redux/Slice/userSlice";
 import * as Google from "expo-auth-session/providers/google";
 import * as Web from "expo-web-browser";
-import GoogleButton from "react-google-button";
 import CustomButton from "./CustomButton";
 
 Web.maybeCompleteAuthSession();
 
 const Login = ({ navigation }) => {
-  // const URL = 'http://localhost:3001/login';
-  //ESTADOS PARA LOGIN DE GOOGLE -------------
+
+  // ---------- LOGIN WITH GOOGLE ----------
+  // google states
   const [accessToken, setAccessToken] = useState(null);
 
   const [request, response, promptAsync] = Google.useAuthRequest({
@@ -37,6 +27,7 @@ const Login = ({ navigation }) => {
     webClientId:
       "249536522363-2bvea9vfafhkscv8fs8vrbbe0fei9e5i.apps.googleusercontent.com",
   });
+
   async function getUserInfo() {
     let response = await fetch(
       "https://www.googleapis.com/oauth2/v2/userinfo",
@@ -48,7 +39,7 @@ const Login = ({ navigation }) => {
     );
     const userInfo = await response.json();
     responseToLogin(userInfo.email);
-  }
+  };
 
   useEffect(() => {
     //checkeamos si la respuesta 'success'
@@ -59,48 +50,44 @@ const Login = ({ navigation }) => {
     }
   }, [response, accessToken]);
 
-  // RESPUESTA PARA SABER SI ESTA REGISTRADO O NO
+  // respuesta para saber si está registrado
   const responseToLogin = async (email) => {
+
     //ruta para indtificar el user y traer la data
     let res = await axios.post(ROUTE + "/users/getByEmail/" + email);
     const { status, message, data } = res.data;
-    if (!status) {
-      navigation.navigate("Create User");
-    }
+    
+    if (!status) { navigation.navigate("Create User") };
+
     if (status) {
       dispatch(setUserData(data));
-      // console.log(data)
       AsyncStorage.setItem("storageCredentials", JSON.stringify(data)).catch(
         () => console.log("error while persistLogin at Login.jsx")
       );
       navigation.navigate("Home");
-    }
+    };
   };
+  // ---------- END LOGIN WITH GOOGLE ----------
 
-  const [message, setMessage] = useState("");
-
+  // local states
+  const dispatch = useDispatch();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
+  
+  // create account
   const handleCreate = () => {
     navigation.navigate("UserCreate");
   };
-  const dispatch = useDispatch();
+  
+  // check credentials
+  const onSubmit = async() => {
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    defaultValues: {
-      username: "",
-      password: "",
-    },
-  });
+    if (username.length < 1 || password.length < 1) return alert ('enter username and password');
 
-  const onSubmit = async (data) => {
-    const credentials = {
-      username: data.username,
-      password: data.password,
-    };
+    const credentials = { username, password };
 
+    // checkeo si ya está logueado
     const signedUp = await AsyncStorage.getItem("storageCredentials");
 
     if (signedUp !== null) {
@@ -111,12 +98,12 @@ const Login = ({ navigation }) => {
         const { status, message, data } = res.data; // data contiene el user y su token
         alert(status + " " + message);
         setMessage("");
-        // console.log(data)
-        // const { username, role } = data;
         dispatch(setUserData(data));
         AsyncStorage.setItem("storageCredentials", JSON.stringify(data)).catch(
           () => console.log("error while persistLogin at Login.jsx")
         );
+        setUsername('');
+        setPassword('');
         navigation.navigate("Home"); // agregar props??
       } catch (e) {
         setMessage(e.response.data.status + " " + e.response.data.message);
@@ -125,78 +112,60 @@ const Login = ({ navigation }) => {
   };
 
   return (
-    <View style={{minHeight:'100%'}}>
-        {/* USERNAME */}
+    <View style={styles.container}>
+
+        {/* TITLE BAR */}
         <View style={styles.SBcontainer}>
             <View style={styles.SB}>
                 <FeatherIcon style={styles.iconMenu} name="menu" size={36} onPress={() => navigation.openDrawer()}/>
                 <Text style={{fontSize:28, color:'white', fontWeight:'bold'}}>Log In</Text>
             </View>
         </View>
-        <Text>Username</Text>
-        <Controller
-          name="username"
-          control={control}
-          rules={{ required: true }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              style={styles.input}
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-            />
-          )}
-        />
-        {errors.username && <Text style={styles.error}>Insert username</Text>}
+
+        {/* USERNAME */}
+        <View style={styles.inputsContainers}>
+          <TextInput transparent
+            style={styles.inputs}
+            onChangeText={setUsername}
+            value={username}
+            placeholder="Username"
+          />
+        </View>
 
         {/* PASSWORD */}
-        <Text>Password</Text>
-        <Controller
-          name="password"
-          control={control}
-          rules={{ required: true }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              style={styles.input}
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              secureTextEntry={true}
-            />
-          )}
-        />
-        {errors.password && <Text style={styles.error}>Insert password</Text>}
+        <View style={styles.inputsContainers}>
+          <TextInput transparent
+            style={styles.inputs}
+            onChangeText={setPassword}
+            value={password}
+            placeholder="Password"
+            secureTextEntry={true}
+          />
+        </View>
 
         {/* WRONG CREDENTIALS */}
         {<Text style={styles.error}>{message}</Text>}
 
-        <Button title="Sign in" onPress={handleSubmit(onSubmit)} />
+        <Button title="Sign in" onPress={() => onSubmit()} />
+
+        {/* LOGIN WITH GOOGLE */}
         <CustomButton
           text="Sign in with Google"
           bgColor="#FAE9EA"
           fgColor="#DD4D44"
-          onPress={() => {
-            promptAsync();
-          }}
+          onPress={() => { promptAsync() }}
         />
-        <View style={styles.view}>
-        <Icon name="logo-google" size={30} color="#641E16" /> 
-        <CustomButton 
-        text='Dont have an account? Create one' 
-        onPress={() => handleCreate()}
-        type='TERTIARY'
-        />
-        </View>
-        
-        {/* <Button title="Create account" onPress={() => handleCreate()} /> */}
 
-        {/* LOGIN GOOGLE */}
-        {/* <TouchableOpacity
-          onPress={() => {
-            promptAsync()
-           }}
-        ><Text>Login with Google</Text>
-        </TouchableOpacity> */}
+        {/* CREATE ACCOUNT */}
+        <View style={styles.view}>
+          <Icon name="logo-google" size={30} color="#641E16" /> 
+          <CustomButton 
+          text='Dont have an account? Create one' 
+          onPress={() => handleCreate()}
+          type='TERTIARY'
+          />
+        </View>
+
     </View>
   );
 };
@@ -205,38 +174,45 @@ const styles = StyleSheet.create({
   SBcontainer: {
     height:'12%',
     backgroundColor:'#4A347F',
-    width:'100%'
-  },
-  SB: {
-      flexDirection: "row",
-      justifyContent:"center",
-      alignItems:"center",
-      height:'65%',
-      backgroundColor: '#4A347F',
-      // backgroundColor:'white',
-      width: '100%',
-      marginTop:'9%'
-  },
-  iconMenu: {
-      color:'white',
-      position:'absolute',
-      left:'5%'
+    width:'100%',
   },
   container: {
     flex: 1,
-    justifyContent: "center",
+    minHeight:'100%',
+    // justifyContent: "center",
+    alignItems: 'center',
     marginHorizontal: 16,
-    backgroundColor: "#5E5E5E",
+    // backgroundColor: "#5E5E5E",
   },
-  input: {
-    heigth:80,
-    backgroundColor: "#FFFFFF",
-    marginTop: 0,
-    marginHorizontal: 10,
-    padding: 5,
-    width: "100%",
+  SB: {
+    flexDirection: "row",
+    justifyContent:"center",
+    alignItems:"center",
+    height:'65%',
+    backgroundColor: '#4A347F',
+    width: '100%',
+    marginTop:'9%'
   },
-  error: { color: "red" },
+  iconMenu: {
+    color:'white',
+    position:'absolute',
+    left:'5%'
+  },
+  inputsContainers: {
+    width: '50%',
+    marginTop: 20,
+  },
+  inputs: { 
+    padding: 10, 
+    fontSize: 20,
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+    borderRadius: 10,
+  },
+  error: { 
+    color: "red" ,
+    fontSize: 15,
+    marginVertical: 5,
+  },
   view:{
     flexDirection:"row"
   }
