@@ -2,20 +2,14 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableOpacity,
   FlatList,
   Image,
-  Button,
 } from "react-native";
 import FeatherIcon from 'react-native-vector-icons/Feather';
 
 const OrderDetail = (props) => {
   const { navigation, route } = props;
   let { detail } = route.params;
-
-  // console.log('------------------');
-  // console.log(route);
-
 
   return (
     <View style={styles.container}>
@@ -25,52 +19,28 @@ const OrderDetail = (props) => {
 					<Text style={{fontSize:28, color:'white', fontWeight:'bold'}}>Purchase Order</Text>
 				</View>
 			</View>
-      {/* <Text style={styles.title}>Purchase Order Details</Text> */}
 
       <FlatList
-        // columnWrapperStyle={{ justifyContent: "space-evenly" }}
         style={{height:'88%'}}
         numColumns={1}
         data={detail}
-        renderItem={({ item }) => (
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({ item,index }) => (
 
           <View style={styles.PODetail}>
-            {console.log(item)}
-
-            {/* <Text>{item.id}</Text> */}
             <Image source={{ uri: item.img[0] }} style={styles.image} />
             <Text>{item.name}</Text>
-            {/* <Text>{`Offer: ${item.offer}%`}</Text> */}
             <Text>{`price: $${item.price}`}</Text>
             <Text>{`Quantity: ${item.quantity}`}</Text>
-            {/* <Text>{`review: ${item.review}`}</Text> */}
-            {/* <View>
-              <TouchableOpacity
-                style={styles.Bottunn_}
-                onPress={() => navigation.navigate("Detail", item)}
-              >
-                <Text>Product Details</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.Bottunn_}
-                onPress={() => navigation.navigate()}
-              >
-                <Text>Review</Text>
-              </TouchableOpacity>
-            </View> */}
           </View>
         )}
       />
-      {/* <Text>{`Total: $${route.params?.total}`}</Text> */}
       <Text style={styles.total}>{`Total: $${route.params?.total}`}</Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  // AndroidSafeArea: {
-  //   // paddingTop: StatusBar.currentHeight + 10,
-  // },
   container: {
     width: "100%",
     height: "100%",
@@ -138,21 +108,6 @@ const styles = StyleSheet.create({
     width: 100,
     height: 30,
   },
-
-  // selectsContainer: {
-  //   flexDirection: "row",
-  //   justifyContent: "space-around",
-  // },
-  // selects: {
-  //   flexDirection: "column",
-  //   margin: 10,
-  //   width: "40%",
-  // },
-  // flatList: {
-  //   marginTop: 0,
-  //   padding: 0,
-  //   width: "100%",
-  // },
   title: {
     fontSize: 20,
     padding: 5,

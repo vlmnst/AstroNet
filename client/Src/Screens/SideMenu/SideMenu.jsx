@@ -13,7 +13,7 @@ import AboutUsBtn from "./SideMenuBtns/AboutUsBtn";
 import { StackActions, useNavigationState } from '@react-navigation/native';
 import { useDispatch, useSelector } from "react-redux";
 import { setUserData } from "../../../Redux/Slice/userSlice";
-import img from '../../../assets/logo/logoAstronet.jpeg';
+import img from '../../../assets/logo/logoAstronet.png';
 
 
 const SideMenu = ({ navigation }) => {

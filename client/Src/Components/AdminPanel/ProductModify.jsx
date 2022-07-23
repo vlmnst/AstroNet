@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Text, View, TextInput, Button, StyleSheet, StatusBar, ScrollView,TouchableOpacity, Image } from "react-native";
+import { Text, View, TextInput, Button, StyleSheet, ScrollView } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
-import { ModifyProducts } from "../../../Redux/Slice";
-// import Icon from 'react-native-vector-icons/Ionicons';
+import { getAllProducts, ModifyProducts } from "../../../Redux/Slice";
 import ImageLibrary from '../ImageLibrary';
 import PrePreview from '../PrePreview';
 import FeatherIcon from 'react-native-vector-icons/Feather';
@@ -61,7 +60,7 @@ const ProductModify = (props) => {
         };
     };
 
-    function submitForm() {
+    async function submitForm() {
         if (!name || !price ||!stock || !offer || !description || !detail || categories.length < 1) {
             return alert('empty fields')
         };
@@ -79,7 +78,8 @@ const ProductModify = (props) => {
             }
         };
 
-        dispatch(ModifyProducts(payload));
+        await dispatch(ModifyProducts(payload));
+        dispatch(getAllProducts());
         alert('updated successfully');
     };
 
@@ -91,6 +91,8 @@ const ProductModify = (props) => {
         if (key === '' || value === '') return alert ('enter new key:value for the attribute');
         const newAttribute = {[key]:value}
         setDescription([...description, newAttribute]); 
+        setKey('');
+        setValue('');
     };
 
     return (
@@ -99,7 +101,6 @@ const ProductModify = (props) => {
             <View style={styles.SBcontainer}>
                 <View style={styles.SB}>
                     <FeatherIcon style={styles.iconMenu} name="skip-back" size={36} onPress={() => props.navigation.goBack()}/>
-                    {/* <Text style={{fontSize:24, color:'white', fontWeight:'bold'}}>Create a new product</Text> */}
                 </View>
             </View>
 
@@ -205,8 +206,8 @@ const ProductModify = (props) => {
                     />
                 </View>
 
-                <Button title="Add new attribute" onPress={() => createDescription()} />
                 <PrePreview item={product}/>
+                <Button title="Add new attribute" onPress={() => createDescription()} />
                 <Button title="Modify Product" onPress={() => submitForm()}/>
                 <View style={{marginBottom:'30%'}}/>
             </ScrollView>

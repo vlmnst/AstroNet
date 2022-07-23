@@ -1,43 +1,31 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
 import Cart from "../Components/Cart";
-import {
-  View,
-  Text,
-  StyleSheet,
-  useWindowDimensions,
-  Button,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import ProductReviews from "../Components/ProductReviews";
 import AverageScore from "../Components/AverageScore";
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import Icon from 'react-native-vector-icons/Ionicons';
+import ImageDetails from "../Components/ImageDetails";
 
 const Details = (props) => {
+
   const { route } = props;
   const { params } = route;
   const { navigation } = props
-  // let descriptionArray = Object.entries(params.description); //converte el objecto en array de arrays (con key y value)
 
   return (
     <View>
+
       <View style={styles.SBcontainer}>
         <View style={styles.SB}>
           <FeatherIcon style={styles.iconMenu} name="skip-back" size={36} onPress={() => props.navigation.goBack()}/>
           <Icon style={styles.iconCart} name="cart-outline" size={30}  onPress={() => navigation.navigate("Cart")}/>
         </View>
       </View>
+
       <ScrollView contentContainerStyle={styles.container}>
-        {/* <TouchableOpacity
-          style={styles.button}
-          onPress={() => props.navigation.goBack()}
-        >
-          <Text style={styles.text}>Go Back</Text>
-        </TouchableOpacity> */}
-        <Image source={{ uri: params.img[0] }} style={styles.image} />
+        <ImageDetails images={params.img}/>
+
         <View style={styles.contInt}>
           <View style={styles.priceOffer}>
             {params.offer > 0 ? (
@@ -54,33 +42,40 @@ const Details = (props) => {
               </Text>
             ) : null}
           </View>
+
           <View style={styles.descriptionCont}>
             <Text style={styles.name}>{params.name}: </Text>
             {params.description.map((item, index) => {
               return (
-                <Text style={styles.description} key={index}>
+                <View key={index}>
+                <Text style={styles.description} >
                   {Object.keys(item)} : {Object.values(item)}
                 </Text>
+                </View>
               );
             })}
           </View>
+
           <View>
             <Text style={styles.name}>Detail: </Text>
             <Text style={styles.description}>{params.detail}</Text>
           </View>
+
           <View style={styles.addcartbtn}>
             <Cart navigation={route} item={params} />
           </View>
+
             {/* -------AVERAGE SCORE--------------  */}
             {params.reviews.length > 0 ?
             <AverageScore item={params}/>
             :
             null }
+
           {/* -------USERS COMMENTS--------------  */}
           <View style={styles.reviewscontainer}>
           {params.reviews.length > 0 ?
-          params.reviews.map((reviews) => (
-            <ProductReviews reviews={reviews}/>
+          params.reviews.map((reviews, index) => (
+            <ProductReviews key={index} reviews={reviews}/>
           )) : 
           <View style={styles.divOne}>
           <Text>

@@ -61,6 +61,19 @@ const ProductCreate = ({navigation}) => {
         };
     };
 
+    // add new attribute
+    const [key, setKey] = useState('');
+    const [value, setValue] = useState('');
+    
+    const createDescription = (e) => {
+        if (key === '' || value === '') return alert ('enter new key:value for the attribute');
+        const newAttribute = {[key]:value}
+        setDescription([...description, newAttribute]); 
+        setKey('');
+        setValue('');
+    };
+    
+
     function clearInputs(){
         setName('');
         setPrice('');
@@ -90,7 +103,6 @@ const ProductCreate = ({navigation}) => {
         dispatch(createProduct(product));
         clearInputs();
     };
-
 
     return(
         <ScrollView contentContainerStyle={styles.container}>
@@ -185,10 +197,28 @@ const ProductCreate = ({navigation}) => {
                 }
             </View>
 
+            {/* NEW ATTRIBUTE */}
+            <Text style={{fontSize: 15 }}>Add new attribute</Text>
+                <View style={styles.inputsContainers}>
+                    <TextInput
+                        style={styles.inputs}
+                        onChangeText={setKey}
+                        value={key}
+                        placeholder="Name of attribute..."
+                    />
+                    <TextInput
+                        style={styles.inputs}
+                        onChangeText={setValue}
+                        value={value}
+                        placeholder="Value of attribute..."
+                    />
+                </View>
+
             {/* CREATE BUTTON */}
-            <View style={{width: '50%', marginBottom: 15}}>
-                <Button title="Create Product" onPress={() => submitForm()}/>
+            <View style={{width: '50%', marginBottom: 80}}>
                 <PrePreview item={product}/>
+                <Button title="Add new attribute" onPress={() => createDescription()} />
+                <Button title="Create Product" onPress={() => submitForm()}/>
             </View>
 
             {/* <View>

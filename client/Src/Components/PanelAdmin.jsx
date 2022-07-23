@@ -50,6 +50,11 @@ const PanelAdmin = ({ navigation, route }) => {
                             <Text style={styles.text}>Post new product</Text>
                         </View>
                     </TouchableOpacity>
+                    <TouchableOpacity style={styles.TouchableOpacity} onPress={() => navigation.navigate("AllPurchaseHistory")}>
+                        <View style={styles.button}>
+                            <Text style={styles.text}>All Purchase History</Text>
+                        </View>
+                    </TouchableOpacity>
                     <Email/>
                 </View>
             </View>

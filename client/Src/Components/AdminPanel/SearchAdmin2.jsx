@@ -1,30 +1,23 @@
 import { View, TextInput, StyleSheet } from "react-native";
-import { getProductsByName, searchUser } from '../../../Redux/Slice/index';
+import { searchOrder } from '../../../Redux/Slice/userSlice';
 import { useDispatch } from "react-redux";
 import React, { useState, useEffect } from "react";
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const SearchAdmin = ({ navigation, route }) => {
+const SearchAdmin2 = ({ navigation, route }) => {
 
     const dispatch = useDispatch();
-    const [nombre, setNombre] = useState('');
+    const [order, setOrder] = useState('');
 
     function filterSearchBar(e) {
-        setNombre(e)
+        setOrder(e)
     };
 
     function search(e) {
-        // console.log(route.name)
-        route.name === 'AllUsers' ?(
-            nombre === ''? alert('Enter a name')
+        
+            order === ''? alert('Enter a order')
             :
-            dispatch(searchUser(nombre))
-        )
-        :(
-            nombre === ''? alert('Enter a name')
-            :
-                dispatch(getProductsByName(nombre))
-        )
+            dispatch(searchOrder(order))
         
     };
 
@@ -33,10 +26,10 @@ const SearchAdmin = ({ navigation, route }) => {
             <TextInput
                 style={styles.textInput}
                 onChangeText={(text) => filterSearchBar(text)}
-                value={nombre}
+                value={order}
                 onSubmitEditing={e => (search(e.nativeEvent.text))}
             />
-            <Icon style={styles.iconSearch} onPress={() => search()} name="search-outline" size={30} color="white" />
+            <Icon style={styles.iconSearch} onPress={() => search()} name="search-outline" size={30} color="grey" />
         </View>
     );
 };
@@ -64,4 +57,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default SearchAdmin;
+export default SearchAdmin2;
