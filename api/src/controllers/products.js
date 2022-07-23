@@ -280,7 +280,7 @@ const putReview = async (req, res, next) => {
 
     try {
         const { id } = req.params;
-        const review = req.body; // review: {rating, comment, owner}
+        const {review} = req.body; // review: {rating, comment, owner}
         // console.log(req.body)
         // falta ir a buscar al owner y sus productHistory, para agregarle al producto comprado : REVIEW = true
      

@@ -191,6 +191,46 @@ const getUser = async (req, res, next) => {
       res.status(404).send(e.message);
     }
   };
-  
+  const getPurchasedProductsAllUsers = async (req, res, next) => {
+    try {
+        const users = await User.find()
 
-module.exports = { createUser, getAllUsers, totalUsers, PutPrivileges, PutBanned, getPurchasedProducts, getProductsHistory, getUser,getUsersFull};
+        if (users.length > 0) {
+            let purchasedProducts = [];
+            users.map(p => p.productsHistory.map(prod => purchasedProducts.push(prod)));
+            res.json(purchasedProducts);
+        } else {
+            res.status(400).json({ error: 'Your products history is empty, buy something'})
+        }; 
+    } catch (error) { 
+        return next(error);
+    };
+};
+const putpurchasedProducts = async (req, res, next) => {
+    let order=req.params.order
+    let {username, status}= req.body;
+    try{
+        let isAdmin = await User.find({username})
+        if(isAdmin[0].role==="admin"){
+            let users = await User.find()
+            let productsHistory = [];
+            let Name=[]
+            users.map(p =>  p.productsHistory?(p.productsHistory.map(prod => prod.order===order?Name.push(p.username):null)):null);
+            let user = await User.find({"username":Name[0]})
+            user[0].productsHistory.map(p => productsHistory.push(p));
+            for (let i = 0; i < productsHistory.length; i++) {  
+                if(productsHistory[i].order===order){
+                    productsHistory[i].status=status
+                }
+            }
+            await User.findOneAndUpdate({"username":Name[0]},{$set:{"productsHistory":productsHistory}})
+            res.status(200).send(`. \u2705 order "${order}" "status" Updated to ${status}`)
+        }else{
+            res.status(400).json({ error: 'not admin'});
+        }
+    } catch(e){
+        res.status(404).send(e.message)
+    }
+};
+
+module.exports = { createUser, getAllUsers, totalUsers, PutPrivileges, PutBanned, getPurchasedProducts, getProductsHistory, getUser,getUsersFull,getPurchasedProductsAllUsers,putpurchasedProducts};
