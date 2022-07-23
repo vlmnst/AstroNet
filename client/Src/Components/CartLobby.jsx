@@ -29,6 +29,7 @@ var { width } = Dimensions.get("window");
 
 const CartLobby = ({navigation}) => {
   const infoCart = useSelector((state) => state.ALL_PRODUCTS.cart);
+  console.log(infoCart)
   const dispatch = useDispatch();
   //console.log(infoCart, '<-------CartLobby');
   const [userID, setUserID] = useState();
@@ -122,7 +123,7 @@ const CartLobby = ({navigation}) => {
             return(
               <View key={index} style={styles.viewMap} >
                   
-                  <Image style={{width:width/3, height:width/3}} source={{uri : item.image}}/>
+                  <Image style={{width:width/3, height:width/3}} source={{uri : item.img[0]}}/>
 
                   <View style={{backgroundColor:'transparent', flex:1, justifyContent:'space-between'}}>
                     

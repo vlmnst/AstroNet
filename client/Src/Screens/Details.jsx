@@ -15,6 +15,7 @@ import ProductReviews from "../Components/ProductReviews";
 import AverageScore from "../Components/AverageScore";
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import Icon from 'react-native-vector-icons/Ionicons';
+import ImageDetails from "../Components/ImageDetails";
 
 const Details = (props) => {
   const { route } = props;
@@ -37,7 +38,8 @@ const Details = (props) => {
         >
           <Text style={styles.text}>Go Back</Text>
         </TouchableOpacity> */}
-        <Image source={{ uri: params.img[0] }} style={styles.image} />
+        {/* <Image source={{ uri: params.img[0] }} style={styles.image} /> */}
+        <ImageDetails images={params.img}/>
         <View style={styles.contInt}>
           <View style={styles.priceOffer}>
             {params.offer > 0 ? (

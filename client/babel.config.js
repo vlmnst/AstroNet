@@ -7,6 +7,7 @@ module.exports = function(api) {
         envName: "APP_ENV",
         moduleName: "@env",
         path: ".env",
+        allowUndefined: true,
       }],
       [
         "react-native-reanimated/plugin"
