@@ -43,6 +43,27 @@ export const realUserSlice = createSlice({
             state.purchaseProducts = [];
             state.allProductsUser = [];
         },
+        getPurchasedProductsAllUsers(state, action){
+            state.allpurchaseProducts = action.payload
+            state.allpurchaseProductsFull= action.payload
+        },
+        searchOrder(state,action){
+            let info =[]
+            state.allpurchaseProducts.map((u)=> {
+                if (
+                    u.order === action.payload
+                ){
+                    info.push(u)
+                }
+        })
+            state.allpurchaseProducts = info;
+        },
+        FilterByStatus(state,action){
+            let info = state.allpurchaseProductsFull;
+            let array=[];
+            info.map(d=>d.status===action.payload?array.push(d):null)
+            state.allpurchaseProducts = array
+        }
     },
 });
 
@@ -138,7 +159,23 @@ export const sendEmail = (emailData) => async (dispatch) => {
 };
     //---------------------------------------------------------------------------------------------
 
-
-export const { setLogOut } = realUserSlice.actions;
+    export const getPurchasedProductsAllUsers = ()=> async(dispatch) => {
+        try {
+            // ROUTE
+            const { data } = await axios.get(ROUTE+'/users/getpurchasedProductsAllUsers/');
+            dispatch(realUserSlice.actions.getPurchasedProductsAllUsers(data));
+        } catch (error) {
+            console.log(error);
+        };
+    };
+    export const putpurchasedProducts = (payload)=> async(dispatch) => {
+        try {
+            const {order,status} = payload
+            await axios.put(ROUTE+'/users/putpurchasedProducts/'+ order, status);
+        } catch (error) {
+            console.log(error);
+        };
+    };
+export const { setLogOut,searchOrder,FilterByStatus} = realUserSlice.actions;
 
 export default realUserSlice.reducer;

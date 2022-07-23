@@ -1,6 +1,6 @@
 const userRouter = require('express').Router();
 
-const { createUser, getAllUsers, totalUsers, PutPrivileges, PutBanned, getPurchasedProducts, getProductsHistory, getUser,getUsersFull } = require('../controllers/users');
+const { createUser, getAllUsers, totalUsers, PutPrivileges, PutBanned, getPurchasedProducts, getProductsHistory, getUser,getUsersFull,getPurchasedProductsAllUsers,putpurchasedProducts } = require('../controllers/users');
 const { sendEmail,pushToken,putToken} = require('../controllers/nodemailer');//import email
 // const { authOK } = require('../controllers/login');
 
@@ -16,5 +16,7 @@ userRouter.get('/getUserFull/:email', getUsersFull);
 userRouter.post('/email',sendEmail);//ruta email
 userRouter.post('/pushToken',pushToken);//ruta push
 userRouter.post('/putToken',putToken);//ruta push
+userRouter.get('/getpurchasedProductsAllUsers', getPurchasedProductsAllUsers);
+userRouter.put('/putpurchasedProducts/:order', putpurchasedProducts);
 
 module.exports = userRouter;

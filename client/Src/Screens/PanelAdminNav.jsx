@@ -7,6 +7,7 @@ import AllAdmin from "../Components/AdminPanel/allAdmin";
 import ProductModify from "../Components/AdminPanel/ProductModify";
 import AllUsers from "../Components/AdminPanel/AllUsers";
 import UserDetails from "../Components/AdminPanel/UserDetails";
+import AllPurchaseHistory from "../Components/AdminPanel/AllPurchaseHistory";
 
 const Stack = createNativeStackNavigator();
 
@@ -39,6 +40,10 @@ const PanelAdminNav = () => {
             <Stack.Screen
                 name='Details'
                 component={UserDetails}
+            />
+            <Stack.Screen
+            name='AllPurchaseHistory'
+            component={AllPurchaseHistory}
             />
         </Stack.Navigator >
     )

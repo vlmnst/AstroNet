@@ -35,7 +35,6 @@ const OrderDetail = (props) => {
         renderItem={({ item }) => (
 
           <View style={styles.PODetail}>
-            {console.log(item)}
 
             {/* <Text>{item.id}</Text> */}
             <Image source={{ uri: item.img[0] }} style={styles.image} />
