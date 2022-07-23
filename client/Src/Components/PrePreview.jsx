@@ -1,6 +1,7 @@
 import { Text, View, Modal, StyleSheet, Pressable, Image } from "react-native";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import ImageDetails from "./ImageDetails";
 
 const PrePreview = ({item}) => {
     
@@ -11,6 +12,11 @@ const PrePreview = ({item}) => {
         : null;
     
     const [modalVisible, setModalVisible] = useState(false);
+    const images = [];
+
+    item.images.one === 'empty' ? null : images.push(item.images.one);
+    item.images.two === 'empty' ? null : images.push(item.images.two) 
+    item.images.three === 'empty' ? null : images.push(item.images.three) 
 
     return (
         <View >
@@ -26,7 +32,8 @@ const PrePreview = ({item}) => {
                 >
                 <View style={styles.modalBackground}>
                 <Text style={styles.name}>{item.name} </Text>
-                    <Image source={{ uri: item.images.one }} style={styles.image} />
+                    {/* <Image source={{ uri: item.images.one }} style={styles.image} /> */}
+                    <ImageDetails images={images}/>
                         <View style={styles.contInt}>
                             <View style={item.priceOffer}>
                                 {item.offer > 0 ? (

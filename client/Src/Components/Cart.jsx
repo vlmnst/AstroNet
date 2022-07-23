@@ -27,7 +27,6 @@ const updateLocalCart = async (value) => {
   } catch (error) {
     console.log(error);
   }
-  console.log(cartEnStorage)
 };
 
 
