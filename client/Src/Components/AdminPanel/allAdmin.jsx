@@ -8,13 +8,8 @@ import {
     StatusBar,
     ActivityIndicator
 } from "react-native";
-import {
-    resetAdminProducts,
-    getAdminByPrice,
-    getAdminByCategory,
-    clearAdmin,
-    getAdminByName,
-} from "../../../Redux/Slice";
+import { resetAdminProducts, getByPrice, getProductsByCategory, getAllProducts } from "../../../Redux/Slice";
+
 import ProductCardModify from "./ProductCardModify";
 import DropDownPicker from "react-native-dropdown-picker";
 import SearchAdmin from "./SearchAdmin";
@@ -25,7 +20,8 @@ const AllAdmin = ({ route, navigation }) => {
     // si route.params existe en categories, busco por categoria
     const dispatch = useDispatch();
     // ---------- global states ----------
-    let products = useSelector((state) => state.ALL_PRODUCTS.allAdminProducts);
+    let products = useSelector((state) => state.ALL_PRODUCTS.allProductsFiltered);
+    console.log(products)
     let [categories /*setCategories*/] = useState(
         useSelector((state) => state.ALL_PRODUCTS.categories)
     );
@@ -57,18 +53,20 @@ const AllAdmin = ({ route, navigation }) => {
     console.log(currentPage, 'useEffect');
     }, [products]);
 
+
     // ---------- handlers ----------
 
     function handleCategory(e) {
         e.value === "all Products"?
         (setpaginateProducts([]), dispatch(resetAdminProducts(e.value)), setPage(1)) :
-        (setpaginateProducts([]), dispatch(getAdminByCategory(e.value)),  setPage(1)) ;
+        (setpaginateProducts([]), dispatch(getProductsByCategory(e.value)),  setPage(1)) ;
     }
 
     function handlePrice(e) {
         setpaginateProducts([]);
-        dispatch(getAdminByPrice(e.value));
+        dispatch(getByPrice(e.value));
         setPage(1);
+
     }
 
       // ------------ LOADER ----------

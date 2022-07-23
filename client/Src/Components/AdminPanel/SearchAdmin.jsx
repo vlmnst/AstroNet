@@ -1,5 +1,5 @@
 import { View, TextInput, StyleSheet } from "react-native";
-import { getProductsByName, getAdminByName,searchUser } from '../../../Redux/Slice/index';
+import { getProductsByName, searchUser } from '../../../Redux/Slice/index';
 import { useDispatch } from "react-redux";
 import React, { useState, useEffect } from "react";
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -27,7 +27,7 @@ const SearchAdmin = ({ navigation, route, setPage, setpaginateProducts }) => {
             :   
             setPage(1), 
             setpaginateProducts([]),
-            dispatch(getAdminByName(nombre))
+            dispatch(getProductsByName(nombre))
         )
         
     };
