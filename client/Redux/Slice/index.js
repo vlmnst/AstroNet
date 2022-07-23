@@ -66,14 +66,15 @@ export const userSlice = createSlice({
             state.AllUsersFiltered = action.payload
         },
         searchUser(state,action){
+            let min = action.payload.toLowerCase()
             let user =[]
             state.AllUsers.map((u)=> {
                 if (
-                    u.role === action.payload || 
-                    u.username === action.payload ||
-                    u.firstname === action.payload ||
-                    u.lastname === action.payload ||
-                    u.email === action.payload ||
+                    u.role.toLowerCase().includes(min) || 
+                    u.username.toLowerCase().includes(min) ||
+                    u.firstname.toLowerCase().includes(min) ||
+                    u.lastname.toLowerCase().includes(min) ||
+                    u.email.toLowerCase().includes(min) ||
                     u.phone === action.payload ||
                     u.dni.toString() === action.payload
                 ){
