@@ -1,19 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-    View,
-    Text,
-    FlatList,
-    StyleSheet,
-    StatusBar,
-} from "react-native";
-import {
-    resetAdminProducts,
-    getAdminByPrice,
-    getAdminByCategory,
-    clearAdmin,
-    getAdminByName,
-} from "../../../Redux/Slice";
+import { View, Text, FlatList, StyleSheet } from "react-native";
+import { resetAdminProducts, getByPrice, getProductsByCategory, getAllProducts } from "../../../Redux/Slice";
 import ProductCardModify from "./ProductCardModify";
 import DropDownPicker from "react-native-dropdown-picker";
 import SearchAdmin from "./SearchAdmin";
@@ -24,7 +12,8 @@ const AllAdmin = ({ route, navigation }) => {
     // si route.params existe en categories, busco por categoria
     const dispatch = useDispatch();
     // ---------- global states ----------
-    let products = useSelector((state) => state.ALL_PRODUCTS.allAdminProducts);
+    let products = useSelector((state) => state.ALL_PRODUCTS.allProductsFiltered);
+    console.log(products)
     let [categories /*setCategories*/] = useState(
         useSelector((state) => state.ALL_PRODUCTS.categories)
     );
@@ -45,21 +34,16 @@ const AllAdmin = ({ route, navigation }) => {
         ? categories.map((c, index) => pickerItems.push({ label: c, value: c }))
         : null;
 
-    // unmount
-    // useEffect(() => {
-    //     return () => dispatch(clearAdmin());
-    // }, [dispatch]);
-
     // ---------- handlers ----------
 
     function handleCategory(e) {
         e.value === "all Products"?
         dispatch(resetAdminProducts(e.value)):
-        dispatch(getAdminByCategory(e.value));
+        dispatch(getProductsByCategory(e.value));
     }
 
     function handlePrice(e) {
-        dispatch(getAdminByPrice(e.value));
+        dispatch(getByPrice(e.value));
     }
 
     return (

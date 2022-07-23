@@ -13,13 +13,12 @@ export const userSlice = createSlice({
         purchaseProducts: [],
         AllUsers:[],
         AllUsersFiltered: [],
-        allAdminProducts:[],
         cart:[],
     },
     reducers:{
         getAllProducts(state,action){
             state.allProducts = action.payload
-            state.allAdminProducts = action.payload
+            state.allProductsFiltered = action.payload
         },
         getProductsByCategory(state,action){
             state.allProductsFiltered = action.payload
@@ -82,44 +81,8 @@ export const userSlice = createSlice({
         })
             state.AllUsersFiltered = user;
         },
-        clearAdmin(state){
-            state.allAdminProducts = []
-        },
-        getAdminByName(state,action){
-            state.allAdminProducts = action.payload
-        },
-        getAdminByCategory(state,action){
-            state.allAdminProducts = action.payload
-        },
-        getAdminByPrice(state,action){
-            if (action.payload === "higher"){
-                let neworder = state.allAdminProducts.sort(function (a,b){
-                    if (a.price < b.price) {
-                        return 1;
-                    }
-                    if (b.price < a.price) {
-                        return -1;
-                    }
-                    return 0;
-                });
-                state.allAdminProducts = neworder 
-            }
-            if (action.payload === "lower"){
-                let neworder = state.allAdminProducts.sort(function (a,b){
-                    if (a.price < b.price) {
-                        return -1;
-                    }
-                    if (b.price < a.price) {
-                        return 1;
-                    }
-                    return 0;
-                });
-                state.allAdminProducts = neworder
-            }
-            
-        },
         resetAdminProducts(state,action){
-            state.allAdminProducts = state.allProducts 
+            state.allProductsFiltered = state.allProducts 
         },
 
         cartCreate(state, action){
@@ -188,20 +151,18 @@ export const PutPrivileges = (payload)=> async(dispatch) => {
         console.log(e)
     }
 };
-export const PutBanned = (payload)=> async(dispatch) => {
+export const PutBanned = (payload)=> async() => {
     const {name,privileges} = payload
     try {
-        // console.log(ROUTE+"/users/banned/"+name, privileges)
         await axios.put(ROUTE+"/users/banned/"+name, privileges)
     } catch (e) {
         console.log(e)
     }
 };
-export const ModifyProducts = (payload)=> async(dispatch) => {
+export const ModifyProducts = (payload)=> async() => {
     const {id,product} = payload
     try {
-        let {data} = await axios.put(ROUTE+"/products/update/"+id, product)
-        console.log(data);
+        await axios.put(ROUTE+"/products/update/"+id, product)
     } catch (e) {
         console.log(e)
     }
@@ -210,30 +171,10 @@ export const getAllUsers = () => async (dispatch) => {
     try {
         var json = await axios.get(ROUTE + "/users/getAll")
         dispatch(userSlice.actions.getAllUsers(json.data))
-
     } catch (e) {
         console.log(e)
     }
 ;}
-export const getAdminByCategory = (category)=> async(dispatch) => {
-    try {
-        var json = await axios.get(ROUTE +"/products/category/"+category)
-        dispatch(userSlice.actions.getAdminByCategory (json.data))
-
-    } catch (e) {
-        console.log(e)
-    }
-};
-export const getAdminByName = (name)=> async(dispatch) => {
-    try {
-        var json = await axios.get(ROUTE+"/products/search/"+name.toLowerCase())
-        dispatch(userSlice.actions.getAdminByName (json.data))
-        // console.log(json.data)
-    } catch (e) {
-        console.log(e)
-    }
-};
-
 
 export const cartCreate = (payload) => async(dispatch) => {
     dispatch(userSlice.actions.cartCreate(payload))
