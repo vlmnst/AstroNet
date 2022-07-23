@@ -3,7 +3,7 @@ import Cart from "../Components/Cart";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import ProductReviews from "../Components/ProductReviews";
 import AverageScore from "../Components/AverageScore";
-import FeatherIcon from 'react-native-vector-icons/Feather';
+import IconIonicons from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ImageDetails from "../Components/ImageDetails";
 
@@ -18,7 +18,7 @@ const Details = (props) => {
 
       <View style={styles.SBcontainer}>
         <View style={styles.SB}>
-          <FeatherIcon style={styles.iconMenu} name="skip-back" size={36} onPress={() => props.navigation.goBack()}/>
+          <IconIonicons style={styles.iconMenu} name="chevron-back" size={36} onPress={() => props.navigation.goBack()}/>
           <Icon style={styles.iconCart} name="cart-outline" size={30}  onPress={() => navigation.navigate("Cart")}/>
         </View>
       </View>

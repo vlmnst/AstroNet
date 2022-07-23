@@ -14,6 +14,7 @@ import { StackActions, useNavigationState } from '@react-navigation/native';
 import { useDispatch, useSelector } from "react-redux";
 import { setUserData } from "../../../Redux/Slice/userSlice";
 import img from '../../../assets/logo/logoAstronet.png';
+import AllProductsBtn from "./SideMenuBtns/AllProductsBtn";
 
 
 const SideMenu = ({ navigation }) => {
@@ -123,6 +124,10 @@ const SideMenu = ({ navigation }) => {
                 <HomeBtn
                     text = "Home"
                     onPress={() => handlePressHome('HomeNav')}
+                />
+                <AllProductsBtn
+                    text = "AllProducts"
+                    onPress={() => handlePress('Allproducts')}
                 />
                 { userName ? (
                     <ProfileBtn
