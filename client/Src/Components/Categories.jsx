@@ -1,22 +1,9 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useFonts, Inter_900Black } from '@expo-google-fonts/inter';
-import {
-  View,
-  Text,
-  FlatList,
-  StyleSheet,
-  useWindowDimensions,
-  Button,
-  Image,
-  TouchableOpacity
-} from "react-native";
+import React from "react";
+import { useSelector } from "react-redux";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 
 const Categories = (navigation) => {
   let categories = useSelector((state) => state.ALL_PRODUCTS.categories);
-//   const keyExtractor = useCallback((item) => {
-//     return item;
-//   }, []);
 
   let images = [
     "https://w.wallhaven.cc/full/e7/wallhaven-e7q8r8.png", //teclado
@@ -25,42 +12,19 @@ const Categories = (navigation) => {
     "https://w.wallhaven.cc/full/ym/wallhaven-ymp3mx.jpg", //headphone
     "https://w.wallhaven.cc/full/13/wallhaven-139plv.jpg", //mouse
   ];
+  
   let data = [];
   categories?.map((name, index) => {
     data.push({ name: name, img: images[index], id: index });
   });
-  // console.log(data);
-
-  let [fontsLoaded] = useFonts({
-    Inter_900Black,
-  });
 
   return (
     <View style={styles.realContainer}>
-      {/* <FlatList
-        // horizontal={false}
-        style= {{height: 320}}
-        numColumns={2}
-        data={data}
-        renderItem={({ item }) => (
-        
-            <TouchableOpacity 
-              style={styles.container}
-              onPress={()=>navigation.navigate("Allproducts", item.name)}>
-              <Image 
-                source={{ uri: item.img }} 
-                style={styles.img} 
-                keyExtractor={(item) => item.id} // rompe el componente, ahora tira un warnin
-              />  
-              <Text style={styles.text}>{item.name}</Text>
-            </TouchableOpacity>
-    
-        )}
-      /> */}
-      {data.map((item) => {
+      {data.map((item, index) => {
         return(
           <TouchableOpacity 
               style={styles.container}
+              key={index}
               onPress={()=>navigation.navigate("Allproducts", item.name)}>
               <Image 
                 source={{ uri: item.img }} 
@@ -74,7 +38,6 @@ const Categories = (navigation) => {
     </View>
   );
 };
-
 
 const styles = StyleSheet.create({
   realContainer: {
@@ -99,8 +62,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     paddingTop: 100,
     color: 'white',
-    // fontFamily: 'Inter_900Black',
-    fontFamily: 'serif',
     fontWeight: 'bold',
     fontSize: 25,
     textAlignVertical: 'center'
