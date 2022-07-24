@@ -4,7 +4,7 @@ import {View,Text,FlatList,StyleSheet,StatusBar,TouchableOpacity } from "react-n
 import {getAllUsers,} from "../../../Redux/Slice/index";
 import UserCard from './UserCard';
 import SearchAdmin from './SearchAdmin';
-import FeatherIcon from 'react-native-vector-icons/Feather';
+import IconIonicons from 'react-native-vector-icons/Ionicons';
 
 const AllUsers = ({ route, navigation }) => {
     // ---------- dispatch ----------
@@ -21,7 +21,7 @@ const AllUsers = ({ route, navigation }) => {
             <View style={styles.selectsContainer}>
                 <View style={styles.SBcontainer}>
                     <View style={styles.SB}>
-                        <FeatherIcon style={styles.iconMenu} name="skip-back" size={36} onPress={() => navigation.goBack()}/>
+                        <IconIonicons style={styles.iconMenu} name="chevron-back" size={36} onPress={() => navigation.goBack()}/>
                         <SearchAdmin navigation={navigation} route={route} />
                         <TouchableOpacity
                             onPress={() => handleReset()}

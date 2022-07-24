@@ -17,7 +17,7 @@ const UserProfile = ({ navigation, route }) => {
     useEffect(()=>{  
         dispatch(getPurchaseOrders(userName));
         dispatch(getUserFullData(email))
-    },[dispatch])
+    },[dispatch,email])
 
     return (
             <View Style={styles.conteiner}>

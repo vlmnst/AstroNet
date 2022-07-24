@@ -6,13 +6,15 @@ import { getCredentials } from '../../utils/handleCredentials';
 
 import HomeBtn from "./SideMenuBtns/HomeBtn";
 import PanelAdminBtn from "./SideMenuBtns/PanelAdminBtn";
-import LoginBtn from "./SideMenuBtns/LoginBtn";
-import { StackActions, useNavigationState } from '@react-navigation/native';
 import ProfileBtn from "./SideMenuBtns/ProfileBtn";
+import LoginBtn from "./SideMenuBtns/LoginBtn";
 import LogoutBtn from "./SideMenuBtns/LogoutBtn";
+import AboutUsBtn from "./SideMenuBtns/AboutUsBtn";
+import { StackActions, useNavigationState } from '@react-navigation/native';
 import { useDispatch, useSelector } from "react-redux";
 import { setUserData } from "../../../Redux/Slice/userSlice";
 import img from '../../../assets/logo/logoAstronet.png';
+import AllProductsBtn from "./SideMenuBtns/AllProductsBtn";
 
 
 const SideMenu = ({ navigation }) => {
@@ -123,6 +125,10 @@ const SideMenu = ({ navigation }) => {
                     text = "Home"
                     onPress={() => handlePressHome('HomeNav')}
                 />
+                <AllProductsBtn
+                    text = "AllProducts"
+                    onPress={() => handlePress('Allproducts')}
+                />
                 { userName ? (
                     <ProfileBtn
                         text = "Profile"
@@ -147,6 +153,10 @@ const SideMenu = ({ navigation }) => {
                         navigation={navigation}
                     />
                 ) : null }
+                <AboutUsBtn
+                    text = "About Us"
+                    onPress={() => handlePress('AboutUs')}
+                />
             </View>
             
         </DrawerContentScrollView>
@@ -168,7 +178,9 @@ const styles = StyleSheet.create({
         width: 180,
         alignSelf:"center",
         resizeMode:"contain",
-        borderRadius: 75,
+        borderWidth:1,
+        borderColor:'white',
+        borderRadius: 70,
         marginVertical:15
     },
 })

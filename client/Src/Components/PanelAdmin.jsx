@@ -55,7 +55,7 @@ const PanelAdmin = ({ navigation, route }) => {
                             <Text style={styles.text}>All Purchase History</Text>
                         </View>
                     </TouchableOpacity>
-                    <Email/>
+                    {/* <Email/> */}
                 </View>
             </View>
     );
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
         width:'80%',
         justifyContent:"center",
         alignItems:"center",
-        marginTop:'20%'
+        marginTop:'15%'
     },
     button: {
         height: '100%',

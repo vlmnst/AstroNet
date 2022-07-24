@@ -42,6 +42,7 @@ export const realUserSlice = createSlice({
             state.productHistory = [];
             state.purchaseProducts = [];
             state.allProductsUser = [];
+            state.userFullData = [];
         },
         getPurchasedProductsAllUsers(state, action){
             state.allpurchaseProducts = action.payload
