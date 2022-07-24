@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { View, Text, FlatList, StyleSheet, Image, Button, Modal, TouchableOpacity, TextInput } from "react-native";
-import FeatherIcon from 'react-native-vector-icons/Feather';
+import IconIonicons from 'react-native-vector-icons/Ionicons';
 
 // reducer actions
 import { getPurchaseProducts, putReviewToProduct } from "../../Redux/Slice/userSlice";
@@ -125,7 +125,7 @@ const DoReview = ({ route, navigation }) => {
             {/* ------------ TITLE ------------ */}
             <View style={styles.SBcontainer}>
 				<View style={styles.SB}>
-					<FeatherIcon style={styles.iconMenu} name="skip-back" size={36} onPress={() => navigation.goBack()}/>
+                    <IconIonicons style={styles.iconMenu} name="chevron-back" size={36} onPress={() => navigation.goBack()}/>
 					<Text style={{fontSize:28, color:'white', fontWeight:'bold'}}>Purchase products</Text>
 				</View>
 			</View>

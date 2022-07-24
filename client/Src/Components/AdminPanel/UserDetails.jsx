@@ -4,7 +4,7 @@ import {PutBanned} from "../../../Redux/Slice/index";
 import { getCredentials } from "../../utils/handleCredentials";
 import { useDispatch} from "react-redux";
 import {useState, useEffect} from "react";
-import FeatherIcon from 'react-native-vector-icons/Feather';
+import IconIonicons from 'react-native-vector-icons/Ionicons';
 
 const UserDetails = (props) => {
     const { route } = props;
@@ -62,7 +62,7 @@ const UserDetails = (props) => {
         <View style={styles.container}>
             <View style={styles.SBcontainer}>
                 <View style={styles.SB}>
-                    <FeatherIcon style={styles.iconMenu} name="skip-back" size={36} onPress={() => navigation.goBack()}/>
+                    <IconIonicons style={styles.iconMenu} name="chevron-back" size={36} onPress={() => navigation.goBack()}/>
                     {/* <Text style={{fontSize:24, color:'white', fontWeight:'bold'}}>Create a new product</Text> */}
                 </View>
             </View>

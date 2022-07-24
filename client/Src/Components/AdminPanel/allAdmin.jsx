@@ -5,7 +5,7 @@ import { resetAdminProducts, getByPrice, getProductsByCategory, getAllProducts }
 import ProductCardModify from "./ProductCardModify";
 import DropDownPicker from "react-native-dropdown-picker";
 import SearchAdmin from "./SearchAdmin";
-import FeatherIcon from 'react-native-vector-icons/Feather';
+import IconIonicons from 'react-native-vector-icons/Ionicons';
 
 const AllAdmin = ({ route, navigation }) => {
     // ---------- dispatch ----------
@@ -52,7 +52,7 @@ const AllAdmin = ({ route, navigation }) => {
                 {/* ------------ TITLE ------------ */}
                 <View style={styles.SBcontainer}>
                     <View style={styles.SB}>
-                        <FeatherIcon style={styles.iconMenu} name="skip-back" size={36} onPress={() => navigation.goBack()}/>
+                        <IconIonicons style={styles.iconMenu} name="chevron-back" size={36} onPress={() => navigation.goBack()}/>
                         <SearchAdmin navigation={navigation} route={route} />
                         {/* <Text style={{fontSize:24, color:'white', fontWeight:'bold'}}>Create a new product</Text> */}
                     </View>

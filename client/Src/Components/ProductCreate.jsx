@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Text, View, TextInput, Button, StyleSheet, ScrollView, Image } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
-import FeatherIcon from 'react-native-vector-icons/Feather';
+import IconIonicons from 'react-native-vector-icons/Ionicons';
 // import axios from "axios";
 
 import ImageLibrary from "./ImageLibrary";
@@ -108,7 +108,7 @@ const ProductCreate = ({navigation}) => {
         <ScrollView contentContainerStyle={styles.container}>
             <View style={styles.SBcontainer}>
 				<View style={styles.SB}>
-					<FeatherIcon style={styles.iconMenu} name="skip-back" size={36} onPress={() => navigation.goBack()}/>
+                    <IconIonicons style={styles.iconMenu} name="chevron-back" size={36} onPress={() => navigation.goBack()}/>
 					<Text style={{fontSize:24, color:'white', fontWeight:'bold'}}>Create a new product</Text>
 				</View>
 			</View>
