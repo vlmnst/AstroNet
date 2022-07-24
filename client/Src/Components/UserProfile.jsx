@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserFullData,getPurchaseOrders } from "../../Redux/Slice/userSlice";
 import FeatherIcon from 'react-native-vector-icons/Feather';
 // import Icon from 'react-native-vector-icons/Ionicons';
-
+import Loader from "./Loader";
 
 const UserProfile = ({ navigation, route }) => {
 
@@ -22,9 +22,8 @@ const UserProfile = ({ navigation, route }) => {
     return (
             <View Style={styles.conteiner}>
                 {!data[0] ?
-                <View>
-                    <Text>Loading...</Text>
-                </View>:
+                <Loader/>
+                :
                 <View style={styles.view1}>
                     <View style={styles.SBcontainer}>
                         <View style={styles.SB}>
