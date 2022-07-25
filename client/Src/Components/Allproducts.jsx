@@ -11,6 +11,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import {
+  getAllProducts,
   getByPrice,
   getProductsByCategory,
   clearCache,
@@ -29,7 +30,6 @@ const Allproducts = ({ route, navigation }) => {
   // const [searchName, setsearchName] = useState(route.params);
   let searchName = route.params;
   const dispatch = useDispatch();
-
   // ---------- global states ----------
   let products = useSelector((state) => state.ALL_PRODUCTS.allProductsFiltered);
   let [categories ] = useState(
@@ -53,17 +53,28 @@ const Allproducts = ({ route, navigation }) => {
     : null;
 
   // mount
+  // useEffect(() => {
+  //   if (searchName !==undefined){
+  //   categories.includes(searchName)
+  //     ? dispatch(getProductsByCategory(searchName))
+  //     : dispatch(getProductsByName(searchName));
+  //   }
+  //   setPage(1);
+  // }, [dispatch]);
   useEffect(() => {
-    categories.includes(searchName)
+    if (searchName !== undefined){
+      categories.includes(searchName)
       ? dispatch(getProductsByCategory(searchName))
       : dispatch(getProductsByName(searchName));
+    }else{
+      dispatch(getAllProducts())
+    }
     setPage(1);
   }, [dispatch]);
 
     //update
     useEffect(() => {
       loadMoreItem();
-      // console.log(currentPage);
     }, [products]);
 
   // unmount
@@ -121,17 +132,12 @@ const Allproducts = ({ route, navigation }) => {
     ) : null;
   };
 
-  // console.log(currentPage);
   const loadMoreItem = () => {
-    // if (isLoading) {
-      // console.log(currentPage);
-     setCurrentPage(currentPage+1)
+      setCurrentPage(currentPage+1)
       nextPage();
       products.length === paginateProducts.length
         ? setIsLoading(false)
         : setIsLoading(true);
-      // console.log("ejecutando");
-    // }
   };
 
   return (
