@@ -10,7 +10,7 @@ const ProductCard = (props) => {
 
   return (
     <TouchableOpacity
-      style={styles.container}
+      style={ item.stock === 0 ? styles.noStock : styles.container }
       onPress={() => navigation.navigate("Details", item, navigation)}
     >
       <Image source={{ uri: item.img[0] }} style={styles.image} />
@@ -46,6 +46,17 @@ const styles = StyleSheet.create({
     height: 250,
     borderColor: "#EAEAEA",
     backgroundColor: "#F6F6F6",
+    borderRadius: 10,
+  },
+  noStock: {
+    alignItems: "center",
+    margin: 5,
+    padding: 0,
+    borderWidth: 2,
+    width: "93%",
+    height: 250,
+    borderColor: "#EAEAEA",
+    backgroundColor: 'rgba(255, 0, 0, 0.5)', 
     borderRadius: 10,
   },
   priceOffer: {

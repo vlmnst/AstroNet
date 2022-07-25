@@ -188,19 +188,10 @@ const Allproducts = ({ route, navigation }) => {
             onEndReached={() => loadMoreItem()}
             ListFooterComponent={renderLoader}
             renderItem={({ item }) => (
-              (item.stock === 0) 
-                ? (userRole === 'admin' || userRole === 'mod')
-                  ? (
-                    <View>
-                      <ProductCard navigation={navigation} item={item} />
-                    </View>
-                  ) : (
-                    null
-                  )
-                : (<View>
-                    <ProductCard navigation={navigation} item={item} />
-                  </View>)
-            )}
+                <View>
+                  <ProductCard navigation={navigation} item={item} />
+                </View>)
+            }
           />
 
         </View>
