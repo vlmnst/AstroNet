@@ -15,6 +15,7 @@ import {
   TouchableHighlight,
   FlatList
 } from 'react-native';
+import Details from "../Screens/Details";
 
 const Banner = ({ navigation }) => {
 
@@ -44,14 +45,25 @@ const Banner = ({ navigation }) => {
             ...state,
             slideIndex: (state.slideIndex) + n,
     });
+    useEffect(()=>{
+      ;
+    },[])
 }
+const detFunc=()=>{
+  if (imgToView.name){
+    navigation.navigate("Details", imgToView);
+  }else{
+    imgToView =products[state.slideIndex]
+    navigation.navigate("Details", imgToView);
+  }
+  }
 const [visible, setVisible] = useState(false)
 const[variable, setVariable] = useState('')
 const user = useSelector((state) => state.USER.userName)
 // setInterval(()=>plusSlides(1),10000)
   return (
 
-    <TouchableOpacity onPress={() => navigation.navigate("Details", imgToView)}>
+    <TouchableOpacity onPress={() =>detFunc()}>
       {
         imgToView ?
             <View style={styles.imageContainer}>

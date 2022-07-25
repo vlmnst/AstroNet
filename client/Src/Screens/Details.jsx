@@ -12,6 +12,7 @@ const Details = (props) => {
   const { route } = props;
   const { params } = route;
   const { navigation } = props
+  console.log(props)
 
   return (
     <View>
@@ -44,8 +45,9 @@ const Details = (props) => {
           </View>
 
           <View style={styles.descriptionCont}>
-            <Text style={styles.name}>{params.name}: </Text>
-            {params.description.map((item, index) => {
+            {params.name?
+            <Text style={styles.name}>{params.name}: </Text>:null}
+            {params.description?.map((item, index) => {
               return (
                 <View key={index}>
                 <Text style={styles.description} >
@@ -66,14 +68,14 @@ const Details = (props) => {
           </View>
 
             {/* -------AVERAGE SCORE--------------  */}
-            {params.reviews.length > 0 ?
+            {params.reviews?.length > 0 ?
             <AverageScore item={params}/>
             :
             null }
 
           {/* -------USERS COMMENTS--------------  */}
           <View style={styles.reviewscontainer}>
-          {params.reviews.length > 0 ?
+          {params.reviews?.length > 0 ?
           params.reviews.map((reviews, index) => (
             <ProductReviews key={index} reviews={reviews}/>
           )) : 
