@@ -91,16 +91,6 @@ const CartLobby = ({ navigation }) => {
   };
 
 
-  const emptyCart = async () => {
-    try {
-      await AsyncStorage.removeItem("storageCart");
-      dispatch(deleteCart());
-      return true;
-    } catch (error) {
-      return false;
-    }
-  };
-
 
   return (
     <View style={{ flex: 1, width: width, alignItems: 'center', justifyContent: 'center' }}>
@@ -151,7 +141,7 @@ const CartLobby = ({ navigation }) => {
 
                   </View>
                   <View>
-                    <DeleteCart item={item} />
+                  <DeleteCart item={item}/>
                     <CartLobbyCounter item={item} />
                   </View>
 
@@ -168,20 +158,6 @@ const CartLobby = ({ navigation }) => {
         >
           <Text style={styles.cartText}>
             CHECKOUT
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={emptyCart}
-          style={{
-            backgroundColor: "#aaaaaa",
-            width: width - 40,
-            alignItems: "center",
-            padding: 10,
-            borderRadius: 5,
-          }}
-        >
-          <Text style={styles.emptyCart}>
-            EMPTY CART
           </Text>
         </TouchableOpacity>
         <View style={{ height: '1%' }} />

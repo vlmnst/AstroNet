@@ -51,10 +51,13 @@ const Cart = (props) => {
         price: data.price,
         img: data.img,
         offer: data.offer,
-        ////////////////////////////////////////////////////////////////
         stock: data.stock
       };
+
+
      console.log(itemCart);
+console.log("hola linea 59");
+
      ////////////////////////////////////////////////////////////////////////////
       // updateLocalCart(data)
       updateLocalCart(itemCart)
