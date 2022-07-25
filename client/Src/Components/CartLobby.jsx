@@ -29,7 +29,7 @@ var { width } = Dimensions.get("window");
 
 const CartLobby = ({navigation}) => {
   const infoCart = useSelector((state) => state.ALL_PRODUCTS.cart);
-  console.log(infoCart)
+  
   const dispatch = useDispatch();
   //console.log(infoCart, '<-------CartLobby');
   const [userID, setUserID] = useState();

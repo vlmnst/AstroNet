@@ -83,7 +83,7 @@ export const userSlice = createSlice({
             state.AllUsersFiltered = user;
         },
         resetAdminProducts(state,action){
-            state.allProductsFiltered = state.allProducts 
+            state.allProductsFiltered =[ ...state.allProducts ]
         },
 
         cartCreate(state, action){

@@ -71,6 +71,18 @@ const Allproducts = ({ route, navigation }) => {
     return () => dispatch(clearCache());
   }, [dispatch]);
 
+  // useEffect(() => {
+  //   return () => dispatch(clearCache());
+  // }, [dispatch]);
+
+//    //mount
+//    useEffect(() => {
+//     getAllProducts()
+// console.log('allprodu');
+// }, [products]);
+
+
+
   // ---------- paginate ----------
   const [currentPage, setCurrentPage] = useState(0);
   const productsPerPage = 6;
@@ -134,10 +146,13 @@ const Allproducts = ({ route, navigation }) => {
     // }
   };
 
+  console.log(products)
+    console.log(paginateProducts)
+
   return (
     <View style={styles.container}>
       <View style={styles.SB}>
-        <SearchBar navigation={navigation} route={route} />
+        <SearchBar navigation={navigation} route={route} setPage={setPage} setpaginateProducts={setpaginateProducts} />
       </View>
       {/* ------------ TITLE ------------ */}
       {/* <Text style={styles.title}>{searchName}</Text> *MEJOR QUE NO FUNCIONE A QUE FUNCIONE MAL /}
