@@ -1,8 +1,9 @@
-import { View, Text, Image, StyleSheet, TouchableOpacity, Button } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { PutBanned, getAllUsers, PutPrivileges } from "../../../Redux/Slice/index";
 import { getCredentials } from "../../utils/handleCredentials";
 import { useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
+import { functionReset } from "../../../Redux/Slice/userSlice"
 
 const UserCard = (props) => {
     const [userAdmin, setUserAdmin] = useState();
@@ -18,9 +19,7 @@ const UserCard = (props) => {
         };
         checkCreds()
     }, []);
-    useEffect(() => {
 
-    }, []);
     const dispatch = useDispatch();
     const { navigation, item } = props;
     //-----------User Types---------------
@@ -57,8 +56,13 @@ const UserCard = (props) => {
         }
     }
     const handleReset = () => {
-        //dispatch(funcionreset()) Falta accion en reducer y ruta en el back 
+        const data={
+            id:item.id,
+            userMail:item.email
+        }
+        dispatch(functionReset(data))
     }
+
     return (
         <TouchableOpacity
             style={item.role === 'banned' ? styles.containerBanned : styles.container}
@@ -104,11 +108,11 @@ const UserCard = (props) => {
                                 </TouchableOpacity>)
                             ))
                         }
-                        {/* <TouchableOpacity
+                        <TouchableOpacity
                             style={styles.button}
                             onPress={() => handleReset()}>
                             <Text style={styles.text}> Reset password </Text>
-                        </TouchableOpacity> */}
+                        </TouchableOpacity>
 
                     </View>
                 }

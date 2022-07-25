@@ -1,6 +1,8 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
+const { v4: uuidv4 } = require('uuid');
+const { sendEmail } = require('./nodemailer');
 
 const getAllUsers = async (req, res, next) => {
 
@@ -233,4 +235,31 @@ const putpurchasedProducts = async (req, res, next) => {
     }
 };
 
-module.exports = { createUser, getAllUsers, totalUsers, PutPrivileges, PutBanned, getPurchasedProducts, getProductsHistory, getUser,getUsersFull,getPurchasedProductsAllUsers,putpurchasedProducts};
+const resetUserPassword = async(req, res, next) => {
+    try {
+        const { id, userMail } = req.body;
+        const user = await User.findById(id);
+
+        if (!user) return res.status(401).json( { error: 'user invalid'});
+
+        const newPassword = uuidv4();
+
+        // hash passwd
+            const saltRounds = 10;
+            const passwordHash = await bcrypt.hash(newPassword, saltRounds);
+
+        user.passwordHash = passwordHash;
+        user.save();
+
+        const message = `For security policies we reset your Astronet password. You can change to the password you want in the modify user section of our app. Greetings from Astronet! The new password is " ${newPassword} "`;
+        const payload = { body: { userMail, message }};
+
+        await sendEmail(payload);
+
+        return res.json( { msg: 'new password created successfully'})
+    } catch (error) {
+        return next(error);
+    }
+};
+
+module.exports = { createUser, getAllUsers, totalUsers, PutPrivileges, PutBanned, getPurchasedProducts, getProductsHistory, getUser,getUsersFull,getPurchasedProductsAllUsers,putpurchasedProducts, resetUserPassword };
