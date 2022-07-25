@@ -64,7 +64,10 @@ const Details = (props) => {
           </View>
 
           <View style={styles.addcartbtn}>
-            <Cart navigation={route} item={params} />
+            { (params.stock === 0) 
+              ? ( <Text style={styles.offer}>Without stock</Text>)
+              : ( <Cart navigation={route} item={params} /> )
+            }
           </View>
 
             {/* -------AVERAGE SCORE--------------  */}
