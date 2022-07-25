@@ -21,7 +21,7 @@ const AllAdmin = ({ route, navigation }) => {
     const dispatch = useDispatch();
     // ---------- global states ----------
     let products = useSelector((state) => state.ALL_PRODUCTS.allProductsFiltered);
-    console.log(products)
+    // console.log(products)
     let [categories /*setCategories*/] = useState(
         useSelector((state) => state.ALL_PRODUCTS.categories)
     );
@@ -61,6 +61,7 @@ const AllAdmin = ({ route, navigation }) => {
 
 
 
+
     // ---------- handlers ----------
 
     function handleCategory(e) {
@@ -88,7 +89,7 @@ const AllAdmin = ({ route, navigation }) => {
     };
 
     // ---------- paginate ----------
-    const [currentPage, setCurrentPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(0);
     const productsPerPage = 6;
 
     const indexOfLast = currentPage * productsPerPage;
@@ -185,7 +186,7 @@ const AllAdmin = ({ route, navigation }) => {
                     ListFooterComponent={renderLoader}
                     renderItem={({ item }) => (
                         <View >
-                            <ProductCardModify navigation={navigation} item={item} />
+                            <ProductCardModify navigation={navigation} item={item} setPage={setPage} setpaginateProducts={setpaginateProducts} />
                         </View>
                     )}
                 />

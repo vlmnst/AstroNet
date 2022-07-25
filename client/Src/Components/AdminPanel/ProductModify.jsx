@@ -2,17 +2,25 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Text, View, TextInput, Button, StyleSheet, ScrollView } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
-import { getAllProducts, ModifyProducts } from "../../../Redux/Slice";
+import { getAllProducts, ModifyProducts, clearCache} from "../../../Redux/Slice";
 import ImageLibrary from '../ImageLibrary';
 import PrePreview from '../PrePreview';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 
 const ProductModify = (props) => {
-    // console.log(props);
+    //  console.log(props);
+    const { item, setPage, setpaginateProducts} = props.route.params
     const dispatch = useDispatch();
 
+    // useEffect(()=>{
+    //     console.log('limpio')
+    //     return () =>  dispatch(clearCache()),
+    //     setpaginateProducts([]),
+    //     setPage(1);
+    // },[dispatch])
+
     // reducer states
-    let item = props.route.params;
+    // let item = props.route.params;
     let categoriesReducer = useSelector((state) => state.ALL_PRODUCTS.categories); 
 
     // picker states
@@ -68,7 +76,9 @@ const ProductModify = (props) => {
         if (images.one === 'empty' && images.two === 'empty' && images.three === 'empty') {
             return alert('upload one image at least')
         };
-
+        dispatch(clearCache()),
+        setpaginateProducts([]),
+        setPage(0);
         const payload = {
             id: item.id,
             product: {

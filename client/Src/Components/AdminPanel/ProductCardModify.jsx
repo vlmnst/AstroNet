@@ -1,12 +1,14 @@
+import { useEffect } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 
 const ProductCardModify = (props) => {
     const { navigation, item } = props;
-    // console.log(item);
+    // console.log(props);
+
     return (
         <TouchableOpacity
             style={styles.container}
-            onPress={() => navigation.navigate("ProductModify", item)}
+            onPress={() => navigation.navigate("ProductModify", props)}
         >
             <Image source={{ uri: item.img[0] }} style={styles.image} />
             <View style={styles.contInt}>
