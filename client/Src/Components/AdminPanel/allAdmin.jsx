@@ -50,13 +50,11 @@ const AllAdmin = ({ route, navigation }) => {
     //update
     useEffect(() => {
         dispatch(getAllProducts())
-    console.log( 'primero');
     }, [getAllProducts]);
     
 
     useEffect(() => {
         loadMoreItem();
-    console.log(currentPage, 'load');
     }, [products]);
 
 
@@ -102,7 +100,6 @@ const AllAdmin = ({ route, navigation }) => {
       }
 
       const nextPage = () => {
-        console.log(products, 'nextpage')
         if (products?.length > 1) {
           setpaginateProducts([
             ...paginateProducts,
@@ -111,7 +108,6 @@ const AllAdmin = ({ route, navigation }) => {
         }
       };
 
-    // console.log(currentPage);
     const loadMoreItem = () => {
         setCurrentPage(currentPage+1)
         nextPage();
@@ -119,9 +115,6 @@ const AllAdmin = ({ route, navigation }) => {
             ? setIsLoading(false)
             : setIsLoading(true);
     };
-
-    console.log(products)
-    console.log(paginateProducts)
     
     
     return (

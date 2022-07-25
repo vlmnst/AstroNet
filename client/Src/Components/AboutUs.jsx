@@ -91,7 +91,7 @@ const AboutUs = ({ navigation, route }) => {
                     <Image style={styles.img} source={ img } />
                 </View>
                 <View style={styles.txtsContainer}>
-                    <Text style={styles.txtTitle}>Gorup 7 ft 25 b</Text>
+                    <Text style={styles.txtTitle}>Group 7 ft 25 b</Text>
                     <Text style={styles.txtAbout}>This app is a project for an e-comerce, to sell tecnology oriented products.</Text>
                     <Text style={styles.txtIntegrants}>The project was made by:</Text>
                     <View style={styles.card}>

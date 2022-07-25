@@ -11,6 +11,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import {
+  getAllProducts,
   getByPrice,
   getProductsByCategory,
   clearCache,
@@ -29,7 +30,6 @@ const Allproducts = ({ route, navigation }) => {
   // const [searchName, setsearchName] = useState(route.params);
   let searchName = route.params;
   const dispatch = useDispatch();
-
   // ---------- global states ----------
   let products = useSelector((state) => state.ALL_PRODUCTS.allProductsFiltered);
   let userRole = useSelector((state) => state.USER.role);
@@ -53,34 +53,27 @@ const Allproducts = ({ route, navigation }) => {
     ? categories.map((c, index) => pickerItems.push({ label: c, value: c }))
     : null;
 
-  // mount
+
   useEffect(() => {
-    categories.includes(searchName)
+    if (searchName !== undefined){
+      categories.includes(searchName)
       ? dispatch(getProductsByCategory(searchName))
       : dispatch(getProductsByName(searchName));
+    }else{
+      dispatch(getAllProducts())
+    }
     setPage(1);
   }, [dispatch]);
 
     //update
     useEffect(() => {
       loadMoreItem();
-      // console.log(currentPage);
     }, [products]);
 
   // unmount
   useEffect(() => {
     return () => dispatch(clearCache());
   }, [dispatch]);
-
-  // useEffect(() => {
-  //   return () => dispatch(clearCache());
-  // }, [dispatch]);
-
-//    //mount
-//    useEffect(() => {
-//     getAllProducts()
-// console.log('allprodu');
-// }, [products]);
 
 
 
@@ -91,10 +84,6 @@ const Allproducts = ({ route, navigation }) => {
   const indexOfLast = currentPage * productsPerPage;
   const indexOfFirst = indexOfLast - productsPerPage;
 
-  // let paginateProducts;
-  // if (products.length > 0) {
-  //   paginateProducts = products.slice(indexOfFirst, indexOfLast);
-  // }
   let [paginateProducts, setpaginateProducts] = useState([]);
 
   const nextPage = () => {
@@ -108,17 +97,17 @@ const Allproducts = ({ route, navigation }) => {
 
   // ---------- handlers ----------
   function setPage(number) {
-    setCurrentPage(number);
+    setCurrentPage(number)
+    setpaginateProducts([]);
   }
 
+
   function handleCategory(e) {
-    setpaginateProducts([])
     dispatch(getProductsByCategory(e.value));
     setPage(1);
   }
 
   function handlePrice(e) {
-    setpaginateProducts([])
     dispatch(getByPrice(e.value));
     setPage(1);
   }
@@ -134,26 +123,18 @@ const Allproducts = ({ route, navigation }) => {
     ) : null;
   };
 
-  // console.log(currentPage);
   const loadMoreItem = () => {
-    // if (isLoading) {
-      // console.log(currentPage);
      setCurrentPage(currentPage+1)
       nextPage();
       products.length === paginateProducts.length
         ? setIsLoading(false)
         : setIsLoading(true);
-      // console.log("ejecutando");
-    // }
   };
-
-  // console.log(products)
-  //   console.log(paginateProducts)
 
   return (
     <View style={styles.container}>
       <View style={styles.SB}>
-        <SearchBar navigation={navigation} route={route} setPage={setPage} setpaginateProducts={setpaginateProducts} />
+        <SearchBar navigation={navigation} route={route} setPage={setPage}  />
       </View>
       {/* ------------ TITLE ------------ */}
       {/* <Text style={styles.title}>{searchName}</Text> *MEJOR QUE NO FUNCIONE A QUE FUNCIONE MAL /}

@@ -177,6 +177,16 @@ export const sendEmail = (emailData) => async (dispatch) => {
             console.log(error);
         };
     };
+
+    export const functionReset = (data)=> async() => {
+        try {
+            await axios.put(ROUTE+'/users/resetPassword', data);
+            alert('user password reset successfully')
+        } catch (error) {
+            console.log(error);
+        };
+    };
+
 export const { setLogOut,searchOrder,FilterByStatus} = realUserSlice.actions;
 
 export default realUserSlice.reducer;
