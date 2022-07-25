@@ -32,29 +32,35 @@ const updateLocalCart = async (value) => {
 
 const Cart = (props) => {
   const dispatch = useDispatch();
-  const { navigation, item } = props;
-  const [cart, setCart] = useState([]);
+  const { item } = props;
 
   const infoCart = useSelector((state) => state.ALL_PRODUCTS.cart);
-
+  
   const onClickAddCart = (data) => {
-    //console.log(data);
-    const itemCart = {
-      article: data.name,
-      detail: data.detail,
-      id: data.id,
-      quantity: 1,
-      price: data.price,
-      img: data.img,
-      offer: data.offer,
-    };
-   
-    updateLocalCart(data)
-    //setCart((item)=>item.concat(itemCart));
-    //infoCart.concat(itemCart);
-    //var arr = [itemCart]
-    dispatch(cartCreate(itemCart));
-
+    // console.log(data.id);
+    console.log(data);
+    let find = infoCart.find(obj => obj.id === data.id)
+    if(find){
+      alert("This item is allready on your cart")
+    } else {
+      const itemCart = {
+        article: data.name,
+        detail: data.detail,
+        id: data.id,
+        quantity: 1,
+        price: data.price,
+        img: data.img,
+        offer: data.offer,
+        ////////////////////////////////////////////////////////////////
+        stock: data.stock
+      };
+     console.log(itemCart);
+     ////////////////////////////////////////////////////////////////////////////
+      // updateLocalCart(data)
+      updateLocalCart(itemCart)
+      //////////////////////////////////////////////////////////////////////////
+      dispatch(cartCreate(itemCart));
+    }
   };
 
   return (
@@ -62,7 +68,7 @@ const Cart = (props) => {
       onPress={() => onClickAddCart(item)}
       style={styles.addCart}
     >
-      <Text style={styles.addCartText}>Add cart</Text>
+      <Text style={styles.addCartText}>Add Cart</Text>
     </TouchableOpacity>
   );
 };
@@ -70,7 +76,7 @@ const Cart = (props) => {
 const styles = StyleSheet.create({
   addCart: {
     alignItems: "center",
-    backgroundColor: "#33c37d",
+    backgroundColor: "#111111",
     alignItems: "center",
     padding: 5,
     borderRadius: 5,
