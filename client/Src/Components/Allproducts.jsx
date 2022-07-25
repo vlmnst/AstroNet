@@ -53,15 +53,7 @@ const Allproducts = ({ route, navigation }) => {
     ? categories.map((c, index) => pickerItems.push({ label: c, value: c }))
     : null;
 
-  // mount
-  // useEffect(() => {
-  //   if (searchName !==undefined){
-  //   categories.includes(searchName)
-  //     ? dispatch(getProductsByCategory(searchName))
-  //     : dispatch(getProductsByName(searchName));
-  //   }
-  //   setPage(1);
-  // }, [dispatch]);
+
   useEffect(() => {
     if (searchName !== undefined){
       categories.includes(searchName)
@@ -83,16 +75,6 @@ const Allproducts = ({ route, navigation }) => {
     return () => dispatch(clearCache());
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   return () => dispatch(clearCache());
-  // }, [dispatch]);
-
-//    //mount
-//    useEffect(() => {
-//     getAllProducts()
-// console.log('allprodu');
-// }, [products]);
-
 
 
   // ---------- paginate ----------
@@ -102,10 +84,6 @@ const Allproducts = ({ route, navigation }) => {
   const indexOfLast = currentPage * productsPerPage;
   const indexOfFirst = indexOfLast - productsPerPage;
 
-  // let paginateProducts;
-  // if (products.length > 0) {
-  //   paginateProducts = products.slice(indexOfFirst, indexOfLast);
-  // }
   let [paginateProducts, setpaginateProducts] = useState([]);
 
   const nextPage = () => {
@@ -119,17 +97,17 @@ const Allproducts = ({ route, navigation }) => {
 
   // ---------- handlers ----------
   function setPage(number) {
-    setCurrentPage(number);
+    setCurrentPage(number)
+    setpaginateProducts([]);
   }
 
+
   function handleCategory(e) {
-    setpaginateProducts([])
     dispatch(getProductsByCategory(e.value));
     setPage(1);
   }
 
   function handlePrice(e) {
-    setpaginateProducts([])
     dispatch(getByPrice(e.value));
     setPage(1);
   }
@@ -156,7 +134,7 @@ const Allproducts = ({ route, navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.SB}>
-        <SearchBar navigation={navigation} route={route} setPage={setPage} setpaginateProducts={setpaginateProducts} />
+        <SearchBar navigation={navigation} route={route} setPage={setPage}  />
       </View>
       {/* ------------ TITLE ------------ */}
       {/* <Text style={styles.title}>{searchName}</Text> *MEJOR QUE NO FUNCIONE A QUE FUNCIONE MAL /}

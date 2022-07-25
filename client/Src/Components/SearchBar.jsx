@@ -5,8 +5,10 @@ import React, { useState } from "react";
 import Icon from 'react-native-vector-icons/Ionicons';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import img from '../../assets/logo/logoAstronet.png'
-
-const SearchBar = ({ navigation, route, setPage, setpaginateProducts }) => {
+//, { navigation, route, setPage, setpaginateProducts }
+const SearchBar = (props ) => {
+  console.log(props)
+  const  { navigation, route, setPage } = props
   const dispatch = useDispatch();
   const [nombre, setNombre] = useState('');
 
@@ -18,10 +20,11 @@ const SearchBar = ({ navigation, route, setPage, setpaginateProducts }) => {
     if (nombre === '') alert('Enter a name')
     else {
       route.name === 'Home' ?
-      navigation.navigate('Allproducts', nombre) : setPage(1), setpaginateProducts([]), dispatch(getProductsByName(nombre));
+      navigation.navigate('Allproducts', nombre) : setPage(1), dispatch(getProductsByName(nombre) );
+      // navigation.navigate('Allproducts', nombre) : dispatch(getProductsByName(nombre));
     };
     setNombre("")
-  };
+  }; 
 
   return (
     <View style={styles.Container_}>

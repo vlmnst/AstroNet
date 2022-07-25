@@ -3,7 +3,6 @@ const { Expo } = require('expo-server-sdk');
 const Token =require('../models/Token');
 
 const sendEmail = async (req, res, next) => {
-
     try {
         let { userMail, message } = req.body;
         const eMailer = nodemailer.createTransport({
@@ -29,7 +28,7 @@ const sendEmail = async (req, res, next) => {
             }
         })
     } catch (error) {
-        return next(error);
+        console.log(error)
     };
 };
 const expo = new Expo();
