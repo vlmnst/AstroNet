@@ -32,6 +32,7 @@ const Allproducts = ({ route, navigation }) => {
 
   // ---------- global states ----------
   let products = useSelector((state) => state.ALL_PRODUCTS.allProductsFiltered);
+  let userRole = useSelector((state) => state.USER.role);
   let [categories ] = useState(
     useSelector((state) => state.ALL_PRODUCTS.categories)
   );
@@ -195,6 +196,7 @@ const Allproducts = ({ route, navigation }) => {
         </View>
       ) : (
         <View style={styles.flatListContainer}>
+
           {/* ------------ PRODUCTS CARDS ------------ */}
           <FlatList
             columnWrapperStyle={{ justifyContent: "space-evenly" }}
@@ -205,19 +207,21 @@ const Allproducts = ({ route, navigation }) => {
             onEndReached={() => loadMoreItem()}
             ListFooterComponent={renderLoader}
             renderItem={({ item }) => (
-              <View>
-                <ProductCard navigation={navigation} item={item} />
-              </View>
+              (item.stock === 0) 
+                ? (userRole === 'admin' || userRole === 'mod')
+                  ? (
+                    <View>
+                      <ProductCard navigation={navigation} item={item} />
+                    </View>
+                  ) : (
+                    null
+                  )
+                : (<View>
+                    <ProductCard navigation={navigation} item={item} />
+                  </View>)
             )}
           />
 
-          {/* ------------ PAGINATE ------------ */}
-          {/* <Paginate
-            products={products.length}
-            currentPage={currentPage}
-            setPage={setPage}
-            productsPerPage={productsPerPage}
-          /> */}
         </View>
       )}
     </View>
