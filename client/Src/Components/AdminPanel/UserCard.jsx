@@ -30,7 +30,7 @@ const UserCard = (props) => {
         banned: "banned",
     }
     //-----------Handlers---------------
-    const handlePushPrivilege = (type) => {
+    const handlePushPrivilege = async(type) => {
         if (type !== "banned") {
             const payload = {
                 name: item.username,
@@ -39,7 +39,7 @@ const UserCard = (props) => {
                     privilege: type
                 }
             }
-            dispatch(PutPrivileges(payload))
+            await dispatch(PutPrivileges(payload))
             alert('privileges changed successfully')
             dispatch(getAllUsers())
         } else {
@@ -50,7 +50,7 @@ const UserCard = (props) => {
                     username: userAdmin
                 }
             }
-            dispatch(PutBanned(payload))
+            await dispatch(PutBanned(payload))
             alert('user banned successfully')
             dispatch(getAllUsers())
 
