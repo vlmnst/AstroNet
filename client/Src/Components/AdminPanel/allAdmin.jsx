@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { View, Text, FlatList, StyleSheet } from "react-native";
+import {
+    View,
+    Text,
+    FlatList,
+    StyleSheet,
+    StatusBar,
+    ActivityIndicator
+} from "react-native";
 import { resetAdminProducts, getByPrice, getProductsByCategory, getAllProducts } from "../../../Redux/Slice";
+
 import ProductCardModify from "./ProductCardModify";
 import DropDownPicker from "react-native-dropdown-picker";
 import SearchAdmin from "./SearchAdmin";
@@ -13,7 +21,7 @@ const AllAdmin = ({ route, navigation }) => {
     const dispatch = useDispatch();
     // ---------- global states ----------
     let products = useSelector((state) => state.ALL_PRODUCTS.allProductsFiltered);
-    console.log(products)
+    // console.log(products)
     let [categories /*setCategories*/] = useState(
         useSelector((state) => state.ALL_PRODUCTS.categories)
     );
@@ -34,26 +42,91 @@ const AllAdmin = ({ route, navigation }) => {
         ? categories.map((c, index) => pickerItems.push({ label: c, value: c }))
         : null;
 
+    // unmount
+    // useEffect(() => {
+    //     return () => dispatch(clearAdmin());
+    // }, [dispatch]);
+
+    //update
+    useEffect(() => {
+        dispatch(getAllProducts())
+    }, [getAllProducts]);
+    
+
+    useEffect(() => {
+        loadMoreItem();
+    }, [products]);
+
+
+
+
     // ---------- handlers ----------
 
     function handleCategory(e) {
         e.value === "all Products"?
-        dispatch(resetAdminProducts(e.value)):
-        dispatch(getProductsByCategory(e.value));
+        (setpaginateProducts([]), setPage(1), dispatch(resetAdminProducts(e.value))) :
+        (setpaginateProducts([]), setPage(1), dispatch(getProductsByCategory(e.value)))   ;
     }
 
     function handlePrice(e) {
+        setpaginateProducts([]);
+        setPage(1);
         dispatch(getByPrice(e.value));
+
     }
 
+      // ------------ LOADER ----------
+    const [isLoading, setIsLoading] = useState(true);
+
+    const renderLoader = () => {
+        return isLoading ? (
+        <View style={styles.loaderStyle}>
+            <ActivityIndicator size="large" color="#aaa" />
+        </View>
+        ) : null;
+    };
+
+    // ---------- paginate ----------
+    const [currentPage, setCurrentPage] = useState(0);
+    const productsPerPage = 6;
+
+    const indexOfLast = currentPage * productsPerPage;
+    const indexOfFirst = indexOfLast - productsPerPage;
+
+    let [paginateProducts, setpaginateProducts] = useState([]);
+
+    function setPage(number) {
+        setCurrentPage(number);
+      }
+
+      const nextPage = () => {
+        if (products?.length > 1) {
+          setpaginateProducts([
+            ...paginateProducts,
+            ...products.slice(indexOfFirst, indexOfLast),
+          ]);
+        }
+      };
+
+    const loadMoreItem = () => {
+        setCurrentPage(currentPage+1)
+        nextPage();
+        products.length === paginateProducts.length
+            ? setIsLoading(false)
+            : setIsLoading(true);
+    };
+    
+    
     return (
 
             <View style={styles.container}>
                 {/* ------------ TITLE ------------ */}
                 <View style={styles.SBcontainer}>
                     <View style={styles.SB}>
+
                         <IconIonicons style={styles.iconMenu} name="chevron-back" size={36} onPress={() => navigation.goBack()}/>
-                        <SearchAdmin navigation={navigation} route={route} />
+                        <SearchAdmin navigation={navigation} route={route}  setPage={setPage} setpaginateProducts={setpaginateProducts} />
+
                         {/* <Text style={{fontSize:24, color:'white', fontWeight:'bold'}}>Create a new product</Text> */}
                     </View>
                 </View>
@@ -102,10 +175,13 @@ const AllAdmin = ({ route, navigation }) => {
                     columnWrapperStyle={{ justifyContent: "space-evenly" }}
                     style={styles.flatList}
                     numColumns={2}
-                    data={products}
+                    data={paginateProducts}
+                    onEndReachedThreshold={0.2}
+                    onEndReached={() => loadMoreItem()}
+                    ListFooterComponent={renderLoader}
                     renderItem={({ item }) => (
                         <View >
-                            <ProductCardModify navigation={navigation} item={item} />
+                            <ProductCardModify navigation={navigation} item={item} setPage={setPage} setpaginateProducts={setpaginateProducts} />
                         </View>
                     )}
                 />
