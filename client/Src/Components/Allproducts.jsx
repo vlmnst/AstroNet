@@ -134,21 +134,15 @@ const Allproducts = ({ route, navigation }) => {
     ) : null;
   };
 
-  // console.log(currentPage);
   const loadMoreItem = () => {
     // if (isLoading) {
-      // console.log(currentPage);
      setCurrentPage(currentPage+1)
       nextPage();
       products.length === paginateProducts.length
         ? setIsLoading(false)
         : setIsLoading(true);
-      // console.log("ejecutando");
     // }
   };
-
-  console.log(products)
-    console.log(paginateProducts)
 
   return (
     <View style={styles.container}>
