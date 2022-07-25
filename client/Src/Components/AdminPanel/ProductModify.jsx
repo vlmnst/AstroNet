@@ -12,13 +12,6 @@ const ProductModify = (props) => {
     const { item, setPage, setpaginateProducts} = props.route.params
     const dispatch = useDispatch();
 
-    // useEffect(()=>{
-    //     console.log('limpio')
-    //     return () =>  dispatch(clearCache()),
-    //     setpaginateProducts([]),
-    //     setPage(1);
-    // },[dispatch])
-
     // reducer states
     // let item = props.route.params;
     let categoriesReducer = useSelector((state) => state.ALL_PRODUCTS.categories); 
