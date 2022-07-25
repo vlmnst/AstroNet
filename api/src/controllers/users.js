@@ -233,4 +233,11 @@ const putpurchasedProducts = async (req, res, next) => {
     }
 };
 
-module.exports = { createUser, getAllUsers, totalUsers, PutPrivileges, PutBanned, getPurchasedProducts, getProductsHistory, getUser,getUsersFull,getPurchasedProductsAllUsers,putpurchasedProducts};
+const addItemInWishList = async (req, res, next) => {
+    let {id, idUser}= req.body;
+    console.log(id);
+    console.log(idUser)
+
+}
+
+module.exports = { createUser, getAllUsers, totalUsers, PutPrivileges, PutBanned, getPurchasedProducts, getProductsHistory, getUser,getUsersFull,getPurchasedProductsAllUsers,putpurchasedProducts, addItemInWishList};

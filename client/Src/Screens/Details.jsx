@@ -6,13 +6,14 @@ import AverageScore from "../Components/AverageScore";
 import IconIonicons from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ImageDetails from "../Components/ImageDetails";
+import WishListButton from "../Components/WishListButton";
 
 const Details = (props) => {
 
   const { route } = props;
   const { params } = route;
   const { navigation } = props
-  console.log(props)
+  //console.log(props)
 
   return (
     <View>
@@ -65,6 +66,10 @@ const Details = (props) => {
 
           <View style={styles.addcartbtn}>
             <Cart navigation={route} item={params} />
+          </View>
+
+          <View style={styles.addcartbtn}>
+            <WishListButton navigation={route} item={params} />
           </View>
 
             {/* -------AVERAGE SCORE--------------  */}

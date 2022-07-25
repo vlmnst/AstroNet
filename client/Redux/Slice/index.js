@@ -1,7 +1,8 @@
 import {createSlice, dispatch} from '@reduxjs/toolkit';
 import axios from 'axios';
-import { ROUTE }  from '@env';
-// const ROUTE = "http://localhost:3001";
+//import { ROUTE }  from '@env';
+const ROUTE='https://proyectofinal-api-777.herokuapp.com';
+//const ROUTE = "http://localhost:3001";
 
 
 export const userSlice = createSlice({
@@ -14,6 +15,7 @@ export const userSlice = createSlice({
         AllUsers:[],
         AllUsersFiltered: [],
         cart:[],
+        wishList:[]
     },
     reducers:{
         getAllProducts(state,action){
@@ -94,7 +96,10 @@ export const userSlice = createSlice({
         },
         deleteCart(state){
             state.cart = []
-        }
+        },
+        //wishListCreate(state, action){
+          //  state.wishList = [...state.wishList, action.payload]
+        //}
     }
 });
 
@@ -184,6 +189,22 @@ export const cartCreate = (payload) => async(dispatch) => {
 export const initialCartUpdate = (payload) => async(dispatch) => {
     dispatch(userSlice.actions.initialCartUpdate(payload))
 }
+
+//export const wishListCreate = (payload) => async(dispatch) => {
+  //  console.log(payload);
+    //dispatch(userSlice.actions.wishListCreate(payload))
+//}
+
+// export const wishListCreate = (payload)=> async() => {
+//     console.log(payload);
+//     const { id, idUser } = payload
+//     try {
+//         await axios.post(ROUTE +"/users"+idUser, id);
+//         alert('Add in Wishlist Succesfully ');
+//     } catch (e) {
+//         alert(!e.response.data.error ? e.response.data : e.response.data.error)
+//     };
+// };
 
 export const {getByPrice, clearCache,clearAdmin,getAdminByPrice,resetAdminProducts,searchUser, deleteCart} =userSlice.actions;
 
