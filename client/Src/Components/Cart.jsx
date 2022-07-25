@@ -1,5 +1,4 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-//import { Icon } from "react-native-vector-icons/Icon";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -29,7 +28,6 @@ const updateLocalCart = async (value) => {
   }
 };
 
-
 const Cart = (props) => {
   const dispatch = useDispatch();
   const { item } = props;
@@ -37,8 +35,7 @@ const Cart = (props) => {
   const infoCart = useSelector((state) => state.ALL_PRODUCTS.cart);
   
   const onClickAddCart = (data) => {
-    // console.log(data.id);
-    console.log(data);
+
     let find = infoCart.find(obj => obj.id === data.id)
     if(find){
       alert("This item is allready on your cart")
@@ -53,15 +50,7 @@ const Cart = (props) => {
         offer: data.offer,
         stock: data.stock
       };
-
-
-     console.log(itemCart);
-console.log("hola linea 59");
-
-     ////////////////////////////////////////////////////////////////////////////
-      // updateLocalCart(data)
       updateLocalCart(itemCart)
-      //////////////////////////////////////////////////////////////////////////
       dispatch(cartCreate(itemCart));
     }
   };

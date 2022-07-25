@@ -1,5 +1,4 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-//import { Icon } from "react-native-vector-icons/Icon";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -24,18 +23,6 @@ const DeleteCart = (props) => {
       console.log(error);
     };
   };
-
-
-
-
-  // const onClickDeleteCart = (data) => {
-  //   //console.log(data); 
-  //   console.log("hola")
-   
-  //   updateLocalCart(data)
-  //   // dispatch(cartCreate(itemCart));
-
-  // };
 
   return (
     <TouchableOpacity
