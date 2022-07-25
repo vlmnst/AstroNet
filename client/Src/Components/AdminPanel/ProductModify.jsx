@@ -5,7 +5,7 @@ import DropDownPicker from "react-native-dropdown-picker";
 import { getAllProducts, ModifyProducts, clearCache} from "../../../Redux/Slice";
 import ImageLibrary from '../ImageLibrary';
 import PrePreview from '../PrePreview';
-import FeatherIcon from 'react-native-vector-icons/Feather';
+import IconIonicons from 'react-native-vector-icons/Ionicons';
 
 const ProductModify = (props) => {
     //  console.log(props);
@@ -110,7 +110,7 @@ const ProductModify = (props) => {
 
             <View style={styles.SBcontainer}>
                 <View style={styles.SB}>
-                    <FeatherIcon style={styles.iconMenu} name="skip-back" size={36} onPress={() => props.navigation.goBack()}/>
+                    <IconIonicons style={styles.iconMenu} name="chevron-back" size={36} onPress={() => props.navigation.goBack()}/>
                 </View>
             </View>
 
