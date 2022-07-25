@@ -82,7 +82,7 @@ const ProductCreate = ({navigation}) => {
         setDescription('');
         setDetail('');
         setCategories([]);
-        setImages({ one: '', two: '', three: '' })
+        setImages({ one: 'empty', two: 'empty', three: 'empty' })
     };
 
     function submitForm() {
@@ -99,7 +99,7 @@ const ProductCreate = ({navigation}) => {
             category: categories, 
             img: [images.one, images.two, images.three],
         };
-
+        // console.log(product)
         dispatch(createProduct(product));
         clearInputs();
     };

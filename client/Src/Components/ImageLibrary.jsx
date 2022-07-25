@@ -41,31 +41,35 @@ const ImageLibrary = ({images, setImages}) => {
     // abrir galeria
     const selectImage = async(number) => {
         let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
             aspect: [4, 3],
+            base64: true,
             quality: 1,
         });
             // returns ---> { cancelled: false, uri(url,base64), width, height }
-        
+
+        const encoded = 'data:image/png;base64,' + result.base64;
         // si sale bien, seteo imagen
         if (!result.cancelled) {
-            setImages({...images, [number]: result.uri});
+            setImages({...images, [number]: encoded});
         };
     };
 
     // abrir camara
     const openCamera = async(number) => {
         let result = await ImagePicker.launchCameraAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
             aspect: [4, 3],
+            base64: true,
             quality: 1,
         });
             // returns ---> { cancelled: false, type: 'image', uri, width, height, exif, base64 }
-        
+
+        const encoded = 'data:image/png;base64,' + result.base64;
         if (!result.cancelled) {
-            setImages({...images, [number]: result.uri});
+            setImages({...images, [number]: encoded});
         };
         // console.log(result);
     };   
