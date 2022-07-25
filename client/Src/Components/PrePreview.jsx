@@ -1,4 +1,4 @@
-import { Text, View, Modal, StyleSheet, Pressable, Image } from "react-native";
+import { Text, View, Modal, StyleSheet, Pressable } from "react-native";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import ImageDetails from "./ImageDetails";
@@ -32,7 +32,6 @@ const PrePreview = ({item}) => {
                 >
                 <View style={styles.modalBackground}>
                 <Text style={styles.name}>{item.name} </Text>
-                    {/* <Image source={{ uri: item.images.one }} style={styles.image} /> */}
                     <ImageDetails images={images}/>
                         <View style={styles.contInt}>
                             <View style={item.priceOffer}>
@@ -63,7 +62,6 @@ const PrePreview = ({item}) => {
                                 {item.description? item.description.map((p, index) => {
                                     return (
                                         <Text style={styles.description} key={index}>
-                                            {/* {p[0]}: {p[1]} */}
                                             {Object.keys(p)} : {Object.values(p)}
                                         </Text>
                                     );
@@ -140,7 +138,7 @@ const styles = StyleSheet.create({
         fontSize: nameFont,
         textDecorationLine:'line-through'
     },
-    price: { fontSize: priceOfferFont },
+    price: { fontSize: priceOfferFont, color: 'green', fontSize: 20, },
     offer: { color: "red", fontSize: priceOfferFont },  
     pricenew: {
         color: "green",

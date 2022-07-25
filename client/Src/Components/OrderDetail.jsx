@@ -1,11 +1,7 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  Image,
-} from "react-native";
+import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from "react-native";
 import IconIonicons from 'react-native-vector-icons/Ionicons';
+
+import PrePreview from "./PrePreview";
 
 const OrderDetail = (props) => {
   const { navigation, route } = props;
@@ -15,7 +11,7 @@ const OrderDetail = (props) => {
     <View style={styles.container}>
       <View style={styles.SBcontainer}>
 				<View style={styles.SB}>
-          <IconIonicons style={styles.iconMenu} name="chevron-back" size={36} onPress={() => props.navigation.goBack()}/>
+          <IconIonicons style={styles.iconMenu} name="chevron-back" size={36} onPress={() => navigation.goBack()}/>
 					<Text style={{fontSize:28, color:'white', fontWeight:'bold'}}>Purchase Order</Text>
 				</View>
 			</View>
@@ -26,13 +22,26 @@ const OrderDetail = (props) => {
         data={detail}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item,index }) => (
-
-          <View style={styles.PODetail}>
-            <Image source={{ uri: item.img[0] }} style={styles.image} />
-            <Text>{item.name}</Text>
-            <Text>{`price: $${item.price}`}</Text>
-            <Text>{`Quantity: ${item.quantity}`}</Text>
-          </View>
+          <TouchableOpacity onPress={() => prepareForReview(item)}>
+            <View style={styles.PODetail}>
+              <Image source={{ uri: item.img[0] }} style={styles.image} />
+              <Text>{item.name}</Text>
+              <Text>{`price: $${item.price}`}</Text>
+              <Text>{`Quantity: ${item.quantity}`}</Text>
+              <View>
+                <PrePreview item={ product = {
+                  name: item.name,
+                  price: item.price,
+                  offer: item.offer,
+                  images: {
+                    one: item.img[0]?.length > 0 ? item.img[0] : 'empty',
+                    two: item.img[1]?.length > 0 ? item.img[1] : 'empty',
+                    three: item.img[2]?.length > 0 ? item.img[2] : 'empty',
+                  }}
+                }/>
+              </View>
+            </View>
+          </TouchableOpacity>
         )}
       />
       <Text style={styles.total}>{`Total: $${route.params?.total}`}</Text>
