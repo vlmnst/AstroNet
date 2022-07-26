@@ -1,7 +1,6 @@
 const Product = require('../models/Product');
 const User = require('../models/User');
 const { v4: uuidv4 } = require('uuid');
-const axios = require('axios');
 const { cloudinary } = require('../utils/cloudinary.jsx');
 const mercadopago = require('mercadopago');
 const { sendEmail } = require('./nodemailer');
@@ -153,7 +152,7 @@ const buyProduct = async (req, res, next) => {
     try {
         // cart = [{idProduct1, quantity}, {idProduct2, quantity}, etc]
         const { cart, email } = req.body;
-        console.log(req.body)
+
         const user = await User.findOne({email});
 
         var outOfStock = 0;
@@ -224,7 +223,7 @@ const buyProduct = async (req, res, next) => {
 const getProductsByCategory = async (req, res, next) => {
     try{
         let category = req.params.category
-        console.log(category)
+
         if(category){
             let productsFound = await Product.find({category: category})
             if(productsFound.length === 0) {
@@ -288,9 +287,35 @@ const putReview = async (req, res, next) => {
 
     try {
         const { id } = req.params;
-        const {review} = req.body; // review: {rating, comment, owner}
-        // console.log(req.body)
-        // falta ir a buscar al owner y sus productHistory, para agregarle al producto comprado : REVIEW = true
+        const {review, username} = req.body; // review: {rating, comment, owner}
+
+        // const user = await User.findOne({ "username": username, "detail.id": id}, { $inc: { "detail.$.review": true }})
+        // db.test_invoice.update({user_id : 123456 , "items.item_name":"my_item_one"} , {$inc: {"items.$.price": 10}})
+        
+        // if (user) {
+        //     for (let i = 0; i < user.productsHistory.length; i++) {
+        //         for (let j = 0; j < user.productsHistory[i].detail.length; j++) {
+        //             if (user.productsHistory[i].detail[j].id === id) {
+        //                 console.log('llegue')
+        //                 if (user.productsHistory[i].detail[j].review === true) {
+        //                     return res.status(400).json({ error: 'already reviewed this products'})
+        //                 } else {
+        //                     user.productsHistory[i].detail[j].review = true;
+        //                     const newHistory = user.productsHistory;
+        //                     user.productsHistory = newHistory;
+        //                     await user.save()
+        //                 };
+        //             };
+        //         }
+        //     }
+        // };
+
+        // user.save();
+
+        /////////////////////////////////
+        // console.log('user saved')
+        // return res.json(user);
+        /////////////////////////////////
      
         const addReviewProduct = await Product.updateOne({"_id": id }, {$push: {"reviews": review}});
 

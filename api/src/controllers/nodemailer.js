@@ -36,10 +36,10 @@ const expo = new Expo();
 const putToken = async (req, res, next) => {
     try {
         const {token} = req.body;
-        console.log(token)
+
         // chequeo no repetir token
         const exists = await Token.find({token})
-        console.log(exists)
+
         if (exists.length > 0) return res.status(200).json({message:'token already exists'})
         const tokens = new Token({token});
         let savedtoken= await tokens.save();
@@ -78,7 +78,7 @@ const pushToken = async (req, res, next) => {
             for (let chunk of chunks) {
                 try {
                     let ticketChunk = await expo.sendPushNotificationsAsync(chunk);
-                    console.log(ticketChunk);
+
                     tickets.push(...ticketChunk);
                 } catch (error) {
                     console.error(error);

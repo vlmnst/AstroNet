@@ -1,15 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-    View,
-    Text,
-    FlatList,
-    StyleSheet,
-    StatusBar,
-    ActivityIndicator
-} from "react-native";
+import { View, Text, FlatList, StyleSheet, ActivityIndicator } from "react-native";
 import { resetAdminProducts, getByPrice, getProductsByCategory, getAllProducts, setPageScrollinf, setpaginateProducts } from "../../../Redux/Slice";
-
 import ProductCardModify from "./ProductCardModify";
 import DropDownPicker from "react-native-dropdown-picker";
 import SearchAdmin from "./SearchAdmin";
@@ -23,7 +15,7 @@ const AllAdmin = ({ route, navigation }) => {
     let products = useSelector((state) => state.ALL_PRODUCTS.allProductsFiltered);
     let paginate = useSelector((state) => state.ALL_PRODUCTS.pageScrollinf);
     let paginateProducts = useSelector((state) => state.ALL_PRODUCTS.paginateProductsScrollinf)
-    // console.log(products)
+
     let [categories /*setCategories*/] = useState(
         useSelector((state) => state.ALL_PRODUCTS.categories)
     );
@@ -44,11 +36,6 @@ const AllAdmin = ({ route, navigation }) => {
         ? categories.map((c, index) => pickerItems.push({ label: c, value: c }))
         : null;
 
-    // unmount
-    // useEffect(() => {
-    //     return () => dispatch(clearAdmin());
-    // }, [dispatch]);
-
     //update
     useEffect(() => {
         dispatch(getAllProducts())
@@ -60,9 +47,6 @@ const AllAdmin = ({ route, navigation }) => {
     useEffect(() => {
         loadMoreItem();
     }, [products]);
-
-
-
 
     // ---------- handlers ----------
 
@@ -91,18 +75,10 @@ const AllAdmin = ({ route, navigation }) => {
     };
 
     // ---------- paginate ----------
-    // const [currentPage, setCurrentPage] = useState(0);
     const productsPerPage = 6;
 
     const indexOfLast = paginate * productsPerPage;
     const indexOfFirst = indexOfLast - productsPerPage;
-
-    // let [paginateProducts, setpaginateProducts] = useState([]);
-
-    // function setPage(number) {
-    //     // setCurrentPage(number);
-    //     dispatch(setPageScrollinf(number))///////
-    // }
 
     const nextPage = () => {
         if (products?.length > 1) {
@@ -114,7 +90,6 @@ const AllAdmin = ({ route, navigation }) => {
     };
 
     const loadMoreItem = () => {
-        // setCurrentPage(currentPage+1)
         dispatch(setPageScrollinf(paginate+1))////
         nextPage();
         products.length === paginateProducts.length
@@ -129,16 +104,10 @@ const AllAdmin = ({ route, navigation }) => {
                 {/* ------------ TITLE ------------ */}
                 <View style={styles.SBcontainer}>
                     <View style={styles.SB}>
-
                         <IconIonicons style={styles.iconMenu} name="chevron-back" size={36} onPress={() => navigation.goBack()}/>
                         <SearchAdmin navigation={navigation} route={route} setpaginateProducts={setpaginateProducts} />
-
-                        {/* <Text style={{fontSize:24, color:'white', fontWeight:'bold'}}>Create a new product</Text> */}
                     </View>
                 </View>
-                {/* <View style={styles.nav}>
-                    <SearchAdmin navigation={navigation} route={route} />
-                </View> */}
                 {valueitems?
                     <Text style={styles.title}>{valueitems}</Text>
                 :null}
@@ -214,7 +183,6 @@ const styles = StyleSheet.create({
         alignItems:"center",
         height:'65%',
         backgroundColor: '#4A347F',
-        // backgroundColor:'white',
         width: '100%',
         marginTop:'9%'
     },
@@ -244,7 +212,6 @@ const styles = StyleSheet.create({
     },
     nav: {
         flexDirection: 'row',
-        // backgroundColor: '#3E3E3E',
         justifyContent: 'center',
         width: '75%',
         height: 20,

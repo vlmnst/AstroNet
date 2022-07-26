@@ -3,11 +3,9 @@ import { getProductsByName } from '../../Redux/Slice';
 import { useDispatch } from "react-redux";
 import React, { useState } from "react";
 import Icon from 'react-native-vector-icons/Ionicons';
-import FeatherIcon from 'react-native-vector-icons/Feather';
 import img from '../../assets/logo/logoAstronet.png'
-//, { navigation, route, setPage, setpaginateProducts }
 const SearchBar = (props ) => {
-  // console.log(props)
+
   const  { navigation, route, setPage } = props
   const dispatch = useDispatch();
   const [nombre, setNombre] = useState('');
@@ -21,14 +19,12 @@ const SearchBar = (props ) => {
     else {
       route.name === 'Home' ?
       navigation.navigate('Allproducts', nombre) : setPage(1), dispatch(getProductsByName(nombre) );
-      // navigation.navigate('Allproducts', nombre) : dispatch(getProductsByName(nombre));
     };
     setNombre("")
   }; 
 
   return (
     <View style={styles.Container_}>
-      {/* <FeatherIcon style={styles.iconMenu} name="menu" size={36} onPress={() => navigation.openDrawer()}/> */}
       <TouchableOpacity onPress={() => navigation.openDrawer()}>
         <Image style={styles.img} source={ img } />
       </TouchableOpacity>
@@ -62,7 +58,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderColor: "#A09E9E",
     backgroundColor: "white",
-    // marginBottom: 2
   },
   Container_: {
     flexDirection: "row",
@@ -83,7 +78,6 @@ const styles = StyleSheet.create({
   },
   iconMenu: {
     marginRight: 12,
-    // marginBottom: 3
   }
 });
 

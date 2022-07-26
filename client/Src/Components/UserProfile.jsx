@@ -1,18 +1,16 @@
 import React, { useEffect } from "react";
-import { View, StyleSheet, Text, TouchableOpacity, ScrollView, FlatList, Image, Button } from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity, ScrollView } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserFullData,getPurchaseOrders } from "../../Redux/Slice/userSlice";
 import FeatherIcon from 'react-native-vector-icons/Feather';
-// import Icon from 'react-native-vector-icons/Ionicons';
 import Loader from "./Loader";
 
-const UserProfile = ({ navigation, route }) => {
+const UserProfile = ({ navigation }) => {
 
     const dispatch = useDispatch()
     const data = useSelector((state) => state.USER.userFullData)
     const email = useSelector((state) => state.USER.email)
     const userName = useSelector((state) => state.USER.userName)
-    // console.log(data)
 
     useEffect(()=>{  
         dispatch(getPurchaseOrders(userName));
@@ -91,20 +89,12 @@ const UserProfile = ({ navigation, route }) => {
                                 <TouchableOpacity style={styles.ordersandreviewsbtns} onPress={()=>navigation.navigate("PurchaseHistory", {navigation})}>
                                     <Text style={{color:'white', fontSize:20, fontWeight:"bold"}}>View</Text>
                                 </TouchableOpacity>
-                                {/* <Button 
-                                    onPress={()=>navigation.navigate("PurchaseHistory", {navigation})}
-                                    title='open'
-                                /> */}
                             </View>
                             <Text style={styles.text1}>Reviews:</Text>
                             <View style={styles.view2_1}>
                                 <TouchableOpacity style={styles.ordersandreviewsbtns} onPress={()=>navigation.navigate("DoReview", {navigation})}>
                                     <Text style={{color:'white', fontSize:20, fontWeight:"bold"}}>View</Text>
                                 </TouchableOpacity>
-                                {/* <Button 
-                                    onPress={()=>navigation.navigate("DoReview", {navigation})}
-                                    title='items'
-                                /> */}
                             </View>
                         </View>
                     </ScrollView>
@@ -118,7 +108,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
         width: '100%',
         minHeight: '100%',
-        // flexDirection:"column"
     },
     view1: {
         minHeight:'100%'
@@ -134,7 +123,6 @@ const styles = StyleSheet.create({
         alignItems:"center",
         height:'65%',
         backgroundColor: '#4A347F',
-        // backgroundColor:'white',
         width: '100%',
         marginTop:'9%'
     },
@@ -157,7 +145,6 @@ const styles = StyleSheet.create({
         height: '50%',
         justifyContent:"flex-start",
         alignItems:"center"
-        // marginVertical: 15
     },
     textusername: {
         fontSize: 35,

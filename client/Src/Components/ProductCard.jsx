@@ -1,12 +1,7 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-import Cart from "./Cart";
 
 const ProductCard = (props) => {
   const { navigation, item } = props;
-
-  // const goToDetails = () => {
-  //   console.log(navigation);
-  // };
 
   return (
     <TouchableOpacity
@@ -28,7 +23,6 @@ const ProductCard = (props) => {
         </View>
         <Text style={styles.name}>{item.name.slice(0,65)}... </Text>
       </View>
-      {/* <Cart navigation={navigation} item={item}/> */}
     </TouchableOpacity>
   );
 };
@@ -87,11 +81,6 @@ const styles = StyleSheet.create({
     color: "red",
     fontSize: font,
   },
-  // description: {
-  //   fontSize: fontDescription,
-  //   padding:0,
-  //   width:10,
-  // },
   pricethrough: {
     fontSize: font,
     textDecorationLine:'line-through'

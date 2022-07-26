@@ -1,6 +1,5 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { Text, StyleSheet, TouchableOpacity } from "react-native";
+import { useDispatch } from "react-redux";
 import { cartCreate } from "../../Redux/Slice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -25,16 +24,12 @@ const removeLocalCart = async (value) => {
   } catch (error) {
     console.log(error);
   }
-  console.log(cartEnStorage)
 };
 
 
 const CartRemove = (props) => {
   const dispatch = useDispatch();
   const { navigation, item } = props;
-  const [cart, setCart] = useState([]);
-
-  const infoCart = useSelector((state) => state.ALL_PRODUCTS.cart);
 
   const removeCart = (data) => {
     const itemCart = {

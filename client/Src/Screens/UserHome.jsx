@@ -9,9 +9,8 @@ import Login from "../Components/Login";
 import UserCreate from "../Components/UserCreate";
 import Cart from "../Components/CartLobby";
 import OrderDetail from "../Components/OrderDetail";
-import Checkout from "../Components/config/Checkout"
+import Checkout from "../Components/config/Checkout";
 import ProductModify from "../Components/AdminPanel/ProductModify";
-// import NavBar from "../Components/NavBar";
 
 const Stack = createNativeStackNavigator();
 
@@ -53,9 +52,10 @@ const UserHome = () => {
                     name='OrderDetail' 
                     component={OrderDetail} 
                 />
-                  <Stack.Screen 
+                <Stack.Screen 
                     name='Checkout' 
                     component={Checkout} 
+                />
                 <Stack.Screen 
                     name='ProductModify' 
                     component={ProductModify} 

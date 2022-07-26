@@ -28,12 +28,6 @@ const DoReview = ({ route, navigation }) => {
     const [modalOpen, setModalOpen] = useState(false);
     const [productForReview, setProductForReview] = useState({
         id: null,
-        // name: null,
-        // offer: null,
-        // img: null,
-        // price: null,
-        // quantity: null,
-        // review: null,
     });
 
     // review state
@@ -75,12 +69,6 @@ const DoReview = ({ route, navigation }) => {
         setModalOpen(true);
         setProductForReview({
             id: item.id,
-            // name: item.name,
-            // offer: item.id,
-            // img: item.img,
-            // price: item.price,
-            // quantity: item.quantity,
-            // review: item.review,
         });
     };
 
@@ -88,12 +76,6 @@ const DoReview = ({ route, navigation }) => {
     function handleCancelationReview() {
         setProductForReview({
             id: null,
-            // name: null,
-            // offer: null,
-            // img: null,
-            // price: null,
-            // quantity: null,
-            // review: null,
         })
         setDescription(undefined);
         setRating(undefined);
@@ -105,6 +87,7 @@ const DoReview = ({ route, navigation }) => {
     function handleConfirmationReview() {
         if (description !== undefined && rating !== undefined) {
             const payload = {
+                username: user,
                 idProduct: productForReview.id, 
                 review: {
                     rating,

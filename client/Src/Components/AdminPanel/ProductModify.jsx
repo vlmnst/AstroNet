@@ -8,11 +8,10 @@ import PrePreview from '../PrePreview';
 import IconIonicons from 'react-native-vector-icons/Ionicons';
 
 const ProductModify = (props) => {
-    // console.log('------------------------')
-    // console.log('PRODUCT MODIFY',props.route.params);
+
     let item
     let allproductsroute = false
-    // const { item, setPage, setpaginateProducts} = props.route.params
+
     if(props.route.params.item){
         item = props.route.params.item
         allproductsroute = false
@@ -25,8 +24,6 @@ const ProductModify = (props) => {
     }
     const dispatch = useDispatch();
 
-    // reducer states
-    // let item = props.route.params;
     let categoriesReducer = useSelector((state) => state.ALL_PRODUCTS.categories); 
 
     // picker states
@@ -84,8 +81,6 @@ const ProductModify = (props) => {
             return alert('upload one image at least')
         };
         dispatch(clearCache());
-        // setpaginateProducts([]),
-        // setPage(0);
         dispatch(setPageScrollinf(0))
         dispatch(setpaginateProducts([]))
         const payload = {
@@ -103,7 +98,6 @@ const ProductModify = (props) => {
         dispatch(getAllProducts());
         alert('updated successfully');
         if(allproductsroute === true) {
-            // console.log(props)
             props.navigation.pop(2);
         } else {
             props.navigation.goBack()
@@ -124,7 +118,6 @@ const ProductModify = (props) => {
 
     function handleGoBack () {
         if(allproductsroute === true) {
-            // console.log(props)
             props.navigation.pop(2);
         } else {
             props.navigation.goBack()

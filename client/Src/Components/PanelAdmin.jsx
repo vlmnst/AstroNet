@@ -1,11 +1,9 @@
 import React from "react";
-import { View, StyleSheet, Text, TouchableOpacity, Image } from "react-native";
-import CustomButton from "./CustomButton";
+import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import { useSelector } from "react-redux";
-import Email from "./AdminPanel/email"
 
-const PanelAdmin = ({ navigation, route }) => {
+const PanelAdmin = ({ navigation }) => {
 
     const userName = useSelector((state) => state.USER.userName)
 
@@ -17,34 +15,21 @@ const PanelAdmin = ({ navigation, route }) => {
                         <Text style={{fontSize:28, color:'white', fontWeight:'bold'}}>Admin Panel</Text>
                     </View>
                 </View>
-                {/* <Image source={{uri : 'https://img.freepik.com/free-vector/abstract-colorful-technology-dotted-wave-background_1035-17450.jpg'}} style={styles.background}/> */}
                 <Text style={styles.userName}>{userName.slice(0,1).toUpperCase().concat(userName.slice(1,userName.length))}</Text>
                 <View style={{height:'78%', width:'100%', alignItems:"center"}}>
-                    {/* <CustomButton 
-                        onPress={() => navigation.navigate("AllUsers")}
-                        text='All Users'
-                        fgColor='#17202A'
-                    /> */}
+
                     <TouchableOpacity style={styles.TouchableOpacity} onPress={() => navigation.navigate("AllUsers")}>
                         <View style={styles.button}>
                             <Text style={styles.text}>Users</Text>
                         </View>
                     </TouchableOpacity>
-                    {/* <CustomButton 
-                        onPress={() => navigation.navigate("AllAdmin")}
-                        text='All Products'
-                        fgColor='#17202A'
-                    /> */}
+
                     <TouchableOpacity style={styles.TouchableOpacity} onPress={() => navigation.navigate("AllAdmin")}>
                         <View style={styles.button}>
                             <Text style={styles.text}>Products</Text>
                         </View>
                     </TouchableOpacity>
-                    {/* <CustomButton 
-                        onPress={() => navigation.navigate("ProductCreate")}
-                        text='Create Product'
-                        fgColor='#17202A'
-                    /> */}
+
                     <TouchableOpacity style={styles.TouchableOpacity} onPress={() => navigation.navigate("ProductCreate")}>
                         <View style={styles.button}>
                             <Text style={styles.text}>Post new product</Text>
@@ -55,19 +40,12 @@ const PanelAdmin = ({ navigation, route }) => {
                             <Text style={styles.text}>All Purchase History</Text>
                         </View>
                     </TouchableOpacity>
-                    {/* <Email/> */}
                 </View>
             </View>
     );
 };
 
 const styles = StyleSheet.create({
-    // background: {
-    //     flex: 1,
-    //     position: 'absolute',
-    //     width: '100%',
-    //     height: '100%'
-    // },
     conteiner: {
         position: 'absolute',
         // justifyContent: 'center',
