@@ -68,9 +68,7 @@ const Allproducts = ({ route, navigation }) => {
     }
     dispatch(setpaginateProducts([])),
     dispatch(setPageScrollinf(1))
-    // setPage(1);
   }, [dispatch]);
-
 
   //update
   useEffect(() => {
@@ -89,13 +87,10 @@ const Allproducts = ({ route, navigation }) => {
 
 
   // ---------- paginate ----------
-  // const [currentPage, setCurrentPage] = useState(0);
   const productsPerPage = 6;
 
   const indexOfLast = paginate * productsPerPage;
   const indexOfFirst = indexOfLast - productsPerPage;
-
-  // let [paginateProducts, setpaginateProducts] = useState([]);
 
   const nextPage = () => {
     if (products?.length > 1) {
@@ -107,27 +102,15 @@ const Allproducts = ({ route, navigation }) => {
   };
 
   // ---------- handlers ----------
-  // function setPage(number) {
-  //   setCurrentPage(number)
-  //   setpaginateProducts([]);
-  // }
-
 
   function handleCategory(e) {
-    // setPage(1);
     dispatch(setpaginateProducts([])),
     dispatch(setPageScrollinf(1)),
     dispatch(getProductsByCategory(e.value));
   }
-  // function handleCategory(e) {
-  //   e.value === "all Products"?
-  //   (dispatch(setpaginateProducts([])), dispatch(setPageScrollinf(1)), dispatch(resetAdminProducts(e.value))) :
-  //   (dispatch(setpaginateProducts([])), dispatch(setPageScrollinf(1)), dispatch(getProductsByCategory(e.value)));
-  // }
 
   function handlePrice(e) {
     dispatch(getByPrice(e.value));
-    // setPage(1);
     dispatch(setPageScrollinf(1))
   }
 
@@ -143,7 +126,6 @@ const Allproducts = ({ route, navigation }) => {
   };
 
   const loadMoreItem = () => {
-    //  setCurrentPage(currentPage+1)
       dispatch(setPageScrollinf(paginate+1))
       nextPage();
       products.length === paginateProducts.length

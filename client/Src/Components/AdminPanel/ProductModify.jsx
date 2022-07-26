@@ -102,6 +102,12 @@ const ProductModify = (props) => {
         }
         dispatch(getAllProducts());
         alert('updated successfully');
+        if(allproductsroute === true) {
+            // console.log(props)
+            props.navigation.pop(2);
+        } else {
+            props.navigation.goBack()
+        }
     };
 
     // add new attribute
