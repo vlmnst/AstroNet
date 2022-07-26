@@ -1,7 +1,6 @@
 const Product = require('../models/Product');
 const User = require('../models/User');
 const { v4: uuidv4 } = require('uuid');
-const axios = require('axios');
 const { cloudinary } = require('../utils/cloudinary.jsx');
 const mercadopago = require('mercadopago');
 const { sendEmail } = require('./nodemailer');
@@ -153,7 +152,7 @@ const buyProduct = async (req, res, next) => {
     try {
         // cart = [{idProduct1, quantity}, {idProduct2, quantity}, etc]
         const { cart, email } = req.body;
-        console.log(req.body)
+
         const user = await User.findOne({email});
 
         var outOfStock = 0;
@@ -224,7 +223,7 @@ const buyProduct = async (req, res, next) => {
 const getProductsByCategory = async (req, res, next) => {
     try{
         let category = req.params.category
-        console.log(category)
+
         if(category){
             let productsFound = await Product.find({category: category})
             if(productsFound.length === 0) {
@@ -289,7 +288,7 @@ const putReview = async (req, res, next) => {
     try {
         const { id } = req.params;
         const {review} = req.body; // review: {rating, comment, owner}
-        // console.log(req.body)
+
         // falta ir a buscar al owner y sus productHistory, para agregarle al producto comprado : REVIEW = true
      
         const addReviewProduct = await Product.updateOne({"_id": id }, {$push: {"reviews": review}});

@@ -1,10 +1,10 @@
 import { View, TextInput, StyleSheet } from "react-native";
 import { getProductsByName, searchUser, setPageScrollinf, setpaginateProducts } from '../../../Redux/Slice/index';
 import { useDispatch } from "react-redux";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const SearchAdmin = ({ navigation, route }) => {
+const SearchAdmin = ({ route }) => {
 
     const dispatch = useDispatch();
     const [nombre, setNombre] = useState('');
@@ -14,7 +14,6 @@ const SearchAdmin = ({ navigation, route }) => {
     };
 
     function search(e) {
-        // console.log(route.name)
         route.name === 'AllUsers' ?(
             nombre === ''? alert('Enter a name')
             :
@@ -60,7 +59,6 @@ const styles = StyleSheet.create({
         boderWidth: 1,
         borderColor: "#A09E9E",
         justifyContent:"center",
-        // backgroundColor: "white"
     },
     iconSearch: {
         position:"absolute",

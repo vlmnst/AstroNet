@@ -6,18 +6,6 @@ import { useForm, Controller } from "react-hook-form";
 const ROUTE = "https://proyectofinal-api-777.herokuapp.com";
 import axios from 'axios';
 import FeatherIcon from 'react-native-vector-icons/Feather';
-// import { createUser } from "../../Redux/Slice/userSlice";
-// username:           { type: String, required: true, unique: true },
-// email:              { type: String, required: true, unique: true },
-// role:               { type: String, required: true, unique: false },       // role (admin/user/banned)
-// passwordHash:       { type: String, required: true },
-// dni:                { type: Number, required: true },
-// firstname:          { type: String, required: true },
-// lastname:           { type: String, required: true },
-// birthday:           { type: String, required: true },
-// phone:              { type: String, required: true },
-// location:           { type: Object, required: true },       // country {country: , city: , state: }
-// address:            { type: Object, required: true },       // address {street address: , floor: , department: , zip code: }
 
 const UserCreate = ({ navigation }) => {
 

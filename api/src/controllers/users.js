@@ -136,7 +136,15 @@ const getPurchasedProducts = async (req, res, next) => {
 
         if (productsHistory.length > 0) {
             let purchasedProducts = [];
-            productsHistory.map(p => p.detail.map(prod => purchasedProducts.push(prod)));
+            let repeats = [];
+            
+            productsHistory.map(p => p.detail.map(prod => {
+                if (!repeats.includes(prod.id)) {
+                    repeats.push(prod.id)
+                    purchasedProducts.push(prod)
+                }
+            }))
+
             res.json(purchasedProducts);
         } else {
             res.status(400).json({ error: 'Your products history is empty, buy something'})

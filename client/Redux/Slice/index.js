@@ -1,7 +1,8 @@
 import {createSlice, dispatch} from '@reduxjs/toolkit';
 import axios from 'axios';
 // import { ROUTE }  from '@env';
-const ROUTE = "https://proyectofinal-api-777.herokuapp.com";
+const ROUTE = "http://192.168.0.16:3001";
+// const ROUTE = "https://proyectofinal-api-777.herokuapp.com";
 
 
 export const userSlice = createSlice({

@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Text, View, TextInput, Button, StyleSheet, ScrollView, Image } from "react-native";
+import { Text, View, TextInput, Button, StyleSheet, ScrollView } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import IconIonicons from 'react-native-vector-icons/Ionicons';
-// import axios from "axios";
 
 import ImageLibrary from "./ImageLibrary";
 import PrePreview from "./PrePreview";
@@ -99,7 +98,6 @@ const ProductCreate = ({navigation}) => {
             category: categories, 
             img: [images.one, images.two, images.three],
         };
-        // console.log(product)
         dispatch(createProduct(product));
         clearInputs();
     };
@@ -112,7 +110,6 @@ const ProductCreate = ({navigation}) => {
 					<Text style={{fontSize:24, color:'white', fontWeight:'bold'}}>Create a new product</Text>
 				</View>
 			</View>
-            {/* <Text style={{fontSize: 20, marginVertical: 10}}>Create a new product</Text> */}
 
             {/* NAME */}
             <View style={styles.inputsContainers}>
@@ -220,18 +217,13 @@ const ProductCreate = ({navigation}) => {
                 <Button title="Add new attribute" onPress={() => createDescription()} />
                 <Button title="Create Product" onPress={() => submitForm()}/>
             </View>
-
-            {/* <View>
-                <Image style={{width: 100, height: 100}} source={{ uri: 'https://res.cloudinary.com/cloud-img-commerce/image/upload/v1658342083/gpyjyznmn1s3oxxwwzys.jpg'}} />
-            </View> */}
-        
+    
         </ScrollView>
     ); 
 };
 
 const styles = StyleSheet.create({
     container:{
-        // flex: 1, 
         width: '100%',
         alignItems: 'center',
         minHeight:'100%'
@@ -248,7 +240,6 @@ const styles = StyleSheet.create({
         alignItems:"center",
         height:'65%',
         backgroundColor: '#4A347F',
-        // backgroundColor:'white',
         width: '100%',
         marginTop:'9%'
     },

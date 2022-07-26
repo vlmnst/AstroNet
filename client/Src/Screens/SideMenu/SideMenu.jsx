@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { DrawerContentScrollView } from "@react-navigation/drawer";
-import { Text, StyleSheet, Image, View } from "react-native";
+import { StyleSheet, Image, View } from "react-native";
 import { getCredentials } from '../../utils/handleCredentials';
-// import { StackActions, NavigationActions } from 'react-navigation';
-
 import HomeBtn from "./SideMenuBtns/HomeBtn";
 import PanelAdminBtn from "./SideMenuBtns/PanelAdminBtn";
 import ProfileBtn from "./SideMenuBtns/ProfileBtn";
 import LoginBtn from "./SideMenuBtns/LoginBtn";
 import LogoutBtn from "./SideMenuBtns/LogoutBtn";
 import AboutUsBtn from "./SideMenuBtns/AboutUsBtn";
-import { StackActions, useNavigationState } from '@react-navigation/native';
+import { StackActions } from '@react-navigation/native';
 import { useDispatch, useSelector } from "react-redux";
 import { setUserData } from "../../../Redux/Slice/userSlice";
 import img from '../../../assets/logo/logoAstronet.png';
@@ -25,14 +23,12 @@ const SideMenu = ({ navigation }) => {
     
     const [currentBtn, setCurrentBtn] = useState('HomeNav');
     
-    // const index = useNavigationState(state => state?.routes[0].state.index)
     const { routes } = navigation.getState()
     let index = routes[0].state?.index
     let index2 = routes[2].state?.index
     let index3 = routes[3].state?.index
 
     const handlePressHome = (prop) => {
-        // console.log(StackActions.popToTop())
         if(currentBtn === prop && index > 0 ){
             navigation.dispatch(
                 StackActions.popToTop()
@@ -119,7 +115,6 @@ const SideMenu = ({ navigation }) => {
             contentContainerStyle={ styles.container }
             >
             <Image style={styles.img} source={ img } />
-            {/* <Text style={ styles.title }>Menu</Text> */}
             <View style={styles.btncontainer}>
                 <HomeBtn
                     text = "Home"

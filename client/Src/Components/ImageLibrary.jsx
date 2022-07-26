@@ -1,5 +1,5 @@
 import React, { useState, } from 'react';
-import { View, Text, Button, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Button, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 
 const ImageLibrary = ({images, setImages}) => {
@@ -12,7 +12,6 @@ const ImageLibrary = ({images, setImages}) => {
         //  ------ CAMERA PERMISSION ------      
         if (from === 'camera') {
             const cameraPermission = await ImagePicker.requestCameraPermissionsAsync();
-            // console.log(cameraPermission);
 
             setCameraPermission(cameraPermission.status === 'granted');
 
@@ -25,8 +24,6 @@ const ImageLibrary = ({images, setImages}) => {
         //  ------ GALLERY PERMISSION ------  
         } else if (from === 'gallery') {
             const imagePermission = await ImagePicker.requestMediaLibraryPermissionsAsync(); //requestMediaLibraryPermissionsAsync(writeOnly)
-            // console.log(imagePermission);
-            // console.log(imagePermission.status);
 
             setGalleryPermission(imagePermission.status === 'granted');
 
@@ -71,7 +68,6 @@ const ImageLibrary = ({images, setImages}) => {
         if (!result.cancelled) {
             setImages({...images, [number]: encoded});
         };
-        // console.log(result);
     };   
 
     

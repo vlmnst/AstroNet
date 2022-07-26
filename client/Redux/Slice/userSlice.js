@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 // import { ROUTE } from "@env";
-// const ROUTE = "http://localhost:3001";
-const ROUTE = "https://proyectofinal-api-777.herokuapp.com";
+const ROUTE = "http://192.168.0.16:3001";
+// const ROUTE = "https://proyectofinal-api-777.herokuapp.com";
 
 export const realUserSlice = createSlice({
     name: "USER",
@@ -91,7 +91,7 @@ export const getPurchaseOrders = (username) => async (dispatch) => {
     }
 };
 
-export const putReviewToProduct = (payload) => async (dispatch) => {
+export const putReviewToProduct = (payload) => async () => {
     const { idProduct } = payload;
     try {
         const { data } = await axios.put(
@@ -132,7 +132,7 @@ export const getUserFullData = (username) => async (dispatch) => {
 //---------------------------------------------------------------------------------------------
 //----------------------------------EXPO PUSH NOTIFICATION-------------------------------------
 //---------------------------------------------------------------------------------------------
-export const pushToken = (tokenBox) => async (dispatch) => {
+export const pushToken = (tokenBox) => async () => {
     try {
         await axios.post(ROUTE + "/users/pushToken/",tokenBox);//envio de notificacion de usuario
     } catch (error) {
@@ -140,7 +140,7 @@ export const pushToken = (tokenBox) => async (dispatch) => {
     }
 };
 //---------------------------------------------------------------------------------------------
-export const putToken = (payload) => async (dispatch) => {
+export const putToken = (payload) => async () => {
     try {
         await axios.post(ROUTE+"/users/putToken/",payload
         );
@@ -150,11 +150,9 @@ export const putToken = (payload) => async (dispatch) => {
 };
 //-----------------------------------------NODEMAILER------------------------------------------
 //---------------------------------------------------------------------------------------------
-export const sendEmail = (emailData) => async (dispatch) => {
+export const sendEmail = (emailData) => async () => {
     try {
-        // console.log(emailData)
         await axios.post(ROUTE + "/users/email/",emailData);
-        // console.log(emailData)
     } catch (error) {
         console.log(error);
     }
@@ -170,7 +168,7 @@ export const sendEmail = (emailData) => async (dispatch) => {
             console.log(error);
         };
     };
-    export const putpurchasedProducts = (payload)=> async(dispatch) => {
+    export const putpurchasedProducts = (payload)=> async() => {
         try {
             const {order,status} = payload
             await axios.put(ROUTE+'/users/putpurchasedProducts/'+ order, status);

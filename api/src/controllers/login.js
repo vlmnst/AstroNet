@@ -64,9 +64,6 @@ const authOK = async (req, res, next) => {
             decodedToken = jwt.verify(token, process.env.SECRET);
         } catch {};
 
-        console.log(decodedToken);
-        // console.log(token);
-
 
         if (!token || !decodedToken.id) {
             return res.status(401).json({ error: 'token missing or invalid'});

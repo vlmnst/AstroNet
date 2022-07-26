@@ -1,9 +1,7 @@
-import { useEffect } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 
 const ProductCardModify = (props) => {
     const { navigation, item } = props;
-    // console.log('PRODUCT CARD MODIFY',props);
 
     return (
         <TouchableOpacity
@@ -25,11 +23,6 @@ const ProductCardModify = (props) => {
                 </View>
                 <Text style={styles.name}>{item.name.slice(0, 65)}... </Text>
             </View>
-            {/* <TouchableOpacity
-                style={styles.button}
-                onPress={() => navigation.navigate("ProductModify", item)} >
-                <Text style={styles.buttontext}>Modify product</Text>
-            </TouchableOpacity> */}
         </TouchableOpacity>
     );
 };
@@ -93,8 +86,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
         backgroundColor: 'green',
         borderRadius: 5,
-        // padding: 10,
-        // marginHorizontal: 15
     },
     pricethrough: {
         fontSize: font,

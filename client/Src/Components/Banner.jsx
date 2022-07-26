@@ -3,19 +3,12 @@ import { useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import {
-  Button,
   Image,
   View,
-  ScrollView,
-  Dimensions,
   StyleSheet,
-  Platform,
   Text,
   TouchableOpacity,
-  TouchableHighlight,
-  FlatList
 } from 'react-native';
-import Details from "../Screens/Details";
 
 const Banner = ({ navigation }) => {
 
@@ -45,13 +38,9 @@ const Banner = ({ navigation }) => {
             ...state,
             slideIndex: (state.slideIndex) + n,
     });
-    useEffect(()=>{
-      ;
-    },[])
 }
 const detFunc=()=>{
   if (imgToView.name){
-    // console.log('HOLA',imgToView)
     navigation.navigate("Details", imgToView);
   }else{
     imgToView =products[state.slideIndex]
@@ -61,7 +50,6 @@ const detFunc=()=>{
 const [visible, setVisible] = useState(false)
 const[variable, setVariable] = useState('')
 const user = useSelector((state) => state.USER.userName)
-// setInterval(()=>plusSlides(1),10000)
   return (
 
     <TouchableOpacity onPress={() =>detFunc()}>
@@ -95,11 +83,8 @@ const styles = StyleSheet.create({
     marginTop :160,
     justifyContent:'center',
     flexDirection: 'row',
-    // paddingHorizontal: 10,
-    // paddingVertical:10,
     heigth: "100%",
     width: "100%",
-    // borderRadius: 15,
     position:'absolute'
   },
   Button:{
@@ -111,9 +96,6 @@ const styles = StyleSheet.create({
     backgroundColor:"black",
     width: "100%",
     resizeMode:"contain",
-    // marginTop:20,
-    // marginBottom: Platform.select({ ios: 0, android: 1 }),
-    // borderRadius: 8,
   },
   image: {
     padding:30,
@@ -126,10 +108,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top:"2%",
     left:"2%",
-    // alignItems: 'center',
-    // paddingHorizontal: 10,
-    // marginTop: 10,
-    // marginLeft: 5,
     backgroundColor: 'green',
     borderRadius: 10,
     color: 'white',
