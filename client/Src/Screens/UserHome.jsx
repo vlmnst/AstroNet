@@ -9,6 +9,7 @@ import Login from "../Components/Login";
 import UserCreate from "../Components/UserCreate";
 import Cart from "../Components/CartLobby";
 import OrderDetail from "../Components/OrderDetail";
+import Checkout from "../Components/config/Checkout"
 // import NavBar from "../Components/NavBar";
 
 const Stack = createNativeStackNavigator();
@@ -50,6 +51,10 @@ const UserHome = () => {
                 <Stack.Screen 
                     name='OrderDetail' 
                     component={OrderDetail} 
+                />
+                  <Stack.Screen 
+                    name='Checkout' 
+                    component={Checkout} 
                 />
             </Stack.Navigator>
     )

@@ -19,9 +19,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { initialCartUpdate, deleteCart } from "../../Redux/Slice";
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import axios from 'axios';
-import { ROUTE } from "@env";
+// import { ROUTE } from "@env";
 import DeleteCart from "./DeleteCart";
+import config from './config'
 // const ROUTE = "http://localhost:3001";
+const ROUTE = "http://192.168.253.163:3001";
 
 var { width } = Dimensions.get("window");
 
@@ -61,24 +63,25 @@ const CartLobby = ({ navigation }) => {
     cart: infoCart
   }
 
-  const cartCheckout = async () => {
+  // const cartCheckout = async () => {
 
-    try {
-      let { data } = await axios.post(ROUTE + "/products/checkout", payload);
+  //   try {
+  //     let { data } = await axios.post(ROUTE + "/products/checkout", payload);
 
-      // Checking if the link is supported for links with custom URL scheme
-      const supported = await Linking.canOpenURL(data.init_point);
+  //     // Checking if the link is supported for links with custom URL scheme
+  //     const supported = await Linking.canOpenURL(data.init_point);
 
-      if (supported) {
-        // Opening the link with some app,
-        const res = await Linking.openURL(data.init_point);
-      } else {
-        Alert.alert(`Don't know how to open this URL: ${data.init_point}`);
-      };
-    } catch (error) {
-      console.log(error);
-    };
-  };
+  //     if (supported) {
+  //       // Opening the link with some app,
+  //       const res = await Linking.openURL(data.init_point);
+  //     } else {
+  //       Alert.alert(`Don't know how to open this URL: ${data.init_point}`);
+  //     };
+  //   } catch (error) {
+  //     console.log(error);
+  //   };
+  // };
+
 
   return (
     <View style={{ flex: 1, width: width, alignItems: 'center', justifyContent: 'center' }}>
@@ -128,7 +131,7 @@ const CartLobby = ({ navigation }) => {
         </ScrollView>
         <View style={{ height: 20 }} />
         <TouchableOpacity
-          onPress={() => cartCheckout()}
+          onPress={() => navigation.navigate('Checkout', payload)}
           style={styles.cartBtn}
         >
           <Text style={styles.cartText}>
