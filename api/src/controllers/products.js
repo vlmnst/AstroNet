@@ -3,7 +3,7 @@ const User = require('../models/User');
 const { v4: uuidv4 } = require('uuid');
 const axios = require('axios');
 const { cloudinary } = require('../utils/cloudinary.jsx');
-
+const mercadopago = require('mercadopago')
 
 const getAllProducts = async (req, res, next) => {
     try {
@@ -305,40 +305,60 @@ const putReview = async (req, res, next) => {
 //     }
 // }
 
+// const cartCheckout = async (req, res, next) => {
+//     const payload = req.body;
+//     try {
+//         let newCart = [];
+//         payload.cart.map(p => {
+//             let item = { title: p.name, unit_price: p.price, quantity: 1 }
+//             newCart.push(item);
+//         });
+
+//         // console.log(newCart);
+
+//         const url = "https://api.mercadopago.com/checkout/preferences";
+
+//         const body = {
+//             items: newCart,
+//             back_urls: {
+//               failure: "http://localhost:19006",
+//               pending: "http://localhost:19006",
+//               success: "http://localhost:19006"
+//             }
+//           };
+      
+//         const payment = await axios.post(url, body, {
+//         headers: {
+//             "Content-Type": "application/json",
+//             Authorization: `Bearer ${process.env.ACCESS_TOKEN}`
+//         }
+//         });
+//         return res.json(payment.data); 
+//     } catch (error) {
+//         return next(error);
+//     }
+
+
+// };
+
+
+
 const cartCheckout = async (req, res, next) => {
     const payload = req.body;
-    try {
-        let newCart = [];
-        payload.cart.map(p => {
-            let item = { title: p.name, unit_price: p.price, quantity: 1 }
-            newCart.push(item);
-        });
-
-        // console.log(newCart);
-
-        const url = "https://api.mercadopago.com/checkout/preferences";
-
-        const body = {
-            items: newCart,
-            back_urls: {
-              failure: "http://localhost:19006",
-              pending: "http://localhost:19006",
-              success: "http://localhost:19006"
-            }
-          };
-      
-        const payment = await axios.post(url, body, {
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${process.env.ACCESS_TOKEN}`
+        let preference = {
+           items: payload.newCart,
+           back_urls: {
+                          failure: "http://192.168.43.163:3001/failure",
+                          pending: "http://192.168.43.163:3001/pending",
+                          success: "http://192.168.43.163:3001/success"
+                        }
         }
-        });
-        return res.json(payment.data); 
-    } catch (error) {
-        return next(error);
-    }
 
-
+        mercadopago.preferences.create(preference).then(function(data){
+            res.send(JSON.stringify(data.response.init_point))
+        }).catch(function(error) {
+            console.log(error)
+        })
 };
 
 module.exports = { 

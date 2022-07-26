@@ -6,6 +6,8 @@ const cors = require('cors');
 const routes = require('./src/routes/index.js');
 const errorHandler = require('./src/middleware/errorHandler');
 
+const mercadopago = require('mercadopago')
+
 // CREO EL SERVER EXPRESS Y LE PONGO UN NOMBRE
     const server = express();
     server.name = 'API';
@@ -25,6 +27,9 @@ const errorHandler = require('./src/middleware/errorHandler');
 // RUTEO LOS PATH Y MODULARIZO
     server.use('/', routes);
     server.use(errorHandler);
+
+// MERCADOPAGO CONFIG
+mercadopago.configure({access_token: process.env.ACCESS_TOKEN})
 
 // CONECTO EL SERVIDOR
     const { PORT } = process.env // || 3001
