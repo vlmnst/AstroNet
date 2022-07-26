@@ -87,6 +87,7 @@ const DoReview = ({ route, navigation }) => {
     function handleConfirmationReview() {
         if (description !== undefined && rating !== undefined) {
             const payload = {
+                username: user,
                 idProduct: productForReview.id, 
                 review: {
                     rating,
