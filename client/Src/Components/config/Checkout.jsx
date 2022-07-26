@@ -33,14 +33,27 @@ const Checkout = (props) => {
     sendServer()
   }, []);
 
+  async function stateChange(state){
+    console.log(state)
+    let url = state.url
+    if(state.canGoBack == true && !url.includes('mercadopago')){
+        if(url.includes("approved")){
+            props.navigation.navigate('Success');
+        }else{
+            props.navigation.navigate('Home')
+        }
+    }
+  }
+
   return (
     <View style={styles.container}>
         { url && 
             <WebView
                 style={styles.container}
                 originWhitelist={['*']}
-                // source={{ html: '<h1><center>Hello world</center></h1>' }}
+                startInLoadingState={true}
                 source={{ uri: url }}
+                onNavigationStateChange={(state)=>stateChange(state)}
             />
         }
        {/* <Text>Hola</Text> */}

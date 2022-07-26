@@ -23,7 +23,7 @@ import axios from 'axios';
 import DeleteCart from "./DeleteCart";
 import config from './config'
 // const ROUTE = "http://localhost:3001";
-const ROUTE = "http://192.168.253.163:3001";
+const ROUTE = "http://192.168.43.163:3001";
 
 var { width } = Dimensions.get("window");
 
