@@ -2,20 +2,27 @@ import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import config from './index.json'
 import { WebView } from 'react-native-webview';
+import axios from 'axios';
+
+import { deleteCart } from "../../../Redux/Slice/index";
+import { useDispatch } from "react-redux";
+
+// import { ROUTE } from "@env";
+const ROUTE = 'https://proyectofinal-api-777.herokuapp.com'
 
 const Checkout = (props) => {
-  let { cart } = props.route.params;
+  const dispatch = useDispatch();
+  let { cart, email } = props.route.params;
 
   const [url, setUrl] = useState(null)
   let newCart = [];
   cart.map((p) => {
-    let item = { title: p.name, unit_price: p.price, quantity: 1 };
+    let item = { title: p.article, unit_price: p.price - (p.price * (p.offer / 100)), quantity: p.quantity, description: p.id };
     newCart.push(item);
   });
 
   useEffect(() => {
     async function sendServer() {
-      console.log("poraqui");
       let response = await fetch(config.urlRoot + "/products/checkout", {
         method: "POST",
         headers: {
@@ -28,18 +35,24 @@ const Checkout = (props) => {
       });
       let json = await response.json();
       setUrl(json)
-      console.log(json)
     }
     sendServer()
   }, []);
 
   async function stateChange(state){
-    console.log(state)
     let url = state.url
     if(state.canGoBack == true && !url.includes('mercadopago')){
         if(url.includes("approved")){
-            props.navigation.navigate('Success');
+            const payload = {
+              email,
+              cart: newCart,
+            };
+            await axios.post(ROUTE+"/products/buy", payload);
+            dispatch(deleteCart());
+            alert('purchase successfully, check your email')
+            props.navigation.navigate('Home');
         }else{
+            alert('error with the payment')
             props.navigation.navigate('Home')
         }
     }
@@ -56,7 +69,6 @@ const Checkout = (props) => {
                 onNavigationStateChange={(state)=>stateChange(state)}
             />
         }
-       {/* <Text>Hola</Text> */}
     </View>
   );
 };

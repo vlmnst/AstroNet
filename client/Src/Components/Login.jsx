@@ -4,7 +4,7 @@ import FeatherIcon from 'react-native-vector-icons/Feather';
 import { Text, View, TextInput, Button, StyleSheet } from "react-native";
 import axios from "axios";
 // import { ROUTE } from "@env";
-const ROUTE = "http://192.168.43.163:3001";
+const ROUTE = "https://proyectofinal-api-777.herokuapp.com";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch } from "react-redux";
 import { setUserData } from "../../Redux/Slice/userSlice";

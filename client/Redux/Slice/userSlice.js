@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 // import { ROUTE } from "@env";
 // const ROUTE = "http://localhost:3001";
-const ROUTE = "http://192.168.43.163:3001";
+const ROUTE = "https://proyectofinal-api-777.herokuapp.com";
 
 export const realUserSlice = createSlice({
     name: "USER",

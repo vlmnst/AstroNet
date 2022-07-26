@@ -1,7 +1,5 @@
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-import { useState, useEffect } from "react";
+import { Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import Icon from "react-native-vector-icons/Ionicons";
 import { cartCreate } from "../../Redux/Slice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
