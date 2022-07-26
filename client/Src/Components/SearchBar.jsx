@@ -7,7 +7,7 @@ import FeatherIcon from 'react-native-vector-icons/Feather';
 import img from '../../assets/logo/logoAstronet.png'
 //, { navigation, route, setPage, setpaginateProducts }
 const SearchBar = (props ) => {
-  console.log(props)
+  // console.log(props)
   const  { navigation, route, setPage } = props
   const dispatch = useDispatch();
   const [nombre, setNombre] = useState('');

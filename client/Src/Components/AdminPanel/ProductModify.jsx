@@ -2,30 +2,26 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Text, View, TextInput, Button, StyleSheet, ScrollView } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
-import { getAllProducts, ModifyProducts, clearCache, setAllAdminPage, setpaginateProducts} from "../../../Redux/Slice";
+import { getAllProducts, ModifyProducts, clearCache, setPageScrollinf, setpaginateProducts} from "../../../Redux/Slice";
 import ImageLibrary from '../ImageLibrary';
 import PrePreview from '../PrePreview';
 import IconIonicons from 'react-native-vector-icons/Ionicons';
 
 const ProductModify = (props) => {
-    console.log('------------------------')
-    console.log('PRODUCT MODIFY',props.route.params);
+    // console.log('------------------------')
+    // console.log('PRODUCT MODIFY',props.route.params);
     let item
+    let allproductsroute = false
     // const { item, setPage, setpaginateProducts} = props.route.params
-    // let setPage
-    // let setpaginateProducts
     if(props.route.params.item){
         item = props.route.params.item
-        // setPage = props.route.params.setPage
-        // setpaginateProducts = props.route.params.setpaginateProducts
+        allproductsroute = false
     } else if (props.route.params.route.params.item){
         item = props.route.params.route.params.item
-        // setPage = props.route.params.route.params.setPage
-        // setpaginateProducts = props.route.params.route.params.setpaginateProducts
+        allproductsroute = true
     } else {
         item = props.route.params.route.params
-        // setPage = props.route.params.route.params.setPage
-        // setpaginateProducts = props.route.params.route.params.setpaginateProducts
+        allproductsroute = true
     }
     const dispatch = useDispatch();
 
@@ -90,7 +86,7 @@ const ProductModify = (props) => {
         dispatch(clearCache());
         // setpaginateProducts([]),
         // setPage(0);
-        dispatch(setAllAdminPage(0))
+        dispatch(setPageScrollinf(0))
         dispatch(setpaginateProducts([]))
         const payload = {
             id: item.id,
@@ -120,12 +116,21 @@ const ProductModify = (props) => {
         setValue('');
     };
 
+    function handleGoBack () {
+        if(allproductsroute === true) {
+            // console.log(props)
+            props.navigation.pop(2);
+        } else {
+            props.navigation.goBack()
+        }
+    }
+
     return (
         <View style={{minHeight:'100%', width:'100%', backgroundColor:'white'}}>
 
             <View style={styles.SBcontainer}>
                 <View style={styles.SB}>
-                    <IconIonicons style={styles.iconMenu} name="chevron-back" size={36} onPress={() => props.navigation.goBack()}/>
+                    <IconIonicons style={styles.iconMenu} name="chevron-back" size={36} onPress={() => handleGoBack()}/>
                 </View>
             </View>
 

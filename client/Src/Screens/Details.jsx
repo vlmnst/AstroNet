@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Cart from "../Components/Cart";
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 import ProductReviews from "../Components/ProductReviews";
@@ -7,10 +7,12 @@ import IconIonicons from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ImageDetails from "../Components/ImageDetails";
 import { useSelector } from "react-redux";
+import { getProductsByName } from "../../Redux/Slice";
 
 const Details = (props) => {
 
   let role = useSelector((state) => state.USER.role);
+  let product = useSelector((state) => state.ALL_PRODUCTS.allProductsFiltered);
 
   const { route } = props; 
   // const { params } = route;
@@ -24,8 +26,12 @@ const Details = (props) => {
     item = props.route.params
     params = props.route.params
   }
-  console.log('--------------------------')
-  console.log(params)
+  // console.log('--------------------------')
+  // console.log(params)
+
+  // useEffect(() => {
+  //   dispatch(getProductsByName(item.name))
+  // },[product])
 
   return (
     <View>

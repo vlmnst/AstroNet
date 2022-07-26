@@ -14,15 +14,15 @@ export const userSlice = createSlice({
         AllUsers:[],
         AllUsersFiltered: [],
         cart:[],
-        allAdminPage:0,
-        allAdminPaginateProducts:[]
+        pageScrollinf:0,
+        paginateProductsScrollinf:[]
     },
     reducers:{
         setpaginateProducts(state,action){
-            state.allAdminPaginateProducts = action.payload
+            state.paginateProductsScrollinf = action.payload
         },
-        setAllAdminPage(state,action){
-            state.allAdminPage = action.payload
+        setPageScrollinf(state,action){
+            state.pageScrollinf = action.payload
         },
         getAllProducts(state,action){
             state.allProducts = action.payload
@@ -206,6 +206,6 @@ export const cartUpdate = (payload) => async(dispatch) => {
 } 
 
 
-export const {getByPrice, clearCache,clearAdmin,getAdminByPrice,resetAdminProducts,searchUser, deleteCart, deleteCartItem, setAllAdminPage, setpaginateProducts} =userSlice.actions;
+export const {getByPrice, clearCache,clearAdmin,getAdminByPrice,resetAdminProducts,searchUser, deleteCart, deleteCartItem, setPageScrollinf, setpaginateProducts} =userSlice.actions;
 
 export default userSlice.reducer;

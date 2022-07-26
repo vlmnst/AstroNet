@@ -8,7 +8,7 @@ import {
     StatusBar,
     ActivityIndicator
 } from "react-native";
-import { resetAdminProducts, getByPrice, getProductsByCategory, getAllProducts, setAllAdminPage, setpaginateProducts } from "../../../Redux/Slice";
+import { resetAdminProducts, getByPrice, getProductsByCategory, getAllProducts, setPageScrollinf, setpaginateProducts } from "../../../Redux/Slice";
 
 import ProductCardModify from "./ProductCardModify";
 import DropDownPicker from "react-native-dropdown-picker";
@@ -21,8 +21,8 @@ const AllAdmin = ({ route, navigation }) => {
     const dispatch = useDispatch();
     // ---------- global states ----------
     let products = useSelector((state) => state.ALL_PRODUCTS.allProductsFiltered);
-    let paginate = useSelector((state) => state.ALL_PRODUCTS.allAdminPage);
-    let paginateProducts = useSelector((state) => state.ALL_PRODUCTS.allAdminPaginateProducts)
+    let paginate = useSelector((state) => state.ALL_PRODUCTS.pageScrollinf);
+    let paginateProducts = useSelector((state) => state.ALL_PRODUCTS.paginateProductsScrollinf)
     // console.log(products)
     let [categories /*setCategories*/] = useState(
         useSelector((state) => state.ALL_PRODUCTS.categories)
@@ -53,7 +53,7 @@ const AllAdmin = ({ route, navigation }) => {
     useEffect(() => {
         dispatch(getAllProducts())
         dispatch(setpaginateProducts([])),
-        dispatch(setAllAdminPage(1))
+        dispatch(setPageScrollinf(1))
     }, [getAllProducts]);
     
 
@@ -68,13 +68,13 @@ const AllAdmin = ({ route, navigation }) => {
 
     function handleCategory(e) {
         e.value === "all Products"?
-        (dispatch(setpaginateProducts([])), dispatch(setAllAdminPage(1)), dispatch(resetAdminProducts(e.value))) :
-        (dispatch(setpaginateProducts([])), dispatch(setAllAdminPage(1)), dispatch(getProductsByCategory(e.value)));
+        (dispatch(setpaginateProducts([])), dispatch(setPageScrollinf(1)), dispatch(resetAdminProducts(e.value))) :
+        (dispatch(setpaginateProducts([])), dispatch(setPageScrollinf(1)), dispatch(getProductsByCategory(e.value)));
     }
 
     function handlePrice(e) {
         dispatch(setpaginateProducts([]));
-        dispatch(setAllAdminPage(1));
+        dispatch(setPageScrollinf(1));
         dispatch(getByPrice(e.value));
 
     }
@@ -101,7 +101,7 @@ const AllAdmin = ({ route, navigation }) => {
 
     // function setPage(number) {
     //     // setCurrentPage(number);
-    //     dispatch(setAllAdminPage(number))///////
+    //     dispatch(setPageScrollinf(number))///////
     // }
 
     const nextPage = () => {
@@ -115,7 +115,7 @@ const AllAdmin = ({ route, navigation }) => {
 
     const loadMoreItem = () => {
         // setCurrentPage(currentPage+1)
-        dispatch(setAllAdminPage(paginate+1))////
+        dispatch(setPageScrollinf(paginate+1))////
         nextPage();
         products.length === paginateProducts.length
             ? setIsLoading(false)
