@@ -8,8 +8,20 @@ import PrePreview from '../PrePreview';
 import IconIonicons from 'react-native-vector-icons/Ionicons';
 
 const ProductModify = (props) => {
-    //  console.log(props);
-    const { item, setPage, setpaginateProducts} = props.route.params
+    // console.log('PRODUCT MODIFY',props.route.params);
+    let item
+    let setPage
+    let setpaginateProducts
+    if(props.route.params.item){
+        // const { item, setPage, setpaginateProducts} = props.route.params
+        item = props.route.params.item
+        setPage = props.route.params.setPage
+        setpaginateProducts = props.route.params.setpaginateProducts
+    } else {
+        item = props.route.params.route.params.item
+        setPage = props.route.params.route.params.setPage
+        setpaginateProducts = props.route.params.route.params.setpaginateProducts
+    }
     const dispatch = useDispatch();
 
     // reducer states
