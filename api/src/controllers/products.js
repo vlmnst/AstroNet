@@ -3,7 +3,8 @@ const User = require('../models/User');
 const { v4: uuidv4 } = require('uuid');
 const axios = require('axios');
 const { cloudinary } = require('../utils/cloudinary.jsx');
-const mercadopago = require('mercadopago')
+const mercadopago = require('mercadopago');
+const { sendEmail } = require('./nodemailer');
 
 const getAllProducts = async (req, res, next) => {
     try {
@@ -151,12 +152,13 @@ const buyProduct = async (req, res, next) => {
 
     try {
         // cart = [{idProduct1, quantity}, {idProduct2, quantity}, etc]
-        const { cart, userID } = req.body;
-        const user = await User.findById(userID);
+        const { cart, email } = req.body;
+        console.log(req.body)
+        const user = await User.findOne({email});
 
         var outOfStock = 0;
         let promisesStock = cart.map(async(prods) => {
-            let productStock = await Product.findById(prods.id);
+            let productStock = await Product.findById(prods.description);
 
             if (productStock.stock < prods.quantity) {
                 outOfStock++;
@@ -172,23 +174,25 @@ const buyProduct = async (req, res, next) => {
 
         // mapeo los productos del carrito
         let emptyCart = cart.map(async(prods) => {
-            let product = await Product.findById(prods.id);
+            let product = await Product.findById(prods.description);
 
-            let { price, name, offer, img } = product;
+            let { price, name, img, detail, description } = product;
 
             product.stock = product.stock - prods.quantity;
             product.soldCount = product.soldCount + prods.quantity;
-            totalPrice = totalPrice + price;
+            totalPrice = totalPrice + prods.unit_price * prods.quantity;
             product.save();
 
             // agrego uno por uno, cada producto del carrito al 'cartProducts'
             cartProducts.push({
-                id: prods.id,
+                id: prods.description,
                 name,
                 price,
-                offer,
+                offerPrice: prods.unit_price,
                 img,
                 review: false,
+                detail,
+                description,
                 quantity: prods.quantity,
             });
         });
@@ -205,8 +209,12 @@ const buyProduct = async (req, res, next) => {
 
         user.productsHistory = user.productsHistory.concat(order);
         user.save();
+
+        const message = `ASTRONET! Thanks for the purchase, here is your purchase order: " ${JSON.stringify(order)} "`;
+        const payload = { body: { userMail: email, message }};
+        await sendEmail(payload);
         
-        return res.json(order);  
+        return res.json({msg: 'purchase order delivered'});  
     } catch (error) {
         return next(error);
     };
@@ -296,52 +304,6 @@ const putReview = async (req, res, next) => {
     };
 
 };
-
-// const alertarme = async(req, res, next) => {
-//     try {
-//         return res.json('success')
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
-
-// const cartCheckout = async (req, res, next) => {
-//     const payload = req.body;
-//     try {
-//         let newCart = [];
-//         payload.cart.map(p => {
-//             let item = { title: p.name, unit_price: p.price, quantity: 1 }
-//             newCart.push(item);
-//         });
-
-//         // console.log(newCart);
-
-//         const url = "https://api.mercadopago.com/checkout/preferences";
-
-//         const body = {
-//             items: newCart,
-//             back_urls: {
-//               failure: "http://localhost:19006",
-//               pending: "http://localhost:19006",
-//               success: "http://localhost:19006"
-//             }
-//           };
-      
-//         const payment = await axios.post(url, body, {
-//         headers: {
-//             "Content-Type": "application/json",
-//             Authorization: `Bearer ${process.env.ACCESS_TOKEN}`
-//         }
-//         });
-//         return res.json(payment.data); 
-//     } catch (error) {
-//         return next(error);
-//     }
-
-
-// };
-
-
 
 const cartCheckout = async (req, res, next) => {
     const payload = req.body;
