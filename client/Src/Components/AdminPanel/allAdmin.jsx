@@ -8,7 +8,7 @@ import {
     StatusBar,
     ActivityIndicator
 } from "react-native";
-import { resetAdminProducts, getByPrice, getProductsByCategory, getAllProducts } from "../../../Redux/Slice";
+import { resetAdminProducts, getByPrice, getProductsByCategory, getAllProducts, setPageScrollinf, setpaginateProducts } from "../../../Redux/Slice";
 
 import ProductCardModify from "./ProductCardModify";
 import DropDownPicker from "react-native-dropdown-picker";
@@ -21,6 +21,8 @@ const AllAdmin = ({ route, navigation }) => {
     const dispatch = useDispatch();
     // ---------- global states ----------
     let products = useSelector((state) => state.ALL_PRODUCTS.allProductsFiltered);
+    let paginate = useSelector((state) => state.ALL_PRODUCTS.pageScrollinf);
+    let paginateProducts = useSelector((state) => state.ALL_PRODUCTS.paginateProductsScrollinf)
     // console.log(products)
     let [categories /*setCategories*/] = useState(
         useSelector((state) => state.ALL_PRODUCTS.categories)
@@ -50,6 +52,8 @@ const AllAdmin = ({ route, navigation }) => {
     //update
     useEffect(() => {
         dispatch(getAllProducts())
+        dispatch(setpaginateProducts([])),
+        dispatch(setPageScrollinf(1))
     }, [getAllProducts]);
     
 
@@ -64,13 +68,13 @@ const AllAdmin = ({ route, navigation }) => {
 
     function handleCategory(e) {
         e.value === "all Products"?
-        (setpaginateProducts([]), setPage(1), dispatch(resetAdminProducts(e.value))) :
-        (setpaginateProducts([]), setPage(1), dispatch(getProductsByCategory(e.value)))   ;
+        (dispatch(setpaginateProducts([])), dispatch(setPageScrollinf(1)), dispatch(resetAdminProducts(e.value))) :
+        (dispatch(setpaginateProducts([])), dispatch(setPageScrollinf(1)), dispatch(getProductsByCategory(e.value)));
     }
 
     function handlePrice(e) {
-        setpaginateProducts([]);
-        setPage(1);
+        dispatch(setpaginateProducts([]));
+        dispatch(setPageScrollinf(1));
         dispatch(getByPrice(e.value));
 
     }
@@ -87,29 +91,31 @@ const AllAdmin = ({ route, navigation }) => {
     };
 
     // ---------- paginate ----------
-    const [currentPage, setCurrentPage] = useState(0);
+    // const [currentPage, setCurrentPage] = useState(0);
     const productsPerPage = 6;
 
-    const indexOfLast = currentPage * productsPerPage;
+    const indexOfLast = paginate * productsPerPage;
     const indexOfFirst = indexOfLast - productsPerPage;
 
-    let [paginateProducts, setpaginateProducts] = useState([]);
+    // let [paginateProducts, setpaginateProducts] = useState([]);
 
-    function setPage(number) {
-        setCurrentPage(number);
-      }
+    // function setPage(number) {
+    //     // setCurrentPage(number);
+    //     dispatch(setPageScrollinf(number))///////
+    // }
 
-      const nextPage = () => {
+    const nextPage = () => {
         if (products?.length > 1) {
-          setpaginateProducts([
+            dispatch(setpaginateProducts([
             ...paginateProducts,
             ...products.slice(indexOfFirst, indexOfLast),
-          ]);
+            ]));
         }
-      };
+    };
 
     const loadMoreItem = () => {
-        setCurrentPage(currentPage+1)
+        // setCurrentPage(currentPage+1)
+        dispatch(setPageScrollinf(paginate+1))////
         nextPage();
         products.length === paginateProducts.length
             ? setIsLoading(false)
@@ -125,7 +131,7 @@ const AllAdmin = ({ route, navigation }) => {
                     <View style={styles.SB}>
 
                         <IconIonicons style={styles.iconMenu} name="chevron-back" size={36} onPress={() => navigation.goBack()}/>
-                        <SearchAdmin navigation={navigation} route={route}  setPage={setPage} setpaginateProducts={setpaginateProducts} />
+                        <SearchAdmin navigation={navigation} route={route} setpaginateProducts={setpaginateProducts} />
 
                         {/* <Text style={{fontSize:24, color:'white', fontWeight:'bold'}}>Create a new product</Text> */}
                     </View>
@@ -181,7 +187,7 @@ const AllAdmin = ({ route, navigation }) => {
                     ListFooterComponent={renderLoader}
                     renderItem={({ item }) => (
                         <View >
-                            <ProductCardModify navigation={navigation} item={item} setPage={setPage} setpaginateProducts={setpaginateProducts} />
+                            <ProductCardModify navigation={navigation} item={item} />
                         </View>
                     )}
                 />

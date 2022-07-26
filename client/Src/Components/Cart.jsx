@@ -66,13 +66,16 @@ const Cart = (props) => {
 const styles = StyleSheet.create({
   addCart: {
     alignItems: "center",
-    backgroundColor: "#111111",
+    backgroundColor: "#4A347F",
     alignItems: "center",
     padding: 5,
     borderRadius: 5,
+    width:'50%',
+    height:'40%',
+    justifyContent:"center"
   },
   addCartText: {
-    fontSize: 15,
+    fontSize: 22,
     color: "white",
     fontWeight: "bold",
   },

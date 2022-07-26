@@ -11,6 +11,7 @@ import crisimg from '../../assets/imgAboutUs/crisimg.png';
 import juanimg from '../../assets/imgAboutUs/juanimg.png';
 import marceimg from '../../assets/imgAboutUs/marceimg.png';
 import alonsoimg from '../../assets/imgAboutUs/alonsoimg.png';
+import agusimg from '../../assets/imgAboutUs/agusimg.png';
 
 const AboutUs = ({ navigation, route }) => {
     
@@ -122,7 +123,7 @@ const AboutUs = ({ navigation, route }) => {
                         </View>
                     </View>
                     <View style={styles.card}>
-                            <Image style={styles.cardimg} source={ img } />
+                            <Image style={styles.cardimg} source={ agusimg } />
                         <View style={styles.cardtxts}>
                             <Text style={styles.cardinfo1}>Agustin Gómez</Text>
                             <TouchableOpacity onPress={() => handlePress('agus')}>
