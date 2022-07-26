@@ -51,6 +51,7 @@ const Banner = ({ navigation }) => {
 }
 const detFunc=()=>{
   if (imgToView.name){
+    // console.log('HOLA',imgToView)
     navigation.navigate("Details", imgToView);
   }else{
     imgToView =products[state.slideIndex]

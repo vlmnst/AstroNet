@@ -16,6 +16,8 @@ import {
   getProductsByCategory,
   clearCache,
   getProductsByName,
+  setpaginateProducts,
+  setPageScrollinf,
 } from "../../Redux/Slice";
 import ProductCard from "./ProductCard.jsx";
 import DropDownPicker from "react-native-dropdown-picker";
@@ -32,11 +34,13 @@ const Allproducts = ({ route, navigation }) => {
   const dispatch = useDispatch();
   // ---------- global states ----------
   let products = useSelector((state) => state.ALL_PRODUCTS.allProductsFiltered);
-  let userRole = useSelector((state) => state.USER.role);
+  // let userRole = useSelector((state) => state.USER.role);
+  let paginate = useSelector((state) => state.ALL_PRODUCTS.pageScrollinf);
+  let paginateProducts = useSelector((state) => state.ALL_PRODUCTS.paginateProductsScrollinf)
   let [categories ] = useState(
     useSelector((state) => state.ALL_PRODUCTS.categories)
   );
-
+  
   // ---------- pickerUtils ----------
   const [openitems, setOpenitems] = useState(false);
   const [valueitems, setValueitems] = useState(searchName);
@@ -62,54 +66,52 @@ const Allproducts = ({ route, navigation }) => {
     }else{
       dispatch(getAllProducts())
     }
-    setPage(1);
+    dispatch(setpaginateProducts([])),
+    dispatch(setPageScrollinf(1))
   }, [dispatch]);
 
-    //update
-    useEffect(() => {
-      loadMoreItem();
-    }, [products]);
+  //update
+  useEffect(() => {
+    loadMoreItem();
+  }, [products]);
 
   // unmount
   useEffect(() => {
-    return () => dispatch(clearCache());
+    return () => {
+      dispatch(clearCache())
+      dispatch(setpaginateProducts([]))
+      dispatch(setPageScrollinf(0))
+    }
   }, [dispatch]);
 
 
 
   // ---------- paginate ----------
-  const [currentPage, setCurrentPage] = useState(0);
   const productsPerPage = 6;
 
-  const indexOfLast = currentPage * productsPerPage;
+  const indexOfLast = paginate * productsPerPage;
   const indexOfFirst = indexOfLast - productsPerPage;
-
-  let [paginateProducts, setpaginateProducts] = useState([]);
 
   const nextPage = () => {
     if (products?.length > 1) {
-      setpaginateProducts([
+      dispatch(setpaginateProducts([
         ...paginateProducts,
         ...products.slice(indexOfFirst, indexOfLast),
-      ]);
+      ]));
     }
   };
 
   // ---------- handlers ----------
-  function setPage(number) {
-    setCurrentPage(number)
-    setpaginateProducts([]);
-  }
-
 
   function handleCategory(e) {
+    dispatch(setpaginateProducts([])),
+    dispatch(setPageScrollinf(1)),
     dispatch(getProductsByCategory(e.value));
-    setPage(1);
   }
 
   function handlePrice(e) {
     dispatch(getByPrice(e.value));
-    setPage(1);
+    dispatch(setPageScrollinf(1))
   }
 
   // ------------ LOADER ----------
@@ -124,7 +126,7 @@ const Allproducts = ({ route, navigation }) => {
   };
 
   const loadMoreItem = () => {
-     setCurrentPage(currentPage+1)
+      dispatch(setPageScrollinf(paginate+1))
       nextPage();
       products.length === paginateProducts.length
         ? setIsLoading(false)
@@ -134,7 +136,7 @@ const Allproducts = ({ route, navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.SB}>
-        <SearchBar navigation={navigation} route={route} setPage={setPage}  />
+        <SearchBar navigation={navigation} route={route} />
       </View>
       {/* ------------ TITLE ------------ */}
       {/* <Text style={styles.title}>{searchName}</Text> *MEJOR QUE NO FUNCIONE A QUE FUNCIONE MAL /}

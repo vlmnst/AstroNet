@@ -2,25 +2,26 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Text, View, TextInput, Button, StyleSheet, ScrollView } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
-import { getAllProducts, ModifyProducts, clearCache} from "../../../Redux/Slice";
+import { getAllProducts, ModifyProducts, clearCache, setPageScrollinf, setpaginateProducts} from "../../../Redux/Slice";
 import ImageLibrary from '../ImageLibrary';
 import PrePreview from '../PrePreview';
 import IconIonicons from 'react-native-vector-icons/Ionicons';
 
 const ProductModify = (props) => {
+    // console.log('------------------------')
     // console.log('PRODUCT MODIFY',props.route.params);
     let item
-    let setPage
-    let setpaginateProducts
+    let allproductsroute = false
+    // const { item, setPage, setpaginateProducts} = props.route.params
     if(props.route.params.item){
-        // const { item, setPage, setpaginateProducts} = props.route.params
         item = props.route.params.item
-        setPage = props.route.params.setPage
-        setpaginateProducts = props.route.params.setpaginateProducts
-    } else {
+        allproductsroute = false
+    } else if (props.route.params.route.params.item){
         item = props.route.params.route.params.item
-        setPage = props.route.params.route.params.setPage
-        setpaginateProducts = props.route.params.route.params.setpaginateProducts
+        allproductsroute = true
+    } else {
+        item = props.route.params.route.params
+        allproductsroute = true
     }
     const dispatch = useDispatch();
 
@@ -74,6 +75,7 @@ const ProductModify = (props) => {
     };
 
     async function submitForm() {
+        try {
         if (!name || !price ||!stock || !offer || !description || !detail || categories.length < 1) {
             return alert('empty fields')
         };
@@ -81,9 +83,11 @@ const ProductModify = (props) => {
         if (images.one === 'empty' && images.two === 'empty' && images.three === 'empty') {
             return alert('upload one image at least')
         };
-        dispatch(clearCache()),
-        setpaginateProducts([]),
-        setPage(0);
+        dispatch(clearCache());
+        // setpaginateProducts([]),
+        // setPage(0);
+        dispatch(setPageScrollinf(0))
+        dispatch(setpaginateProducts([]))
         const payload = {
             id: item.id,
             product: {
@@ -92,10 +96,18 @@ const ProductModify = (props) => {
                 img: [images.one, images.two, images.three],
             }
         };
-
-        await dispatch(ModifyProducts(payload));
+            await dispatch(ModifyProducts(payload));
+        } catch (error) {
+            console.log(error)
+        }
         dispatch(getAllProducts());
         alert('updated successfully');
+        if(allproductsroute === true) {
+            // console.log(props)
+            props.navigation.pop(2);
+        } else {
+            props.navigation.goBack()
+        }
     };
 
     // add new attribute
@@ -110,12 +122,21 @@ const ProductModify = (props) => {
         setValue('');
     };
 
+    function handleGoBack () {
+        if(allproductsroute === true) {
+            // console.log(props)
+            props.navigation.pop(2);
+        } else {
+            props.navigation.goBack()
+        }
+    }
+
     return (
         <View style={{minHeight:'100%', width:'100%', backgroundColor:'white'}}>
 
             <View style={styles.SBcontainer}>
                 <View style={styles.SB}>
-                    <IconIonicons style={styles.iconMenu} name="chevron-back" size={36} onPress={() => props.navigation.goBack()}/>
+                    <IconIonicons style={styles.iconMenu} name="chevron-back" size={36} onPress={() => handleGoBack()}/>
                 </View>
             </View>
 
