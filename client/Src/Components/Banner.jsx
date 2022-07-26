@@ -51,10 +51,10 @@ const Banner = ({ navigation }) => {
 }
 const detFunc=()=>{
   if (imgToView.name){
-    navigation.navigate("Details", imgToView);
+    navigation.navigate("Details", {item:imgToView});
   }else{
     imgToView =products[state.slideIndex]
-    navigation.navigate("Details", imgToView);
+    navigation.navigate("Details", {item:imgToView});
   }
   }
 const [visible, setVisible] = useState(false)
