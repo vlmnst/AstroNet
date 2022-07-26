@@ -12,10 +12,20 @@ const Details = (props) => {
 
   let role = useSelector((state) => state.USER.role);
 
-  const { route } = props;
-  const { params } = route;
+  const { route } = props; 
+  // const { params } = route;
   const { navigation } = props
-  // console.log(params)
+  let item
+  let params
+  if(props.route.params.item){
+    item = props.route.params.item
+    params = props.route.params
+  } else {
+    item = props.route.params
+    params = props.route.params
+  }
+  console.log('--------------------------')
+  console.log(params)
 
   return (
     <View>
@@ -28,29 +38,29 @@ const Details = (props) => {
       </View>
 
       <ScrollView contentContainerStyle={styles.container}>
-        <ImageDetails images={params.item.img}/>
+        <ImageDetails images={item.img}/>
 
         <View style={styles.contInt}>
           <View style={styles.priceOffer}>
-            {params.item.offer > 0 ? (
-              <Text style={styles.pricethrough}>$ {params.item.price}</Text>
+            {item.offer > 0 ? (
+              <Text style={styles.pricethrough}>$ {item.price}</Text>
             ) : (
-              <Text style={styles.price}>$ {params.item.price}</Text>
+              <Text style={styles.price}>$ {item.price}</Text>
             )}
-            {params.item.offer > 0 ? (
-              <Text style={styles.offer}>{params.item.offer}% off!</Text>
+            {item.offer > 0 ? (
+              <Text style={styles.offer}>{item.offer}% off!</Text>
             ) : null}
-            {params.item.offer > 0 ? (
+            {item.offer > 0 ? (
               <Text style={styles.pricenew}>
-                $ {params.price - params.item.price * (params.item.offer / 100)}
+                $ {params.price - item.price * (item.offer / 100)}
               </Text>
             ) : null}
           </View>
 
           <View style={styles.descriptionCont}>
-            {params.item.name?
-            <Text style={styles.name}>{params.item.name}: </Text>:null}
-            {params.item.description?.map((item, index) => {
+            {item.name?
+            <Text style={styles.name}>{item.name}: </Text>:null}
+            {item.description?.map((item, index) => {
               return (
                 <View key={index}>
                 <Text style={styles.description} >
@@ -63,7 +73,7 @@ const Details = (props) => {
 
           <View>
             <Text style={styles.name}>Detail: </Text>
-            <Text style={styles.description}>{params.item.detail}</Text>
+            <Text style={styles.description}>{item.detail}</Text>
           </View>
 
           { role === 'admin'||role === 'mod'?(
@@ -75,22 +85,22 @@ const Details = (props) => {
           ) : null }
           
           <View style={styles.addcartbtn}>
-            { (params.item.stock === 0) 
+            { (item.stock === 0) 
               ? ( <Text style={styles.offer}>Without stock</Text>)
-              : ( <Cart navigation={route} item={params.item} /> )
+              : ( <Cart navigation={route} item={item} /> )
             }
           </View>
 
             {/* -------AVERAGE SCORE--------------  */}
-            {params.item.reviews?.length > 0 ?
-            <AverageScore item={params.item}/>
+            {item.reviews?.length > 0 ?
+            <AverageScore item={item}/>
             :
             null }
 
           {/* -------USERS COMMENTS--------------  */}
           <View style={styles.reviewscontainer}>
-          {params.item.reviews?.length > 0 ?
-          params.item.reviews.map((reviews, index) => (
+          {item.reviews?.length > 0 ?
+          item.reviews.map((reviews, index) => (
             <ProductReviews key={index} reviews={reviews}/>
           )) : 
           <View style={styles.divOne}>

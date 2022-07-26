@@ -1,10 +1,10 @@
 import { View, TextInput, StyleSheet } from "react-native";
-import { getProductsByName, searchUser } from '../../../Redux/Slice/index';
+import { getProductsByName, searchUser, setAllAdminPage, setpaginateProducts } from '../../../Redux/Slice/index';
 import { useDispatch } from "react-redux";
 import React, { useState, useEffect } from "react";
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const SearchAdmin = ({ navigation, route, setPage, setpaginateProducts }) => {
+const SearchAdmin = ({ navigation, route }) => {
 
     const dispatch = useDispatch();
     const [nombre, setNombre] = useState('');
@@ -18,15 +18,15 @@ const SearchAdmin = ({ navigation, route, setPage, setpaginateProducts }) => {
         route.name === 'AllUsers' ?(
             nombre === ''? alert('Enter a name')
             :
-            setPage(1), 
-            setpaginateProducts([]),
+            dispatch(setAllAdminPage(1)), 
+            dispatch(setpaginateProducts([])),
             dispatch(searchUser(nombre))
         )
         :(
             nombre === ''? alert('Enter a name')
             :   
-            setPage(1), 
-            setpaginateProducts([]),
+            dispatch(setAllAdminPage(1)), 
+            dispatch(setpaginateProducts([])),
             dispatch(getProductsByName(nombre))
         )
         
