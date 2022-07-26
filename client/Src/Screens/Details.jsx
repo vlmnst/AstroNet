@@ -1,18 +1,21 @@
 import React from "react";
 import Cart from "../Components/Cart";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 import ProductReviews from "../Components/ProductReviews";
 import AverageScore from "../Components/AverageScore";
 import IconIonicons from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ImageDetails from "../Components/ImageDetails";
+import { useSelector } from "react-redux";
 
 const Details = (props) => {
+
+  let role = useSelector((state) => state.USER.role);
 
   const { route } = props;
   const { params } = route;
   const { navigation } = props
-  console.log(props)
+  // console.log(params)
 
   return (
     <View>
@@ -25,29 +28,29 @@ const Details = (props) => {
       </View>
 
       <ScrollView contentContainerStyle={styles.container}>
-        <ImageDetails images={params.img}/>
+        <ImageDetails images={params.item.img}/>
 
         <View style={styles.contInt}>
           <View style={styles.priceOffer}>
-            {params.offer > 0 ? (
-              <Text style={styles.pricethrough}>$ {params.price}</Text>
+            {params.item.offer > 0 ? (
+              <Text style={styles.pricethrough}>$ {params.item.price}</Text>
             ) : (
-              <Text style={styles.price}>$ {params.price}</Text>
+              <Text style={styles.price}>$ {params.item.price}</Text>
             )}
-            {params.offer > 0 ? (
-              <Text style={styles.offer}>{params.offer}% off!</Text>
+            {params.item.offer > 0 ? (
+              <Text style={styles.offer}>{params.item.offer}% off!</Text>
             ) : null}
-            {params.offer > 0 ? (
+            {params.item.offer > 0 ? (
               <Text style={styles.pricenew}>
-                $ {params.price - params.price * (params.offer / 100)}
+                $ {params.price - params.item.price * (params.item.offer / 100)}
               </Text>
             ) : null}
           </View>
 
           <View style={styles.descriptionCont}>
-            {params.name?
-            <Text style={styles.name}>{params.name}: </Text>:null}
-            {params.description?.map((item, index) => {
+            {params.item.name?
+            <Text style={styles.name}>{params.item.name}: </Text>:null}
+            {params.item.description?.map((item, index) => {
               return (
                 <View key={index}>
                 <Text style={styles.description} >
@@ -60,26 +63,34 @@ const Details = (props) => {
 
           <View>
             <Text style={styles.name}>Detail: </Text>
-            <Text style={styles.description}>{params.detail}</Text>
+            <Text style={styles.description}>{params.item.detail}</Text>
           </View>
 
+          { role === 'admin'||role === 'mod'?(
+            <View>
+              <TouchableOpacity style={styles.editbtn} onPress={() => navigation.navigate('ProductModify', props)}>
+                <Text style={styles.editText}>Edit Product</Text>
+              </TouchableOpacity>
+            </View>
+          ) : null }
+          
           <View style={styles.addcartbtn}>
-            { (params.stock === 0) 
+            { (params.item.stock === 0) 
               ? ( <Text style={styles.offer}>Without stock</Text>)
-              : ( <Cart navigation={route} item={params} /> )
+              : ( <Cart navigation={route} item={params.item} /> )
             }
           </View>
 
             {/* -------AVERAGE SCORE--------------  */}
-            {params.reviews?.length > 0 ?
-            <AverageScore item={params}/>
+            {params.item.reviews?.length > 0 ?
+            <AverageScore item={params.item}/>
             :
             null }
 
           {/* -------USERS COMMENTS--------------  */}
           <View style={styles.reviewscontainer}>
-          {params.reviews?.length > 0 ?
-          params.reviews.map((reviews, index) => (
+          {params.item.reviews?.length > 0 ?
+          params.item.reviews.map((reviews, index) => (
             <ProductReviews key={index} reviews={reviews}/>
           )) : 
           <View style={styles.divOne}>
@@ -148,7 +159,7 @@ const styles = StyleSheet.create({
   },
   contInt: { marginTop: 5, width: "100%", backgroundColor: "#EAEAEA" },
   price: { fontSize: priceOfferFont },
-  name: { fontSize: nameFont, marginHorizontal: 10, marginVertical: 10 },
+  name: { fontSize: 18, marginHorizontal: 10, marginVertical: 10 },
   offer: { color: "red", fontSize: priceOfferFont },
   descriptionCont: {
     display: "flex",
@@ -158,7 +169,7 @@ const styles = StyleSheet.create({
     
   },
   description: {
-    fontSize: fontDescription,
+    fontSize: 15,
     padding: 5,
     backgroundColor: "white",
     borderRadius: 5,
@@ -187,6 +198,21 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     marginVertical: 10,
     paddingVertical: 15,
+  },
+  editbtn: {
+    alignItems: "center",
+    backgroundColor: "#BD0000",
+    alignItems: "center",
+    padding: 5,
+    borderRadius: 5,
+    width:'50%',
+    alignSelf:"center",
+    marginTop:15
+  },
+  editText: {
+    fontSize: 19,
+    color: "white",
+    fontWeight: "bold",
   },
 });
 
