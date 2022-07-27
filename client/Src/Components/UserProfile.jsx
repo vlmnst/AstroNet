@@ -125,126 +125,127 @@ const UserProfile = ({ navigation }) => {
                             </View>
                             {/* //////////////////////////////////////////// */}
                             <View style={styles.view2_}>
-                            <View style={styles.view2_1_}>
-                                <TouchableOpacity style={styles.ordersandreviewsbtns} onPress={()=>handleModalUserData()}>
-                                    <Text style={{color:'white', fontSize:20, fontWeight:"bold"}}>Edit my user data</Text>
-                                </TouchableOpacity>
-                            </View></View>
+                                <View style={styles.view2_1_}>
+                                    <TouchableOpacity style={styles.ordersandreviewsbtns} onPress={()=>handleModalUserData()}>
+                                        <Text style={{color:'white', fontSize:20, fontWeight:"bold"}}>Edit my user data</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
                             <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
                                 <Modal transparent visible={modalOpenUserData} >
                                         <View style={styles.modalBackground}>
                                         <View style={styles.containerRow2}>
-				                        	<View style={styles.containerLabelColumn}>
-				                        		<Text style={styles.TitleText}>Email:</Text>  
-				                        		<Controller
-				                        			control={control}
-				                        			render={({ field: { onChange, onBlur, value } }) => (
-				                        				<TextInput
-				                        					style={styles.input}
-				                        					onBlur={onBlur}
-				                        					onChangeText={onChange}
-				                        					value={value}
+                                            <View style={styles.containerLabelColumn}>
+                                                <Text style={styles.TitleText}>Email:</Text>  
+                                                <Controller
+                                                    control={control}
+                                                    render={({ field: { onChange, onBlur, value } }) => (
+                                                        <TextInput
+                                                            style={styles.input}
+                                                            onBlur={onBlur}
+                                                            onChangeText={onChange}
+                                                            value={value}
                                                             placeholder={data[0]?.email}
-				                        					/>
-				                        					)}
-				                        			name="email"
-				                        		/>
-				                        	</View>
-				                        	<View style={styles.containerLabelColumn}>
-				                        		<Text style={styles.TitleText}>Dni:</Text>  
-				                        		<Controller
-				                        			control={control}
-				                        			render={({ field: { onChange, onBlur, value } }) => (
-				                        				<TextInput
-				                        					style={styles.input}
-				                        					onBlur={onBlur}
-				                        					onChangeText={onChange}
-				                        					value={value}
+                                                            />
+                                                            )}
+                                                    name="email"
+                                                />
+                                            </View>
+                                            <View style={styles.containerLabelColumn}>
+                                                <Text style={styles.TitleText}>Dni:</Text>  
+                                                <Controller
+                                                    control={control}
+                                                    render={({ field: { onChange, onBlur, value } }) => (
+                                                        <TextInput
+                                                            style={styles.input}
+                                                            onBlur={onBlur}
+                                                            onChangeText={onChange}
+                                                            value={value}
                                                             placeholder={data[0]?.dni}
-				                        				/>
-				                        			)}
-				                        			name="dni"
-				                        		/>
-				                        	</View>
-				                        </View>
-				                        <View style={styles.containerRow2}>
-				                        	<View style={styles.containerLabelColumn}>
-				                        		<Text style={styles.TitleText}>Firstname:</Text>            
-				                        		<Controller
-				                        			control={control}
-				                        			render={({ field: { onChange, onBlur, value } }) => (
-				                        				<TextInput
-				                        					style={styles.input}
-				                        					onBlur={onBlur}
-				                        					onChangeText={onChange}
-				                        					value={value}
+                                                        />
+                                                    )}
+                                                    name="dni"
+                                                />
+                                            </View>
+                                        </View>
+                                        <View style={styles.containerRow2}>
+                                            <View style={styles.containerLabelColumn}>
+                                                <Text style={styles.TitleText}>Firstname:</Text>            
+                                                <Controller
+                                                    control={control}
+                                                    render={({ field: { onChange, onBlur, value } }) => (
+                                                        <TextInput
+                                                            style={styles.input}
+                                                            onBlur={onBlur}
+                                                            onChangeText={onChange}
+                                                            value={value}
                                                             placeholder={data[0]?.firstname}
-				                        				/>
-				                        			)}
-				                        			name="firstname"
-				                        		/>
-				                        	</View>
-				                        	<View style={styles.containerLabelColumn}>
-				                        		<Text style={styles.TitleText}>Lastname:</Text>  
-				                        		<Controller
-				                        			control={control}
-				                        			render={({ field: { onChange, onBlur, value } }) => (
-				                        				<TextInput
-				                        					style={styles.input}
-				                        					onBlur={onBlur}
-				                        					onChangeText={onChange}
-				                        					value={value}
+                                                        />
+                                                    )}
+                                                    name="firstname"
+                                                />
+                                            </View>
+                                            <View style={styles.containerLabelColumn}>
+                                                <Text style={styles.TitleText}>Lastname:</Text>  
+                                                <Controller
+                                                    control={control}
+                                                    render={({ field: { onChange, onBlur, value } }) => (
+                                                        <TextInput
+                                                            style={styles.input}
+                                                            onBlur={onBlur}
+                                                            onChangeText={onChange}
+                                                            value={value}
                                                             placeholder={data[0]?.lastname}
-				                        				/>
-				                        			)}
-				                        			name="lastname"
-				                        		/>
-				                        	</View>
-				                        </View>
-				                        <View style={styles.containerRow2}>
-				                        	<View style={styles.containerLabelColumn}>
-				                        		<Text style={styles.TitleText}>Birthday:</Text>  
-				                        		<Controller
-				                        			control={control}
-				                        			render={({ field: { onChange, onBlur, value } }) => (
-				                        				<TextInput
-				                        					style={styles.input}
-				                        					onBlur={onBlur}
-				                        					onChangeText={onChange}
-				                        					value={value}
+                                                        />
+                                                    )}
+                                                    name="lastname"
+                                                />
+                                            </View>
+                                        </View>
+                                        <View style={styles.containerRow2}>
+                                            <View style={styles.containerLabelColumn}>
+                                                <Text style={styles.TitleText}>Birthday:</Text>  
+                                                <Controller
+                                                    control={control}
+                                                    render={({ field: { onChange, onBlur, value } }) => (
+                                                        <TextInput
+                                                            style={styles.input}
+                                                            onBlur={onBlur}
+                                                            onChangeText={onChange}
+                                                            value={value}
                                                             placeholder={data[0]?.birthday}
-				                        				/>
-				                        			)}
-				                        			name="birthday"
-				                        		/>
-				                        	</View>
-				                        	<View style={styles.containerLabelColumn}>
-				                        		<Text style={styles.TitleText}>Phone:</Text>  
-				                        		<Controller
-				                        			control={control}
-				                        			render={({ field: { onChange, onBlur, value } }) => (
-				                        				<TextInput
-				                        					style={styles.input}
-				                        					onBlur={onBlur}
-				                        					onChangeText={onChange}
-				                        					value={value}
+                                                        />
+                                                    )}
+                                                    name="birthday"
+                                                />
+                                            </View>
+                                            <View style={styles.containerLabelColumn}>
+                                                <Text style={styles.TitleText}>Phone:</Text>  
+                                                <Controller
+                                                    control={control}
+                                                    render={({ field: { onChange, onBlur, value } }) => (
+                                                        <TextInput
+                                                            style={styles.input}
+                                                            onBlur={onBlur}
+                                                            onChangeText={onChange}
+                                                            value={value}
                                                             placeholder={data[0]?.phone}
-				                        				/>
-				                        			)}
-				                        			name="phone"
-				                        		/>
-				                        	</View>
-				                        </View>
+                                                        />
+                                                    )}
+                                                    name="phone"
+                                                />
+                                            </View>
+                                        </View>
                                                     <View style={styles.view2}>
-                                                    <View style={styles.view2_1}>
-                                                        <TouchableOpacity style={styles.ordersandreviewsbtns} onPress={handleSubmit(onSubmit)}>
-                                                            <Text style={{color:'white', fontSize:20, fontWeight:"bold"}}>Save</Text>
-                                                        </TouchableOpacity>
-                                                        <TouchableOpacity style={styles.ordersandreviewsbtns} onPress={()=>handleCancelation()}>
-                                                            <Text style={{color:'white', fontSize:20, fontWeight:"bold"}}>Cancel</Text>
-                                                        </TouchableOpacity>
+                                                        <View style={styles.view2_1}>
+                                                            <TouchableOpacity style={styles.ordersandreviewsbtns} onPress={handleSubmit(onSubmit)}>
+                                                                <Text style={{color:'white', fontSize:20, fontWeight:"bold"}}>Save</Text>
+                                                            </TouchableOpacity>
+                                                            <TouchableOpacity style={styles.ordersandreviewsbtns} onPress={()=>handleCancelation()}>
+                                                                <Text style={{color:'white', fontSize:20, fontWeight:"bold"}}>Cancel</Text>
+                                                            </TouchableOpacity>
+                                                        </View>
                                                     </View>
-                                                     </View>
                                             </View> 
                                     </Modal>
                             </View>
@@ -283,142 +284,143 @@ const UserProfile = ({ navigation }) => {
                                 <Text style={styles.text}>{data[0]?.address.zipCode}</Text>
                             </View>
                             <View style={styles.view2_}>
-                            <View style={styles.view2_1_}>
-                                <TouchableOpacity style={styles.ordersandreviewsbtns} onPress={()=>handleModalAdress()}>
-                                    <Text style={{color:'white', fontSize:20, fontWeight:"bold"}}>Edit Address</Text>
-                                </TouchableOpacity>
-                            </View></View>
+                                <View style={styles.view2_1_}>
+                                    <TouchableOpacity style={styles.ordersandreviewsbtns} onPress={()=>handleModalAdress()}>
+                                        <Text style={{color:'white', fontSize:20, fontWeight:"bold"}}>Edit Address</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
                         </View>
-                            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                            <View style={{ justifyContent: 'center', alignItems: 'center'}}>
                                     <Modal transparent visible={modalOpenAdres} >
                                         <View style={styles.modalBackground}>
                                         <View style={styles.containerRow2}>
-					                    	<View style={styles.containerLabelColumn}>
-					                    		<Text style={styles.TitleText}>Country:</Text>  
-					                    		<Controller
-					                    			control={control}
-					                    			render={({ field: { onChange, onBlur, value } }) => (
-					                    				<TextInput
-					                    					style={styles.input}
-					                    					onBlur={onBlur}
-					                    					onChangeText={onChange}
-					                    					value={value}
+                                            <View style={styles.containerLabelColumn}>
+                                                <Text style={styles.TitleText}>Country:</Text>  
+                                                <Controller
+                                                    control={control}
+                                                    render={({ field: { onChange, onBlur, value } }) => (
+                                                        <TextInput
+                                                            style={styles.input}
+                                                            onBlur={onBlur}
+                                                            onChangeText={onChange}
+                                                            value={value}
                                                             placeholder={data[0]?.location.country}
-					                    				/>
-					                    			)}
-					                    			name="country"
-					                    		/>
-					                    	</View>
-					                    	<View style={styles.containerLabelColumn}>
-					                    		<Text style={styles.TitleText}>City:</Text>  
-					                    		<Controller
-					                    			control={control}
-					                    			render={({ field: { onChange, onBlur, value } }) => (
-					                    				<TextInput
-					                    					style={styles.input}
-					                    					onBlur={onBlur}
-					                    					onChangeText={onChange}
-					                    					value={value}
+                                                        />
+                                                    )}
+                                                    name="country"
+                                                />
+                                            </View>
+                                            <View style={styles.containerLabelColumn}>
+                                                <Text style={styles.TitleText}>City:</Text>  
+                                                <Controller
+                                                    control={control}
+                                                    render={({ field: { onChange, onBlur, value } }) => (
+                                                        <TextInput
+                                                            style={styles.input}
+                                                            onBlur={onBlur}
+                                                            onChangeText={onChange}
+                                                            value={value}
                                                             placeholder={data[0]?.location.city}
-					                    				/>
-					                    			)}
-					                    			name="city"
-					                    		/>
-					                    	</View>
-					                    </View>
-					                    <View style={styles.containerRow2}>
-					                    	<View style={styles.containerLabelColumn}>
-					                    		<Text style={styles.TitleText}>State:</Text>  
-					                    		<Controller
-					                    			control={control}
-					                    			render={({ field: { onChange, onBlur, value } }) => (
-					                    				<TextInput
-					                    					style={styles.input}
-					                    					onBlur={onBlur}
-					                    					onChangeText={onChange}
-					                    					value={value}
+                                                        />
+                                                    )}
+                                                    name="city"
+                                                />
+                                            </View>
+                                        </View>
+                                        <View style={styles.containerRow2}>
+                                            <View style={styles.containerLabelColumn}>
+                                                <Text style={styles.TitleText}>State:</Text>  
+                                                <Controller
+                                                    control={control}
+                                                    render={({ field: { onChange, onBlur, value } }) => (
+                                                        <TextInput
+                                                            style={styles.input}
+                                                            onBlur={onBlur}
+                                                            onChangeText={onChange}
+                                                            value={value}
                                                             placeholder={data[0]?.location.state}
-					                    				/>
-					                    			)}
-					                    			name="state"
-					                    		/>
-					                    	</View>
-					                    </View>
-					                    <View style={styles.containerRow2}>
-					                    	<View style={styles.containerLabelColumn}>
-					                    		<Text style={styles.TitleText}>Street:</Text>  
-					                    		<Controller
-					                    			control={control}
-					                    			render={({ field: { onChange, onBlur, value } }) => (
-					                    				<TextInput
-					                    					style={styles.input}
-					                    					onBlur={onBlur}
-					                    					onChangeText={onChange}
-					                    					value={value}
+                                                        />
+                                                    )}
+                                                    name="state"
+                                                />
+                                            </View>
+                                        </View>
+                                        <View style={styles.containerRow2}>
+                                            <View style={styles.containerLabelColumn}>
+                                                <Text style={styles.TitleText}>Street:</Text>  
+                                                <Controller
+                                                    control={control}
+                                                    render={({ field: { onChange, onBlur, value } }) => (
+                                                        <TextInput
+                                                            style={styles.input}
+                                                            onBlur={onBlur}
+                                                            onChangeText={onChange}
+                                                            value={value}
                                                             placeholder={data[0]?.address.streetAdress}
-					                    				/>
-					                    			)}
-					                    			name="streetAdress"
-					                    		/>
-					                    	</View>
-					                    	<View style={styles.containerLabelColumn}>
-					                    		<Text style={styles.TitleText}>floor:</Text>  
-					                    		<Controller
-					                    			control={control}
-					                    			render={({ field: { onChange, onBlur, value } }) => (
-					                    				<TextInput
-					                    					style={styles.input}
-					                    					onBlur={onBlur}
-					                    					onChangeText={onChange}
-					                    					value={value}
+                                                        />
+                                                    )}
+                                                    name="streetAdress"
+                                                />
+                                            </View>
+                                            <View style={styles.containerLabelColumn}>
+                                                <Text style={styles.TitleText}>floor:</Text>  
+                                                <Controller
+                                                    control={control}
+                                                    render={({ field: { onChange, onBlur, value } }) => (
+                                                        <TextInput
+                                                            style={styles.input}
+                                                            onBlur={onBlur}
+                                                            onChangeText={onChange}
+                                                            value={value}
                                                             placeholder={data[0]?.address.floor}
-					                    				/>
-					                    			)}
-					                    			name="floor"
-					                    		/>
-					                    	</View>
-					                    </View>
-					                    <View style={styles.containerRow2}>
-					                    	<View style={styles.containerLabelColumn}>
-					                    		<Text style={styles.TitleText}>Department:</Text>  
-					                    		<Controller
-					                    			control={control}
-					                    			render={({ field: { onChange, onBlur, value } }) => (
-					                    				<TextInput
-					                    					style={styles.input}
-					                    					onBlur={onBlur}
-					                    					onChangeText={onChange}
-					                    					value={value}
+                                                        />
+                                                    )}
+                                                    name="floor"
+                                                />
+                                            </View>
+                                        </View>
+                                        <View style={styles.containerRow2}>
+                                            <View style={styles.containerLabelColumn}>
+                                                <Text style={styles.TitleText}>Department:</Text>  
+                                                <Controller
+                                                    control={control}
+                                                    render={({ field: { onChange, onBlur, value } }) => (
+                                                        <TextInput
+                                                            style={styles.input}
+                                                            onBlur={onBlur}
+                                                            onChangeText={onChange}
+                                                            value={value}
                                                             placeholder={data[0]?.address.department}
-					                    				/>
-					                    			)}
-					                    			name="department"
-					                    		/>
-					                    	</View>
-					                    	<View style={styles.containerLabelColumn}>
-					                    		<Text style={styles.TitleText}>Zip code:</Text>  
-					                    		<Controller
-					                    			control={control}
-					                    			render={({ field: { onChange, onBlur, value } }) => (
-					                    				<TextInput
-					                    					style={styles.input}
-					                    					onBlur={onBlur}
-					                    					onChangeText={onChange}
-					                    					value={value}
+                                                        />
+                                                    )}
+                                                    name="department"
+                                                />
+                                            </View>
+                                            <View style={styles.containerLabelColumn}>
+                                                <Text style={styles.TitleText}>Zip code:</Text>  
+                                                <Controller
+                                                    control={control}
+                                                    render={({ field: { onChange, onBlur, value } }) => (
+                                                        <TextInput
+                                                            style={styles.input}
+                                                            onBlur={onBlur}
+                                                            onChangeText={onChange}
+                                                            value={value}
                                                             placeholder={data[0]?.address.zipCode}
-					                    				/>
-					                    			)}
-					                    			name="zipCode"
-					                    		/>
-					                    	</View>
+                                                        />
+                                                    )}
+                                                    name="zipCode"
+                                                />
+                                            </View>
                                             </View>
                                         {/* ///////////////////////////////////////////////////////////// */}
                                                     <View style={styles.view2}>
-                                                    <View style={styles.view2_1}>
-                                                        <TouchableOpacity style={styles.ordersandreviewsbtns} onPress={handleSubmit(onSubmit)}>
+                                                    <View style={styles.modalbtnscontainer}>
+                                                        <TouchableOpacity style={styles.modalbtnssave} onPress={handleSubmit(onSubmit)}>
                                                             <Text style={{color:'white', fontSize:20, fontWeight:"bold"}}>Save</Text>
                                                         </TouchableOpacity>
-                                                        <TouchableOpacity style={styles.ordersandreviewsbtns} onPress={()=>handleCancelation()}>
+                                                        <TouchableOpacity style={styles.modalbtnscancel} onPress={()=>handleCancelation()}>
                                                             <Text style={{color:'white', fontSize:20, fontWeight:"bold"}}>Cancel</Text>
                                                         </TouchableOpacity>
                                                     </View>
@@ -429,13 +431,13 @@ const UserProfile = ({ navigation }) => {
                         <View style={styles.view2}>
                             <Text style={styles.text1}>Orders:</Text>
                             <View style={styles.view2_1}>
-                                <TouchableOpacity style={styles.ordersandreviewsbtns} onPress={()=>navigation.navigate("PurchaseHistory", {navigation})}>
+                                <TouchableOpacity style={styles.ordersandreviewsbtns1} onPress={()=>navigation.navigate("PurchaseHistory", {navigation})}>
                                     <Text style={{color:'white', fontSize:20, fontWeight:"bold"}}>View</Text>
                                 </TouchableOpacity>
                             </View>
                             <Text style={styles.text1}>Reviews:</Text>
                             <View style={styles.view2_1}>
-                                <TouchableOpacity style={styles.ordersandreviewsbtns} onPress={()=>navigation.navigate("DoReview", {navigation})}>
+                                <TouchableOpacity style={styles.ordersandreviewsbtns1} onPress={()=>navigation.navigate("DoReview", {navigation})}>
                                     <Text style={{color:'white', fontSize:20, fontWeight:"bold"}}>View</Text>
                                 </TouchableOpacity>
                             </View>
@@ -478,22 +480,26 @@ const styles = StyleSheet.create({
         justifyContent:"center",
     },
     ScrollView: {
-        minHeight:'88%',
+        height:'120%',
+        // minHeight:'88%',
+        // maxHeight:'150%',
         marginHorizontal: 25
     },
     view2: {
         height:'15%',
     },
     view2_1: {
-        height: '50%',
+        height: 70,
+        width:'100%',
         justifyContent:"flex-start",
         alignItems:"center"
     },
     view2_: {
-        height:'15%',
+        height:50,
+        marginTop:15
     },
     view2_1_: {
-        height: '75%',
+        height: '100%',
         justifyContent:"flex-start",
         alignItems:"center"
         // marginVertical: 15
@@ -523,7 +529,15 @@ const styles = StyleSheet.create({
     },
     ordersandreviewsbtns: {
         width:'60%',
-        height: '70%',
+        height: '100%',
+        backgroundColor: '#B50000',
+        borderRadius: 15,
+        alignItems:"center",
+        justifyContent:"center"
+    },
+    ordersandreviewsbtns1: {
+        width:'60%',
+        height: '100%',
         backgroundColor: '#4A347F',
         borderRadius: 15,
         alignItems:"center",
@@ -608,6 +622,28 @@ const styles = StyleSheet.create({
 		marginBottom:'25%'
 	},
 	separator: { marginVertical: 15, borderBottomColor: '#737373', borderBottomWidth: StyleSheet.hairlineWidth },
+    modalbtnscontainer: {
+        width:'60%',
+        height:50,
+        flexDirection:"row",
+        marginTop:35
+    },
+    modalbtnscancel: {
+        marginHorizontal:10,
+        backgroundColor:'#B50000',
+        justifyContent:"center",
+        alignItems:"center",
+        borderRadius:10,
+        width:'60%'
+    },
+    modalbtnssave: {
+        marginHorizontal:10,
+        backgroundColor:'#4A347F',
+        justifyContent:"center",
+        alignItems:"center",
+        borderRadius:10,
+        width:'60%'
+    }
 });
 
 export default UserProfile;
