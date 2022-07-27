@@ -51,7 +51,7 @@ const Details = (props) => {
             ) : null}
             {item.offer > 0 ? (
               <Text style={styles.pricenew}>
-                $ {params.price - item.price * (item.offer / 100)}
+                $ {item.price - item.price * (item.offer / 100)}
               </Text>
             ) : null}
           </View>
