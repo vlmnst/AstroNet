@@ -287,36 +287,20 @@ const putReview = async (req, res, next) => {
 
     try {
         const { id } = req.params;
-        const {review, username} = req.body; // review: {rating, comment, owner}
+        const {review, username} = req.body;
+        let user = await User.find({"username":username})
+            let productsHistory = [];
+            user[0].productsHistory.map(p => productsHistory.push(p));
+            for (let i = 0; i < productsHistory.length; i++) { 
 
-        // const user = await User.findOne({ "username": username, "detail.id": id}, { $inc: { "detail.$.review": true }})
-        // db.test_invoice.update({user_id : 123456 , "items.item_name":"my_item_one"} , {$inc: {"items.$.price": 10}})
-        
-        // if (user) {
-        //     for (let i = 0; i < user.productsHistory.length; i++) {
-        //         for (let j = 0; j < user.productsHistory[i].detail.length; j++) {
-        //             if (user.productsHistory[i].detail[j].id === id) {
-        //                 console.log('llegue')
-        //                 if (user.productsHistory[i].detail[j].review === true) {
-        //                     return res.status(400).json({ error: 'already reviewed this products'})
-        //                 } else {
-        //                     user.productsHistory[i].detail[j].review = true;
-        //                     const newHistory = user.productsHistory;
-        //                     user.productsHistory = newHistory;
-        //                     await user.save()
-        //                 };
-        //             };
-        //         }
-        //     }
-        // };
+                for (let j = 0; j < productsHistory[i].detail?.length; j++) { 
+                    if(productsHistory[i].detail[j].id===id){
+                        productsHistory[i].detail[j].review=true
+                    }
+                }
 
-        // user.save();
-
-        /////////////////////////////////
-        // console.log('user saved')
-        // return res.json(user);
-        /////////////////////////////////
-     
+            }
+        await User.findOneAndUpdate({"username": username }, {$set: {"productsHistory": productsHistory}});
         const addReviewProduct = await Product.updateOne({"_id": id }, {$push: {"reviews": review}});
 
         if (addReviewProduct) {

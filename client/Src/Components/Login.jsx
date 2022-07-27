@@ -4,8 +4,8 @@ import FeatherIcon from 'react-native-vector-icons/Feather';
 import { Text, View, TextInput, Button, StyleSheet } from "react-native";
 import axios from "axios";
 // import { ROUTE } from "@env";
-// const ROUTE = "http://192.168.0.16:3001";
-const ROUTE = "https://proyectofinal-api-777.herokuapp.com";
+const ROUTE = "http://192.168.0.16:3001";
+// const ROUTE = "https://proyectofinal-api-777.herokuapp.com";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch } from "react-redux";
 import { setUserData } from "../../Redux/Slice/userSlice";
@@ -167,7 +167,7 @@ const Login = ({ navigation }) => {
 
         {/* CREATE ACCOUNT */}
         <View style={styles.view}>
-          <Icon name="logo-google" size={30} color="#641E16" /> 
+          {/* <Icon name="logo-google" size={30} color="#641E16" />  */}
           <CustomButton 
           text='Dont have an account? Create one' 
           onPress={() => handleCreate()}
@@ -186,11 +186,12 @@ const styles = StyleSheet.create({
     width:'100%',
   },
   container: {
-    flex: 1,
+    // flex: 1,
+    width:'100%',
     minHeight:'100%',
     // justifyContent: "center",
     alignItems: 'center',
-    marginHorizontal: 16,
+    // marginHorizontal: 16,
     // backgroundColor: "#5E5E5E",
   },
   SB: {
@@ -223,7 +224,8 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   view:{
-    flexDirection:"row"
+    flexDirection:"row",
+    // width:'50%'
   }
 });
 

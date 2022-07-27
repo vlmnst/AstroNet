@@ -5,14 +5,14 @@ import PrePreview from "./PrePreview";
 
 const OrderDetail = (props) => {
   const { navigation, route } = props;
-  let { detail } = route.params;
-  console.log(detail)
+  let { detail } = route.params.prod;
+  console.log(props)
 
   return (
     <View style={styles.container}>
       <View style={styles.SBcontainer}>
 				<View style={styles.SB}>
-          <IconIonicons style={styles.iconMenu} name="chevron-back" size={36} onPress={() => navigation.goBack()}/>
+          <IconIonicons style={styles.iconMenu} name="chevron-back" size={36} onPress={() => navigation.pop()}/>
 					<Text style={{fontSize:28, color:'white', fontWeight:'bold'}}>Purchase Order</Text>
 				</View>
 			</View>
@@ -31,11 +31,10 @@ const OrderDetail = (props) => {
               <View>
                 <PrePreview item={ product = {
                   name: item.name,
-                  price: item.price,
-                  offer: item.offer,
+                  price: item.offerPrice,
+                  offer: 0,
                   detail: item.detail,
                   description: item.description,
-                  category: item.category,
                   images: {
                     one: item.img[0]?.length > 0 ? item.img[0] : 'empty',
                     two: item.img[1]?.length > 0 ? item.img[1] : 'empty',
@@ -46,7 +45,7 @@ const OrderDetail = (props) => {
             </View>
         )}
       />
-      <Text style={styles.total}>{`Total: $${route.params?.total}`}</Text>
+      <Text style={styles.total}>{`Total: $${route.params?.prod.total}`}</Text>
     </View>
   );
 };

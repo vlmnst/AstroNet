@@ -99,6 +99,7 @@ const styles = StyleSheet.create({
     },
     selectsContainer: {
         justifyContent: "space-around",
+        flex: 1,
     },
     selects: {
         flexDirection: "column",

@@ -8,7 +8,8 @@ import { deleteCart } from "../../../Redux/Slice/index";
 import { useDispatch } from "react-redux";
 
 // import { ROUTE } from "@env";
-const ROUTE = 'https://proyectofinal-api-777.herokuapp.com'
+// const ROUTE = 'https://proyectofinal-api-777.herokuapp.com'
+const ROUTE = "http://192.168.0.16:3001";
 
 const Checkout = (props) => {
   const dispatch = useDispatch();

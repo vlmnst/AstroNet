@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 // import { ROUTE } from "@env";
-// const ROUTE = "http://192.168.0.16:3001";
-const ROUTE = "https://proyectofinal-api-777.herokuapp.com";
+const ROUTE = "http://192.168.0.16:3001";
+// const ROUTE = "https://proyectofinal-api-777.herokuapp.com";
 
 export const realUserSlice = createSlice({
     name: "USER",
@@ -63,7 +63,7 @@ export const realUserSlice = createSlice({
         FilterByStatus(state,action){
             let info = state.allpurchaseProductsFull;
             let array=[];
-            info.map(d=>d.status===action.payload?array.push(d):null)
+            info.map(d=>d.prod.status===action.payload?array.push(d):null)
             state.allpurchaseProducts = array
         }
     },

@@ -1,9 +1,10 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-
+import Cart from "./Cart";
 const ProductCard = (props) => {
-  const { navigation, item } = props;
+  const { navigation, item, route } = props;
 
   return (
+   <View>
     <TouchableOpacity
       style={ item.stock === 0 ? styles.noStock : styles.container }
       onPress={() => navigation.navigate("Details", props)}
@@ -23,7 +24,15 @@ const ProductCard = (props) => {
         </View>
         <Text style={styles.name}>{item.name.slice(0,65)}... </Text>
       </View>
+      <View style={styles.addcartbtn}>
+            { (item.stock === 0) 
+              ? ( <Text style={styles.addcarttxt}>Without stock</Text>)
+              : ( <Cart navigation={route} item={item} /> )
+            }
+      </View>
     </TouchableOpacity>
+          
+   </View> 
   );
 };
 
@@ -37,7 +46,7 @@ const styles = StyleSheet.create({
     padding: 0,
     borderWidth: 2,
     width: "93%",
-    height: 250,
+    height: 280,
     borderColor: "#EAEAEA",
     backgroundColor: "#F6F6F6",
     borderRadius: 10,
@@ -48,10 +57,13 @@ const styles = StyleSheet.create({
     padding: 0,
     borderWidth: 2,
     width: "93%",
-    height: 250,
+    height: 280,
     borderColor: "#EAEAEA",
     backgroundColor: 'rgba(255, 0, 0, 0.5)', 
     borderRadius: 10,
+  },
+  addcartbtn: {
+    height: 70,
   },
   priceOffer: {
     flexDirection: "row",

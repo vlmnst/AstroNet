@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     justifyContent:"center"
   },
   addCartText: {
-    fontSize: 22,
+    fontSize: 15,
     color: "white",
     fontWeight: "bold",
   },
