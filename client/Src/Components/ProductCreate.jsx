@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Text, View, TextInput, Button, StyleSheet, ScrollView } from "react-native";
+import { Text, View, TextInput, Button, StyleSheet, ScrollView, Modal } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import IconIonicons from 'react-native-vector-icons/Ionicons';
 
 import ImageLibrary from "./ImageLibrary";
 import PrePreview from "./PrePreview";
 import { createProduct } from "../../Redux/Slice";
+import Loader from "./Loader";
 
 const ProductCreate = ({navigation}) => {
     
@@ -41,6 +42,8 @@ const ProductCreate = ({navigation}) => {
         name, price, offer, stock, detail, description, category: categories, images
     })
 
+    // modal state
+    const [modalVisible, setModalVisible] = useState(false);
 
     // update preview
     useEffect(() => {
@@ -85,7 +88,7 @@ const ProductCreate = ({navigation}) => {
         setImages({ one: 'empty', two: 'empty', three: 'empty' })
     };
 
-    function submitForm() {
+    async function submitForm() {
         if (!name || !price ||!stock || !offer || !description || categories.length < 1) {
             return alert('empty fields')
         };
@@ -99,7 +102,10 @@ const ProductCreate = ({navigation}) => {
             category: categories, 
             img: [images.one, images.two, images.three],
         };
-        dispatch(createProduct(product));
+        setModalVisible(true)
+        await dispatch(createProduct(product));
+        setModalVisible(false)
+        alert('created successfully');
         clearInputs();
     };
 
@@ -111,6 +117,11 @@ const ProductCreate = ({navigation}) => {
 					<Text style={{fontSize:24, color:'white', fontWeight:'bold'}}>Create a new product</Text>
 				</View>
 			</View>
+
+            {/* LOADER AL CREAR PRODUCTO */}
+            <Modal transparent visible={modalVisible}>
+                <Loader />
+            </Modal>
 
             {/* NAME */}
             <View style={styles.inputsContainers}>
