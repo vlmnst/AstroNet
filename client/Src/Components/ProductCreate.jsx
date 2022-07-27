@@ -70,6 +70,7 @@ const ProductCreate = ({navigation}) => {
         setDescription([...description, newAttribute]); 
         setKey('');
         setValue('');
+        alert('attribute added');
     };
     
 
@@ -151,16 +152,36 @@ const ProductCreate = ({navigation}) => {
                 />
             </View>
 
-            {/* DESCRIPTION */}
+            {/* DETAIL */}
             <View style={styles.descriptionContainer}>
                 <TextInput transparent
                     style={styles.descriptionInput}
                     multiline={true}
                     onChangeText={setDetail}
                     value={detail}
-                    placeholder="Enter details..."
+                    placeholder="Enter a detail..."
                 />
             </View>
+
+            {/* NEW ATTRIBUTE DESCRIPTION */}
+            <Text style={{fontSize: 15, marginTop: 10 }}>Add new attribute</Text>
+                <View style={styles.inputsContainers}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'center', marginVertical: 10}}>
+                        <TextInput
+                            style={styles.inputs}
+                            onChangeText={setKey}
+                            value={key}
+                            placeholder="Name of attribute..."
+                        />
+                        <TextInput
+                            style={styles.inputs}
+                            onChangeText={setValue}
+                            value={value}
+                            placeholder="Value of attribute..."
+                        />
+                    </View>
+                    <Button title="Add new attribute" onPress={() => createDescription()} />
+                </View>
 
             {/* IMAGES */}
             <Text style={{fontSize: 15, marginTop: 15}}>Add images</Text>
@@ -170,7 +191,7 @@ const ProductCreate = ({navigation}) => {
             <Text style={{fontSize: 15 }}>Add categories</Text>
             <View style={styles.inputsContainers}>
                 <DropDownPicker
-                    style={{marginVertical: 10}}
+                    style={{marginVertical: 10, elevation: 3, zIndex: 0}}
                     open={openitems}
                     value={valueitems}
                     items={pickerItems}
@@ -194,27 +215,9 @@ const ProductCreate = ({navigation}) => {
                 }
             </View>
 
-            {/* NEW ATTRIBUTE */}
-            <Text style={{fontSize: 15 }}>Add new attribute</Text>
-                <View style={styles.inputsContainers}>
-                    <TextInput
-                        style={styles.inputs}
-                        onChangeText={setKey}
-                        value={key}
-                        placeholder="Name of attribute..."
-                    />
-                    <TextInput
-                        style={styles.inputs}
-                        onChangeText={setValue}
-                        value={value}
-                        placeholder="Value of attribute..."
-                    />
-                </View>
-
             {/* CREATE BUTTON */}
             <View style={{width: '50%', marginBottom: 80}}>
                 <PrePreview item={product}/>
-                <Button title="Add new attribute" onPress={() => createDescription()} />
                 <Button title="Create Product" onPress={() => submitForm()}/>
             </View>
     

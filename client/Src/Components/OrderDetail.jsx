@@ -6,6 +6,7 @@ import PrePreview from "./PrePreview";
 const OrderDetail = (props) => {
   const { navigation, route } = props;
   let { detail } = route.params;
+  console.log(detail)
 
   return (
     <View style={styles.container}>
@@ -22,7 +23,6 @@ const OrderDetail = (props) => {
         data={detail}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item,index }) => (
-          <TouchableOpacity onPress={() => prepareForReview(item)}>
             <View style={styles.PODetail}>
               <Image source={{ uri: item.img[0] }} style={styles.image} />
               <Text>{item.name}</Text>
@@ -33,6 +33,9 @@ const OrderDetail = (props) => {
                   name: item.name,
                   price: item.price,
                   offer: item.offer,
+                  detail: item.detail,
+                  description: item.description,
+                  category: item.category,
                   images: {
                     one: item.img[0]?.length > 0 ? item.img[0] : 'empty',
                     two: item.img[1]?.length > 0 ? item.img[1] : 'empty',
@@ -41,7 +44,6 @@ const OrderDetail = (props) => {
                 }/>
               </View>
             </View>
-          </TouchableOpacity>
         )}
       />
       <Text style={styles.total}>{`Total: $${route.params?.total}`}</Text>
