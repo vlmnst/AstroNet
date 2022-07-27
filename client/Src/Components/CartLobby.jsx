@@ -45,7 +45,7 @@ const CartLobby = ({ navigation }) => {
   }
 
   return (
-    <View style={{ flex: 1, width: width, alignItems: 'center', justifyContent: 'center', marginTop: 100 }}>
+    <View style={{ height:'100%' }}>
       <View style={styles.SBcontainer}>
         <View style={styles.SB}>
           <FeatherIcon style={styles.iconMenu} name="skip-back" size={36} onPress={() => navigation.goBack()} />
@@ -53,7 +53,7 @@ const CartLobby = ({ navigation }) => {
         </View>
       </View>
 
-      <View style={{ backgroundColor: 'transparent' }}>
+      <View style={{ height:'88%', backgroundColor: 'transparent' }}>
         <ScrollView style={styles.scrollView}>
           {
             infoCart?.map((item, index) => {    // ojo con el "?"
@@ -69,20 +69,22 @@ const CartLobby = ({ navigation }) => {
                         {`${item.detail.slice(0, 40)}...`}
                       </Text>
                     </View>
-                    <View style={{ backgroundColor: 'transparent', flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <View style={{ backgroundColor: 'transparent', justifyContent: 'space-between', marginLeft:15 }}>
+                      <View style={{flexDirection:'row'}}>
+                        {item.offer > 0 ? (
+                          <Text style={styles.pricethrough}>$ {item.price}</Text>)
+                          : <Text style={styles.price}>$ {item.price}</Text>}
+                        {item.offer > 0 ? (
+                          <Text style={styles.offer}>{item.offer}% off!</Text>
+                        ) : null}
+                      </View>
                       {item.offer > 0 ? (
-                        <Text style={styles.pricethrough}>$ {item.price}</Text>)
-                        : <Text style={styles.price}>$ {item.price}</Text>}
-                      {item.offer > 0 ? (
-                        <Text style={styles.offer}>{item.offer}% off!</Text>
-                      ) : null}
-                      {item.offer > 0 ? (
-                        <Text style={styles.pricenew}>$ {item.price - (item.price * (item.offer / 100))}</Text>
+                        <Text style={styles.pricenew}>total: $ {item.price - (item.price * (item.offer / 100))}</Text>
                       ) : null}
                     </View>
                   </View>
                   <View>
-                  <DeleteCart item={item}/>
+                    <DeleteCart item={item}/>
                     <CartLobbyCounter item={item} />
                   </View>
                 </View>
@@ -128,7 +130,7 @@ const styles = StyleSheet.create({
     left: '5%'
   },
   scrollView: {
-    height: '100%',
+    // height: '100%',
     width: '100%',
   },
   buybtn: {
@@ -139,8 +141,9 @@ const styles = StyleSheet.create({
   },
   viewMap: {
     width: width - 20,
-    height: '50%',
-    margin: 10,
+    height: 150,
+    marginVertical: 20,
+    marginHorizontal:12,
     backgroundColor: 'transparent',
     flexDirection: 'row',
     borderWidthBottom: 2,
@@ -155,6 +158,7 @@ const styles = StyleSheet.create({
     // padding:10,
     height: '10%',
     borderRadius: 20,
+    alignSelf:"center"
   },
   cartText: {
     fontSize: 24,
@@ -167,6 +171,13 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     color: "white"
+  },
+  offer: {
+    color:'#B50000',
+    marginLeft: 10
+  },
+  pricethrough: {
+    textDecorationLine:"line-through"
   }
 });
 
