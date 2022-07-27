@@ -22,7 +22,7 @@ const CartLobbyCounter = (Props) => {
   let { item } = Props;
   let { stock } = item;
   let [counter, setCounter] = useState(item.quantity);
-  
+
   const upCount = async () => {
     try {
       if (stock > counter) {
@@ -61,7 +61,7 @@ const CartLobbyCounter = (Props) => {
     // si solo qued un producto, se llama a borra todo. 
 
     try {
-      if (counter > 0) {
+      if (counter > 1) {
         var finalCart = []; 
         setCounter(--counter);
 
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
   },
   interior: {
     height: '30%',
-    width: '70%',
+    width: '60%',
     borderWidth: 1,
     borderColor: "#111111",
     borderRadius:10,
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     width: '100%',
     // borderWidth: 2,
     // borderColor: "#111111",
-    textAlign: "center"
+    textAlign: "center",
   }
 });
 

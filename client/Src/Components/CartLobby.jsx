@@ -12,7 +12,7 @@ import { useSelector, useDispatch } from "react-redux";
 import CartLobbyCounter from "./CartLobbyCounter";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { initialCartUpdate } from "../../Redux/Slice";
-import FeatherIcon from 'react-native-vector-icons/Feather';
+import IconIonicons from 'react-native-vector-icons/Ionicons';
 import DeleteCart from "./DeleteCart";
 
 var { width } = Dimensions.get("window");
@@ -48,7 +48,7 @@ const CartLobby = ({ navigation }) => {
     <View style={{ height:'100%' }}>
       <View style={styles.SBcontainer}>
         <View style={styles.SB}>
-          <FeatherIcon style={styles.iconMenu} name="skip-back" size={36} onPress={() => navigation.goBack()} />
+          <IconIonicons style={styles.iconMenu} name="chevron-back" size={36} onPress={() => navigation.goBack()} />
           <Text style={{ fontSize: 28, color: 'white', fontWeight: 'bold' }}>Cart</Text>
         </View>
       </View>
@@ -63,7 +63,7 @@ const CartLobby = ({ navigation }) => {
                   <View style={{ backgroundColor: 'transparent', flex: 1, justifyContent: 'space-around' }}>
                     <View>
                       <Text style={{ fontSize: 15, fontWeight: 'bold' }}>
-                        {item.article}
+                        {item.article.slice(0, 40)}...
                       </Text>
                       <Text>
                         {`${item.detail.slice(0, 40)}...`}
