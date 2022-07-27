@@ -59,7 +59,7 @@ const Login = ({ navigation }) => {
     let res = await axios.post(ROUTE + "/users/getByEmail/" + email);
     const { status, message, data } = res.data;
     
-    if (!status) { navigation.navigate("Create User") };
+    if (!status) { navigation.navigate("UserCreate", email) };
 
     if (status) {
       dispatch(setUserData(data));
