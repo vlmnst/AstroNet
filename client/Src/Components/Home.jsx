@@ -118,6 +118,7 @@ const styles = StyleSheet.create({
     // position: 'absolute',
     justifyContent: 'center',
     width: '100%',
+    minHeight:'100%',
     // flexDirection:"column",
     // alignItems:'space-between'
     // backgroundColor:'white'
@@ -131,7 +132,7 @@ const styles = StyleSheet.create({
   SB: {
     // flexDirection: 'row',
     width: '100%',
-    height: '12%',
+    height: 100,
     // alignItems: 'center',
     // justifyContent: "center",
     backgroundColor: '#4A347F',

@@ -110,8 +110,9 @@ const Allproducts = ({ route, navigation }) => {
   }
 
   function handlePrice(e) {
+    dispatch(setpaginateProducts([])),
+    dispatch(setPageScrollinf(1)),
     dispatch(getByPrice(e.value));
-    dispatch(setPageScrollinf(1))
   }
 
   // ------------ LOADER ----------
