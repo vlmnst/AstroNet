@@ -37,7 +37,7 @@ const DeleteCart = (props) => {
 const styles = StyleSheet.create({
   addCart: {
     alignItems: "center",
-    backgroundColor: "#33c37d",
+    backgroundColor: "#B50000",
     alignItems: "center",
     padding: 5,
     borderRadius: 5,

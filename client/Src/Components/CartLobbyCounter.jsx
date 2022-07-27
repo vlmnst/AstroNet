@@ -110,7 +110,7 @@ const CartLobbyCounter = (Props) => {
       <TouchableOpacity style={styles.interior} onPress={() => downCount()}>
         <Text>-</Text>
       </TouchableOpacity>
-      <Text>Stock: {stock}</Text>
+      <Text style={{width:'100%'}}>Stock: {stock}</Text>
     </View>
   )
 };
@@ -119,26 +119,30 @@ const styles = StyleSheet.create({
 
 
   container: {
-    height: '100%',
+    height: '70%',
     width: '100%',
-    borderWidth: 2,
-    borderColor: "#111111",
-    display: "flex",
-    justifyContent: "center"
+    // borderWidth: 2,
+    // borderColor: "#111111",
+    // display: "flex",
+    justifyContent: "center",
+    alignSelf:"center",
+    marginTop:'25%'
   },
   interior: {
     height: '30%',
-    width: '100%',
-    borderWidth: 2,
+    width: '70%',
+    borderWidth: 1,
     borderColor: "#111111",
+    borderRadius:10,
     alignItems: "center",
-
+    justifyContent:"center",
+    alignSelf:"center"
   },
   counter: {
-    height: '30%',
+    height: '20%',
     width: '100%',
-    borderWidth: 2,
-    borderColor: "#111111",
+    // borderWidth: 2,
+    // borderColor: "#111111",
     textAlign: "center"
   }
 });
