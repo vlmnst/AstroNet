@@ -242,7 +242,34 @@ const putpurchasedProducts = async (req, res, next) => {
         res.status(404).send(e.message)
     }
 };
-
+const putUser = async (req, res, next) => {
+    let {username}=req.params
+    let {
+        email,
+		dni,
+		firstname,
+		lastname,
+		birthday,
+		phone,
+		location,
+		address
+    }= req.body;
+    try{
+            await User.findOneAndUpdate({"username":username},{$set:{
+                "email":email,
+		        "dni":dni,
+		        "firstname":firstname,
+		        "lastname":lastname,
+		        "birthday":birthday,
+		        "phone":phone,
+		        "location":location,
+		        "address":address
+            }})
+            res.status(200).send(`. \u2705 user "${username}" Updated `)
+    } catch(e){
+        res.status(404).send(e.message)
+    }
+};
 const resetUserPassword = async(req, res, next) => {
     try {
         const { id, userMail } = req.body;
@@ -270,4 +297,6 @@ const resetUserPassword = async(req, res, next) => {
     }
 };
 
-module.exports = { createUser, getAllUsers, totalUsers, PutPrivileges, PutBanned, getPurchasedProducts, getProductsHistory, getUser,getUsersFull,getPurchasedProductsAllUsers,putpurchasedProducts, resetUserPassword };
+
+module.exports = { createUser, getAllUsers, totalUsers, PutPrivileges, PutBanned, getPurchasedProducts, getProductsHistory, getUser,getUsersFull,getPurchasedProductsAllUsers,putpurchasedProducts, resetUserPassword,putUser};
+

@@ -1,6 +1,5 @@
 const userRouter = require('express').Router();
-
-const { createUser, getAllUsers, totalUsers, PutPrivileges, PutBanned, getPurchasedProducts, getProductsHistory, getUser,getUsersFull,getPurchasedProductsAllUsers,putpurchasedProducts, resetUserPassword } = require('../controllers/users');
+const { createUser, getAllUsers, totalUsers, PutPrivileges, PutBanned, getPurchasedProducts, getProductsHistory, getUser,getUsersFull,getPurchasedProductsAllUsers,putpurchasedProducts,resetUserPassword,putUser } = require('../controllers/users');
 const { sendEmail,pushToken,putToken} = require('../controllers/nodemailer');//import email
 // const { authOK } = require('../controllers/login');
 
@@ -19,5 +18,6 @@ userRouter.post('/putToken',putToken);//ruta push
 userRouter.get('/getpurchasedProductsAllUsers', getPurchasedProductsAllUsers);
 userRouter.put('/putpurchasedProducts/:order', putpurchasedProducts);
 userRouter.put('/resetPassword', resetUserPassword);
+userRouter.put('/update/:username', putUser);
 
 module.exports = userRouter;

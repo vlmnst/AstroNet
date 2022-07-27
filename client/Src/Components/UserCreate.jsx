@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch} from "react-redux";
-import { Text, View, TextInput, Button, StyleSheet, SafeAreaView, StatusBar,TouchableOpacity, ScrollView  } from "react-native";
+import { Text, View, TextInput, StyleSheet, TouchableOpacity, ScrollView  } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 // import { ROUTE }  from '@env';
 const ROUTE = "https://proyectofinal-api-777.herokuapp.com";
@@ -24,10 +24,10 @@ const UserCreate = ({ navigation }) => {
         country:"" ,
         city:"" ,
         state:"",
-        street_address:"",
+        streetAdress:"",
         floor:"",
         department:"",
-        zip_code:"" 
+        zipCode:"" 
 		}
 	});
 
@@ -42,8 +42,8 @@ const UserCreate = ({ navigation }) => {
 			lastname: data.lastname,
 			birthday: data.birthday,
 			phone: data.phone,
-			location: {"country":data.country,"city":data.country,"state":data.state},
-			address: {"street_address":data.street_address , "floor":data.floor , "department":data.department , "zip_code":data.zip_code }
+			location: {"country":data.country,"city":data.city,"state":data.state},
+			address: {"streetAdress":data.streetAdress , "floor":data.floor , "department":data.department , "zipCode":data.zipCode }
 			}
 			const res = await axios.post(ROUTE +"/users/register", user);
 			alert("user created successfully !")
@@ -310,9 +310,9 @@ const UserCreate = ({ navigation }) => {
 										value={value}
 									/>
 								)}
-								name="street_address"
+								name="streetAdress"
 							/>
-							{errors.street_address && <Text style={styles.ErrorText}>Insert street address</Text>}
+							{errors.streetAdress && <Text style={styles.ErrorText}>Insert street address</Text>}
 						</View>
 						<View style={styles.containerLabelColumn}>
 							<Text style={styles.TitleText}>floor:</Text>  
@@ -369,9 +369,9 @@ const UserCreate = ({ navigation }) => {
 										value={value}
 									/>
 								)}
-								name="zip_code"
+								name="zipCode"
 							/>
-							{errors.zip_code && <Text style={styles.ErrorText}>Insert Zip code</Text>} 
+							{errors.zipCode && <Text style={styles.ErrorText}>Insert Zip code</Text>} 
 						</View>
 					</View>
 				</View>
