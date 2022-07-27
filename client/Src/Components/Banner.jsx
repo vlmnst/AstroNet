@@ -52,7 +52,7 @@ const[variable, setVariable] = useState('')
 const user = useSelector((state) => state.USER.userName)
   return (
 
-    <TouchableOpacity onPress={() =>detFunc()}>
+    <TouchableOpacity style={styles.TouchableOpacity} onPress={() =>detFunc()}>
       {
         imgToView ?
             <View style={styles.imageContainer}>
@@ -64,8 +64,8 @@ const user = useSelector((state) => state.USER.userName)
                 {imgToView.offer}% Off!
               </Text>
               <View style={styles.Buttoncontainer}>
-              <View style={{position:'absolute',left:"5%",bottom:"30%"}}><Icon onPress={(e)=>plusSlides(-1)} name="arrow-back-outline" size={30} color="grey" /></View>
-              <View style={{position:'absolute',right:"5%",bottom:"30%"}}><Icon onPress={(e)=>plusSlides(1)} name="arrow-forward-outline" size={30} color="grey" /></View>
+              <TouchableOpacity style={{position:'absolute',left:"5%",bottom:-50, backgroundColor:'#BDBDBD', height:100, width:35, borderRadius:10, justifyContent:"center", alignItems:"center"}} onPress={(e)=>plusSlides(-1)}><Icon name="arrow-back-outline" size={30} color="white" /></TouchableOpacity>
+              <TouchableOpacity style={{position:'absolute',right:"5%",bottom:-50, backgroundColor:'#BDBDBD', height:100, width:35, borderRadius:10, justifyContent:"center", alignItems:"center"}} onPress={(e)=>plusSlides(1)}><Icon name="arrow-forward-outline" size={30} color="white" /></TouchableOpacity>
               </View>
             </View>
           :
@@ -79,13 +79,18 @@ const user = useSelector((state) => state.USER.userName)
 };
 
 const styles = StyleSheet.create({
+  TouchableOpacity:{
+    // margin:10,
+    marginTop:20,
+    borderRadius:20
+  },
   Buttoncontainer:{
     marginTop :160,
     justifyContent:'center',
     flexDirection: 'row',
     heigth: "100%",
     width: "100%",
-    position:'absolute'
+    position:'absolute',
   },
   Button:{
     width: 40,
@@ -93,34 +98,36 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     justifyContent: "center",
-    backgroundColor:"black",
+    backgroundColor:"white",
     width: "100%",
     resizeMode:"contain",
+    borderRadius:20
   },
   image: {
     padding:30,
     height: 170,
     width: '100%',
     alignSelf:"center",
-    resizeMode:"contain"
+    resizeMode:"contain",
   },
   offer: {
     position: 'absolute',
     top:"2%",
-    left:"2%",
+    left:"8%",
     backgroundColor: 'green',
     borderRadius: 10,
     color: 'white',
     fontSize: 25,
   },
   name: {
-    color: 'white',
+    // color: 'white',
     marginLeft: 5,
     marginBottom: 10,
     fontFamily: 'monospace',
     fontWeight: 'bold',
     fontSize: 20,
-    textAlignVertical: 'center'
+    textAlignVertical: 'center',
+    alignSelf:"center"
   }
 });
 

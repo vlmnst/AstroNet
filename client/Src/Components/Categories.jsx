@@ -6,11 +6,11 @@ const Categories = (navigation) => {
   let categories = useSelector((state) => state.ALL_PRODUCTS.categories);
 
   let images = [
+    "https://w.wallhaven.cc/full/13/wallhaven-139plv.jpg", //mouse
     "https://w.wallhaven.cc/full/e7/wallhaven-e7q8r8.png", //teclado
     "https://static.lenovo.com/ww/campaigns/2022/legion-brand/lenovo-campaign-legion-brand-agnostic-feature-2-7-series-mobile.jpg", //notebook
     "https://w.wallhaven.cc/full/qd/wallhaven-qdvjjd.jpg", //KIT PC
     "https://w.wallhaven.cc/full/ym/wallhaven-ymp3mx.jpg", //headphone
-    "https://w.wallhaven.cc/full/13/wallhaven-139plv.jpg", //mouse
   ];
   
   let data = [];
