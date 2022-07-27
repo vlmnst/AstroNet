@@ -1,4 +1,4 @@
-import { Text, View, Modal, StyleSheet, Pressable } from "react-native";
+import { Text, View, Modal, StyleSheet, Pressable, ScrollView } from "react-native";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import ImageDetails from "./ImageDetails";
@@ -19,21 +19,31 @@ const PrePreview = ({item}) => {
     item.images.three === 'empty' ? null : images.push(item.images.three) 
 
     return (
-        <View >
-            <View >      
-                <Modal
-                    animationType="slide"
-                    transparent={true}
-                    visible={modalVisible}
-                    onRequestClose={() => {
-                    Alert.alert("Modal has been closed.");
-                    setModalVisible(!modalVisible);
-                    }}
+        <View>  
+
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => {
+                Alert.alert("Modal has been closed.");
+                setModalVisible(!modalVisible);
+                }}
+            >
+
+            <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => setModalVisible(!modalVisible)}
                 >
-                <View style={styles.modalBackground}>
+                <Text style={styles.textStyle}>Close Detail</Text>
+            </Pressable>
+
+            <View style={styles.modalBackground} >
+
                 <Text style={styles.name}>{item.name} </Text>
                     <ImageDetails images={images}/>
                         <View style={styles.contInt}>
+
                             <View style={item.priceOffer}>
                                 {item.offer > 0 ? (
                                 <Text style={styles.pricethrough}>$ {item.price}</Text>)
@@ -45,9 +55,10 @@ const PrePreview = ({item}) => {
                                 <Text style={styles.pricenew}>$ {item.price - (item.price * (item.offer/100))}</Text>
                                 ) : null}
                             </View>
+
                             <View style={styles.descriptionCont}>
-                            <Text style={styles.name}>Categories: </Text>
-                            {item.category? item.category.map((p,index)=>{
+                                <Text style={styles.name}>Categories: </Text>
+                                {item.category? item.category.map((p,index)=>{
                                     return(
                                         <View key={index}>
                                         <Text style={styles.description}>{p} </Text>
@@ -56,40 +67,36 @@ const PrePreview = ({item}) => {
                                     
                                     }
                                 )
-                                :<View style={styles.descriptionCont}><Text style={styles.name}>not categories loaded </Text></View>}
+                                :   <View style={styles.descriptionCont}><Text style={styles.name}>not categories loaded </Text></View>}
 
-                            <Text style={styles.name}>Description: </Text> 
-                                {item.description? item.description.map((p, index) => {
-                                    return (
-                                        <Text style={styles.description} key={index}>
-                                            {Object.keys(p)} : {Object.values(p)}
-                                        </Text>
-                                    );
-                                }):null}
+                                <Text style={styles.name}>Description: </Text> 
+                                    {item.description? item.description.map((p, index) => {
+                                        return (
+                                            <Text style={styles.description} key={index}>
+                                                {Object.keys(p)} : {Object.values(p)}
+                                            </Text>
+                                        );
+                                    }):null}
 
-                            <Text style={styles.name}>Detail: </Text>
-                            <Text style={styles.description}>{item.detail}</Text>
+                                <Text style={styles.name}>Detail: </Text>
+                                <Text style={styles.description}>{item.detail}</Text>
                             </View>
+
                         </View>
-                        <Pressable
-                            style={[styles.button, styles.buttonClose]}
-                            onPress={() => setModalVisible(!modalVisible)}
-                            >
-                            <Text style={styles.textStyle}>Close Detail</Text>
-                        </Pressable>
-                </View>
-                    
+
+            </View>     
             </Modal>
+
+            <View>
+                <Pressable
+                    style={[styles.button, styles.buttonOpen]}
+                    onPress={() => setModalVisible(true)}
+                >
+                    <Text style={styles.textStyle}>Show Preview</Text>
+                </Pressable>
             </View>
-                        <View>
-                        <Pressable
-                            style={[styles.button, styles.buttonOpen]}
-                            onPress={() => setModalVisible(true)}
-                        >
-                            <Text style={styles.textStyle}>Show Preview</Text>
-                        </Pressable>
-                        </View>
-        </View>        
+        </View>
+                
        
     )
 }

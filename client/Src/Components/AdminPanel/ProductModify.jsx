@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Text, View, TextInput, Button, StyleSheet, ScrollView } from "react-native";
+import { Text, View, TextInput, Button, StyleSheet, ScrollView, Modal } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import { getAllProducts, ModifyProducts, clearCache, setPageScrollinf, setpaginateProducts} from "../../../Redux/Slice";
 import ImageLibrary from '../ImageLibrary';
 import PrePreview from '../PrePreview';
 import IconIonicons from 'react-native-vector-icons/Ionicons';
+import Loader from "../Loader";
 
 const ProductModify = (props) => {
 
@@ -52,6 +53,9 @@ const ProductModify = (props) => {
         name, price, offer, stock, detail, description, category: categories, images
     })
 
+    // modal state
+    const [modalVisible, setModalVisible] = useState(false);
+
 
     // update preview
     useEffect(() => {
@@ -91,11 +95,13 @@ const ProductModify = (props) => {
                 img: [images.one, images.two, images.three],
             }
         };
-            await dispatch(ModifyProducts(payload));
+        setModalVisible(true)
+        await dispatch(ModifyProducts(payload));
         } catch (error) {
             console.log(error)
         }
         dispatch(getAllProducts());
+        setModalVisible(false)
         alert('updated successfully');
         if(allproductsroute === true) {
             props.navigation.pop(2);
@@ -132,6 +138,11 @@ const ProductModify = (props) => {
                     <IconIonicons style={styles.iconMenu} name="chevron-back" size={36} onPress={() => handleGoBack()}/>
                 </View>
             </View>
+
+            {/* LOADER AL CREAR PRODUCTO */}
+            <Modal transparent visible={modalVisible}>
+                <Loader />
+            </Modal>
 
             <ScrollView contentContainerStyle={styles.container}>
 
