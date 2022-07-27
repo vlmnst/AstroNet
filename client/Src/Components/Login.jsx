@@ -59,7 +59,7 @@ const Login = ({ navigation }) => {
     let res = await axios.post(ROUTE + "/users/getByEmail/" + email);
     const { status, message, data } = res.data;
     
-    if (!status) { navigation.navigate("Create User") };
+    if (!status) { navigation.navigate("UserCreate", email) };
 
     if (status) {
       dispatch(setUserData(data));
@@ -98,6 +98,13 @@ const Login = ({ navigation }) => {
       try {
         let res = await axios.post(ROUTE + "/login", credentials);
         const { status, message, data } = res.data; // data contiene el user y su token
+        
+        if (data.role === "banned") {
+          setUsername('');
+          setPassword('');
+          return alert('Account banned from Astronet')
+        } 
+
         alert(status + " " + message);
         setMessage("");
         dispatch(setUserData(data));

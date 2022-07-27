@@ -335,9 +335,9 @@ const cartCheckout = async (req, res, next) => {
         let preference = {
            items: payload.newCart,
            back_urls: {
-                          failure: "http://192.168.43.163:3001/failure",
-                          pending: "http://192.168.43.163:3001/pending",
-                          success: "http://192.168.43.163:3001/success"
+                          failure: "https://proyectofinal-api-777.herokuapp.com/failure",
+                          pending: "https://proyectofinal-api-777.herokuapp.com/pending",
+                          success: "https://proyectofinal-api-777.herokuapp.com/success"
                         }
         }
 

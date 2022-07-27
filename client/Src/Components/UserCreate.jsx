@@ -7,10 +7,11 @@ const ROUTE = "https://proyectofinal-api-777.herokuapp.com";
 import axios from 'axios';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 
-const UserCreate = ({ navigation }) => {
+const UserCreate = ({ navigation, route }) => {
 
-	const dispatch = useDispatch();
+	const email  = route.params
 
+	
 	const { control, handleSubmit, formState: { errors } } = useForm({
 		defaultValues: {
         username: '',
@@ -110,7 +111,26 @@ const UserCreate = ({ navigation }) => {
 				<View style={styles.containerRow2}>
 					<View style={styles.containerLabelColumn}>
 						<Text style={styles.TitleText}>Email:</Text>  
-						<Controller
+						{
+						email ? 
+						(<Controller
+							control={control}
+							rules={{
+								required: true,
+							}}
+							render={({ field: { onChange, onBlur, value } }) => (
+								<TextInput
+									style={styles.input}
+									onBlur={onBlur}
+									onChangeText={onChange}
+									value={email}
+									/>
+									)}
+							name="email"
+						/>) 
+						: 
+						(
+							<Controller
 							control={control}
 							rules={{
 								required: true,
@@ -125,6 +145,9 @@ const UserCreate = ({ navigation }) => {
 									)}
 							name="email"
 						/>
+						)
+						}
+						
 						{errors.email && <Text style={styles.ErrorText}>Insert email </Text>}
 					</View>
 					<View style={styles.containerLabelColumn}>
