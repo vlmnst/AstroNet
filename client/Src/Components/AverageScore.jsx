@@ -45,7 +45,7 @@ const AverageScore = ({ item }) => {
 
   return (
     <View style={styles.score}>
-      <Text>Average score: {total} </Text>
+      <Text>Average score: {Math.floor(total)} </Text>
       {/* STARS RATING */}
       {/* <TouchableOpacity style={{direction: 'flex', flexDirection: 'row', marginBottom: 5}}> */}
       <View

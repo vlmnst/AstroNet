@@ -161,7 +161,7 @@ const UserProfile = ({ navigation }) => {
                                                             onBlur={onBlur}
                                                             onChangeText={onChange}
                                                             value={value}
-                                                            placeholder={data[0]?.dni}
+                                                            placeholder={data[0]?.dni.toString()}
                                                         />
                                                     )}
                                                     name="dni"
