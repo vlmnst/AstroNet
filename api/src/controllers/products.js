@@ -151,7 +151,7 @@ const buyProduct = async (req, res, next) => {
 
     try {
         // cart = [{idProduct1, quantity}, {idProduct2, quantity}, etc]
-        const { cart, email } = req.body;
+        const { cart, email, direction } = req.body;
 
         const user = await User.findOne({email});
 
@@ -201,18 +201,21 @@ const buyProduct = async (req, res, next) => {
         // creo la orden de compra
         const order = {
             order: uuidv4(),
+            direction: direction,
             date: new Date(),
             total: totalPrice,
             detail: cartProducts,
         };
 
-        user.productsHistory = user.productsHistory.concat(order);
-        user.save();
-
-        const message = `ASTRONET! Thanks for the purchase, here is your purchase order: " ${JSON.stringify(order)} "`;
+        await User.findOneAndUpdate({ email }, {$push: {"productsHistory": order}});
+        // user.productsHistory = user.productsHistory.concat(order);
+        // user.save();
+        // user.update();
+        const message = `ASTRONET! Thanks for the purchase, the purchased will be delivered to "${direction}", here is your purchase order: " ${JSON.stringify(order)} "`;
         const payload = { body: { userMail: email, message }};
         await sendEmail(payload);
-        
+
+        // (console.log('saliendo'))
         return res.json({msg: 'purchase order delivered'});  
     } catch (error) {
         return next(error);
@@ -319,9 +322,9 @@ const cartCheckout = async (req, res, next) => {
         let preference = {
            items: payload.newCart,
            back_urls: {
-                          failure: "https://proyectofinal-api-777.herokuapp.com/failure",
-                          pending: "https://proyectofinal-api-777.herokuapp.com/pending",
-                          success: "https://proyectofinal-api-777.herokuapp.com/success"
+                          failure: "proyectofinal://failure",
+                          pending: "proyectofinal://pending",
+                          success: "proyectofinal://success"
                         }
         }
 

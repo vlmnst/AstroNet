@@ -1,5 +1,5 @@
 {
     "publicKey": "APP_USR-cdb18842-4a8a-4e23-9ba2-2f39f1038bd4",
     "token" : "APP_USR-6256249032011167-072014-b3cfb05f4bb87952bb7c2dbc859ecf36-1163898822",
-    "urlRoot": "https://proyectofinal-api-777.herokuapp.com"
+    "urlRoot": "http://192.168.0.16:3001"
 }

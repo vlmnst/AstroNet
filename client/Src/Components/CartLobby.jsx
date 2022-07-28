@@ -6,8 +6,11 @@ import {
   Dimensions,
   TouchableOpacity,
   ScrollView,
+  Modal,
+  TextInput,
+  Button,
 } from "react-native";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import CartLobbyCounter from "./CartLobbyCounter";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -20,6 +23,9 @@ var { width } = Dimensions.get("window");
 const CartLobby = ({ navigation }) => {
   const infoCart = useSelector((state) => state.ALL_PRODUCTS.cart);
   const email = useSelector((state) => state.USER.email);
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [direction, setDirection] = useState('');
 
   const dispatch = useDispatch();
 
@@ -39,10 +45,24 @@ const CartLobby = ({ navigation }) => {
     }
   }, []);
 
-  const payload = {
-    email: email,
-    cart: infoCart
-  }
+    // cancelo modal
+  function handleCancelationReview() {
+      setModalOpen(false);
+  };
+
+  // confirmo modal
+  function handleConfirmationReview() {
+      if (infoCart.length < 1) return alert('add something to the cart')
+      if (email.length < 1 ) return alert('sign up for checkout')
+
+      const payload = {
+        direction: direction.length > 1 ? direction : "Your account address",
+        email: email,
+        cart: infoCart
+      }
+      setModalOpen(false);
+      navigation.navigate('Checkout', payload)
+  };
 
   return (
     <View style={{ height:'100%' }}>
@@ -52,6 +72,27 @@ const CartLobby = ({ navigation }) => {
           <Text style={{ fontSize: 28, color: 'white', fontWeight: 'bold' }}>Cart</Text>
         </View>
       </View>
+
+      <Modal transparent visible={modalOpen}>
+        <View style={styles.modalBackground}>
+          <View style={styles.modalContainer}>
+            <TextInput
+                multiline={true}
+                style={styles.input}
+                placeholder='Address, street, department, floor'
+                onChangeText={text => setDirection(text)}
+                value={direction || ''}
+            />
+          </View>
+
+            {/* BUTTONS */}
+            <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly'}}>
+                <Button title='CANCEL' onPress={() => handleCancelationReview()} />
+                <Button title='NEXT' onPress={() => handleConfirmationReview()} />
+            </View>
+        </View>
+
+      </Modal>
 
       <View style={{ height:'88%', backgroundColor: 'transparent' }}>
         <ScrollView style={styles.scrollView}>
@@ -94,7 +135,7 @@ const CartLobby = ({ navigation }) => {
         </ScrollView>
         <View style={{ height: 20 }} />
         <TouchableOpacity
-          onPress={() => navigation.navigate('Checkout', payload)}
+          onPress={() => setModalOpen(true)}
           style={styles.cartBtn}
         >
           <Text style={styles.cartText}>
@@ -124,11 +165,28 @@ const styles = StyleSheet.create({
     width: '100%',
     marginTop: '4%'
   },
+  input: {
+    height: 50,
+    width: '90%',
+    backgroundColor: 'white',
+  },
   iconMenu: {
     color: 'white',
     position: 'absolute',
     left: '5%'
   },
+  modalBackground: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.9)', 
+    justifyContent: 'center',
+    alignItems: 'center',
+},
+modalContainer: {
+  width: '100%',
+  justifyContent: 'center',
+  alignItems: 'center',
+  heigth: 100,
+},
   scrollView: {
     // height: '100%',
     width: '100%',

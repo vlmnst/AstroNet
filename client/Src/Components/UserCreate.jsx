@@ -34,6 +34,19 @@ const UserCreate = ({ navigation, route }) => {
 	});
 
     const onSubmit = async(data) => {
+
+		if (!data.birthday.match(/^([0-2][0-9]|3[0-1])(\/|-)(0[1-9]|1[0-2])\2(\d{4})$/)) {
+			return alert('bad birthday');
+		} 
+
+		if (!data.dni.match(/^[0-9]+([.][0-9]+)?$/)) {
+			return alert('bad dni');
+		}
+
+		if (!data.phone.match(/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/))  {
+			return alert('bad phone');
+		} 
+
 		try {
 			const user = {
 			username: data.username,
@@ -102,6 +115,7 @@ const UserCreate = ({ navigation, route }) => {
 									onBlur={onBlur}
 									onChangeText={onChange}
 									value={value}
+									secureTextEntry={true}
 								/>
 							)}
 							name="password"
@@ -223,9 +237,11 @@ const UserCreate = ({ navigation, route }) => {
 							render={({ field: { onChange, onBlur, value } }) => (
 								<TextInput
 									style={styles.input}
+									type={'date'}
 									onBlur={onBlur}
 									onChangeText={onChange}
 									value={value}
+									placeholder={'dd/mm/yyyy'}
 								/>
 							)}
 							name="birthday"
@@ -488,9 +504,10 @@ const styles = StyleSheet.create({
 	},
 	ErrorText: {
 		textAlign:"center",
-		fontSize:18,
-		backgroundColor:"red",
-		width: '150px',
+		fontSize:14,
+		color: 'red',
+		// backgroundColor:"red",
+		width: 150,
 		borderRadius: 30,
 		paddingLeft:10,
 		paddingRight:10,
