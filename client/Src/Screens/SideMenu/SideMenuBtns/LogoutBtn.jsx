@@ -1,5 +1,5 @@
-import React from "react";
-import { Text, TouchableOpacity, StyleSheet } from "react-native";
+import React, {useState} from "react";
+import { Text, TouchableOpacity, StyleSheet, Alert, View } from "react-native";
 import { useDispatch } from "react-redux";
 import { setLogOut } from "../../../../Redux/Slice/userSlice";
 import { logOut } from '../../../utils/handleCredentials';
@@ -8,6 +8,27 @@ import IconAntDesign from 'react-native-vector-icons/AntDesign';
 const LogoutBtn = ({navigation, text, onPress }) => {
 
     const dispatch = useDispatch()
+   
+
+    const showConfirmDialog = () => {
+        return Alert.alert(
+          'Hi!',
+          "Are your sure you want logout?",
+          [
+           
+            {
+              text: "Yes",
+              onPress: () => {
+                handleLogOut();
+              },
+            },
+            {
+                text: "Cancel",
+                style: "cancel",
+            },
+          ]
+        );
+      };
 
     const handleLogOut = () => {
         logOut()
@@ -18,7 +39,7 @@ const LogoutBtn = ({navigation, text, onPress }) => {
     return(
         <TouchableOpacity
             style={ styles.container }
-            onPress={() => handleLogOut()}
+            onPress={() => showConfirmDialog()}
         >
             <IconAntDesign style={ styles.icon } name="login" size={20} color="black"/>
             <Text style={ styles.text }>{text}</Text>
@@ -47,7 +68,12 @@ const styles = StyleSheet.create({
         fontWeight:"bold",
         fontSize:20,
         color:'white'
-    }
+    },
+    screen: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+    },
 })
 
 export default LogoutBtn;
