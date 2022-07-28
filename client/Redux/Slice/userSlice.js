@@ -65,6 +65,9 @@ export const realUserSlice = createSlice({
             let array=[];
             info.map(d=>d.prod.status===action.payload?array.push(d):null)
             state.allpurchaseProducts = array
+        },
+        clearPerfil(state, action){
+            state.userFullData = []
         }
     },
 });
@@ -186,6 +189,6 @@ export const sendEmail = (emailData) => async () => {
         };
     };
 
-export const { setLogOut,searchOrder,FilterByStatus} = realUserSlice.actions;
+export const { setLogOut, searchOrder, FilterByStatus, clearPerfil} = realUserSlice.actions;
 
 export default realUserSlice.reducer;

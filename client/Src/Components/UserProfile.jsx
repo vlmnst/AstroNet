@@ -2,7 +2,7 @@ import React, {useState, useEffect } from "react";
 import { View, StyleSheet, Text, TouchableOpacity, ScrollView,Modal, Button,TextInput } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm, Controller } from "react-hook-form";
-import { getUserFullData,getPurchaseOrders } from "../../Redux/Slice/userSlice";
+import { getUserFullData,getPurchaseOrders, clearPerfil } from "../../Redux/Slice/userSlice";
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import Loader from "./Loader";
 import axios from 'axios';
@@ -39,7 +39,7 @@ const UserProfile = ({ navigation }) => {
     useEffect(()=>{  
         dispatch(getPurchaseOrders(userName));
         dispatch(getUserFullData(email))
-    },[dispatch,email])
+    },[dispatch, email])
 
     function handleCancelation() {
         setModalOpenAdres(false);
@@ -53,6 +53,7 @@ const UserProfile = ({ navigation }) => {
     };
     const onSubmit = async(info) => {
 		try {
+
 			const user = {
 			email: info.email?info.email:data[0]?.email,
 			dni: info.dni?info.dni:data[0]?.dni,
@@ -64,7 +65,11 @@ const UserProfile = ({ navigation }) => {
 			address: {"streetAdress":info.streetAdress?info.streetAdress:data[0]?.address?.streetAdress , "floor":info.floor?info.floor:data[0]?.address?.floor , "department":info.department?info.department:data[0]?.address?.department , "zipCode":info.zipCode?info.zipCode:data[0]?.address?.zipCode }
 			}
             await axios.put("https://proyectofinal-api-777.herokuapp.com"+"/users/update/"+userName, user);
-			alert("user created successfully !")
+            setModalOpenUserData(false)
+            setModalOpenAdres(false)
+            dispatch(clearPerfil())
+            dispatch(getUserFullData(email))
+			alert("user edited successfully !")
 			navigation.navigate('Profile')
 		} catch (error) {
 			alert(!error )
