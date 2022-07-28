@@ -4,8 +4,8 @@ import FeatherIcon from 'react-native-vector-icons/Feather';
 import { Text, View, TextInput, Button, StyleSheet } from "react-native";
 import axios from "axios";
 // import { ROUTE } from "@env";
-const ROUTE = "http://192.168.0.16:3001";
-// const ROUTE = "https://proyectofinal-api-777.herokuapp.com";
+// const ROUTE = "http://192.168.0.16:3001";
+const ROUTE = "https://proyectofinal-api-777.herokuapp.com";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch } from "react-redux";
 import { setUserData } from "../../Redux/Slice/userSlice";
@@ -174,6 +174,9 @@ const Login = ({ navigation }) => {
           type='TERTIARY'
           />
         </View>
+
+        <Text style={styles.view}>Problems with your credentials?</Text>
+        <Text style={styles.view}>Send an email to correoAstronet@gmail.com</Text>
 
     </View>
   );

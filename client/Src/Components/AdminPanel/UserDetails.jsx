@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
-import {PutPrivileges} from "../../../Redux/Slice/index";
-import {PutBanned} from "../../../Redux/Slice/index";
+// import {PutPrivileges} from "../../../Redux/Slice/index";
+// import {PutBanned} from "../../../Redux/Slice/index";
 import { getCredentials } from "../../utils/handleCredentials";
 import { useDispatch} from "react-redux";
 import {useState, useEffect} from "react";
@@ -29,34 +29,34 @@ const UserDetails = (props) => {
         mod:"mod",
         banned:"banned",
     }
-        //-----------Handlers---------------
-        const handlePushPrivilege=(type)=>{
-            if (type !== "banned"){
-                const payload = {
-                    name:data.username,
-                    privileges:{
-                        username:userAdmin, 
-                        privilege:type
-                    }
-                }
-                dispatch(PutPrivileges(payload))
-                alert('privileges changed successfully')
-            }else{
-            const payload = {
-                name:data.username,
-                privileges:{
-                    privilege:type,
-                    username:userAdmin
-                }
-            }
-                dispatch(PutBanned(payload))
-                alert('user banned successfully')
+        // //-----------Handlers---------------
+        // const handlePushPrivilege=(type)=>{
+        //     if (type !== "banned"){
+        //         const payload = {
+        //             name:data.username,
+        //             privileges:{
+        //                 username:userAdmin, 
+        //                 privilege:type
+        //             }
+        //         }
+        //         dispatch(PutPrivileges(payload))
+        //         alert('privileges changed successfully')
+        //     }else{
+        //     const payload = {
+        //         name:data.username,
+        //         privileges:{
+        //             privilege:type,
+        //             username:userAdmin
+        //         }
+        //     }
+        //         dispatch(PutBanned(payload))
+        //         alert('user banned successfully')
             
-            }
-        }
-        const handleReset=()=>{
-            //dispatch(funcionreset()) Falta accion en reducer y ruta en el back 
-        }
+        //     }
+        // }
+        // const handleReset=()=>{
+        //     //dispatch(funcionreset()) Falta accion en reducer y ruta en el back 
+        // }
 
     return (
         <View style={styles.container}>

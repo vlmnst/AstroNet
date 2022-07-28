@@ -185,7 +185,7 @@ const Allproducts = ({ route, navigation }) => {
           <FlatList
             columnWrapperStyle={{ justifyContent: "space-evenly" }}
             style={styles.flatList}
-            numColumns={2}
+            numColumns={ 2}
             data={paginateProducts}
             onEndReachedThreshold={0.2}
             onEndReached={() => loadMoreItem()}

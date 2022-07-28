@@ -3,8 +3,8 @@ import { useDispatch} from "react-redux";
 import { Text, View, TextInput, StyleSheet, TouchableOpacity, ScrollView  } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 // import { ROUTE }  from '@env';
-// const ROUTE = "https://proyectofinal-api-777.herokuapp.com";
-const ROUTE = "http://192.168.0.16:3001";
+const ROUTE = "https://proyectofinal-api-777.herokuapp.com";
+// const ROUTE = "http://192.168.0.16:3001";
 import axios from 'axios';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 
