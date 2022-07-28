@@ -113,15 +113,15 @@ const AllPurchaseHistoryCard = (props) => {
                 </View>
                 <View style={styles.line}>
                     <Text style={styles.name}>order: </Text>
-                    <Text style={styles.detail}>{item.prod.order}</Text>
+                    <Text style={styles.detail}>{item.order}</Text>
                 </View>
                 <View style={styles.line}>
                     <Text style={styles.name}>date: </Text>
-                    <Text style={styles.detail}>{item.prod.date}</Text>
+                    <Text style={styles.detail}>{item.date}</Text>
                 </View>
                 <View style={styles.line}>
                     <Text style={styles.name}>total: </Text>
-                    <Text style={styles.detail}>{item.prod.total}</Text>
+                    <Text style={styles.detail}>{item.total}</Text>
                 </View>
 
             </View>
