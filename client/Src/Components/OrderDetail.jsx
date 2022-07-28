@@ -4,9 +4,12 @@ import IconIonicons from 'react-native-vector-icons/Ionicons';
 import PrePreview from "./PrePreview";
 
 const OrderDetail = (props) => {
+  console.log(props)
   const { navigation, route } = props;
-  let { detail } = route.params;
-  console.log(detail)
+  let detail;
+  route.params.prod ? detail = route.params.prod.detail : detail = route.params.detail;
+  // let { detail } = route.params.prod;
+  // console.log(detail)
 
   return (
     <View style={styles.container}>
@@ -46,7 +49,7 @@ const OrderDetail = (props) => {
             </View>
         )}
       />
-      <Text style={styles.total}>{`Total: $${route.params?.total}`}</Text>
+      <Text style={styles.total}>{`Total: $${route.params.prod? route.params.prod.total : route.params.total}`}</Text>
     </View>
   );
 };

@@ -148,6 +148,7 @@ const ProductModify = (props) => {
 
                 {/* NAME */}
                 <View style={styles.inputsContainers}>
+                    <Text>Name: </Text>
                     <TextInput transparent
                         style={styles.inputs}
                         onChangeText={setName}
@@ -158,6 +159,7 @@ const ProductModify = (props) => {
 
                 {/* PRICE */}
                 <View style={styles.inputsContainers}>
+                <Text>Price: </Text>
                     <TextInput transparent
                         style={styles.inputs}
                         onChangeText={setPrice}
@@ -168,6 +170,7 @@ const ProductModify = (props) => {
 
                 {/* STOCK */}
                 <View style={styles.inputsContainers}>
+                <Text>Stock: </Text>
                     <TextInput transparent
                         style={styles.inputs}
                         onChangeText={setStock}
@@ -178,6 +181,7 @@ const ProductModify = (props) => {
 
                 {/* OFFER */}
                 <View style={styles.inputsContainers}>
+                <Text>Offer: </Text>
                     <TextInput transparent
                         style={styles.inputs}
                         onChangeText={setOffer}
@@ -188,6 +192,7 @@ const ProductModify = (props) => {
 
                 {/* DESCRIPTION */}
                 <View style={styles.descriptionContainer}>
+                <Text>Description: </Text>
                     <TextInput transparent
                         style={styles.descriptionInput}
                         multiline={true}

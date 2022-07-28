@@ -1,18 +1,13 @@
 import {
   Text,
   View,
-  TextInput,
-  Image,
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getCredentials } from "../utils/handleCredentials";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { initialCartUpdate, deleteCart, cartUpdate } from "../../Redux/Slice";
-
-
+import { cartUpdate } from "../../Redux/Slice";
 
 const CartLobbyCounter = (Props) => {
   const dispatch = useDispatch();

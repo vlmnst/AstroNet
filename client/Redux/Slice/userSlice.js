@@ -63,7 +63,7 @@ export const realUserSlice = createSlice({
         FilterByStatus(state,action){
             let info = state.allpurchaseProductsFull;
             let array=[];
-            info.map(d=>d.status===action.payload?array.push(d):null)
+            info.map(d=>d.prod.status===action.payload?array.push(d):null)
             state.allpurchaseProducts = array
         }
     },

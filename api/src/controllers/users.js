@@ -207,7 +207,8 @@ const getUser = async (req, res, next) => {
 
         if (users.length > 0) {
             let purchasedProducts = [];
-            users.map(p => p.productsHistory.map(prod => purchasedProducts.push(prod)));
+            users.map(p => p.productsHistory.map(prod => purchasedProducts.push({username: p.username, email: p.email, prod})));
+            // console.log(purchasedProducts)
             res.json(purchasedProducts);
         } else {
             res.status(400).json({ error: 'Your products history is empty, buy something'})

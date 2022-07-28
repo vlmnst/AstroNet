@@ -24,6 +24,7 @@ const ProductCreate = ({navigation}) => {
     const [detail, setDetail] = useState('');
     const [description, setDescription] = useState('');
     const [categories, setCategories] = useState([]);
+    const [newCategory, setNewCategory] = useState('');
     const [images, setImages] = useState({
         one: 'empty',
         two: 'empty',
@@ -225,6 +226,20 @@ const ProductCreate = ({navigation}) => {
                     : (null)
                 }
             </View>
+
+            {/* NEW CATEGORY */}
+            <Text style={{fontSize: 15, marginTop: 10 }}>Add new category</Text>
+                <View style={styles.inputsContainers}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'center', marginVertical: 10}}>
+                        <TextInput
+                            style={styles.inputs}
+                            onChangeText={setNewCategory}
+                            value={newCategory}
+                            placeholder="Insert new category..."
+                        />
+                    </View>
+                    <Button title="Add new category" onPress={() => setCategories([...categories, newCategory])} />
+                </View>
 
             {/* CREATE BUTTON */}
             <View style={{width: '50%', marginBottom: 80}}>

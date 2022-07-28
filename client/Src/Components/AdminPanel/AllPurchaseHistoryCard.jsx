@@ -21,6 +21,7 @@ const AllPurchaseHistoryCard = (props) => {
     }, []);
     const dispatch = useDispatch();
     const { navigation, item } = props;
+    // console.log(item)
     //-----------User Types---------------
     const statusType = {
         Processing: "Processing",
@@ -102,17 +103,25 @@ const AllPurchaseHistoryCard = (props) => {
             </View>
 
             <View style={styles.card}>
+            <View style={styles.line}>
+                    <Text style={styles.name}>username: </Text>
+                    <Text style={styles.detail}>{item.username}</Text>
+                </View>
+                <View style={styles.line}>
+                    <Text style={styles.name}>email: </Text>
+                    <Text style={styles.detail}>{item.email}</Text>
+                </View>
                 <View style={styles.line}>
                     <Text style={styles.name}>order: </Text>
-                    <Text style={styles.detail}>{item.order}</Text>
+                    <Text style={styles.detail}>{item.prod.order}</Text>
                 </View>
                 <View style={styles.line}>
                     <Text style={styles.name}>date: </Text>
-                    <Text style={styles.detail}>{item.date}</Text>
+                    <Text style={styles.detail}>{item.prod.date}</Text>
                 </View>
                 <View style={styles.line}>
                     <Text style={styles.name}>total: </Text>
-                    <Text style={styles.detail}>{item.total}</Text>
+                    <Text style={styles.detail}>{item.prod.total}</Text>
                 </View>
 
             </View>

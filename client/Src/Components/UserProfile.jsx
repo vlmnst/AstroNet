@@ -6,7 +6,6 @@ import { getUserFullData,getPurchaseOrders } from "../../Redux/Slice/userSlice";
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import Loader from "./Loader";
 import axios from 'axios';
-// import Icon from 'react-native-vector-icons/Ionicons';
 
 const UserProfile = ({ navigation }) => {
 
@@ -17,20 +16,6 @@ const UserProfile = ({ navigation }) => {
     const [modalOpenAdres, setModalOpenAdres] = useState(false);
     const [modalOpenUserData, setModalOpenUserData] = useState(false);
 
-    // state user
-    // const [email_, setEmail] = useState();
-    // const [dni, setDni] = useState();
-    // const [firstname, setFirstname] = useState();
-    // const [lastname, setLastname] = useState();
-    // const [birthday, setBirthday] = useState();
-    // const [phone, setPhone] = useState();
-    // const [country, setCountry] = useState();
-    // const [city, setCity] = useState();
-    // const [state, setState] = useState();
-    // const [street_address, setStreet_address] = useState();
-    // const [floor, setFloor] = useState();
-    // const [department, setDepartment] = useState();
-    // const [zip_code, setZip_code] = useState();
     const { control, handleSubmit, formState: { errors } } = useForm({
 		defaultValues: {
         username: '',

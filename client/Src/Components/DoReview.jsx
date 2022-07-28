@@ -84,7 +84,7 @@ const DoReview = ({ route, navigation }) => {
     };
 
     // confirmo review y despacho
-    function handleConfirmationReview() {
+    async function handleConfirmationReview() {
         if (description !== undefined && rating !== undefined) {
             const payload = {
                 username: user,
@@ -95,7 +95,8 @@ const DoReview = ({ route, navigation }) => {
                     owner: user,
                 }
             };
-            dispatch(putReviewToProduct(payload));
+            await dispatch(putReviewToProduct(payload));
+            dispatch(getPurchaseProducts(user));
             handleCancelationReview();
         } else {
             alert('Leave a comment');
