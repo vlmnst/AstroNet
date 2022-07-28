@@ -36,16 +36,20 @@ const UserCreate = ({ navigation, route }) => {
     const onSubmit = async(data) => {
 
 		if (!data.birthday.match(/^([0-2][0-9]|3[0-1])(\/|-)(0[1-9]|1[0-2])\2(\d{4})$/)) {
-			return alert('bad birthday');
+			return alert('invalid birthday');
 		} 
 
 		if (!data.dni.match(/^[0-9]+([.][0-9]+)?$/)) {
-			return alert('bad dni');
+			return alert('invalid dni');
 		}
 
 		if (!data.phone.match(/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/))  {
-			return alert('bad phone');
+			return alert('invalid phone');
 		} 
+
+		if (!data.email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)) {
+			return alert('invalid email')
+		}
 
 		try {
 			const user = {
@@ -156,6 +160,7 @@ const UserCreate = ({ navigation, route }) => {
 									onBlur={onBlur}
 									onChangeText={onChange}
 									value={value}
+									placeholder={'user@email.com'}
 									/>
 									)}
 							name="email"
@@ -178,6 +183,7 @@ const UserCreate = ({ navigation, route }) => {
 									onBlur={onBlur}
 									onChangeText={onChange}
 									value={value}
+									placeholder={'11111111'}
 								/>
 							)}
 							name="dni"
@@ -261,6 +267,7 @@ const UserCreate = ({ navigation, route }) => {
 									onBlur={onBlur}
 									onChangeText={onChange}
 									value={value}
+									placeholder={'(11) XXXX XXXX'}
 								/>
 							)}
 							name="phone"
@@ -419,7 +426,6 @@ const UserCreate = ({ navigation, route }) => {
 					<Text>Register</Text>
 				</TouchableOpacity>
 				<Separator style={styles.separator} />
-				{/* <Button style={styles.Bottunn_} title="Register" onPress={handleSubmit(onSubmit)} /> */}
 			</ScrollView>
 		</View>
     ); 
