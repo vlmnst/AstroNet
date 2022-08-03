@@ -1,12 +1,12 @@
-# AstroNet
+# :rocket: AstroNet
 <h2>
-Aplicación celular: E-commerce de productos tecnológicos.
+:iphone:App mobile: E-commerce de productos tecnológicos.
 </h2>
-<h3>
+<p>
 Con un equipo de 8 integrantes, desarrollamos una app en React Native con estilos en CSS que incluía base de datos en MongoDB, back en NodeJS con Express, Login con Google, bcrypt y jsonwebtoken, notificaciones push y vía email, guardado de imágenes en base de datos online con Cloudinary y pasarela de pagos con Mercado Pago.
-</h3> 
+</p> 
 <h2>
-Video del projecto :
+:movie_camera: Video del proyecto :
 </h2>
-<p align="left">  <a href="https://www.youtube.com/watch?v=o2CoBTuhhA4" target="_blank"> <img src="./algo.png" alt="javascript" width="250" height="400"/> 
+<p align="center">  <a href="https://www.youtube.com/watch?v=o2CoBTuhhA4" target="_blank"> <img src="./algo.png" alt="javascript" width="250" height="550"/> 
 
