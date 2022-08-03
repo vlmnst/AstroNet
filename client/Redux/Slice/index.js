@@ -16,7 +16,9 @@ export const userSlice = createSlice({
         AllUsersFiltered: [],
         cart:[],
         pageScrollinf:0,
-        paginateProductsScrollinf:[]
+        paginateProductsScrollinf:[],
+        wishListData:[],
+        wishList:[]
     },
     reducers:{
         setpaginateProducts(state,action){
@@ -111,6 +113,14 @@ export const userSlice = createSlice({
             let filteredCart = state.cart.filter((x)=>{
                 x.id !== action.payload
             })
+        },
+        wishListAddInfo(state, action){
+            state.wishListData =  action.payload
+            //console.log(state.wishListData);
+        },
+        wishListComming(state, action){
+              state.wishList = state.wishList.concat(action.payload)
+              //console.log(state.wishList)
         }
     }
 });
@@ -204,6 +214,31 @@ export const initialCartUpdate = (payload) => async(dispatch) => {
 export const cartUpdate = (payload) => async(dispatch) => {
     dispatch(userSlice.actions.cartUpdate(payload))
 } 
+
+export const wishListAddInfo = (payload) => async(dispatch) => {
+    //console.log(payload);
+    try {
+        await axios.post(ROUTE +"/users/addItemWishList", payload);
+        //console.log(itemId)
+        //console.log(user)
+        dispatch(userSlice.actions.wishListAddInfo(payload))
+        alert('created successfully');
+    } catch (e) {
+        alert(!e.response.data.error ? e.response.data : e.response.data.error)
+    };
+
+   
+}
+
+export const wishListComming = (user) => async(dispatch) => {
+    //console.log(user);
+    try {
+        const info = await axios.get(ROUTE + "/users/wishListComming/"+ user)
+        dispatch(userSlice.actions.wishListComming(info.data))
+    } catch (error) {
+        console.log(error)   
+    }
+}
 
 
 export const {getByPrice, clearCache,clearAdmin,getAdminByPrice,resetAdminProducts,searchUser, deleteCart, deleteCartItem, setPageScrollinf, setpaginateProducts} =userSlice.actions;
