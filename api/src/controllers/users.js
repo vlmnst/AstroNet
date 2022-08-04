@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
+const Product = require('../models/Product');
 const jwt = require('jsonwebtoken');
 const { v4: uuidv4 } = require('uuid');
 const { sendEmail } = require('./nodemailer');
@@ -298,6 +299,45 @@ const resetUserPassword = async(req, res, next) => {
     }
 };
 
+const addItemInWishList = async (req, res, next) => {
+    try{
+       const{itemId, user}= req.body;
+       const item = await Product.findById(itemId);
+       const userName = await User.find({'username': user})
+       if(userName){
+        await User.findOneAndUpdate({'username': user},{$set:{'favorites':item}})
+            res.status(200).send(`added to ${user} wishlist`)
+       }else {
+        res.status(400).json({ error: 'not added in wishlist'});
+       }
+    }catch (error) {
+        return next(error);
+    };
 
-module.exports = { createUser, getAllUsers, totalUsers, PutPrivileges, PutBanned, getPurchasedProducts, getProductsHistory, getUser,getUsersFull,getPurchasedProductsAllUsers,putpurchasedProducts, resetUserPassword,putUser};
+};
+
+const wishListComming = async (req, res, next) => {
+        const{user}= req.params; 
+
+        let mapeo = [];
+    try {
+        const wishListUser = await User.findOne({'username': user})
+        let userWishList = [];
+             if(wishListUser){
+                 mapeo = wishListUser.favorites.map( async (f) => {
+                    let product = await Product.findById(f)
+                    userWishList.push(product);
+                })
+             } 
+             await Promise.all(mapeo)   
+            //  console.log(userWishList);
+             return res.json(userWishList);
+                          
+    }catch (error) {
+        console.log(error)
+    }
+}
+
+
+module.exports = { createUser, getAllUsers, totalUsers, PutPrivileges, PutBanned, getPurchasedProducts, getProductsHistory, getUser,getUsersFull,getPurchasedProductsAllUsers,putpurchasedProducts, resetUserPassword,putUser, addItemInWishList, wishListComming};
 

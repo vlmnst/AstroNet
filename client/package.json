@@ -20,6 +20,7 @@
     "@reduxjs/toolkit": "^1.8.3",
     "axios": "^0.27.2",
     "expo": "~45.0.0",
+    "expo-application": "^4.2.2",
     "expo-auth-session": "~3.6.1",
     "expo-device": "^4.2.0",
     "expo-font": "~10.1.0",
@@ -48,10 +49,10 @@
     "react-native-snap-carousel": "^3.9.1",
     "react-native-vector-icons": "^9.2.0",
     "react-native-web": "0.17.7",
+    "react-native-webview": "11.18.1",
     "react-navigation": "^4.4.4",
     "react-redux": "^8.0.2",
-    "react-style-proptype": "^3.2.2",
-    "react-native-webview": "11.18.1"
+    "react-style-proptype": "^3.2.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

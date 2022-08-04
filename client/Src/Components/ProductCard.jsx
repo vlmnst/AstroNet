@@ -1,5 +1,7 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import Cart from "./Cart";
+import WishListButton from "../Components/WishListButton";
+
 const ProductCard = (props) => {
   const { navigation, item, route } = props;
 
@@ -9,6 +11,7 @@ const ProductCard = (props) => {
       style={ item.stock === 0 ? styles.noStock : styles.container }
       onPress={() => navigation.navigate("Details", props)}
     >
+      <WishListButton navigation={navigation} item={item} />
       <Image source={{ uri: item.img[0] }} style={styles.image} />
       <View style={styles.contInt}>
         <View style={styles.priceOffer}>

@@ -7,13 +7,15 @@ import IconIonicons from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ImageDetails from "../Components/ImageDetails";
 import { useSelector } from "react-redux";
+import WishListButton from "../Components/WishListButton";
 
 const Details = (props) => {
 
   let role = useSelector((state) => state.USER.role);
   let product = useSelector((state) => state.ALL_PRODUCTS.allProductsFiltered);
 
-  const { route } = props; 
+  const { route } = props;
+  const { paramss } = route; 
 
   const { navigation } = props
   let item
@@ -37,6 +39,7 @@ const Details = (props) => {
       </View>
 
       <ScrollView contentContainerStyle={styles.container}>
+      <WishListButton navigation={route} item={params} />
         <ImageDetails images={item.img}/>
 
         <View style={styles.contInt}>

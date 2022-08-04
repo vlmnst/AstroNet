@@ -3,6 +3,7 @@ import { getProductsByName, setPageScrollinf, setpaginateProducts } from '../../
 import { useDispatch } from "react-redux";
 import React, { useState } from "react";
 import Icon from 'react-native-vector-icons/Ionicons';
+import FeatherIcon from 'react-native-vector-icons/Feather';
 import img from '../../assets/logo/logoAstronet.png'
 const SearchBar = (props ) => {
 
@@ -36,6 +37,7 @@ const SearchBar = (props ) => {
       />
       <Icon style={styles.iconSearch} onPress={() => search()} name="search-outline" size={30} />
       <Icon style={styles.iconCart} name="cart-outline" size={30}  onPress={() => navigation.navigate("Cart")}/>
+      <Icon  name="heart-outline" size={30}  onPress={() => navigation.navigate("WishListLobby")}/>
     </View>
   );
 };
