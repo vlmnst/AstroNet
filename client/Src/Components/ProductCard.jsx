@@ -26,12 +26,12 @@ const ProductCard = (props) => {
               ) : null}
         </View>
         <Text style={styles.name}>{item.name.slice(0,65)}... </Text>
-      </View>
-      <View style={styles.addcartbtn}>
+        <View style={styles.addcartbtn}>
             { (item.stock === 0) 
               ? ( <Text style={styles.addcarttxt}>Without stock</Text>)
               : ( <Cart navigation={route} item={item} /> )
             }
+      </View>
       </View>
     </TouchableOpacity>
           

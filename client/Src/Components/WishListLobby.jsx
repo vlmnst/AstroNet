@@ -96,6 +96,7 @@ const styles = StyleSheet.create({
     movieCard:{
         width: Dimensions.get('screen').width-10,
         height: 100,
+        width:"85%",
         backgroundColor: '#FFF',
         margin: 5,
         borderRadius: 10,
