@@ -38,7 +38,7 @@ const wishListButton = (props) => {
           onPress={() => onClickAddInWishList(item)}
           style={styles.addCart}
         >
-        <Icon style={styles.iconHeart} name="heart-outline" size={30}  />
+        <Icon style={styles.addCartText} name="heart-outline" size={30}  />
         </TouchableOpacity>
       );
 }
@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
       alignItems: "center",
       padding: 5,
       borderRadius: 5,
+      color: "white",
     },
     addCartText: {
       fontSize: 15,

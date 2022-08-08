@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity,Dimensions } from "react-native";
 
 const Categories = (navigation) => {
   let categories = useSelector((state) => state.ALL_PRODUCTS.categories);
@@ -20,7 +20,7 @@ const Categories = (navigation) => {
     var i=[]
   });
 
-  return (
+  return width_>410?(
     <View style={styles.realContainer}>
       {data.map((item, index) => {
         return(
@@ -38,9 +38,28 @@ const Categories = (navigation) => {
         )
       })}
     </View>
-  );
+  ):(
+    <View style={styles.realContainer}>
+      {data.map((item, index) => {
+        return(
+          <TouchableOpacity 
+              style={styles.container}
+              key={index}
+              onPress={()=>navigation.navigate("Allproducts", item.name)}>
+              <Image 
+                source={{ uri: item.img }} 
+                style={styles.img2} 
+                keyExtractor={(item) => item.id} // rompe el componente, ahora tira un warnin
+              />  
+              <Text style={styles.text2}>{item.name}</Text>
+            </TouchableOpacity>
+        )
+      })}
+    </View>
+  )
 };
-
+const height_ = Dimensions.get("window").height;
+const width_ = Dimensions.get("window").width;
 const styles = StyleSheet.create({
   realContainer: {
     flexDirection: "row",
@@ -66,6 +85,19 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     fontSize: 25,
+    textAlignVertical: 'center'
+  },
+  img2: {
+    width: '100%',
+    height: 100,
+    borderRadius: 10
+  },
+  text2: {
+    position: 'absolute',
+    paddingTop: 75,
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 14,
     textAlignVertical: 'center'
   }
 });
