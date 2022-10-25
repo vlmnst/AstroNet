@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from "react";
-import Icon from 'react-native-vector-icons/Ionicons';
-import FeatherIcon from 'react-native-vector-icons/Feather';
-import { Text, View, TextInput, Button, StyleSheet } from "react-native";
-import axios from "axios";
-// import { ROUTE } from "@env";
-// const ROUTE = "http://192.168.0.16:3001";
-const ROUTE = "https://proyectofinal-api-777.herokuapp.com";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch } from "react-redux";
-import { setUserData } from "../../Redux/Slice/userSlice";
-import * as Google from "expo-auth-session/providers/google";
+import { Text, View, TextInput, Button, StyleSheet } from "react-native";
+import FeatherIcon from 'react-native-vector-icons/Feather';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Web from "expo-web-browser";
+import * as Google from "expo-auth-session/providers/google";
+import axios from "axios";
+
+import { ROUTE } from "../../EndpointAPI"
 import CustomButton from "./CustomButton";
+import { setUserData } from "../../Redux/Slice/userSlice";
 
 Web.maybeCompleteAuthSession();
 
@@ -167,7 +165,6 @@ const Login = ({ navigation }) => {
 
         {/* CREATE ACCOUNT */}
         <View style={styles.view}>
-          {/* <Icon name="logo-google" size={30} color="#641E16" />  */}
           <CustomButton 
           text='Dont have an account? Create one' 
           onPress={() => handleCreate()}
@@ -189,13 +186,9 @@ const styles = StyleSheet.create({
     width:'100%',
   },
   container: {
-    // flex: 1,
     width:'100%',
     minHeight:'100%',
-    // justifyContent: "center",
     alignItems: 'center',
-    // marginHorizontal: 16,
-    // backgroundColor: "#5E5E5E",
   },
   SB: {
     flexDirection: "row",
@@ -228,7 +221,6 @@ const styles = StyleSheet.create({
   },
   view:{
     flexDirection:"row",
-    // width:'50%'
   }
 });
 

@@ -1,17 +1,15 @@
 import React from "react";
-import { useDispatch} from "react-redux";
+// import { useDispatch} from "react-redux";
 import { Text, View, TextInput, StyleSheet, TouchableOpacity, ScrollView  } from "react-native";
 import { useForm, Controller } from "react-hook-form";
-// import { ROUTE }  from '@env';
-const ROUTE = "https://proyectofinal-api-777.herokuapp.com";
-// const ROUTE = "http://192.168.0.16:3001";
-import axios from 'axios';
 import FeatherIcon from 'react-native-vector-icons/Feather';
+import axios from 'axios';
+
+import { ROUTE } from "../../EndpointAPI"
 
 const UserCreate = ({ navigation, route }) => {
 
 	const email  = route.params
-
 	
 	const { control, handleSubmit, formState: { errors } } = useForm({
 		defaultValues: {

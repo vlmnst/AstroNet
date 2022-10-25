@@ -1,40 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  View,
-  Text,
-  FlatList,
-  StyleSheet,
-  SafeAreaView,
-  StatusBar,
-  Image,
-  ActivityIndicator,
-} from "react-native";
-import {
-  getAllProducts,
-  getByPrice,
-  getProductsByCategory,
-  clearCache,
-  getProductsByName,
-  setpaginateProducts,
-  setPageScrollinf,
-} from "../../Redux/Slice";
-import ProductCard from "./ProductCard.jsx";
 import DropDownPicker from "react-native-dropdown-picker";
+import { View, Text, FlatList, StyleSheet, Image, ActivityIndicator } from "react-native";
 
-import Paginate from "./Paginate";
-import NavBar from "./NavBar";
+import { getAllProducts, getByPrice, getProductsByCategory, clearCache, getProductsByName, setpaginateProducts, setPageScrollinf } from "../../Redux/Slice";
+import ProductCard from "./ProductCard.jsx";
 import SearchBar from "./SearchBar";
 
 const Allproducts = ({ route, navigation }) => {
   // ---------- dispatch ----------
   // si route.params existe en categories, busco por categoria
-  // const [searchName, setsearchName] = useState(route.params);
   let searchName = route.params;
   const dispatch = useDispatch();
+
   // ---------- global states ----------
   let products = useSelector((state) => state.ALL_PRODUCTS.allProductsFiltered);
-  // let userRole = useSelector((state) => state.USER.role);
   let paginate = useSelector((state) => state.ALL_PRODUCTS.pageScrollinf);
   let paginateProducts = useSelector((state) => state.ALL_PRODUCTS.paginateProductsScrollinf)
   let [categories ] = useState(
@@ -49,14 +29,16 @@ const Allproducts = ({ route, navigation }) => {
   const [valueprice, setValueprice] = useState(null);
 
   let pickerSort = [
+    { label: "rating higher", value: "r-higher" },
+    { label: "rating lower", value: "r-lower" },
     { label: "higher", value: "higher" },
     { label: "lower", value: "lower" },
   ];
+
   let pickerItems = [];
   categories.length
     ? categories.map((c, index) => pickerItems.push({ label: c, value: c }))
     : null;
-
 
   useEffect(() => {
     if (searchName !== undefined){
@@ -109,7 +91,7 @@ const Allproducts = ({ route, navigation }) => {
     dispatch(getProductsByCategory(e.value));
   }
 
-  function handlePrice(e) {
+  function handleOrder(e) {
     dispatch(setpaginateProducts([])),
     dispatch(setPageScrollinf(1)),
     dispatch(getByPrice(e.value));
@@ -169,7 +151,7 @@ const Allproducts = ({ route, navigation }) => {
             items={pickerSort}
             setOpen={setOpenprice}
             setValue={setValueprice}
-            onSelectItem={(value) => handlePrice(value)}
+            onSelectItem={(value) => handleOrder(value)}
           />
         </View>
       </View>

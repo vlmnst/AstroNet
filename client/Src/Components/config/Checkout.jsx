@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { View, Text, StyleSheet } from "react-native";
-import config from './index.json'
 import { WebView } from 'react-native-webview';
 import axios from 'axios';
 
+import config from './index.json'
 import { deleteCart } from "../../../Redux/Slice/index";
-import { useDispatch } from "react-redux";
-
-// import { ROUTE } from "@env";
-const ROUTE = 'https://proyectofinal-api-777.herokuapp.com'
-// const ROUTE = "http://192.168.0.16:3001";
+import { ROUTE } from "../../../EndpointAPI"
 
 const Checkout = (props) => {
   const dispatch = useDispatch();

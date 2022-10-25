@@ -1,9 +1,8 @@
 import {createSlice, dispatch} from '@reduxjs/toolkit';
 import axios from 'axios';
-// import { ROUTE }  from '@env';
-// const ROUTE = "http://192.168.0.16:3001";
-const ROUTE = "https://proyectofinal-api-777.herokuapp.com";
 
+import { ROUTE } from "../../EndpointAPI"
+import { getPromRate } from '../../Src/utils/getPromRate';
 
 export const userSlice = createSlice({
     name : "ALL_PRODUCTS",
@@ -59,7 +58,36 @@ export const userSlice = createSlice({
                 });
                 state.allProductsFiltered = neworder
             }
-            
+
+            if (action.payload === "r-lower"){
+                let rated = state.allProductsFiltered.filter(p => p.reviews.length > 0) // rated = prods con reviews [{}, {}, {}]
+
+                let neworder = rated.sort(function (a,b){
+                    if (getPromRate(a) < getPromRate(b)) {
+                        return -1;
+                    }
+                    if (getPromRate(b) < getPromRate(a)) {
+                        return 1;
+                    }
+                    return 0;
+                });
+                state.allProductsFiltered = neworder
+            }
+
+            if (action.payload === "r-higher"){
+                let rated = state.allProductsFiltered.filter(p => p.reviews.length > 0) // rated = prods con reviews [{}, {}, {}]
+
+                let neworder = rated.sort(function (a,b){
+                    if (getPromRate(a) < getPromRate(b)) {
+                        return 1;
+                    }
+                    if (getPromRate(b) < getPromRate(a)) {
+                        return -1;
+                    }
+                    return 0;
+                });
+                state.allProductsFiltered = neworder
+            }  
         },
         clearCache(state){
             state.allProductsFiltered = []
@@ -121,7 +149,11 @@ export const userSlice = createSlice({
         wishListComming(state, action){
               state.wishList = state.wishList.concat(action.payload)
               //console.log(state.wishList)
+        },
+        undoItemWishList(state, action) {
+            state.wishList = state.wishList.filter(i => i.id !== action.payload)
         }
+
     }
 });
 
@@ -241,6 +273,6 @@ export const wishListComming = (user) => async(dispatch) => {
 }
 
 
-export const {getByPrice, clearCache,clearAdmin,getAdminByPrice,resetAdminProducts,searchUser, deleteCart, deleteCartItem, setPageScrollinf, setpaginateProducts} =userSlice.actions;
+export const { undoItemWishList, getByPrice, clearCache,clearAdmin,getAdminByPrice,resetAdminProducts,searchUser, deleteCart, deleteCartItem, setPageScrollinf, setpaginateProducts} =userSlice.actions;
 
 export default userSlice.reducer;

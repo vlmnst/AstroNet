@@ -14,15 +14,14 @@ import * as Permissions from 'expo-permissions';//EXPO PUSH IMPORT
 
 const Home = ({ navigation, route }) => {
 
-  //---------------------------------------------------------------------------------------------
-  //----------------------------------EXPO PUSH NOTIFICATION-------------------------------------
-  //---------------------------------------------------------------------------------------------
+  // expo push notification
   useEffect(() => {
     registerForPushNotifications()
-    .then(token=> token ? dispatch(putToken(token)) : null)
+    .then(token => token ? dispatch(putToken(token)) : null)
     .catch(err => console.log(err))
   }, []);
-  // Token notificacion push (id unico de dispositivo)
+
+  // token notificacion push (id unico de dispositivo)
   const registerForPushNotifications = async () => {
     try {
       const{status} = await Permissions.getAsync(Permissions.NOTIFICATIONS);
@@ -34,13 +33,12 @@ const Home = ({ navigation, route }) => {
           return;
         }
       const token = (await Notifications.getExpoPushTokenAsync()).data;
-      return token// <------TOKEN DISPOSITIVO-------
+      return token
     }
     catch (error) {
       console.log('we dont want your see our notification in web because is suck, you are welcome');
     }
   }
-  //---------------------------------------------------------------------------------------------
 
   const [visible, setVisible] = useState(false)
   const [variable, setVariable] = useState('')
@@ -65,6 +63,7 @@ const Home = ({ navigation, route }) => {
   }
 
   const dispatch = useDispatch();
+  
   useEffect(() => {
     dispatch(getCategories());
     dispatch(getAllProducts());
@@ -78,9 +77,7 @@ const Home = ({ navigation, route }) => {
         >
           <View style={styles.modalConteiner}>
             <View style={styles.popUpConteiner}>
-              {/* <View style={styles.popUpimgcontainer}> */}
-                <Image style={styles.popUpimg} source={ img } />
-              {/* </View> */}
+              <Image style={styles.popUpimg} source={ img } />
               <Text style={styles.modaltxt1}>Welcome to AstroNet</Text>
               <TouchableOpacity
                 onPress={() => handleOnPress()}
@@ -114,27 +111,18 @@ const Home = ({ navigation, route }) => {
 
 const styles = StyleSheet.create({
   conteiner: {
-    // flex: 1,
-    // position: 'absolute',
     justifyContent: 'center',
     width: '100%',
     minHeight:'100%',
-    // flexDirection:"column",
-    // alignItems:'space-between'
-    // backgroundColor:'white'
     backgroundColor: "white",
   },
   ScrollViewStyles: {
     minHeight:'88%',
-    // marginTop: 10,
     backgroundColor: 'white'
   },
   SB: {
-    // flexDirection: 'row',
     width: '100%',
     height: 100,
-    // alignItems: 'center',
-    // justifyContent: "center",
     backgroundColor: '#4A347F',
   },
   modalConteiner: {
@@ -174,8 +162,6 @@ const styles = StyleSheet.create({
     color:'white'
   },
   popUpimgcontainer: {
-    // height:120,
-    // resizeMode:"contain",
   },
   popUpimg: {
     height: '38%',

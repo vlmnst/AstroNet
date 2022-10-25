@@ -1,33 +1,21 @@
-import { Text, View, TextInput, Image, StyleSheet, Dimensions, TouchableOpacity, ScrollView, FlatList } from 'react-native';
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { wishListComming } from "../../Redux/Slice";
+import { Text, View, Image, StyleSheet, Dimensions, TouchableOpacity, FlatList } from 'react-native';
+import FeatherIcon from 'react-native-vector-icons/Feather';
 import Icon from 'react-native-vector-icons/AntDesign';
 
-
 import Cart from "../Components/Cart";
-import FeatherIcon from 'react-native-vector-icons/Feather';
+import { undoItemWishList } from "../../Redux/Slice";
 
 const WishListLobby = (props) => {
     const { route } = props;
-    const { params } = route;
     const { navigation } = props
 
-    // const [userData, setUserData] = useState();
-
     const dispatch = useDispatch();
-    // const userName = useSelector(state => state.USER.userName)
     const wishlist = useSelector(state => state.ALL_PRODUCTS.wishList)
-    //const data = wishlist[0]
 
-    // useEffect(() => {
-    //     dispatch(wishListComming(userName))
-    // }, []);
-  
-
-    //console.log(wishlist);
-    const onClickDeleteDataWishList = () => {
-
+    const deleteItem = (item) => {
+        dispatch(undoItemWishList(item.id))
     }
    
     return (
@@ -37,30 +25,24 @@ const WishListLobby = (props) => {
                 <FeatherIcon style={styles.iconMenu} name="skip-back" size={36} onPress={() => navigation.goBack()} />
                 <Text style={{ fontSize: 28, color: 'white', fontWeight: 'bold' }}>WishList</Text>
         </View>
-      </View>
-            <Text style={{ fontSize:30, fontWeight: '600', color: 'gray', marginLeft: 20, marginBottom: 20 }}>
-               
-            </Text>
+        </View>
             <FlatList
                 horizontal={false}
                 showsVerticalScrollIndicator={false}
                 data={wishlist}
                 renderItem={({item}) => (
                     <View style={styles.movieCard}>
-                        {/* <TouchableOpacity
-                            onPress={() => onClickDeleteDataWishList(item)}
-                            style={styles.addCart}
-                        >
+                        <TouchableOpacity onPress={() => deleteItem(item)} style={styles.addCart}>
                             <Icon style={styles.iconHeart} name="delete" size={20}  />
-                        </TouchableOpacity> */}
+                        </TouchableOpacity>
                        <Image resizeMode="contain" style={{ width: 100, height: 100 }}
                              source={{ uri: item.img[0] }}
-                             />
+                        />
                        <Text style={styles.cartText}>
-                            {item.name}
+                            {item.name.slice(0, 15)}...
                         </Text>
                          <View style={styles.addcartbtn}>
-                             <Cart navigation={route}  />
+                             <Cart navigation={route} item={item}/>
                          </View>
                     </View>
                 )} 
@@ -73,10 +55,10 @@ const WishListLobby = (props) => {
 
 const styles = StyleSheet.create({
     cartText: {
-        fontSize: 10,
+        fontSize: 20,
         fontWeight: 'bold',
         width: '60%',
-        color: 'white',
+        color: 'black',
         textAlign: 'center',
         justifyContent: 'center'
       },
@@ -86,10 +68,7 @@ const styles = StyleSheet.create({
         alignItems:"center",
         height:160},
     container: {
-        //paddingTop: 50,
-        //display: 'flex',
         flex: 1,
-        //justifyContent: 'flex-start',
         alignItems: 'center',
         backgroundColor: '#E5E5E5'
     },

@@ -2,6 +2,9 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import Cart from "./Cart";
 import WishListButton from "../Components/WishListButton";
 
+import { getPromRate } from "../utils/getPromRate"
+const starImg = require("../../assets/reviews/star.png");
+
 const ProductCard = (props) => {
   const { navigation, item, route } = props;
 
@@ -11,7 +14,13 @@ const ProductCard = (props) => {
       style={ item.stock === 0 ? styles.noStock : styles.container }
       onPress={() => navigation.navigate("Details", props)}
     >
-      <WishListButton navigation={navigation} item={item} />
+      <View style={styles.cardTop}>
+        <View style={{ flexDirection: 'row', alignItems: 'center'}}>
+          <Text>{getPromRate(item)}</Text>
+          <Image source= {starImg} style={{ height: 30, width: 30 }}/>
+        </View>
+        <WishListButton navigation={navigation} item={item} />
+      </View>
       <Image source={{ uri: item.img[0] }} style={styles.image} />
       <View style={styles.contInt}>
         <View style={styles.priceOffer}>
@@ -42,6 +51,10 @@ const ProductCard = (props) => {
 const font = 10;
 
 const styles = StyleSheet.create({
+  cardTop: {
+    flexDirection: "row",
+    // alignItems: 'center',
+  },
   container: {
     // flex: 1,
     alignItems: "center",
